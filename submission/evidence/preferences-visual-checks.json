@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-18T21:31:46.777Z",
+  "base_url": "http://localhost:3000",
+  "checks": {
+    "english_receipt": true,
+    "simulated_notice_retained": true,
+    "dark_receipt_prints_white": true,
+    "mobile_dashboard_captured": true,
+    "english_light_signin_captured": true
+  }
+}

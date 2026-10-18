@@ -1,3 +1,26 @@
+# Interface languages and appearance — 2026-10-19
+
+Completed Vietnamese, English and Simplified Chinese interface controls before and after sign-in. Local dictionaries cover navigation, forms, guided tasks, invoice/checkout/status/receipt labels, budgeting, document search, test lab and operator screens. Number/date presentation follows the selected locale; monetary values remain exact server Decimal strings, with BigInt used for grouped integer display. Vietnam remains the display time zone.
+
+Light, dark and device-following themes now cover the application and mobile layouts. Device changes are observed while the page is open; an explicit selection overrides them. Preferences survive reload/navigation and synchronize across same-origin tabs. Blocked storage falls back to memory in the current tab; invalid saved values use Vietnamese/device settings. Language changes preserve form drafts and do not remount the page. Hydration starts with the same language as the server; saved preferences activate after hydration, and a small static head script applies the saved/device theme before paint.
+
+Original user entries, uploaded content, citations and backend-generated account answers retain their source language. This is interface localization, not automatic document translation or a new multilingual LLM. Assistant questions remain supported in Vietnamese/English; Chinese interface selection does not add Chinese intent recognition. OCR language remains an independent input. The fixed simulated-payment warning is preserved in every language, and dark-mode receipts print on white with readable text.
+
+Executed checks for this change:
+
+- Lint and standalone Webpack build: exit 0; TypeScript: exit 0. The isolated build input matches current frontend source (digest in preferences-checks.json).
+- Production browser regression: **19 passed**, zero unexpected/skipped/flaky, **79590.064 ms**. Two development-only operator UI cases are excluded because that panel is intentionally disabled in production.
+- Dedicated production preferences run: **6 passed**, zero unexpected/skipped/flaky, **26615.032 ms**. These six also ran in the 19-case regression.
+- Signed manual success, duplicate event and receipt: focused unchanged development recheck **1 passed in 7.9 seconds**. The manual failure/invalid-operator-code case passed in the development rerun.
+- Actual browser screenshots and CSS assertions checked English light sign-in, Chinese dark invoice drafts, a 320-pixel layout, dark receipts and white-background printing with preserved warnings.
+- An intermediate full development rerun was **18 passed / 3 failed**: one 5-second receipt navigation assertion during concurrent build (focused recheck passed), and two sign-ups rejected with HTTP 429 after repeated runs. The throttle remains intact; the isolated production regression used separate existing test data/configuration. An unfiltered production attempt was stopped because manual operator UI is deliberately unavailable there. Earlier new-test label/selector failures were corrected. No intermediate failure is counted as a pass.
+
+Usage and reproducible Windows/Unix commands: LANGUAGE_AND_APPEARANCE.md. Current validation evidence is in submission/evidence/preferences-checks.json, preferences-visual-checks.json and browser-results.json; screenshots are under screenshots/preferences/. Backend Python, payment rules and API contracts were not changed; the backend suite was not rerun for this interface change. Historical backend results below retain their original dates.
+
+GitHub main is the distribution source for this update. Render auto-deployment remains disabled: the online service requires Manual Deploy → Deploy latest commit after the push. Earlier Render acceptance below describes its earlier deployed commit and is not evidence that this interface update is already online.
+
+---
+
 # Render deployment verified — 2026-10-18
 
 The user created the Free Blueprint in Render Dashboard. Service ai4s-demo is **Live** at https://ai4s-demo.onrender.com, runtime commit 3ac84b1c8f4f4c8db15afa55f8c16896cc7546d9. The single-image Linux Docker build and startup therefore ran on Render; this supersedes the earlier authentication-blocked preparation status below. No paid resource was selected.

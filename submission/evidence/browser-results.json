@@ -3,7 +3,10 @@
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
       "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
-      "test"
+      "test",
+      "--grep-invert",
+      "human consent, asynchronous|failure has no receipt",
+      "--reporter=list,json"
     ],
     "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
     "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
@@ -55,7 +58,7 @@
         "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
         "timeout": 60000,
         "use": {
-          "baseURL": "http://192.168.1.14:3000",
+          "baseURL": "http://localhost:3102",
           "channel": "chrome",
           "headless": true,
           "trace": "retain-on-failure",
@@ -69,14 +72,10 @@
     "quiet": false,
     "reporter": [
       [
-        "list",
-        null
+        "list"
       ],
       [
-        "json",
-        {
-          "outputFile": "../submission/evidence/browser-results.json"
-        }
+        "json"
       ]
     ],
     "reportSlowTests": {
@@ -114,20 +113,14 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 63545,
+                  "duration": 10522,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:17:17.614Z",
+                  "startTime": "2026-10-18T21:40:04.310Z",
                   "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\acceptance-owner-completes-ca67a-payment-ledger-and-evidence\\video.webm"
-                    }
-                  ]
+                  "attachments": []
                 }
               ],
               "status": "expected"
@@ -154,20 +147,14 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 41781,
+                  "duration": 13252,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:18:21.477Z",
+                  "startTime": "2026-10-18T21:40:15.080Z",
                   "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\acceptance-declined-test-m-3e169-d-allows-a-successful-retry\\video.webm"
-                    }
-                  ]
+                  "attachments": []
                 }
               ],
               "status": "expected"
@@ -202,12 +189,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2072,
+                  "duration": 1026,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:19:12.596Z",
+                  "startTime": "2026-10-18T21:40:29.117Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -218,40 +205,6 @@
           "id": "86d6a544053f1eb9f224-52fb58225d922d8dc4b5",
           "file": "flows.spec.ts",
           "line": 26,
-          "column": 5
-        },
-        {
-          "title": "human consent, asynchronous signed success, duplicate, receipt",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 14908,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-18T11:19:14.947Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "86d6a544053f1eb9f224-218dad5b71d243d0c12f",
-          "file": "flows.spec.ts",
-          "line": 40,
           "column": 5
         },
         {
@@ -270,12 +223,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9158,
+                  "duration": 2569,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:19:29.932Z",
+                  "startTime": "2026-10-18T21:40:30.379Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -286,40 +239,6 @@
           "id": "86d6a544053f1eb9f224-34e60b1a44fe488223a7",
           "file": "flows.spec.ts",
           "line": 74,
-          "column": 5
-        },
-        {
-          "title": "failure has no receipt and operator code is verified",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 14951,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-18T11:19:39.190Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "86d6a544053f1eb9f224-d065727ff03aa048c12b",
-          "file": "flows.spec.ts",
-          "line": 87,
           "column": 5
         }
       ]
@@ -346,12 +265,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 11847,
+                  "duration": 2529,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:19:54.442Z",
+                  "startTime": "2026-10-18T21:40:32.979Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -380,12 +299,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18881,
+                  "duration": 4621,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:20:06.308Z",
+                  "startTime": "2026-10-18T21:40:35.537Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -414,12 +333,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9359,
+                  "duration": 2763,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:20:25.237Z",
+                  "startTime": "2026-10-18T21:40:40.178Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -456,12 +375,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 12768,
+                  "duration": 4973,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:20:34.868Z",
+                  "startTime": "2026-10-18T21:40:42.976Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -490,12 +409,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 6201,
+                  "duration": 3468,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:20:47.780Z",
+                  "startTime": "2026-10-18T21:40:47.978Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -524,12 +443,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 6449,
+                  "duration": 1676,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:20:54.034Z",
+                  "startTime": "2026-10-18T21:40:51.469Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -540,6 +459,218 @@
           "id": "fe534f0825407f213faa-cdf04d92dc77620bc434",
           "file": "onboarding.spec.ts",
           "line": 80,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "preferences.spec.ts",
+      "file": "preferences.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sign-in preferences preserve input, persist on reload, and synchronize tabs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:40:53.193Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-bf1379fee037187bf983",
+          "file": "preferences.spec.ts",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "system theme follows device changes, explicit selection takes priority",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:40:54.940Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-61581c1c2ab3e27c3c5d",
+          "file": "preferences.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "translated screens, nested invoice form and guide retain draft data",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4523,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:40:55.822Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-628527ecfa0e6d540188",
+          "file": "preferences.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "mobile dark mode has readable surfaces and no horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4077,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:41:00.369Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-190403fd770bcd2e4a67",
+          "file": "preferences.spec.ts",
+          "line": 87,
+          "column": 5
+        },
+        {
+          "title": "preferences tolerate unavailable local storage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 719,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:41:04.468Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-fc46f3f63599c148350b",
+          "file": "preferences.spec.ts",
+          "line": 107,
+          "column": 5
+        },
+        {
+          "title": "invalid saved preferences fall back to Vietnamese and device theme",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:41:05.214Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-b7f81bf60425c4a01095",
+          "file": "preferences.spec.ts",
+          "line": 122,
           "column": 5
         }
       ]
@@ -566,12 +697,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 14290,
+                  "duration": 5547,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:21:01.004Z",
+                  "startTime": "2026-10-18T21:41:06.294Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -600,12 +731,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18919,
+                  "duration": 6654,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:21:15.352Z",
+                  "startTime": "2026-10-18T21:41:11.870Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -634,12 +765,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5522,
+                  "duration": 4008,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T11:21:34.360Z",
+                  "startTime": "2026-10-18T21:41:18.551Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -657,9 +788,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-18T11:17:13.010Z",
-    "duration": 271092.295,
-    "expected": 15,
+    "startTime": "2026-10-18T21:40:03.601Z",
+    "duration": 79590.064,
+    "expected": 19,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
