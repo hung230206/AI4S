@@ -40,6 +40,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://localhost:3000")
     parser.add_argument("--public-reference", type=Path, help="Optional original BFSU PDF downloaded using team.py fetch-reference")
+    parser.add_argument("--output", type=Path, help="Separate evidence destination for a deployed environment")
     args = parser.parse_args()
     checks = {}
     source_path = ROOT / "fixtures/uploads/01_Hoa_don/01_en_800.png"
@@ -128,7 +129,9 @@ def main():
         checked(client.get("/auth/session"), 401)
         checks["logout_revokes_session"] = True
     output = {"captured_at": datetime.now(timezone.utc).isoformat(), "transport": "Actual HTTP through frontend proxy", "synthetic_account_and_invoice_data": True, "checks": checks, "public_reference": public, "payment_provider": "MOCK", "real_funds_moved": False, "reference_rate": {"source": quote["rate_source"], "date": quote["rate_date"], "rate": quote["vnd_per_cny"]}}
-    target = ROOT / "submission/evidence/acceptance-live.json"
+    output["base_url"] = args.url.rstrip("/")
+    target = args.output or ROOT / "submission/evidence/acceptance-live.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"ACCEPTANCE PASS: {len(checks)} checks; actual OCR, reference FX, consent, provider callbacks, separate ledger and case ZIP.")
 

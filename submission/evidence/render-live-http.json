@@ -1,0 +1,26 @@
+{
+  "captured_at": "2026-10-18T11:56:40.837647+00:00",
+  "transport": "Actual HTTP through frontend proxy",
+  "synthetic_account_and_invoice_data": true,
+  "checks": {
+    "downloadable_inputs": true,
+    "ocr_human_review_and_saved_source": true,
+    "invoice_plan_native_forecast": true,
+    "declared_test_policy_page_citation": true,
+    "consented_automatic_signed_outcome_no_operator": true,
+    "separate_ledger_confirmation_no_double_count": true,
+    "owner_case_zip_original_quote_receipt_events_ledger": true,
+    "journey_progress_from_database": true,
+    "decline_no_receipt_fresh_consent_retry": true,
+    "logout_revokes_session": true
+  },
+  "public_reference": null,
+  "payment_provider": "MOCK",
+  "real_funds_moved": false,
+  "reference_rate": {
+    "source": "FRANKFURTER_REFERENCE",
+    "date": "2026-10-18",
+    "rate": "3864.490000"
+  },
+  "base_url": "https://ai4s-demo.onrender.com"
+}

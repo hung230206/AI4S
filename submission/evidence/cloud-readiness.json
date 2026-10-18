@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-10-18T11:45:46.041539+00:00",
+  "checked_at": "2026-10-18T12:00:45.088739+00:00",
   "provider": "Render",
   "requested_plan": "Free demo; idle sleep and database expiry accepted",
-  "public_deployed": false,
-  "connection_status": "Render returned USER_NOT_LOGGED_IN; authenticated account required",
-  "resources_created": false,
+  "public_deployed": true,
+  "connection_status": "User created Blueprint in Render Dashboard; Live verified via dashboard and actual public HTTPS requests. Render connector not used.",
+  "resources_created": true,
   "paid_resources_created": false,
   "blueprint": {
     "file": "render.yaml",
@@ -45,17 +45,26 @@
       3102,
       8102
     ],
-    "existing_local_app_preserved": true
+    "existing_local_app_preserved": true,
+    "render_https_core_checks": 10,
+    "render_dense_public_pdf": "HTTP 422 OCR_TIMEOUT; page/download assertions not reached",
+    "render_docker_build_and_startup": "Dashboard Live; actual HTTPS flow passed"
   },
   "not_executed": [
-    "Linux Docker build/run: Docker unavailable on host",
-    "Render resource creation/build/HTTPS acceptance: not authenticated",
-    "512MB Free-plan capacity/load certification"
+    "Full browser interaction suite against public Render URL (native browser acceptance previously passed)",
+    "512MB Free-plan capacity/load/failover certification"
   ],
   "boundaries": [
     "Free database expires after 30 days",
     "Free web sleeps on idle and has shared usage quotas",
     "75-second OCR bound may be exceeded on slow/contended Free CPU",
     "Only MOCK payments; no real funds moved"
-  ]
+  ],
+  "previous_preparation_connection_status": "Render returned USER_NOT_LOGGED_IN; authenticated account required",
+  "public_url": "https://ai4s-demo.onrender.com",
+  "resource_creation_actor": "User via Blueprint",
+  "service_id": "srv-dbab553ncjis73cthbc0",
+  "blueprint_id": "exs-dbab3fnbtjjs73eg0290",
+  "deploy_id": "dep-dbab55jncjis73cthcng",
+  "deployed_commit": "3ac84b1c8f4f4c8db15afa55f8c16896cc7546d9"
 }

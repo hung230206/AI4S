@@ -1,3 +1,15 @@
+# Render deployment verified — 2026-10-18
+
+The user created the Free Blueprint in Render Dashboard. Service ai4s-demo is **Live** at https://ai4s-demo.onrender.com, runtime commit 3ac84b1c8f4f4c8db15afa55f8c16896cc7546d9. The single-image Linux Docker build and startup therefore ran on Render; this supersedes the earlier authentication-blocked preparation status below. No paid resource was selected.
+
+**10 actual HTTPS acceptance checks passed**: private registration/session, downloadable inputs, real invoice OCR plus human review, saved source, budget projection, cited text policy, actual reference FX, consent-bound signed automatic outcomes, separate ledger accounting, owner case export, decline/retry and logout revocation. Check groups are recorded exactly in submission/evidence/render-live-http.json. The public sign-in UI was also opened and captured; the full browser interaction suite has not been rerun against Render.
+
+The additional original BFSU scanned table returned **HTTP 422 OCR_TIMEOUT** under the existing 75-second bound on Free hosting. Secure cookie verification passed before that upload, but page-search and byte-download assertions were not reached on this cloud attempt. Earlier native tests of the same PDF passed; that does not establish sufficient Free CPU for this document. Use clear invoice images and text-based policy PDFs for the initial cloud journey. The failure is recorded in render-public-reference.json; no paid upgrade or timeout bypass was performed.
+
+Current deployment evidence: cloud-readiness.json, render-live-http.json, render-public-reference.json and screenshots/cloud/signin.png. All payments remain simulated. Free service sleep/quota and 30-day database expiry still apply. Historical preparation and native results follow.
+
+---
+
 # Cloud deployment preparation — 2026-10-18
 
 The user selected a fixed online demo independent of the local computer, has no hosting account yet, and chose Free hosting with idle sleep/database limits. Added a Render Deploy button, root render.yaml, a single-origin multi-stage cloud Dockerfile, standalone frontend output gated by BUILD_STANDALONE, bounded cloud OCR concurrency, and a supervisor for non-resetting migrations/readiness/owned-process shutdown. DEPLOY_RENDER.md explains account setup, actual resource/URL selection, secrets, quotas, recovery and manual deployments.

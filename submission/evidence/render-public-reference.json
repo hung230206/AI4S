@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-18T12:00:45.088739+00:00",
+  "base_url": "https://ai4s-demo.onrender.com",
+  "secure_cookie_verified": true,
+  "public_reference_url": "https://osao.bfsu.edu.cn/2025xuenianliuxueshengduofanganchanpinjianbiao.pdf",
+  "public_original_bytes": 705051,
+  "passed": false,
+  "actual_http_status": 422,
+  "actual_error_code": "OCR_TIMEOUT",
+  "configured_ocr_timeout_seconds": 75,
+  "page_search_and_original_download": "Not reached on this cloud attempt",
+  "scope": "Dense scanned public PDF on Render Free; same original passed earlier native checks. No paid upgrade performed."
+}

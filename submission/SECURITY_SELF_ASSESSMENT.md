@@ -29,7 +29,7 @@ Self-assessment dated 2026-10-18, not independent certification. Production mone
 5. OCR smoke samples do not establish real-world accuracy. Field parsing and keyword/synonym retrieval can miss context or return irrelevant passages. Compare originals; no medical/legal/coverage decision is automated. The assistant is not a generative LLM or full semantic RAG system.
 6. Forecasts omit undeclared items. Invoice plans are snapshots. Same-day projections are end-of-day values, not intraday liquidity guarantees. No realtime or executable FX is promised.
 7. Runtime npm audit reports zero vulnerabilities. Full audit retains five high findings in the existing development-tool chain: https://github.com/advisories/GHSA-vfj7-8cjw-p6xm . No incompatible forced downgrade was applied. Python vulnerability auditing was not performed. Package/model/native notices are retained; exported metadata is not legal certification.
-8. Docker/Unix startup, public deployment, load/failover and production accessibility certification were not executed. One pre-existing Starlette TestClient/httpx warning remains. Application audit tables are not tamper-proof against privileged administrators.
+8. Native Docker Compose/Unix setup, load/failover and production accessibility certification were not executed. The single-image Docker app did run on Render and pass 10 HTTPS core check groups; a dense public PDF hit the bounded OCR timeout. One pre-existing Starlette TestClient/httpx warning remains. Application audit tables are not tamper-proof against privileged administrators.
 
 ## Cloud configuration
 

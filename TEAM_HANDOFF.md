@@ -1,6 +1,6 @@
 # Bàn giao sản phẩm Demo
 
-Muốn dùng online khi tắt máy cá nhân: xem [DEPLOY_RENDER.md](DEPLOY_RENDER.md) và nút deploy từ GitHub. Bản Free dành cho demo có giới hạn ngủ/quota và database hết hạn sau 30 ngày; chưa có URL cloud cho đến khi tạo tài nguyên và service Live.
+Muốn dùng online khi tắt máy cá nhân: xem [DEPLOY_RENDER.md](DEPLOY_RENDER.md) và nút deploy từ GitHub. Bản Free dành cho demo có giới hạn ngủ/quota và database hết hạn sau 30 ngày; URL cloud hiện tại: https://ai4s-demo.onrender.com/test-lab. 10 kiểm tra HTTPS luồng chính đã qua; PDF scan công khai dạng bảng dày gặp OCR_TIMEOUT trên Free.
 
 ## Bắt đầu từ đâu
 

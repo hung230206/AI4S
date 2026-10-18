@@ -1,6 +1,6 @@
 # Demo — Student Finance Participant MVP
 
-Current implementation, 2026-10-18. The user clarified their screenshot as competition-problem analysis and requested a working upgrade along that analysis. The team retains the official Topic C/D submission choice; no submission or public deployment was performed.
+Current implementation, 2026-10-18. The user clarified their screenshot as competition-problem analysis and requested a working upgrade along that analysis. The team retains the official Topic C/D submission choice; no competition submission was performed. The Free Render demo is now live at https://ai4s-demo.onrender.com; exact verification and limits are in IMPLEMENTATION_REPORT.md.
 
 ## End-to-end task
 
@@ -65,3 +65,7 @@ Follow TEAM_HANDOFF.md for current Windows/Unix setup and ACCEPTANCE_TESTS.md fo
 The root render.yaml creates one Free Docker web service and one Free PostgreSQL database in Singapore. The cloud image builds Next standalone and includes local OCR models/dependencies. A supervisor normalizes the platform PostgreSQL URL for psycopg, requires explicit cloud secrets and an exact HTTPS origin, enables Secure cookies, migrates without resetting records, starts a loopback-only API and serves UI on the assigned public port. Cloud OCR concurrency is limited to one; local default remains two.
 
 The Free database expires after 30 days; the web service sleeps on idle and has limited CPU/RAM/quotas. Full Linux Docker/Render execution and cloud capacity must be checked on an authenticated account; local build/schema checks alone are not evidence of a live site. See DEPLOY_RENDER.md and evidence/cloud-readiness.json for actual checks and connection status. No paid resource is authorized.
+
+## Public deployment verification
+
+The user created the Render Blueprint; runtime commit 3ac84b1 reached Live and passed 10 actual HTTPS core check groups. The public sign-in UI was inspected. The dense original BFSU scanned table returned HTTP 422 OCR_TIMEOUT at the configured 75-second bound; its native success is not proof of Free-host capacity. No paid upgrade was made. See evidence/render-live-http.json, render-public-reference.json and cloud-readiness.json.
