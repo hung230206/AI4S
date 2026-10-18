@@ -17,7 +17,7 @@ P = "/api/v1"
 
 @pytest.fixture(autouse=True)
 def reference(monkeypatch):
-    monkeypatch.setattr(fx, "fetch_json", lambda *a, **k: {"date": finance.today().isoformat(), "base": "CNY", "quote": "VND", "rate": Decimal("3864.07")})
+    monkeypatch.setattr(fx, "fetch_json", lambda *a, **k: {"date": fx.now().date().isoformat(), "base": "CNY", "quote": "VND", "rate": Decimal("3864.07")})
 
 
 def account(client):

@@ -1,0 +1,168 @@
+
+Running 24 tests using 1 worker
+
+(node:26052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\acceptance.spec.ts:44:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (10.4s)
+  ok  2 tests\acceptance.spec.ts:102:5 › declined test method requires renewed consent and allows a successful retry (10.7s)
+(node:11628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (1.5s)
+  ok  4 tests\flows.spec.ts:40:5 › human consent, asynchronous signed success, duplicate, receipt (5.9s)
+  ok  5 tests\flows.spec.ts:82:5 › mobile cancellation and safe retry (2.8s)
+  ok  6 tests\flows.spec.ts:95:5 › failure has no receipt and operator code is verified (4.3s)
+  ok  7 tests\gemini.spec.ts:12:5 › Gemini chat sends bounded conversation context, displays sources and clears locally (1.5s)
+  ok  8 tests\gemini.spec.ts:35:5 › provider quota fallback is explicit and direct lookup sends no chat history (1.2s)
+  ok  9 tests\gemini.spec.ts:53:5 › no key keeps direct lookup available without offering an active Gemini mode (823ms)
+  ok 10 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (2.3s)
+  ok 11 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (4.5s)
+  ok 12 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (2.7s)
+  ok 13 tests\onboarding.spec.ts:20:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (3.3s)
+  ok 14 tests\onboarding.spec.ts:47:5 › guided invoice journey explains inputs and calculates a quote without a payment (3.1s)
+  ok 15 tests\onboarding.spec.ts:80:5 › insurance entry opens its own workflow and route-specific help without an invoice (1.6s)
+  ok 16 tests\preferences.spec.ts:16:5 › sign-in preferences preserve input, persist on reload, and synchronize tabs (1.7s)
+  ok 17 tests\preferences.spec.ts:44:5 › system theme follows device changes, explicit selection takes priority (740ms)
+  ok 18 tests\preferences.spec.ts:57:5 › translated screens, nested invoice form and guide retain draft data (4.2s)
+  ok 19 tests\preferences.spec.ts:87:5 › mobile dark mode has readable surfaces and no horizontal overflow (3.3s)
+  ok 20 tests\preferences.spec.ts:107:5 › preferences tolerate unavailable local storage (659ms)
+  ok 21 tests\preferences.spec.ts:122:5 › invalid saved preferences fall back to Vietnamese and device theme (682ms)
+
+  x  22 tests\student-finance.spec.ts:31:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (5.8s)
+(node:2660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  x  23 tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis (5.8s)
+(node:23440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  x  24 tests\student-finance.spec.ts:107:5 › scanned policy PDF OCR produces a cited answer on a phone (6.0s)
+
+
+  1) tests\student-finance.spec.ts:31:5 › native ledger, planned shortfall, actual confirmation and bounded assistant 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+
+
+       at guide-helper.ts:5
+
+      3 | export async function dismissWelcome(page: Page) {
+      4 |   const guide = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
+    > 5 |   await expect(guide).toBeVisible();
+        |                       ^
+      6 |   await guide.getByRole("button", {name: "Để sau", exact: true}).click();
+      7 |   await expect(guide).not.toBeVisible();
+      8 | }
+        at dismissWelcome (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\guide-helper.ts:5:23)
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:20:23)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:32:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+
+
+       at guide-helper.ts:5
+
+      3 | export async function dismissWelcome(page: Page) {
+      4 |   const guide = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
+    > 5 |   await expect(guide).toBeVisible();
+        |                       ^
+      6 |   await guide.getByRole("button", {name: "Để sau", exact: true}).click();
+      7 |   await expect(guide).not.toBeVisible();
+      8 | }
+        at dismissWelcome (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\guide-helper.ts:5:23)
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:20:23)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:72:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\student-finance.spec.ts:107:5 › scanned policy PDF OCR produces a cited answer on a phone 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })
+
+
+       at guide-helper.ts:5
+
+      3 | export async function dismissWelcome(page: Page) {
+      4 |   const guide = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
+    > 5 |   await expect(guide).toBeVisible();
+        |                       ^
+      6 |   await guide.getByRole("button", {name: "Để sau", exact: true}).click();
+      7 |   await expect(guide).not.toBeVisible();
+      8 | }
+        at dismissWelcome (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\guide-helper.ts:5:23)
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:20:23)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:109:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\student-finance.spec.ts:31:5 › native ledger, planned shortfall, actual confirmation and bounded assistant 
+    tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis 
+    tests\student-finance.spec.ts:107:5 › scanned policy PDF OCR produces a cited answer on a phone 
+  21 passed (1.5m)

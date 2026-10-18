@@ -2739,5 +2739,81 @@ export const phrases: Record<string, {en: string; zh: string}> = {
   "Chuyển sang chế độ tối": {
     "en": "Switch to dark mode",
     "zh": "切换到深色模式"
+  },
+  "Gemini diễn giải dữ liệu tài khoản và đoạn tài liệu liên quan, có thể hiểu câu hỏi nối tiếp. Tra cứu trực tiếp dùng quy tắc của ứng dụng và không gọi AI bên ngoài.": {
+    "en": "Gemini explains your account data and relevant document excerpts, including follow-up questions. Direct lookup uses application rules without external AI.",
+    "zh": "Gemini 解读账户数据和相关文件摘录，并理解后续提问。直接查询使用应用规则，不调用外部 AI。"
+  },
+  "Chế độ trả lời": {
+    "en": "Response mode",
+    "zh": "回答模式"
+  },
+  "Tra cứu trực tiếp": {
+    "en": "Direct lookup",
+    "zh": "直接查询"
+  },
+  "Xóa cuộc trò chuyện": {
+    "en": "Clear conversation",
+    "zh": "清空对话"
+  },
+  "Cuộc trò chuyện": {
+    "en": "Conversation",
+    "zh": "对话"
+  },
+  "Đang kiểm tra kết nối trợ lý…": {
+    "en": "Checking assistant availability…",
+    "zh": "正在检查助手状态…"
+  },
+  "Khi gửi, câu hỏi, 3 lượt hội thoại gần nhất và dữ liệu/tài liệu liên quan được gửi tới Google Gemini. Không gửi tệp gốc. Hãy kiểm tra nguồn trước khi sử dụng câu trả lời.": {
+    "en": "Sending shares your question, the last 3 conversation turns and relevant account data/document excerpts with Google Gemini. Original files are not sent. Verify sources before using an answer.",
+    "zh": "发送时会将问题、最近 3 轮对话以及相关账户数据和文件摘录发送给 Google Gemini。不会发送原文件。使用回答前请核对来源。"
+  },
+  "Tra cứu trực tiếp dùng dữ liệu đã lưu và quy tắc. Nội dung câu hỏi không được gửi tới Gemini.": {
+    "en": "Direct lookup uses saved data and rules. Your question is not sent to Gemini.",
+    "zh": "直接查询使用已保存的数据和规则。问题不会发送给 Gemini。"
+  },
+  "Gemini chưa được cấu hình. Đang dùng tra cứu trực tiếp.": {
+    "en": "Gemini is not configured. Using direct lookup.",
+    "zh": "Gemini 尚未配置，正在使用直接查询。"
+  },
+  "Gemini phản hồi chậm. Đang dùng tra cứu trực tiếp.": {
+    "en": "Gemini timed out. Using direct lookup.",
+    "zh": "Gemini 响应超时，正在使用直接查询。"
+  },
+  "Gemini đã chạm giới hạn lượt gọi. Đang dùng tra cứu trực tiếp.": {
+    "en": "Gemini reached its request limit. Using direct lookup.",
+    "zh": "Gemini 已达到请求限制，正在使用直接查询。"
+  },
+  "Khóa Gemini chưa được nhà cung cấp chấp nhận. Đang dùng tra cứu trực tiếp.": {
+    "en": "The provider did not accept the Gemini key. Using direct lookup.",
+    "zh": "提供商未接受 Gemini 密钥，正在使用直接查询。"
+  },
+  "Thao tác tài chính cần bạn tự kiểm tra và xác nhận trong ứng dụng.": {
+    "en": "Financial actions require your review and confirmation in the app.",
+    "zh": "金融操作需要您在应用中自行核对并确认。"
+  },
+  "Có nguồn để đối chiếu": {
+    "en": "Sources available for verification",
+    "zh": "可核对来源"
+  },
+  "Giải thích tổng quát": {
+    "en": "General explanation",
+    "zh": "一般说明"
+  },
+  "Gemini tạm thời chưa trả lời được. Đang dùng tra cứu trực tiếp.": {
+    "en": "Gemini is temporarily unavailable. Using direct lookup.",
+    "zh": "Gemini 暂时无法回答，正在使用直接查询。"
+  },
+  "Gemini đang đối chiếu dữ liệu và soạn câu trả lời…": {
+    "en": "Gemini is reviewing the data and preparing a reply…",
+    "zh": "Gemini 正在核对数据并准备回答…"
+  },
+  "Hội thoại chỉ giữ trong tab hiện tại; tải lại trang hoặc xóa cuộc trò chuyện sẽ làm mới ngữ cảnh.": {
+    "en": "Conversation stays in this tab only; reloading or clearing the conversation resets its context.",
+    "zh": "对话仅保留在当前标签页；刷新页面或清空对话会重置上下文。"
+  },
+  "Khi gửi, câu hỏi, 3 lượt hội thoại gần nhất và dữ liệu/tài liệu liên quan được gửi tới Google Gemini. Không gửi tệp gốc. Dùng dữ liệu mẫu hoặc đã ẩn danh; nội dung nhạy cảm nên chọn Tra cứu trực tiếp. Hãy kiểm tra nguồn trước khi sử dụng câu trả lời.": {
+    "en": "Sending shares your question, the last 3 conversation turns and relevant account data/document excerpts with Google Gemini. Original files are not sent. Use sample or anonymized data; choose Direct lookup for sensitive content. Verify sources before using an answer.",
+    "zh": "发送时会将问题、最近 3 轮对话以及相关账户数据和文件摘录发送给 Google Gemini。不会发送原文件。请使用示例或匿名数据；敏感内容请选择直接查询。使用回答前请核对来源。"
   }
 };

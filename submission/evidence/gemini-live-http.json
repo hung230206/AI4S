@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-10-18T21:56:22.808131+00:00",
+  "base_url": "http://localhost:3000",
+  "elapsed_seconds": 21.766,
+  "checks": {
+    "private_session_and_configured_status": true,
+    "real_generated_budget_with_owned_source": true,
+    "real_multiturn_follow_up": true,
+    "real_generated_policy_answer_with_original_excerpt": true,
+    "payment_guard_and_unchanged_ledger": true,
+    "direct_lookup_still_available": true
+  },
+  "replies_from_real_gemini": [
+    {
+      "question": "30 ngày tới tôi có đủ tiền không? Hãy nêu số dư cuối kỳ đúng như nguồn.",
+      "method": "GEMINI_GROUNDED",
+      "model": "gemini-3.8-flash",
+      "answer": "Trong 30 ngày tới (từ 2026-10-19 đến 2026-11-18), bạn dự kiến sẽ không đủ tiền theo sổ cái \"QA CNY ledger\".\n\n- Số dư hiện tại: 1000.00 CNY\n- Số dư dự phóng cuối kỳ (projected_balance): -200.00 CNY\n- Số dư tối thiểu: -200.00 CNY\n- Ngày thiếu hụt đầu tiên: 2026-10-24\n\nLưu ý rằng kết quả này dựa trên số dư và lịch thu chi do bạn tự khai báo (không kết nối ngân hàng thực tế). Vui lòng kiểm tra lại màn hình ngân sách trong ứng dụng để điều chỉnh kế hoạch chi tiêu.",
+      "sources": [
+        {
+          "source_id": "B1",
+          "title": "QA CNY ledger: 1000.00 → -200.00 CNY",
+          "href": "/finance"
+        }
+      ]
+    },
+    {
+      "question": "Giải thích lại câu trả lời trước bằng 2 câu ngắn.",
+      "method": "GEMINI_GROUNDED",
+      "model": "gemini-3.8-flash",
+      "answer": "Trong 30 ngày tới (2026-10-19 đến 2026-11-18), bạn dự kiến không đủ tiền với số dư cuối kỳ của sổ cái QA CNY ledger là -200.00 CNY. Khoản thiếu hụt dự kiến bắt đầu từ ngày 2026-10-24 theo số liệu bạn tự khai báo, vui lòng kiểm tra lại màn hình ngân sách trong ứng dụng.",
+      "sources": [
+        {
+          "source_id": "B1",
+          "title": "QA CNY ledger: 1000.00 → -200.00 CNY",
+          "href": "/finance"
+        }
+      ]
+    },
+    {
+      "question": "Hồ sơ bồi thường trong tài liệu tôi tải lên cần những gì?",
+      "method": "GEMINI_GROUNDED",
+      "model": "gemini-3.8-flash",
+      "answer": "Theo trích dẫn từ tài liệu bạn tải lên (\"Self-authored QA policy\", trang 1), hồ sơ yêu cầu bồi thường cần:\n- Hóa đơn bệnh viện (hospital invoices)\n- Mẫu đơn yêu cầu bồi thường có chữ ký (signed claim form)\n\nLưu ý rằng thông tin này chỉ phản ánh nội dung trích xuất từ tài liệu thử nghiệm được cung cấp, không phải là xác nhận về quyền lợi bảo hiểm hay quyết định bồi thường thực tế. Vui lòng kiểm tra màn hình tài liệu tương ứng trong ứng dụng để biết thêm chi tiết.",
+      "sources": [
+        {
+          "source_id": "D1",
+          "title": "Self-authored QA policy",
+          "filename": "self-authored-gemini-qa.txt",
+          "page": 1,
+          "excerpt": "Claims require hospital invoices and a signed claim form.",
+          "document_id": "8dff71ed-3c46-418b-acee-724a65284cf7",
+          "document_kind": "TEST_FIXTURE"
+        }
+      ]
+    }
+  ],
+  "real_payments": false
+}

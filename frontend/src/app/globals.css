@@ -138,6 +138,15 @@ select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outlin
 .dark .task-card p,.dark .task-card>small,.dark .task-time,.dark .task-number,.dark .getting-started p,.dark .getting-started small,.dark .continue-card p,.dark .guide-content>p,.dark .guide-choices span,.dark .guide-reopen,.dark .form-section-title p,.dark .next-action-note p,.dark .status-next,.dark .document-steps>span,.dark .scenario-grid span,.dark .import-card>p,.dark .auth-demo-note,.dark .mono,.dark .empty,.dark .empty h3,.dark .chart-axis,.dark .flow-steps li,.dark .stat-caption,.dark .invoice-amount span,.dark .finance-tabs>button{color:var(--muted)}
 .dark .positive,.dark .flow-steps li.complete,.dark .document-steps .current,.dark .finance-tabs>button.selected{color:#b9e3c8}
 .dark .negative{color:#ffbba5!important}.dark .citation-card blockquote{color:#cee1d2}
+.copilot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.copilot-toolbar .prompt-chips{margin:0}.copilot-toolbar button{display:inline-flex;align-items:center;gap:7px}
+.prompt-chips button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}
+.copilot-privacy{padding:14px;border:1px solid var(--line);border-radius:8px;line-height:1.8}
+.copilot-answer-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.copilot-fallback{font-size:12px;border-left:3px solid var(--gold);padding:8px 12px;margin-top:12px;color:var(--ink)}
+.copilot-question,.copilot-source{overflow-wrap:anywhere}
+.dark .prompt-chips button[aria-pressed=true]{background:var(--green);color:var(--brand-text)}
+@media(max-width:600px){.copilot-toolbar{align-items:flex-start}.copilot-toolbar>.text-link{font-size:12px}.copilot-privacy{font-size:11px}}
 @media(max-width:600px){.auth-preferences{padding:12px;gap:8px}.auth-preferences .language-group{margin-left:auto}.topbar{align-items:flex-start}.topbar-right{width:100%;gap:10px;justify-content:space-between}.language-group{gap:2px}.lang-btn{padding:5px 7px}.topbar .avatar{margin-left:0}.breadcrumb{overflow-wrap:anywhere}.sidebar nav{flex-wrap:wrap}.auth-page{padding-top:18px}}
 @media(max-width:360px){.auth-preferences{justify-content:center}.auth-preferences .language-group{margin:0}.topbar-right .language-group{order:3;width:100%}.topbar-right .lang-btn{flex:1}}
 @media print{html.dark,html.dark body,html.dark .app-shell,html.dark .main-shell,html.dark main,html.dark .receipt{background:#fff!important;color:#17332e!important;color-scheme:light}html.dark .receipt h2,html.dark .receipt dd,html.dark .receipt dt,html.dark .receipt p,html.dark .receipt .mono{color:#17332e!important}html.dark .receipt-warning{background:#fbf4df!important;color:#6b4714!important;border-color:#946623!important}html.dark .receipt-watermark{color:#ddd!important}.auth-preferences{display:none!important}}

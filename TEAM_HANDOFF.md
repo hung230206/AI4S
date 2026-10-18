@@ -1,5 +1,7 @@
 # Bàn giao sản phẩm Demo
 
+Chatbot Gemini đã tích hợp và kiểm tra bằng API thật ở local. Team xem [GEMINI_GUIDE.md](GEMINI_GUIDE.md); trên Render cần đặt khóa mới trong Environment rồi deploy, không đưa khóa lên GitHub.
+
 Chọn **Tiếng Việt / English / 中文** hoặc bấm nút **mặt trăng / mặt trời** để đổi sáng/tối ngay đầu trang, kể cả trước đăng nhập. Lựa chọn lưu theo trình duyệt. Xem [LANGUAGE_AND_APPEARANCE.md](LANGUAGE_AND_APPEARANCE.md) để thử và biết phần nội dung giữ ngôn ngữ gốc.
 
 Muốn dùng online khi tắt máy cá nhân: xem [DEPLOY_RENDER.md](DEPLOY_RENDER.md) và nút deploy từ GitHub. Bản Free dành cho demo có giới hạn ngủ/quota và database hết hạn sau 30 ngày; URL cloud hiện tại: https://ai4s-demo.onrender.com/test-lab. 10 kiểm tra HTTPS luồng chính đã qua; PDF scan công khai dạng bảng dày gặp OCR_TIMEOUT trên Free.

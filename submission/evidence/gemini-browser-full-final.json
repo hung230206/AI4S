@@ -1,0 +1,1094 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "snapshotDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:3000",
+          "channel": "chrome",
+          "headless": true,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "acceptance.spec.ts",
+      "file": "acceptance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "owner completes upload, budget, policy, automatic signed payment, ledger and evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10361,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:01:58.028Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6bf654160f377cf56a60-64d009d7938cc2808f00",
+          "file": "acceptance.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "declined test method requires renewed consent and allows a successful retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:08.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6bf654160f377cf56a60-96cc2d3c2ce8aa12c1e4",
+          "file": "acceptance.spec.ts",
+          "line": 102,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "flows.spec.ts",
+      "file": "flows.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "desktop dashboard and mobile keyboard navigation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:19.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "86d6a544053f1eb9f224-52fb58225d922d8dc4b5",
+          "file": "flows.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "human consent, asynchronous signed success, duplicate, receipt",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5909,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:21.731Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "86d6a544053f1eb9f224-218dad5b71d243d0c12f",
+          "file": "flows.spec.ts",
+          "line": 40,
+          "column": 5
+        },
+        {
+          "title": "mobile cancellation and safe retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:27.654Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "86d6a544053f1eb9f224-34e60b1a44fe488223a7",
+          "file": "flows.spec.ts",
+          "line": 82,
+          "column": 5
+        },
+        {
+          "title": "failure has no receipt and operator code is verified",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:30.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "86d6a544053f1eb9f224-d065727ff03aa048c12b",
+          "file": "flows.spec.ts",
+          "line": 95,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "gemini.spec.ts",
+      "file": "gemini.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Gemini chat sends bounded conversation context, displays sources and clears locally",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:34.707Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-9c5c740f7a73ab4d3bcc",
+          "file": "gemini.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "provider quota fallback is explicit and direct lookup sends no chat history",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:36.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-74dea7e9d5e0bfab57f0",
+          "file": "gemini.spec.ts",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "title": "no key keeps direct lookup available without offering an active Gemini mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:37.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-50aeb867ecab0c77418b",
+          "file": "gemini.spec.ts",
+          "line": 53,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "mvp.spec.ts",
+      "file": "mvp.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "account registration, persistent session, profile and sign-out",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:38.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "616161ec86a02322bd37-2698b0939c5636df477e",
+          "file": "mvp.spec.ts",
+          "line": 36,
+          "column": 5
+        },
+        {
+          "title": "invoice CRUD, real reference quote, sandbox consent and archive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:40.573Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "616161ec86a02322bd37-1f763af9e73bfca9c663",
+          "file": "mvp.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "private policy upload, cited search, download and delete on mobile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2744,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:45.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "616161ec86a02322bd37-f0f28f781713818bce26",
+          "file": "mvp.spec.ts",
+          "line": 85,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "onboarding.spec.ts",
+      "file": "onboarding.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:47.808Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fe534f0825407f213faa-b7429731be79b0a2d1a1",
+          "file": "onboarding.spec.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "guided invoice journey explains inputs and calculates a quote without a payment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3059,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:51.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fe534f0825407f213faa-1974e903d4fc82570b2f",
+          "file": "onboarding.spec.ts",
+          "line": 47,
+          "column": 5
+        },
+        {
+          "title": "insurance entry opens its own workflow and route-specific help without an invoice",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:54.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fe534f0825407f213faa-cdf04d92dc77620bc434",
+          "file": "onboarding.spec.ts",
+          "line": 80,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "preferences.spec.ts",
+      "file": "preferences.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sign-in preferences preserve input, persist on reload, and synchronize tabs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:55.845Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-bf1379fee037187bf983",
+          "file": "preferences.spec.ts",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "system theme follows device changes, explicit selection takes priority",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 740,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:57.515Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-61581c1c2ab3e27c3c5d",
+          "file": "preferences.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "translated screens, nested invoice form and guide retain draft data",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:02:58.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-628527ecfa0e6d540188",
+          "file": "preferences.spec.ts",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "title": "mobile dark mode has readable surfaces and no horizontal overflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:02.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-190403fd770bcd2e4a67",
+          "file": "preferences.spec.ts",
+          "line": 87,
+          "column": 5
+        },
+        {
+          "title": "preferences tolerate unavailable local storage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:05.753Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-fc46f3f63599c148350b",
+          "file": "preferences.spec.ts",
+          "line": 107,
+          "column": 5
+        },
+        {
+          "title": "invalid saved preferences fall back to Vietnamese and device theme",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:06.422Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14778efd97370ce75a77-b7f81bf60425c4a01095",
+          "file": "preferences.spec.ts",
+          "line": 122,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "student-finance.spec.ts",
+      "file": "student-finance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native ledger, planned shortfall, actual confirmation and bounded assistant",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5816,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:32:3",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                      "column": 23,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mguide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                        "column": 23,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n\n   at guide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:32:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:07.414Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-native-led-f655a-ation-and-bounded-assistant\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-native-led-f655a-ation-and-bounded-assistant\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-native-led-f655a-ation-and-bounded-assistant\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                    "column": 23,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "aa60e1354e74ab413836-151b8523e465cf046483",
+          "file": "student-finance.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "real image OCR, mandatory review, source download, invoice plan and FX analysis",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5832,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:72:3",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                      "column": 23,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mguide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                        "column": 23,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n\n   at guide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:72:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:14.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-real-image-d8cb3-nvoice-plan-and-FX-analysis\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                    "column": 23,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "aa60e1354e74ab413836-15058814611db9cf409b",
+          "file": "student-finance.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "scanned policy PDF OCR produces a cited answer on a phone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5990,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:109:3",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                      "column": 23,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mguide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                        "column": 23,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Bắt đầu cùng Demo' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Bắt đầu cùng Demo' })\u001b[22m\n\n\n   at guide-helper.ts:5\n\n  3 | export async function dismissWelcome(page: Page) {\n  4 |   const guide = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n> 5 |   await expect(guide).toBeVisible();\n    |                       ^\n  6 |   await guide.getByRole(\"button\", {name: \"Để sau\", exact: true}).click();\n  7 |   await expect(guide).not.toBeVisible();\n  8 | }\n    at dismissWelcome (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts:5:23)\n    at register (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:20:23)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\student-finance.spec.ts:109:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:03:20.970Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\student-finance-scanned-po-20dbb-s-a-cited-answer-on-a-phone\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\guide-helper.ts",
+                    "column": 23,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "aa60e1354e74ab413836-9ca23fa93a6609bc3f9f",
+          "file": "student-finance.spec.ts",
+          "line": 107,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T22:01:57.259Z",
+    "duration": 90085.986,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

@@ -1,5 +1,7 @@
 # Dùng bản MVP hiện tại
 
+Chatbot đã có **Gemini AI** và **Tra cứu trực tiếp**. Cách thử, cấu hình khóa ở backend/Render và giới hạn dữ liệu: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).
+
 Bản mới có **Trợ lý du học**, **Ngân sách & thu chi**, **Tỷ giá & ngân sách** và nhập hóa đơn từ ảnh/PDF. Xem [STUDENT_FINANCE_GUIDE.md](STUDENT_FINANCE_GUIDE.md) để dùng trọn luồng; các bước nền tảng dưới đây vẫn áp dụng.
 
 Bạn bè dùng máy khác cùng Wi-Fi: mở **http://192.168.1.14:3000** khi máy chủ đang chạy (IP kiểm tra ngày 18/10/2026). Cách chạy lại hoặc đổi địa chỉ IP: xem [LAN_TEST_GUIDE.md](LAN_TEST_GUIDE.md).

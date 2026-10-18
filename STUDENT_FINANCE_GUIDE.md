@@ -1,5 +1,7 @@
 # Dùng bản nâng cấp theo bài toán tài chính du học
 
+**Chatbot mới:** chọn Gemini AI hoặc Tra cứu trực tiếp trong Trợ lý du học. Hướng dẫn dùng API thật, dữ liệu mẫu, quyền riêng tư và cấu hình Render: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).
+
 Mở http://localhost:3000 và tạo tài khoản riêng. Bạn bè cùng Wi-Fi dùng http://192.168.1.14:3000 khi máy chủ đang chạy; IP được kiểm tra ngày 18/10/2026. Không cần API key, tài khoản OCR hay tài khoản ngân hàng để thử các chức năng dưới đây.
 
 ## 1. Từ thông báo thu phí tới hóa đơn
@@ -40,7 +42,7 @@ Mở **Tỷ giá & ngân sách**, xem lịch sử CNY/VND từ Frankfurter. Có 
 
 ## 5. Trợ lý và tài liệu bảo hiểm
 
-**Trợ lý du học** có các câu hỏi gợi ý về đủ tiền trong 30 ngày, hóa đơn gần hạn, tỷ giá và hồ sơ bảo hiểm. Trả lời lấy từ kế hoạch/tài liệu đã lưu, có đường dẫn hoặc trang nguồn. Nếu thiếu dữ liệu, trợ lý nêu phần cần bổ sung. Phản hồi hiện theo quy tắc và tìm đoạn gốc; không dùng LLM sinh trả lời tự do.
+**Trợ lý du học** có các câu hỏi gợi ý về đủ tiền trong 30 ngày, hóa đơn gần hạn, tỷ giá và hồ sơ bảo hiểm. Trả lời lấy từ kế hoạch/tài liệu đã lưu, có đường dẫn hoặc trang nguồn. Nếu thiếu dữ liệu, trợ lý nêu phần cần bổ sung. Chọn Gemini AI để diễn giải bằng mô hình sinh văn bản, có hội thoại nối tiếp và nguồn đối chiếu; chọn Tra cứu trực tiếp để dùng quy tắc/tìm đoạn gốc. Chỉ chế độ Gemini gửi ngữ cảnh liên quan tới Google.
 
 **Tài liệu bảo hiểm** nhận PDF, ảnh, TXT hoặc MD. PDF có chữ tối đa 50 trang; OCR ảnh/PDF quét tối đa 5 trang; tệp tối đa 5 MB. Chọn ngôn ngữ chính cho bản quét. Sau khi tải, đọc toàn văn hoặc tìm từ khóa. Có hỗ trợ từ khóa Trung/Việt/Anh và trích dẫn số trang, không tự quyết định quyền lợi/bồi thường.
 

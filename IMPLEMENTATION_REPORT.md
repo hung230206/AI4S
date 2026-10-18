@@ -1,3 +1,32 @@
+# Optional Gemini chatbot — 2026-10-19
+
+Integrated the user's Gemini project through a backend-only HTTPX adapter and the existing authenticated study-abroad assistant. Local `.env` holds the key; it is never returned in status, model context, browser requests, source files or handoff artifacts. Direct lookup remains usable without a key. No dependency additions or database migrations were required.
+
+The chatbot supports recent conversation (three preceding turns), Vietnamese/English/Chinese output, owned budget/invoice/reference-rate evidence and original policy excerpts with server-owned citation IDs/links. Original file bytes, account credentials and beneficiary details are not selected for model context. The UI discloses Google processing, offers local lookup, labels generated versus fallback answers, and distinguishes test documents. Provider timeout/auth/quota/invalid output produce an explicitly labelled local fallback. Application throttling can return 429. Financial action requests use the read-only guard; no tools, arbitrary model URLs or financial mutations are available.
+
+Model discovery succeeded. `gemini-2.5-flash` returned 404 for this project; current Google documentation describes restricted access for new projects. **gemini-3.8-flash generated real responses successfully**, including schema-validated answers. This does not establish free/unlimited quota or payment-provider integration. Sources and configuration are documented in GEMINI_GUIDE.md and contracts/assistant.openapi.yaml.
+
+## Executed validation
+
+- Baseline backend: **110 passed / 2 failed**, 53.18 seconds. The existing finance fixture used Vietnam's local date for a provider observation checked against UTC; before UTC midnight it supplied a future date. Corrected the fixture to UTC, retaining the application's future-rate rejection.
+- Final full backend: **138 passed**, one existing Starlette TestClient/httpx deprecation warning; **59.635 seconds**. Tests force Gemini off and mock provider calls; they do not consume the supplied key's quota. New coverage includes ownership isolation, bounded history, original excerpts, follow-up retrieval, source-ID validation, request limits, safe errors, key/header handling and zero financial writes.
+- Final full browser suite on an isolated native development stack: **24 passed**, zero unexpected/skipped/flaky; **182024.205 ms**. Gemini browser interaction cases use mocked provider responses. The final source-label UI refinement was separately rechecked: **3 passed**, **5769.362 ms**.
+- Real HTTP acceptance: **6 check groups passed**, **3 actual Gemini replies**, **21.766 seconds**. A self-authored private QA account's budget projected -200.00 CNY, follow-up answers retained context, policy answers cited original page-one excerpts, and payment/ledger state remained unchanged.
+- Actual browser acceptance additionally received a real Gemini answer, verified the privacy disclosure and absence of a key in the browser payload, captured desktop/mobile-dark screenshots, and observed zero page errors and no horizontal overflow.
+- Final frontend lint, TypeScript and standalone Webpack production build: exit 0. The build input matches current frontend source; evidence and digest are recorded in gemini-checks.json / gemini-frontend-build.txt. No Docker/Render build of this change is claimed.
+
+An intermediate browser run was 23 passed / 1 failed because a terminal payment snapshot reloaded before a queued duplicate webhook was applied. The test now waits for the authenticated provider-event log before refreshing; its focused recheck and full isolated rerun passed. A second main-instance run was 21 passed / 3 failed when repeated registrations reached the existing 15-minute signup limit (429). Limits and production data were not bypassed or reset; the final run used the separate existing QA database/configuration. An initial command-line output capture also hit Windows text encoding after a successful model reply; the persisted UTF-8 live evidence supersedes that capture failure.
+
+## Delivery and remaining limits
+
+Local integration is configured and running. GitHub delivery includes code, docs, reproducible checks and secret-free evidence. Render still needs a server-side `GEMINI_API_KEY`, `GEMINI_ENABLED=true`, model configuration and Manual Deploy; no key or environment update is published through Git. The supplied key appeared in chat, so the handoff guide recommends replacing it before sharing the hosted demo.
+
+Chat history is not persisted by this application; Google applies its separate processing terms. Unpaid Gemini should use anonymized/self-authored data. Retrieval is bounded keyword/synonym search, not embeddings or exhaustive document reasoning. Valid source IDs do not prove every generated statement is correct. No streaming, autonomous financial actions, bank integration or actual insurance activation was added.
+
+Evidence: gemini-backend-tests.txt / gemini-backend-junit.xml; gemini-browser-isolated.json / .txt; gemini-browser-targeted-final.json; gemini-live-http.json; gemini-live-ui.json; screenshots/gemini/; gemini-checks.json. Earlier runs and deployment records below retain their original scope.
+
+---
+
 # Theme button correction — 2026-10-19
 
 Replaced the theme dropdown with one sun/moon icon button, before and after sign-in. Clicking switches directly between light and dark based on the resolved current appearance. The button exposes its dark-mode state to assistive technology and has a localized action tooltip. Saved choices, cross-tab synchronization and default device following remain supported. Updated the usage docs and existing preferences tests for the button.

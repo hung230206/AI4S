@@ -1,6 +1,6 @@
 # Demo — Student Finance Participant MVP
 
-Current implementation, 2026-10-18. The user clarified their screenshot as competition-problem analysis and requested a working upgrade along that analysis. The team retains the official Topic C/D submission choice; no competition submission was performed. The Free Render demo is now live at https://ai4s-demo.onrender.com; exact verification and limits are in IMPLEMENTATION_REPORT.md.
+Current implementation, 2026-10-19. The user clarified their screenshot as competition-problem analysis and requested a working upgrade along that analysis. The team retains the official Topic C/D submission choice; no competition submission was performed. The Free Render demo is now live at https://ai4s-demo.onrender.com; exact verification and limits are in IMPLEMENTATION_REPORT.md.
 
 ## End-to-end task
 
@@ -8,7 +8,7 @@ A student uploads a fee notice (photo, scan, text PDF or text). Local OCR/text e
 
 A user-declared CNY/VND ledger records actual income/expenses by original currency. Scheduled items can be entered manually or copied from an owned invoice. A 30/60/90-day projection highlights negative balances and overdue items. Explicit confirmation posts an occurrence once; retries do not duplicate it or double-count it in the forecast. Voiding restores its balance effect and planned occurrence.
 
-Frankfurter supplies dated daily CNY/VND references and history. The scenario tool computes reference and ±5% costs against an optional VND budget. This is sensitivity analysis, not a market prediction or executable conversion price. The student copilot routes budget, invoice, FX and policy questions to owned data/citations and opens the relevant workflow. It is a deterministic grounded workflow, without generative LLM output or autonomous financial execution.
+Frankfurter supplies dated daily CNY/VND references and history. The scenario tool computes reference and ±5% costs against an optional VND budget. This is sensitivity analysis, not a market prediction or executable conversion price. The student copilot routes budget, invoice, FX and policy questions to owned data/citations and opens the relevant workflow. It now offers optional Gemini generation over bounded owner-scoped evidence and recent conversation, alongside the deterministic direct-lookup workflow. No assistant response executes financial actions. See GEMINI_GUIDE.md for payload limits, provider setup, privacy and actual acceptance evidence.
 
 ## Guided acceptance and provider test methods
 
@@ -31,6 +31,7 @@ flowchart LR
   API --> FX[Reference cache + scenario calculation]
   FX -->|public currency pair and dates only| FF[Frankfurter v2]
   API --> DOC[Private text + cited multilingual search]
+  API -->|bounded evidence, explicit Gemini mode| AI[Google Gemini: server-side key, no tools]
   API --> PAY[PaymentProvider: local sandbox]
   PAY --> OUT[Durable signed-event outbox]
   OUT --> WH[HMAC webhook verification + locks]
@@ -56,7 +57,7 @@ Verified: 112 backend tests, 15 full browser workflows through LAN, frontend lin
 
 ## Limits and reproduction
 
-No production custody, bank synchronization, real transfer, insurance activation, realtime FX feed, generative RAG/LLM, claims filing or statistical forecasting is connected. Forecasts depend on declared inputs. OCR can fail on photos, handwriting and complex layouts; review is required. Payment remains MOCK, demo mode, with real payments disabled.
+No production custody, bank synchronization, real transfer, insurance activation, realtime FX feed, vector-based semantic retrieval, claims filing or statistical forecasting is connected. Forecasts depend on declared inputs. OCR can fail on photos, handwriting and complex layouts; review is required. Payment remains MOCK, demo mode, with real payments disabled.
 
 Follow TEAM_HANDOFF.md for current Windows/Unix setup and ACCEPTANCE_TESTS.md for the A-Z journey. Fresh extraction, clean installation, production build and both owner browser flows were exercised on isolated ports/database; see evidence/handoff-validation.json. STUDENT_FINANCE_GUIDE.md explains the broader finance screens. Install locked backend dependencies, run `npm ci`, migrate, and execute `python scripts/setup_ocr.py` once. Start database/API/frontend, then pytest and Playwright. `scripts/check_acceptance_live.py --public-reference .local/public-reference/bfsu-2025.pdf` produces current credential-free owner evidence. LAN IP 192.168.1.14 may change with DHCP; keep the host awake. Windows/native PostgreSQL was exercised; Docker/Unix startup was documented, not executed here.
 

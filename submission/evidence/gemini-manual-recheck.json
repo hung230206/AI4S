@@ -1,0 +1,147 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "flows.spec.ts",
+      "--grep",
+      "human consent",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "snapshotDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:3000",
+          "channel": "chrome",
+          "headless": true,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "flows.spec.ts",
+      "file": "flows.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "human consent, asynchronous signed success, duplicate, receipt",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6016,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:01:11.539Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "86d6a544053f1eb9f224-218dad5b71d243d0c12f",
+          "file": "flows.spec.ts",
+          "line": 40,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T22:01:11.070Z",
+    "duration": 6888.826999999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -8,7 +8,7 @@ Web nhớ lựa chọn trên trình duyệt hiện tại, giữ lại khi tải 
 
 Đổi ngôn ngữ khi đang nhập sẽ giữ các trường đang nhập. Giao diện, menu, form, hướng dẫn và nhãn trạng thái có bản dịch; dấu phân cách tiền và ngày hiển thị theo ngôn ngữ, thời gian vẫn theo Việt Nam. Số tiền gửi lên máy chủ và quy tắc làm tròn không đổi.
 
-Tên, nội dung người dùng nhập, chứng từ, đoạn trích, câu trả lời từ dữ liệu tài khoản và thông báo nguyên gốc từ máy chủ giữ ngôn ngữ gốc. Trợ lý hiện hỗ trợ câu hỏi Việt/Anh theo quy tắc; chọn giao diện Trung không bổ sung khả năng hiểu câu hỏi Trung. Ngôn ngữ OCR chọn riêng theo chữ trong tệp, không theo ngôn ngữ giao diện. Nút chọn tệp và lịch có thể theo ngôn ngữ của trình duyệt/hệ điều hành.
+Tên, nội dung người dùng nhập, chứng từ, đoạn trích, câu trả lời từ dữ liệu tài khoản và thông báo nguyên gốc từ máy chủ giữ ngôn ngữ gốc. Gemini trả lời theo giao diện Việt/Anh/Trung. Chế độ Tra cứu trực tiếp vẫn dựa trên từ khóa/quy tắc; xem GEMINI_GUIDE.md. Ngôn ngữ OCR chọn riêng theo chữ trong tệp, không theo ngôn ngữ giao diện. Nút chọn tệp và lịch có thể theo ngôn ngữ của trình duyệt/hệ điều hành.
 
 Biên nhận luôn giữ cảnh báo `SIMULATED TRANSACTION — NO REAL FUNDS MOVED`. Khi in từ chế độ tối, biên nhận chuyển sang nền trắng để đọc rõ.
 

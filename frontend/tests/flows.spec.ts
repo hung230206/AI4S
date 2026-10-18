@@ -55,6 +55,14 @@ test("human consent, asynchronous signed success, duplicate, receipt", async ({p
   await expect(op.getByText(/Đã xếp hàng sự kiện/)).toBeVisible();
   await expect(page.getByText("Mô phỏng thành công", {exact: true})).toBeVisible({timeout: 15000});
   await op.getByRole("button", {name: "Phát lại sự kiện", exact: true}).click();
+  // Replay is queued asynchronously. A terminal payment view stops polling, so
+  // wait for the signed callback to be processed before taking its fresh snapshot.
+  const reader = await page.request.post("/api/v1/demo/session", {data: {role: "STUDENT"}});
+  const readerToken = (await reader.json()).access_token;
+  await expect.poll(async () => {
+    const events = await page.request.get(`/api/v1/orders/${id}/events`, {headers: {Authorization: `Bearer ${readerToken}`}});
+    return events.ok() && (await events.json()).audit.some((event: {action: string}) => event.action === "DUPLICATE_WEBHOOK");
+  }, {timeout: 15000}).toBe(true);
   await page.reload();
   await expect(page.getByText("Đã nhận trùng · không xử lý lại")).toBeVisible({timeout: 15000});
   const downloadPromise = page.waitForEvent("download");

@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-10-18T22:10:03.133868+00:00",
+  "frontend_source_sha256": "1ebb64a6eb6711bb4ae6c9b96fe0b4a1c8f82dea459588b7c3b0ada1b740e231",
+  "production_build_input_matches_source": true,
+  "standalone_webpack_build_exit_code": 0,
+  "lint_exit_code": 0,
+  "typescript_exit_code": 0,
+  "backend_passed": 138,
+  "backend_failures": 0,
+  "full_browser": {
+    "startTime": "2026-10-18T22:04:56.707Z",
+    "duration": 182024.205,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "targeted_final_ui": {
+    "startTime": "2026-10-18T22:08:41.771Z",
+    "duration": 5769.362,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "live_http_check_groups": 6,
+  "live_http_model_replies": 3,
+  "live_browser_real_model_reply": true,
+  "model": "gemini-3.8-flash",
+  "local_configured": true,
+  "render_key_configured_by_this_task": false,
+  "render_deployed_by_this_task": false,
+  "paid_resources_created": false,
+  "isolated_ports_released": true,
+  "real_payments": false
+}

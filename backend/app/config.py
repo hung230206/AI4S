@@ -1,6 +1,6 @@
 from pathlib import Path
 from decimal import Decimal
-from pydantic import Field, model_validator
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     fx_quote_ttl_seconds: int = 600
     provider_worker_enabled: bool = True
     ocr_max_workers: int = Field(default=2, ge=1, le=2)
+    gemini_enabled: bool = False
+    gemini_api_key: SecretStr = Field(default=SecretStr(""), repr=False, exclude=True)
+    gemini_model: str = Field(default="gemini-3.8-flash", pattern=r"^[a-z0-9][a-z0-9.-]{1,79}$")
+    gemini_timeout_seconds: int = Field(default=25, ge=5, le=45)
     cookie_secure: bool = False
     session_hours: int = 24
     fx_reference_cache_hours: int = 6

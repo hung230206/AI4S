@@ -1,0 +1,34 @@
+
+Running 24 tests using 1 worker
+
+(node:5516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\acceptance.spec.ts:44:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (1.7m)
+  ok  2 tests\acceptance.spec.ts:102:5 › declined test method requires renewed consent and allows a successful retry (12.6s)
+(node:23500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (2.1s)
+  ok  4 tests\flows.spec.ts:40:5 › human consent, asynchronous signed success, duplicate, receipt (6.0s)
+  ok  5 tests\flows.spec.ts:82:5 › mobile cancellation and safe retry (3.0s)
+  ok  6 tests\flows.spec.ts:95:5 › failure has no receipt and operator code is verified (4.4s)
+  ok  7 tests\gemini.spec.ts:12:5 › Gemini chat sends bounded conversation context, displays sources and clears locally (1.8s)
+  ok  8 tests\gemini.spec.ts:35:5 › provider quota fallback is explicit and direct lookup sends no chat history (1.1s)
+  ok  9 tests\gemini.spec.ts:53:5 › no key keeps direct lookup available without offering an active Gemini mode (837ms)
+  ok 10 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (2.4s)
+  ok 11 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (6.2s)
+  ok 12 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (2.3s)
+  ok 13 tests\onboarding.spec.ts:20:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (2.8s)
+  ok 14 tests\onboarding.spec.ts:47:5 › guided invoice journey explains inputs and calculates a quote without a payment (2.9s)
+  ok 15 tests\onboarding.spec.ts:80:5 › insurance entry opens its own workflow and route-specific help without an invoice (1.4s)
+  ok 16 tests\preferences.spec.ts:16:5 › sign-in preferences preserve input, persist on reload, and synchronize tabs (1.6s)
+  ok 17 tests\preferences.spec.ts:44:5 › system theme follows device changes, explicit selection takes priority (767ms)
+  ok 18 tests\preferences.spec.ts:57:5 › translated screens, nested invoice form and guide retain draft data (4.2s)
+  ok 19 tests\preferences.spec.ts:87:5 › mobile dark mode has readable surfaces and no horizontal overflow (3.1s)
+  ok 20 tests\preferences.spec.ts:107:5 › preferences tolerate unavailable local storage (737ms)
+  ok 21 tests\preferences.spec.ts:122:5 › invalid saved preferences fall back to Vietnamese and device theme (703ms)
+
+  ok 22 tests\student-finance.spec.ts:31:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (4.8s)
+  ok 23 tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis (5.4s)
+  ok 24 tests\student-finance.spec.ts:107:5 › scanned policy PDF OCR produces a cited answer on a phone (3.8s)
+
+  24 passed (3.0m)

@@ -4,7 +4,7 @@ from datetime import date, timedelta, timezone
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Literal
 from uuid import UUID
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from pydantic import Field, field_validator
 from sqlalchemy import select, func
 from .db import get_db
@@ -331,16 +331,30 @@ def fx_analysis(body: FxAnalysisInput, user=Depends(student), db=Depends(get_db,
     return {"amount_cny": display(amount, "CNY"), "budget_vnd": body.budget_vnd, "reference_rate": public_rate(row, stale), "scenarios": scenarios, "budget_rate_threshold": format((budget / amount).quantize(Decimal(".000001"), rounding=ROUND_HALF_UP), ".6f") if budget is not None else None, "notice": "Kịch bản tác động ±5%, không phải dự báo hoặc khuyến nghị đổi tiền. Chưa gồm phí nhà cung cấp."}
 
 
+class ChatTurn(Strict):
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=4000)
+
+
 class AssistantInput(Strict):
     message: str = Field(min_length=2, max_length=500)
+    use_gemini: bool = False
+    language: Literal["vi", "en", "zh"] = "vi"
+    history: list[ChatTurn] = Field(default_factory=list, max_length=6)
+
+    @field_validator("message")
+    @classmethod
+    def nonblank(cls, value):
+        if len(value.strip()) < 2:
+            raise ValueError("Question must contain at least two characters")
+        return value.strip()
 
 
-@router.post("/assistant")
-def assistant(body: AssistantInput, user=Depends(student), db=Depends(get_db, scope="function")):
+def workflow_reply(body, user, db):
     from .documents import normalize, search, Search
     message = normalize(body.message)
     response = {"method": "GROUNDED_WORKFLOW", "executed_actions": [], "citations": [], "actions": [], "notice": "Trả lời từ dữ liệu đã lưu và quy tắc có thể kiểm tra; không dùng mô hình sinh văn bản. Không thực hiện hành động tài chính."}
-    if any(term in message for term in ("thanh toan", "chuyen tien", "doi tien", "pay ", "transfer")):
+    if any(term in message for term in ("thanh toan", "chuyen tien", "doi tien", "pay ", "transfer", "exchange my", "convert my", "支付", "付款", "转账", "兑换")):
         response.update({"intent": "PAYMENT_REVIEW", "answer": "Tôi có thể giúp bạn kiểm tra hóa đơn và số tiền. Hãy mở hóa đơn, xem báo giá rồi tự xác nhận nếu muốn thử sandbox. Tôi không tự chuyển tiền, đổi tiền hoặc xác nhận thay bạn.", "actions": [{"title": "Mở hóa đơn để kiểm tra", "href": "/invoices"}, {"title": "Theo dõi giao dịch đã tạo", "href": "/history"}]})
     elif any(term in message for term in ("ty gia", "exchange", "vnd", "ngoai te")):
         row, stale = reference_rate(db)
@@ -360,3 +374,72 @@ def assistant(body: AssistantInput, user=Depends(student), db=Depends(get_db, sc
             answer = "Trong lịch 30 ngày đã nhập, " + ("có thể thiếu hụt ở: " + "; ".join(f"{w['name']} từ {w['first_shortfall_date']} (thấp nhất {w['minimum_balance']} {w['currency']})" for w in shortfalls) if shortfalls else "chưa thấy số dư âm vào cuối ngày. Kết quả chỉ bao gồm những khoản bạn đã khai báo; kiểm tra xem đã nhập đủ chi phí chưa.")
         response.update({"intent": "BUDGET_NEXT_STEP", "answer": answer, "recommendations": data["recommendations"], "citations": [{"title": f"{w['name']}: hiện {w['current_balance']} {w['currency']}, cuối kỳ {w['projected_balance']} {w['currency']}", "href": "/finance"} for w in data["wallets"]], "actions": [{"title": "Kiểm tra ngân sách và lịch thu chi", "href": "/finance"}, {"title": "Thêm khoản phí từ chứng từ", "href": "/invoices/new"}]})
     return response
+
+
+@router.get("/assistant/status")
+def assistant_status(user=Depends(student)):
+    from .gemini import configured
+    from .config import settings
+    return {"gemini_configured": configured(), "model": settings.gemini_model if configured() else None, "read_only": True, "history_stored": False}
+
+
+def assistant_evidence(question, user, db):
+    from .documents import search, Search
+    data = forecast(30, user, db)
+    evidence = []; citations = {}
+
+    def add(source_id, kind, facts, citation):
+        evidence.append({"id": source_id, "kind": kind, "data": facts})
+        citations[source_id] = {"source_id": source_id, **citation}
+
+    for index, wallet in enumerate(data["wallets"][:8]):
+        facts = {key: wallet[key] for key in ("name", "currency", "current_balance", "projected_balance", "minimum_balance", "first_shortfall_date")}
+        facts.update({"from": data["from"], "to": data["to"], "basis": "User-declared ledger and schedules; no bank connection"})
+        add(f"B{index + 1}", "BUDGET", facts, {"title": f"{wallet['name']}: {wallet['current_balance']} → {wallet['projected_balance']} {wallet['currency']}", "href": "/finance"})
+    add("A1", "ACCOUNT_DATA_AVAILABILITY", {"wallet_count": len(data["wallets"]), "budget_days": 30, "notice": data["notice"], "upcoming_events": [{key: item[key] for key in ("title", "kind", "amount", "currency", "due_date")} for item in data["events"][:5]]}, {"title": "Ngân sách · dữ liệu do bạn khai báo", "href": "/finance"})
+    if data["reference_rate"]:
+        rate = data["reference_rate"]
+        add("F1", "DAILY_REFERENCE_FX", {key: rate[key] for key in ("rate", "rate_date", "is_stale", "notice")}, {"title": "Frankfurter · " + rate["rate_date"], "url": "https://frankfurter.dev/"})
+    invoices = list(db.scalars(select(Invoice).where(Invoice.student_id == user.id, Invoice.status == "OPEN").order_by(Invoice.due_date).limit(5)))
+    for index, invoice in enumerate(invoices):
+        add(f"I{index + 1}", "OPEN_INVOICE", {"amount_cny": display(invoice.amount_cny, "CNY"), "due_date": invoice.due_date.isoformat(), "fee_type": invoice.fee_type, "source_type": invoice.source_type}, {"title": f"{invoice.invoice_number}: {display(invoice.amount_cny, 'CNY')} CNY · {invoice.due_date}", "href": f"/invoices/{invoice.id}"})
+    result = search(Search(question=question), user, db)
+    for index, item in enumerate(result["matches"][:3]):
+        add(f"D{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"]}, {key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind")})
+    return evidence, citations
+
+
+@router.post("/assistant")
+def assistant(body: AssistantInput, request: Request, user=Depends(student), db=Depends(get_db, scope="function")):
+    from . import gemini
+    from .accounts import throttle
+    from .config import settings
+    try:
+        fallback = workflow_reply(body, user, db)
+    except ApiError as exc:
+        if exc.code != "FX_UNAVAILABLE":
+            raise
+        fallback = {"method": "GROUNDED_WORKFLOW", "intent": "REFERENCE_FX", "answer": "Chưa có tỷ giá đủ mới để đối chiếu. Hãy mở trang tỷ giá và thử lại sau.", "citations": [], "actions": [{"title": "Mở tỷ giá", "href": "/rates"}], "executed_actions": [], "notice": "Không thực hiện hành động tài chính."}
+    if not body.use_gemini:
+        return fallback
+    # A request to act never reaches the language model or payment/ledger write APIs.
+    if fallback["intent"] == "PAYMENT_REVIEW":
+        return {**fallback, "provider": "RULES", "fallback_reason": "READ_ONLY_GUARD"}
+    if not gemini.configured():
+        return {**fallback, "provider": "RULES", "fallback_reason": "NOT_CONFIGURED"}
+    throttle(db, request, str(user.id), "GEMINI_USER", limit=20)
+    throttle(db, request, "all", "GEMINI_APP", limit=60)
+    previous_questions = [turn.content for turn in body.history if turn.role == "user"]
+    retrieval_question = " ".join([body.message, *previous_questions[-1:]])[:500]
+    evidence, citations = assistant_evidence(retrieval_question, user, db)
+    # Release DB/advisory locks before waiting on the external model. Only bounded
+    # usage counters and reference-rate cache writes have been made here.
+    db.commit()
+    try:
+        result = gemini.generate(body.message, [turn.model_dump() for turn in body.history], body.language, evidence)
+        selected = list(dict.fromkeys(result.source_ids))
+        return {"method": "GEMINI_GROUNDED", "provider": "GEMINI", "model": settings.gemini_model, "intent": fallback["intent"], "answer": result.answer,
+                "citations": [citations[source_id] for source_id in selected], "actions": fallback["actions"], "executed_actions": [],
+                "notice": "Gemini diễn giải dữ liệu tham chiếu; hãy đối chiếu nguồn. Không thực hiện hành động tài chính."}
+    except gemini.GeminiFailure as exc:
+        return {**fallback, "provider": "RULES", "fallback_reason": exc.code}

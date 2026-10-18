@@ -56,6 +56,7 @@ test("native ledger, planned shortfall, actual confirmation and bounded assistan
   await page.getByRole("button", {name: "Xác nhận hủy ghi nhận", exact: true}).click();
   await expect(page.getByRole("status")).toContainText("Đã hủy ghi nhận");
   await page.getByRole("link", {name: "Trợ lý du học", exact: true}).click();
+  await page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true}).click();
   await page.getByRole("button", {name: "30 ngày tới tôi có đủ tiền không?", exact: true}).click();
   await expect(page.locator(".copilot-answer")).toContainText("-200.00 CNY");
   await page.getByLabel("Câu hỏi cho trợ lý", {exact: true}).fill("Thanh toán ngay giúp tôi");
@@ -112,6 +113,7 @@ test("scanned policy PDF OCR produces a cited answer on a phone", async ({page})
   await page.getByRole("button", {name: "Tải lên và trích xuất", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Scanned QA policy", exact: true})).toBeVisible({timeout: 75000});
   await page.getByRole("link", {name: "Trợ lý du học", exact: true}).click();
+  await page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true}).click();
   await page.getByRole("button", {name: "Hồ sơ bồi thường gồm những gì?", exact: true}).click();
   await expect(page.locator(".copilot-source")).toContainText("hospital invoices");
   await expect(page.locator(".copilot-source")).toContainText("Trang 1");

@@ -1,5 +1,7 @@
 # Demo Student Finance MVP
 
+Optional Gemini chatbot is integrated with server-side credentials, owned sources, recent conversation and direct-lookup fallback. Setup, privacy, actual test evidence and Render configuration: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).
+
 Repository: https://github.com/hung230206/AI4S
 
 **Live demo:** https://ai4s-demo.onrender.com/test-lab — sign up, download the sample pack and follow the six steps. Clear invoice OCR/text policy flows passed HTTPS checks; a dense scanned public PDF hit the Free-host OCR timeout.

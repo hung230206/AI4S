@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-10-18T22:02:24.769Z",
+  "base_url": "http://localhost:3000",
+  "provider": "GEMINI",
+  "model": "gemini-3.8-flash",
+  "answer": "Xin chào! Ứng dụng Demo giúp bạn quản lý tài chính du học một cách thuận tiện:\n\n1. Quản lý ngân sách: Theo dõi dự phóng chi tiêu theo kế hoạch. Lưu ý dự phóng được tính từ số dư và lịch thu/chi bạn tự khai báo, không tự động cộng hóa đơn hoặc thanh toán sandbox vào sổ.\n2. Theo dõi hóa đơn: Xem danh sách các khoản phí sắp tới (như bảo hiểm, học phí) trên màn hình hóa đơn của ứng dụng.\n3. Tham khảo tỷ giá: Cập nhật tỷ giá tham chiếu hàng ngày để ước tính chi phí (đây là tỷ giá tham chiếu, không phải tỷ giá giao dịch thực tế).\n4. Tìm hiểu bảo hiểm: Đọc và giải thích các quyền lợi, điều khoản từ tài liệu bảo hiểm đã cung cấp.\n\nỨng dụng không tự động thanh toán hay chuyển tiền. Bạn vui lòng truy cập trực tiếp các màn hình liên quan trong ứng dụng để kiểm tra và cập nhật thông tin.",
+  "citation_count": 1,
+  "executed_actions": [],
+  "privacy_notice_visible": true,
+  "no_key_in_browser_request": true,
+  "mobile_overflow": false,
+  "browser_errors": []
+}

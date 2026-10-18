@@ -1,0 +1,213 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "gemini.spec.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "snapshotDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:3000",
+          "channel": "chrome",
+          "headless": true,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "gemini.spec.ts",
+      "file": "gemini.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Gemini chat sends bounded conversation context, displays sources and clears locally",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:57:03.359Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-9c5c740f7a73ab4d3bcc",
+          "file": "gemini.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "provider quota fallback is explicit and direct lookup sends no chat history",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:57:05.219Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-74dea7e9d5e0bfab57f0",
+          "file": "gemini.spec.ts",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "title": "no key keeps direct lookup available without offering an active Gemini mode",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 788,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T21:57:06.352Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e1053ebd942d6dbbbfc-50aeb867ecab0c77418b",
+          "file": "gemini.spec.ts",
+          "line": 53,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T21:57:02.879Z",
+    "duration": 4488.288,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

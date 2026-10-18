@@ -7,6 +7,9 @@ os.environ["DATABASE_URL"] = os.environ.get("TEST_DATABASE_URL", "postgresql+psy
 if not urlparse(os.environ["DATABASE_URL"]).path.endswith("_test"):
     raise RuntimeError("Destructive tests require a database name ending _test")
 os.environ["PROVIDER_WORKER_ENABLED"] = "false"
+# Tests never consume a developer's real Gemini quota. Provider calls are mocked.
+os.environ["GEMINI_ENABLED"] = "false"
+os.environ["GEMINI_API_KEY"] = ""
 
 import pytest
 from alembic import command

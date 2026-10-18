@@ -1,0 +1,45 @@
+
+> bao-an-demo@1.0.0 build
+> next build --webpack
+
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.ts took 32ms
+- Experiments (use with caution):
+  · proxyTimeout: 120000
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 8.9s
+  Running TypeScript ...
+  Finished TypeScript in 3.2s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/13) ...
+  Generating static pages using 11 workers (3/13) 
+  Generating static pages using 11 workers (6/13) 
+  Generating static pages using 11 workers (9/13) 
+✓ Generating static pages using 11 workers (13/13) in 716ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /assistant
+├ ƒ /checkout/[invoiceId]
+├ ○ /copilot
+├ ○ /finance
+├ ○ /history
+├ ○ /invoices
+├ ƒ /invoices/[id]
+├ ƒ /invoices/[id]/edit
+├ ○ /invoices/new
+├ ƒ /operator
+├ ƒ /payments/[id]
+├ ○ /rates
+├ ƒ /receipts/[id]
+└ ○ /test-lab
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
