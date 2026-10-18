@@ -19,14 +19,14 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from pypdf import PdfReader
 import pypdfium2 as pdfium
 from sqlalchemy import select, func
-from .config import ROOT
+from .config import ROOT, settings
 from .db import get_db
 from .models import InvoiceImport
 from .security import student, ApiError
 from .services import audit
 
 router = APIRouter(prefix="/api/v1/invoice-imports", tags=["Reviewed local invoice OCR"])
-slots = threading.BoundedSemaphore(2)
+slots = threading.BoundedSemaphore(settings.ocr_max_workers)
 MAX_BYTES = 5 * 1024 * 1024
 
 

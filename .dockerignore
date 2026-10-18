@@ -4,6 +4,7 @@ output
 backend/.venv
 **/__pycache__
 **/.pytest_cache
+**/*.egg-info
 frontend/node_modules
 frontend/.next
 frontend/.test-results

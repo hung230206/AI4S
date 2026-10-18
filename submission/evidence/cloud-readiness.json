@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-10-18T11:45:46.041539+00:00",
+  "provider": "Render",
+  "requested_plan": "Free demo; idle sleep and database expiry accepted",
+  "public_deployed": false,
+  "connection_status": "Render returned USER_NOT_LOGGED_IN; authenticated account required",
+  "resources_created": false,
+  "paid_resources_created": false,
+  "blueprint": {
+    "file": "render.yaml",
+    "official_schema": "https://render.com/schema/render.yaml.json",
+    "schema_sha256": "8a3fb8da6b4f55fe686fbefa790e011d3dd7895f013f355953c572a21ab6494a",
+    "draft": "2020-12",
+    "validation": "passed",
+    "plans": [
+      "free",
+      "free"
+    ],
+    "services": 1,
+    "databases": 1,
+    "database_external_ip_allow_list": []
+  },
+  "verification": {
+    "backend_tests": 112,
+    "backend_seconds": 254.25,
+    "backend_warning": "Existing Starlette TestClient/httpx deprecation",
+    "alembic_check": "No new upgrade operations detected",
+    "cloud_configuration_unittests": 9,
+    "frontend_lint_exit": 0,
+    "webpack_standalone_build_exit": 0,
+    "native_host": "Windows, Python 3.11, Node 24, native PostgreSQL 18",
+    "native_cloud_launcher_actual_http_checks": 11,
+    "native_cloud_launcher_browser": {
+      "startTime": "2026-10-18T11:41:38.207Z",
+      "duration": 60896.92399999999,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "runtime_ocr_workers": 1,
+    "runtime_node_max_old_space_mb": 192,
+    "original_public_pdf_ocr_passed": true,
+    "direct_file_launcher_shutdown_ports_released": [
+      3102,
+      8102
+    ],
+    "existing_local_app_preserved": true
+  },
+  "not_executed": [
+    "Linux Docker build/run: Docker unavailable on host",
+    "Render resource creation/build/HTTPS acceptance: not authenticated",
+    "512MB Free-plan capacity/load certification"
+  ],
+  "boundaries": [
+    "Free database expires after 30 days",
+    "Free web sleeps on idle and has shared usage quotas",
+    "75-second OCR bound may be exceeded on slow/contended Free CPU",
+    "Only MOCK payments; no real funds moved"
+  ]
+}

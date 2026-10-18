@@ -1,5 +1,7 @@
 # Bàn giao sản phẩm Demo
 
+Muốn dùng online khi tắt máy cá nhân: xem [DEPLOY_RENDER.md](DEPLOY_RENDER.md) và nút deploy từ GitHub. Bản Free dành cho demo có giới hạn ngủ/quota và database hết hạn sau 30 ngày; chưa có URL cloud cho đến khi tạo tài nguyên và service Live.
+
 ## Bắt đầu từ đâu
 
 Trên máy đang chạy, mở **http://localhost:3000/test-lab**. Bạn cùng Wi-Fi dùng địa chỉ LAN của máy chủ, hiện được cấu hình là **http://192.168.1.14:3000/test-lab**. Trang này có bộ tệp tải lên, hướng dẫn sáu bước, trạng thái sẵn sàng của OCR/provider, tiến độ từ dữ liệu tài khoản và nút xuất hồ sơ ZIP.

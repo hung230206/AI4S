@@ -1,0 +1,50 @@
+# Free demo only: idle sleep, shared monthly quotas, Postgres expires after 30 days.
+# Review the Render resource summary before creating anything.
+services:
+  - type: web
+    name: ai4s-demo
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./deploy/cloud.Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai4s-demo-db
+          property: connectionString
+      - key: APP_SESSION_SECRET
+        generateValue: true
+      - key: MOCK_WEBHOOK_SECRET
+        generateValue: true
+      - key: DEMO_OPERATOR_CODE
+        generateValue: true
+      - key: DEMO_MODE
+        value: "true"
+      - key: ALLOW_REAL_PAYMENTS
+        value: "false"
+      - key: PAYMENT_PROVIDER
+        value: mock
+      - key: AIRWALLEX_ENABLED
+        value: "false"
+      - key: PROVIDER_WORKER_ENABLED
+        value: "true"
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: OCR_MAX_WORKERS
+        value: "1"
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=192
+      - key: MALLOC_ARENA_MAX
+        value: "2"
+databases:
+  - name: ai4s-demo-db
+    plan: free
+    region: singapore
+    databaseName: ai4s_demo
+    user: ai4s_demo
+    postgresMajorVersion: "18"
+    ipAllowList: []

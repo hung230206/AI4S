@@ -2,6 +2,8 @@
 
 Repository: https://github.com/hung230206/AI4S
 
+**Online demo:** [Deploy to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fhung230206%2FAI4S). Read [DEPLOY_RENDER.md](DEPLOY_RENDER.md) first: Free services sleep on idle; the Free database expires after 30 days. The button prepares a new deployment in your own Render account; it does not imply an existing live site.
+
 **Team handoff:** Start with [TEAM_HANDOFF.md](TEAM_HANDOFF.md), [ACCEPTANCE_TESTS.md](ACCEPTANCE_TESTS.md) and `/test-lab`. Upload fixtures download from the app; automatic sandbox methods complete the normal test flow without an operator code. Setup/start/doctor/package commands are in `scripts/team.py`. The current source ZIP is generated locally under `output/`.
 
 # Insurance Cross-border Payment Assistant — Codex Implementation Kit

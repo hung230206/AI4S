@@ -18,7 +18,7 @@ Self-assessment dated 2026-10-18, not independent certification. Production mone
 
 ## Verification
 
-111 backend tests cover the existing adversarial payment/account/finance/OCR cases plus consent-bound automatic sandbox methods, delayed signed delivery, worker-disabled rejection, scenario/request conflicts, evidence-owner boundaries and declared document provenance. Fifteen complete browser workflows passed through LAN, including A-Z success and decline/retry. Eleven actual-HTTP acceptance checks include a public original PDF and source-byte identity. Exact results are in IMPLEMENTATION_REPORT.md.
+112 backend tests cover the existing adversarial payment/account/finance/OCR cases plus consent-bound automatic sandbox methods, delayed signed delivery, worker-disabled rejection, scenario/request conflicts, evidence-owner boundaries and declared document provenance. Fifteen complete browser workflows passed through LAN, including A-Z success and decline/retry. Eleven actual-HTTP acceptance checks include a public original PDF and source-byte identity. Exact results are in IMPLEMENTATION_REPORT.md.
 
 ## Open risks and deployment requirements
 
@@ -30,3 +30,7 @@ Self-assessment dated 2026-10-18, not independent certification. Production mone
 6. Forecasts omit undeclared items. Invoice plans are snapshots. Same-day projections are end-of-day values, not intraday liquidity guarantees. No realtime or executable FX is promised.
 7. Runtime npm audit reports zero vulnerabilities. Full audit retains five high findings in the existing development-tool chain: https://github.com/advisories/GHSA-vfj7-8cjw-p6xm . No incompatible forced downgrade was applied. Python vulnerability auditing was not performed. Package/model/native notices are retained; exported metadata is not legal certification.
 8. Docker/Unix startup, public deployment, load/failover and production accessibility certification were not executed. One pre-existing Starlette TestClient/httpx warning remains. Application audit tables are not tamper-proof against privileged administrators.
+
+## Cloud configuration
+
+The Free Render Blueprint generates independent session/webhook/operator secrets and does not upload the local .env or database. Only Next is public; its API listens on loopback. Database external IP access is disabled in the Blueprint. Startup requires an explicit PostgreSQL URL, a single HTTPS origin and sandbox-only settings, with Secure cookies. The HTTP exception is limited to an explicitly requested local loopback smoke test. These configuration guards have separate tests. Free hosting is a demo environment, not a production security certification; its database expiration and resource limits are documented in DEPLOY_RENDER.md.

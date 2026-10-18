@@ -1,6 +1,6 @@
 from pathlib import Path
 from decimal import Decimal
-from pydantic import model_validator
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     fx_demo_fixed_fee_vnd: Decimal = Decimal("5000")
     fx_quote_ttl_seconds: int = 600
     provider_worker_enabled: bool = True
+    ocr_max_workers: int = Field(default=2, ge=1, le=2)
     cookie_secure: bool = False
     session_hours: int = 24
     fx_reference_cache_hours: int = 6

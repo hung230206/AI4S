@@ -2,6 +2,8 @@
 
 Start with [TEAM_HANDOFF.md](../TEAM_HANDOFF.md) and [ACCEPTANCE_TESTS.md](../ACCEPTANCE_TESTS.md). Package source using `python scripts/team.py package`.
 
+Free cloud setup: ../DEPLOY_RENDER.md and ../render.yaml. Actual readiness/authentication status is in evidence/cloud-readiness.json; a Deploy button alone does not mean the site is live.
+
 Current English artifacts:
 
 - TECHNICAL_DOCUMENT.md: architecture, algorithms, integrations and boundaries.

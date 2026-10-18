@@ -1,3 +1,25 @@
+# Cloud deployment preparation — 2026-10-18
+
+The user selected a fixed online demo independent of the local computer, has no hosting account yet, and chose Free hosting with idle sleep/database limits. Added a Render Deploy button, root render.yaml, a single-origin multi-stage cloud Dockerfile, standalone frontend output gated by BUILD_STANDALONE, bounded cloud OCR concurrency, and a supervisor for non-resetting migrations/readiness/owned-process shutdown. DEPLOY_RENDER.md explains account setup, actual resource/URL selection, secrets, quotas, recovery and manual deployments.
+
+## Executed checks
+
+- Official Render JSON Schema (2020-12): valid; one Free web service, one Free PostgreSQL, no external DB IP access in the configuration.
+- Full backend: **112 passed in 254.25 seconds**, one existing upstream deprecation warning; Alembic detects no new upgrade operations.
+- Cloud startup configuration guards: **9 unittest cases passed**, including explicit PostgreSQL/psycopg conversion, HTTPS/origin/cookies, secret placeholders, port collisions and no-live-money enforcement.
+- Frontend lint: exit 0. Webpack standalone build: exit 0, TypeScript/static generation/16 application routes completed.
+- Actual isolated native cloud launcher: **11 HTTP checks passed**, including the original BFSU PDF OCR, signed sandbox success/decline, separate ledger confirmation and case export. Runtime used one OCR slot and Node heap 192 MB.
+- Standalone production browser acceptance: **2 passed**, zero unexpected/skipped/flaky, **60,896.924 ms**. The prior full LAN browser suite remains 15 passed in browser-results.json.
+- Direct-file launcher shutdown released isolated ports 3102/8102; the original app on port 3000 remained healthy. The initial PowerShell pipeline harness terminated its parent before cleanup; its verified owned children were stopped and the harness was corrected to direct-file invocation before this shutdown check.
+
+## Deployment status and limits
+
+**No public cloud deployment or paid resource has been created.** The newly available Render connection returned USER_NOT_LOGGED_IN; the user must create/sign in and connect the account (then choose the workspace), or use the reviewed Deploy button directly. This is an authentication dependency, not an unreported successful deployment. Docker is unavailable locally, so native standalone/supervisor checks do not certify Linux image execution or Free-plan capacity. Actual Render build/HTTPS acceptance remains pending.
+
+The Free database expires after 30 days and the web service sleeps/has quotas. Slow CPU or 512 MB memory can still constrain dense OCR; no Free-tier load guarantee is claimed. No existing private database/documents are copied into the cloud. Current evidence: submission/evidence/cloud-readiness.json, cloud-native-http.json and cloud-native-browser.json. Earlier sections below are historical release records.
+
+---
+
 # Implementation report — A-Z acceptance and team handoff
 
 ## Current release 2026-10-18

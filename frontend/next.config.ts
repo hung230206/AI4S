@@ -1,6 +1,7 @@
 import type {NextConfig} from "next";
 import path from "node:path";
 const nextConfig: NextConfig = {
+  output: process.env.BUILD_STANDALONE === "true" ? "standalone" : undefined,
   poweredByHeader: false,
   devIndicators: false,
   turbopack: {root: path.resolve(__dirname)},
