@@ -1,3 +1,11 @@
+# Theme button correction — 2026-10-19
+
+Replaced the theme dropdown with one sun/moon icon button, before and after sign-in. Clicking switches directly between light and dark based on the resolved current appearance. The button exposes its dark-mode state to assistive technology and has a localized action tooltip. Saved choices, cross-tab synchronization and default device following remain supported. Updated the usage docs and existing preferences tests for the button.
+
+Validation: **6 focused browser tests passed**, zero unexpected/skipped/flaky, **18999.467 ms** (theme-button-browser.json); lint and TypeScript exit 0. No production rebuild/deployment or full payment regression rerun was needed for this UI-only correction; the production evidence below describes the preceding version.
+
+---
+
 # Interface languages and appearance — 2026-10-19
 
 Completed Vietnamese, English and Simplified Chinese interface controls before and after sign-in. Local dictionaries cover navigation, forms, guided tasks, invoice/checkout/status/receipt labels, budgeting, document search, test lab and operator screens. Number/date presentation follows the selected locale; monetary values remain exact server Decimal strings, with BigInt used for grouped integer display. Vietnam remains the display time zone.

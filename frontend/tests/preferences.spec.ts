@@ -24,17 +24,17 @@ test("sign-in preferences preserve input, persist on reload, and synchronize tab
   await expect(page.getByRole("button", {name: "Sign in", exact: true}).first()).toBeVisible();
   await expect(page.getByLabel("Password", {exact: true})).toHaveValue("draft-password");
   await expect(page.getByLabel("Email", {exact: true})).toHaveValue("draft@example.com");
-  await page.getByLabel("Appearance", {exact: true}).selectOption("dark");
+  await page.getByRole("button", {name: "Appearance", exact: true}).click();
   await expect(page.locator("html")).toHaveClass(/dark/);
   await page.reload();
   await expect(page.getByRole("button", {name: "English", exact: true})).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByLabel("Appearance", {exact: true})).toHaveValue("dark");
+  await expect(page.getByRole("button", {name: "Appearance", exact: true})).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByLabel("Password", {exact: true})).toBeVisible();
   const other = await context.newPage();
   await other.goto("/");
   await expect(other.getByRole("button", {name: "English", exact: true})).toHaveAttribute("aria-pressed", "true");
   await other.getByRole("button", {name: "中文", exact: true}).click();
-  await other.getByLabel("外观", {exact: true}).selectOption("light");
+  await other.getByRole("button", {name: "外观", exact: true}).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.locator("html")).not.toHaveClass(/dark/);
   await expect(page.getByLabel("密码", {exact: true})).toBeVisible();
@@ -44,11 +44,11 @@ test("sign-in preferences preserve input, persist on reload, and synchronize tab
 test("system theme follows device changes, explicit selection takes priority", async ({page}) => {
   await page.emulateMedia({colorScheme: "dark"});
   await page.goto("/");
-  await expect(page.getByLabel("Giao diện", {exact: true})).toHaveValue("system");
+  await expect(page.getByRole("button", {name: "Giao diện", exact: true})).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("html")).toHaveClass(/dark/);
   await page.emulateMedia({colorScheme: "light"});
   await expect(page.locator("html")).not.toHaveClass(/dark/);
-  await page.getByLabel("Giao diện", {exact: true}).selectOption("dark");
+  await page.getByRole("button", {name: "Giao diện", exact: true}).click();
   await page.emulateMedia({colorScheme: "dark"});
   await page.emulateMedia({colorScheme: "light"});
   await expect(page.locator("html")).toHaveClass(/dark/);
@@ -57,7 +57,7 @@ test("system theme follows device changes, explicit selection takes priority", a
 test("translated screens, nested invoice form and guide retain draft data", async ({page}) => {
   await demo(page);
   await page.getByRole("button", {name: "English", exact: true}).click();
-  await page.getByLabel("Appearance", {exact: true}).selectOption("dark");
+  await page.getByRole("button", {name: "Appearance", exact: true}).click();
   const routes = [
     ["/account", "Tài khoản của bạn"], ["/assistant", "Tài liệu bảo hiểm"],
     ["/invoices", "Hóa đơn của bạn"], ["/finance", "Ngân sách du học"],
@@ -88,7 +88,7 @@ test("mobile dark mode has readable surfaces and no horizontal overflow", async 
   await page.setViewportSize({width: 320, height: 740});
   await demo(page);
   await page.getByRole("button", {name: "English", exact: true}).click();
-  await page.getByLabel("Appearance", {exact: true}).selectOption("dark");
+  await page.getByRole("button", {name: "Appearance", exact: true}).click();
   for (const route of ["/", "/finance", "/invoices/new", "/rates", "/copilot", "/test-lab"]) {
     await page.goto(route);
     await expect(page.locator("main h1")).toBeVisible();
@@ -113,7 +113,7 @@ test("preferences tolerate unavailable local storage", async ({page}) => {
   });
   await page.goto("/");
   await page.getByRole("button", {name: "English", exact: true}).click();
-  await page.getByLabel("Appearance", {exact: true}).selectOption("dark");
+  await page.getByRole("button", {name: "Appearance", exact: true}).click();
   await expect(page.getByLabel("Password", {exact: true})).toBeVisible();
   await expect(page.locator("html")).toHaveClass(/dark/);
   expect(errors).toEqual([]);
@@ -124,6 +124,6 @@ test("invalid saved preferences fall back to Vietnamese and device theme", async
   await page.emulateMedia({colorScheme: "dark"});
   await page.goto("/");
   await expect(page.getByRole("button", {name: "Tiếng Việt", exact: true})).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByLabel("Giao diện", {exact: true})).toHaveValue("system");
+  await expect(page.getByRole("button", {name: "Giao diện", exact: true})).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("html")).toHaveClass(/dark/);
 });

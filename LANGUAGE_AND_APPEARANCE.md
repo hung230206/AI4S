@@ -2,11 +2,7 @@
 
 Ở đầu trang, chọn **Tiếng Việt**, **English** hoặc **中文**. Nút này dùng được cả trước và sau khi đăng nhập.
 
-Ô **Giao diện** có ba lựa chọn:
-
-- **Sáng**: luôn dùng nền sáng.
-- **Tối**: luôn dùng nền tối.
-- **Theo thiết bị**: tự theo cài đặt sáng/tối của máy, kể cả khi máy đổi chế độ trong lúc đang mở web.
+Nút biểu tượng **mặt trăng / mặt trời** chuyển trực tiếp giữa sáng và tối bằng một lần bấm. Khi chưa chọn, giao diện tự theo thiết bị; sau khi bấm, web ưu tiên lựa chọn của bạn.
 
 Web nhớ lựa chọn trên trình duyệt hiện tại, giữ lại khi tải lại trang và đồng bộ giữa các tab cùng địa chỉ. Máy hoặc trình duyệt khác chọn riêng. Khi trình duyệt chặn lưu trữ, lựa chọn vẫn dùng trong tab hiện tại nhưng không bảo đảm được lưu sau khi đóng/tải lại.
 
@@ -16,7 +12,7 @@ Tên, nội dung người dùng nhập, chứng từ, đoạn trích, câu trả
 
 Biên nhận luôn giữ cảnh báo `SIMULATED TRANSACTION — NO REAL FUNDS MOVED`. Khi in từ chế độ tối, biên nhận chuyển sang nền trắng để đọc rõ.
 
-Để thử: nhập dở một hóa đơn, chuyển English rồi 中文, kiểm tra dữ liệu còn nguyên; chọn Tối, tải lại; mở tab khác và đổi về Sáng. Để kiểm tra tự động:
+Để thử: nhập dở một hóa đơn, chuyển English rồi 中文, kiểm tra dữ liệu còn nguyên; bấm nút mặt trăng để bật tối, tải lại; mở tab khác và bấm nút mặt trời để về sáng. Để kiểm tra tự động:
 
 ```powershell
 cd frontend

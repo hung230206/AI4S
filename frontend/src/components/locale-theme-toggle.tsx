@@ -30,16 +30,18 @@ export function LanguageSelector() {
 
 export function ThemeToggle() {
   useI18n();
-  const {theme, setTheme} = useTheme();
+  const {resolved, setTheme} = useTheme();
+  const isDark = resolved === "dark";
   return (
-    <label className="theme-control">
-      {theme === "dark" ? <Moon size={16} aria-hidden="true"/> : <Sun size={16} aria-hidden="true"/>}
-      <span className="sr-only">{tr("Giao diện")}</span>
-      <select aria-label={tr("Giao diện")} value={theme} onChange={event => setTheme(event.target.value as "light" | "dark" | "system")}>
-        <option value="system">{tr("Theo thiết bị")}</option>
-        <option value="light">{tr("Sáng")}</option>
-        <option value="dark">{tr("Tối")}</option>
-      </select>
-    </label>
+    <button
+      type="button"
+      className="icon-button theme-toggle"
+      aria-label={tr("Giao diện")}
+      aria-pressed={isDark}
+      title={tr(isDark ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối")}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+    >
+      {isDark ? <Sun size={18} aria-hidden="true"/> : <Moon size={18} aria-hidden="true"/>}
+    </button>
   );
 }

@@ -2731,5 +2731,13 @@ export const phrases: Record<string, {en: string; zh: string}> = {
   "Bạn đã thu khoản này ngoài thực tế?": {
     "en": "Have you actually received this amount?",
     "zh": "您是否已实际收到这笔款项？"
+  },
+  "Chuyển sang chế độ sáng": {
+    "en": "Switch to light mode",
+    "zh": "切换到浅色模式"
+  },
+  "Chuyển sang chế độ tối": {
+    "en": "Switch to dark mode",
+    "zh": "切换到深色模式"
   }
 };
