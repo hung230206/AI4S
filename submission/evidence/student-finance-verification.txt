@@ -1,0 +1,15 @@
+2026-10-18, Asia/Bangkok
+Implemented: reviewed local neural OCR, retained sources, CNY/VND ledgers, scheduled cash-flow forecast, daily FX history/scenarios, grounded read-only student copilot.
+Baseline before changes: 76 backend tests passed in 39.83s.
+Final backend pytest -q --junitxml=../submission/evidence/backend-junit.xml: 101 passed in 66.13s; one pre-existing Starlette warning.
+Full browser suite through LAN: 13 passed, 0 unexpected, 0 skipped; 100942.167 ms in structured browser-results.json.
+Targeted three workflows after language changes: 3 passed in 23.3s.
+Final frontend lint: exit 0; build: exit 0, TypeScript and 15 application routes plus not-found completed.
+Migration: 9f40f776cbf8 applied; alembic check no new operations. 18 ORM tables and 45 OpenAPI paths.
+Actual HTTP evidence: 8 checks passed through frontend LAN proxy (student-finance-live-http.json).
+Real local OCR on clean self-authored printed samples: English 5/5 fields in 0.67s, Vietnamese 5/5 in 0.75s, Chinese 5/5 in 1.05s. Not a production accuracy estimate.
+Models: pinned public tessdata_fast commit 87416418657359cb625c412a48b6e1d6d41c29bd, installed locally; source/hash manifest retained.
+Runtime npm audit: zero findings. Full audit: five high existing development-tool-chain findings.
+Source/evidence scan: passed, no local session/webhook/operator secret copies.
+Handoff validation: passed.
+No public deployment, live payment, custody, bank synchronization, insurer activation, generative LLM or realtime FX feed introduced.

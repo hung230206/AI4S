@@ -1,0 +1,66 @@
+{
+  "fixture_provenance": "Self-authored clean printed images; not real invoices",
+  "limitation": "Three synthetic samples do not establish production accuracy on photos, handwriting, complex layouts or all languages",
+  "cases": {
+    "en": {
+      "method": "LOCAL_TESSERACT",
+      "seconds": 0.67,
+      "checks": {
+        "invoice_number": true,
+        "institution_name": true,
+        "beneficiary_name": true,
+        "amount_cny": true,
+        "due_date": true
+      },
+      "matched_fields": 5,
+      "total_fields": 5,
+      "extracted": {
+        "invoice_number": "EN-OCR-2026",
+        "institution_name": "QA University",
+        "beneficiary_name": "QA Insurance",
+        "amount_cny": "800.00",
+        "due_date": "2026-12-20"
+      }
+    },
+    "vi": {
+      "method": "LOCAL_TESSERACT",
+      "seconds": 0.75,
+      "checks": {
+        "invoice_number": true,
+        "institution_name": true,
+        "beneficiary_name": true,
+        "amount_cny": true,
+        "due_date": true
+      },
+      "matched_fields": 5,
+      "total_fields": 5,
+      "extracted": {
+        "invoice_number": "VI-OCR-2026",
+        "institution_name": "Đại học kiểm thử",
+        "beneficiary_name": "Bảo hiểm kiểm thử",
+        "amount_cny": "800.00",
+        "due_date": "2026-12-20"
+      }
+    },
+    "zh": {
+      "method": "LOCAL_TESSERACT",
+      "seconds": 1.05,
+      "checks": {
+        "invoice_number": true,
+        "institution_name": true,
+        "beneficiary_name": true,
+        "amount_cny": true,
+        "due_date": true
+      },
+      "matched_fields": 5,
+      "total_fields": 5,
+      "extracted": {
+        "invoice_number": "ZH-OCR-2026",
+        "institution_name": "测试大学",
+        "beneficiary_name": "测试保险",
+        "amount_cny": "800.00",
+        "due_date": "2026-12-20"
+      }
+    }
+  }
+}

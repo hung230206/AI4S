@@ -1,0 +1,73 @@
+{
+  "captured_at": "2026-10-18T07:36:40.319128+00:00",
+  "transport": "Actual HTTP through frontend proxy",
+  "data_provenance": "Isolated self-authored QA account, amounts and document fixtures; only FX reference data is public upstream/cache",
+  "checks": {
+    "actual_chinese_neural_ocr_review_gate_and_original_download": true,
+    "native_currency_ledger_forecast_shortfall": true,
+    "confirmed_entry_idempotency_no_forecast_double_count": true,
+    "void_restores_balance_and_planned_event": true,
+    "actual_reference_fx_history_and_decimal_scenarios": true,
+    "scanned_policy_ocr_cited_assistance": true,
+    "assistant_cannot_create_or_confirm_payments": true,
+    "revoked_cookie_session": true
+  },
+  "reference_rate": {
+    "base": "CNY",
+    "quote": "VND",
+    "rate": "3864.490000",
+    "rate_date": "2026-10-18",
+    "fetched_at": "2026-10-18T07:29:08.368698Z",
+    "source": "FRANKFURTER_REFERENCE",
+    "source_url": "https://frankfurter.dev/",
+    "is_stale": false,
+    "notice": "Daily reference rate; not an executable provider FX offer"
+  },
+  "fx_analysis": {
+    "amount_cny": "800.00",
+    "budget_vnd": "3100000",
+    "reference_rate": {
+      "base": "CNY",
+      "quote": "VND",
+      "rate": "3864.490000",
+      "rate_date": "2026-10-18",
+      "fetched_at": "2026-10-18T07:29:08.368698Z",
+      "source": "FRANKFURTER_REFERENCE",
+      "source_url": "https://frankfurter.dev/",
+      "is_stale": false,
+      "notice": "Daily reference rate; not an executable provider FX offer"
+    },
+    "scenarios": [
+      {
+        "change_percent": -5,
+        "rate": "3671.265500",
+        "cost_vnd": "2937012",
+        "remaining_budget_vnd": "162988"
+      },
+      {
+        "change_percent": 0,
+        "rate": "3864.490000",
+        "cost_vnd": "3091592",
+        "remaining_budget_vnd": "8408"
+      },
+      {
+        "change_percent": 5,
+        "rate": "4057.714500",
+        "cost_vnd": "3246172",
+        "remaining_budget_vnd": "-146172"
+      }
+    ],
+    "budget_rate_threshold": "3875.000000",
+    "notice": "Kịch bản tác động ±5%, không phải dự báo hoặc khuyến nghị đổi tiền. Chưa gồm phí nhà cung cấp."
+  },
+  "history_points": 14,
+  "ocr_fields_detected": 5,
+  "forecast_before_actual_entry": {
+    "totals": {
+      "CNY": "-200.00",
+      "VND": "4000000"
+    },
+    "days": 30
+  },
+  "notice": "No credentials, bank data or real payment recorded"
+}

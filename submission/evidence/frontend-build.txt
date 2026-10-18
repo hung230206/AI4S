@@ -1,0 +1,38 @@
+
+> bao-an-demo@1.0.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 37ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1693ms
+  Running TypeScript ...
+  Finished TypeScript in 5.5s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/9) ...
+  Generating static pages using 11 workers (2/9) 
+  Generating static pages using 11 workers (4/9) 
+  Generating static pages using 11 workers (6/9) 
+✓ Generating static pages using 11 workers (9/9) in 396ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /assistant
+├ ƒ /checkout/[invoiceId]
+├ ○ /history
+├ ○ /invoices
+├ ƒ /invoices/[id]
+├ ƒ /invoices/[id]/edit
+├ ○ /invoices/new
+├ ƒ /operator
+├ ƒ /payments/[id]
+└ ƒ /receipts/[id]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

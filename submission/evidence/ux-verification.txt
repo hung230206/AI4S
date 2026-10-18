@@ -1,0 +1,15 @@
+Date: 2026-10-18 Asia/Bangkok
+Current UI LAN URL: http://192.168.1.14:3000
+Research: docs/15_UX_RESEARCH_AND_REDESIGN.md (Flywire, Convera, Wise, SafetyWing public first-party documentation).
+Existing browser suite before redesign: 7 passed (1.1m).
+Backend pytest -q: 76 passed in 36.77s, one pre-existing Starlette deprecation warning.
+Frontend npm run lint: exit 0, no warnings.
+Frontend final npm run build: exit 0, TypeScript and route generation completed.
+Initial complete UX browser run: 9 passed, 1 failed (modal Tab focus could leave DOM controls).
+Fixed explicit forward/backward modal focus wrapping.
+Final complete suite through LAN: 10 passed in 50.3s.
+Targeted 320px phone regression after readable mobile nav labels: 1 passed in 4.0s.
+Screenshot directory: submission/evidence/screenshots/ux/
+Inspected: welcome-desktop.png, dashboard-desktop.png, dashboard-mobile.png, quote-next-step.png.
+Localhost and LAN frontend-proxied health endpoints: HTTP 200.
+No live payment, public deployment or second physical device test performed.

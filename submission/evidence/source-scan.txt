@@ -1,0 +1,1 @@
+Source/evidence scan passed: 125 text files; no copies of local session/webhook/operator secrets.

@@ -1,0 +1,18 @@
+
+> bao-an-demo@1.0.0 test:e2e
+> playwright test
+
+
+Running 7 tests using 1 worker
+
+(node:20124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\flows.spec.ts:24:5 › desktop dashboard and mobile keyboard navigation (2.3s)
+  ok 2 tests\flows.spec.ts:37:5 › human consent, asynchronous signed success, duplicate, receipt (8.7s)
+  ok 3 tests\flows.spec.ts:71:5 › mobile cancellation and safe retry (4.0s)
+  ok 4 tests\flows.spec.ts:84:5 › failure has no receipt and operator code is verified (5.1s)
+  ok 5 tests\mvp.spec.ts:34:5 › account registration, persistent session, profile and sign-out (3.2s)
+  ok 6 tests\mvp.spec.ts:55:5 › invoice CRUD, real reference quote, sandbox consent and archive (5.0s)
+  ok 7 tests\mvp.spec.ts:83:5 › private policy upload, cited search, download and delete on mobile (2.9s)
+
+  7 passed (33.0s)

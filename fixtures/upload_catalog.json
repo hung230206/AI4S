@@ -1,0 +1,225 @@
+{
+  "samples": [
+    {
+      "id": "invoice-1",
+      "title": "01_en_800.png",
+      "kind": "invoice",
+      "language": "en",
+      "relative_path": "01_Hoa_don/01_en_800.png",
+      "expected": {
+        "invoice_number": "DEMO-20261018-EN-800",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "800.00",
+        "due_date": "2026-11-01"
+      }
+    },
+    {
+      "id": "invoice-2",
+      "title": "02_vi_1200.jpg",
+      "kind": "invoice",
+      "language": "vi",
+      "relative_path": "01_Hoa_don/02_vi_1200.jpg",
+      "expected": {
+        "invoice_number": "DEMO-20261018-VI-1200",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "1200.00",
+        "due_date": "2026-11-08"
+      }
+    },
+    {
+      "id": "invoice-3",
+      "title": "03_zh_5000.png",
+      "kind": "invoice",
+      "language": "zh",
+      "relative_path": "01_Hoa_don/03_zh_5000.png",
+      "expected": {
+        "invoice_number": "DEMO-20261018-ZH-5000",
+        "institution_name": "测试大学",
+        "beneficiary_name": "测试教育",
+        "amount_cny": "5000.00",
+        "due_date": "2026-11-15"
+      }
+    },
+    {
+      "id": "invoice-4",
+      "title": "04_scan_en_950.pdf",
+      "kind": "invoice",
+      "language": "en",
+      "relative_path": "01_Hoa_don/04_scan_en_950.pdf",
+      "expected": {
+        "invoice_number": "DEMO-20261018-SCAN-950",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "950.00",
+        "due_date": "2026-10-28"
+      }
+    },
+    {
+      "id": "invoice-5",
+      "title": "05_text_vi_1500.pdf",
+      "kind": "invoice",
+      "language": "vi",
+      "relative_path": "01_Hoa_don/05_text_vi_1500.pdf",
+      "expected": {
+        "invoice_number": "DEMO-20261018-TEXT-1500",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "1500.00",
+        "due_date": "2026-11-04"
+      }
+    },
+    {
+      "id": "invoice-6",
+      "title": "06_en_675.txt",
+      "kind": "invoice",
+      "language": "en",
+      "relative_path": "01_Hoa_don/06_en_675.txt",
+      "expected": {
+        "invoice_number": "DEMO-20261018-TXT-675",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "675.50",
+        "due_date": "2026-11-11"
+      }
+    },
+    {
+      "id": "invoice-7",
+      "title": "07_vi_2400.md",
+      "kind": "invoice",
+      "language": "vi",
+      "relative_path": "01_Hoa_don/07_vi_2400.md",
+      "expected": {
+        "invoice_number": "DEMO-20261018-MD-2400",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "2400.00",
+        "due_date": "2026-11-22"
+      }
+    },
+    {
+      "id": "policy-1",
+      "title": "01_policy_vi_text.pdf",
+      "kind": "policy",
+      "language": "vi",
+      "relative_path": "02_Bao_hiem/01_policy_vi_text.pdf",
+      "expected": [
+        {
+          "query": "Hồ sơ bồi thường",
+          "expected_page": 2,
+          "contains": "hóa đơn viện phí"
+        },
+        {
+          "query": "loại trừ",
+          "expected_page": 3,
+          "contains": "phẫu thuật thẩm mỹ"
+        },
+        {
+          "query": "thời hạn",
+          "expected_page": 1,
+          "contains": "31/10/2027"
+        },
+        {
+          "query": "XYZNOANSWER2026",
+          "expected_matches": 0
+        }
+      ]
+    },
+    {
+      "id": "policy-2",
+      "title": "02_policy_en_scan.pdf",
+      "kind": "policy",
+      "language": "en",
+      "relative_path": "02_Bao_hiem/02_policy_en_scan.pdf",
+      "expected": [
+        {
+          "query": "claims",
+          "expected_page": 1,
+          "contains": "hospital invoices"
+        },
+        {
+          "query": "exclusions",
+          "expected_page": 2,
+          "contains": "elective cosmetic"
+        }
+      ]
+    },
+    {
+      "id": "policy-3",
+      "title": "03_policy_zh.png",
+      "kind": "policy",
+      "language": "zh",
+      "relative_path": "02_Bao_hiem/03_policy_zh.png",
+      "expected": [
+        {
+          "query": "理赔",
+          "expected_page": 1,
+          "contains": "理赔"
+        }
+      ]
+    },
+    {
+      "id": "policy-4",
+      "title": "04_policy_vi.txt",
+      "kind": "policy",
+      "language": "vi",
+      "relative_path": "02_Bao_hiem/04_policy_vi.txt",
+      "expected": [
+        {
+          "query": "hồ sơ bồi thường",
+          "expected_page": 1,
+          "contains": "hóa đơn viện phí"
+        }
+      ]
+    },
+    {
+      "id": "error-1",
+      "title": "01_non_cny_usd.txt",
+      "kind": "error",
+      "language": "en",
+      "relative_path": "03_Thu_loi/01_non_cny_usd.txt",
+      "expected": "currency is null; amount_cny not suggested; warning to review currency"
+    },
+    {
+      "id": "error-2",
+      "title": "02_blank.pdf",
+      "kind": "error",
+      "language": "en",
+      "relative_path": "03_Thu_loi/02_blank.pdf",
+      "expected": "DOCUMENT_NO_TEXT"
+    },
+    {
+      "id": "error-3",
+      "title": "03_invalid.pdf",
+      "kind": "error",
+      "language": "en",
+      "relative_path": "03_Thu_loi/03_invalid.pdf",
+      "expected": "DOCUMENT_INVALID"
+    },
+    {
+      "id": "error-4",
+      "title": "04_unsupported.csv",
+      "kind": "error",
+      "language": "en",
+      "relative_path": "03_Thu_loi/04_unsupported.csv",
+      "expected": "DOCUMENT_TYPE_UNSUPPORTED"
+    }
+  ],
+  "public_sources": [
+    {
+      "id": "bfsu-2025",
+      "title": "BFSU — Bảng quyền lợi bảo hiểm sinh viên năm 2025",
+      "url": "https://osao.bfsu.edu.cn/2025xuenianliuxueshengduofanganchanpinjianbiao.pdf",
+      "language": "zh",
+      "notice": "Tài liệu gốc công khai do trường đăng; dùng để thử đọc tài liệu tham khảo. Không phải hợp đồng cá nhân hoặc xác nhận đang có bảo hiểm. Bản 2025 có thể không còn áp dụng."
+    },
+    {
+      "id": "sjtu-guide",
+      "title": "SJTU — Hướng dẫn bảo hiểm dành cho sinh viên quốc tế",
+      "url": "https://en.sjtu.edu.cn/study-sjtu/current/services/73",
+      "language": "en",
+      "notice": "Trang hướng dẫn của trường, mở đọc ở nguồn. Không phải file hóa đơn cá nhân."
+    }
+  ]
+}

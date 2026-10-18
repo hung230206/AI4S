@@ -1,0 +1,14 @@
+Hãy mở thư mục này trong Codex và triển khai ứng dụng theo file START_HERE_CODEX.md và AGENTS.md.
+
+YÊU CẦU:
+- Đọc toàn bộ tài liệu P0, hợp đồng API và schema trước khi code.
+- Tạo ứng dụng full-stack chạy được: Next.js + FastAPI + PostgreSQL.
+- Chỉ xử lý thanh toán GIẢ LẬP; không chuyển tiền thật, không giả mạo thanh toán thành công ở frontend.
+- Có luồng hóa đơn CNY -> báo giá VND demo -> người dùng xác nhận -> mock payment provider -> webhook đã xác thực -> biên lai SIMULATED.
+- Đủ bảo mật tối thiểu: Decimal, idempotency, HMAC, state machine, phân quyền và lưu logs.
+- Tự viết và CHẠY tests; sửa lỗi đến khi các acceptance tests P0 đạt.
+- Giữ module độc lập để sau này nhóm chọn Topic C hoặc Topic D.
+- Không cần OpenAI API key, Airwallex API key hay tiền thật để demo hoạt động.
+- Ghi rõ các giới hạn và tổng kết cuối cùng trong IMPLEMENTATION_REPORT.md.
+
+BẮT ĐẦU CODE NGAY; không chỉ viết thêm kế hoạch. Nếu có lựa chọn chưa rõ, dùng giả định an toàn được ghi trong docs và báo lại.

@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.docx binary
+*.webm binary
+# Preserve captured output verbatim, including its original whitespace.
+submission/evidence/*.txt -whitespace

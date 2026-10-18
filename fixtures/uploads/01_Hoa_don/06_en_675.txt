@@ -1,0 +1,9 @@
+DEMO TEST DATA - NOT A REAL INVOICE
+
+Invoice number: DEMO-20261018-TXT-675
+Issuer: Demo University
+Beneficiary: Demo Education
+Total due: CNY 675.50
+Due date: 2026-11-11
+
+Self-authored software fixture. Do not pay.

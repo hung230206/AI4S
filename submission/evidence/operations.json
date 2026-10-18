@@ -1,0 +1,316 @@
+{
+  "captured_at": "2026-10-17T11:31:31.672274+00:00",
+  "environment": "LOCAL MOCK; NO REAL FUNDS",
+  "expiry_method": "Controlled fixture timestamp change, then real confirmation API rejection",
+  "results": [
+    {
+      "scenario": "success",
+      "order": {
+        "id": "7e8057c8-a4f0-4b4f-b3a1-6a98c10fcf1d",
+        "invoice_id": "8e0c11db-0e2e-4d61-8ccd-07c44007f908",
+        "quote_id": "2100375a-06a5-4b38-974f-3df6e4a94f4e",
+        "amount_cny": "800.00",
+        "currency": "CNY",
+        "total_vnd": "2847000",
+        "status": "SUCCEEDED",
+        "payment_provider": "MOCK",
+        "confirmation_consent": true,
+        "consent_at": "2026-10-17T11:31:30.780603Z",
+        "consent_version": "demo-v1",
+        "created_at": "2026-10-17T11:31:30.734110Z",
+        "updated_at": "2026-10-17T11:31:30.985571Z",
+        "is_simulated": true,
+        "quote": {
+          "id": "2100375a-06a5-4b38-974f-3df6e4a94f4e",
+          "invoice_id": "8e0c11db-0e2e-4d61-8ccd-07c44007f908",
+          "source_amount_cny": "800.00",
+          "source_currency": "CNY",
+          "settlement_currency": "VND",
+          "vnd_per_cny": "3500.000000",
+          "converted_subtotal_vnd": "2800000",
+          "variable_fee_rate_percent": "1.5000",
+          "variable_fee_vnd": "42000",
+          "fixed_fee_vnd": "5000",
+          "total_vnd": "2847000",
+          "rate_source": "DEMO_FIXED",
+          "created_at": "2026-10-17T11:31:30.682666Z",
+          "expires_at": "2026-10-17T11:41:30.678273Z",
+          "is_simulated": true
+        }
+      },
+      "trace": {
+        "items": [
+          {
+            "external_event_id": "evt_d4b551f4-17f7-4644-9b9d-7dff46bbb7e0",
+            "event_type": "MOCK_PAYMENT_STATUS",
+            "provider_status": "SUCCEEDED",
+            "received_at": "2026-10-17T11:31:30.982121Z",
+            "processing_outcome": "APPLIED",
+            "signature_verified": true,
+            "safe_metadata": {
+              "is_simulated": true
+            }
+          }
+        ],
+        "audit": [
+          {
+            "action": "ORDER_CREATED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:30.740693Z",
+            "safe_metadata": {}
+          },
+          {
+            "action": "HUMAN_CONSENT_RECORDED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:30.781615Z",
+            "safe_metadata": {
+              "quote_id": "2100375a-06a5-4b38-974f-3df6e4a94f4e",
+              "total_vnd": "2847000",
+              "consent_version": "demo-v1"
+            }
+          },
+          {
+            "action": "PROVIDER_OUTCOME_REQUESTED",
+            "actor_type": "OPERATOR",
+            "created_at": "2026-10-17T11:31:30.830268Z",
+            "safe_metadata": {
+              "outcome": "SUCCEEDED"
+            }
+          },
+          {
+            "action": "WEBHOOK_APPLIED",
+            "actor_type": "PROVIDER",
+            "created_at": "2026-10-17T11:31:30.978130Z",
+            "safe_metadata": {
+              "external_event_id": "evt_d4b551f4-17f7-4644-9b9d-7dff46bbb7e0"
+            }
+          },
+          {
+            "action": "PROVIDER_REDELIVERY_REQUESTED",
+            "actor_type": "OPERATOR",
+            "created_at": "2026-10-17T11:31:31.031089Z",
+            "safe_metadata": {
+              "external_event_id": "evt_d4b551f4-17f7-4644-9b9d-7dff46bbb7e0"
+            }
+          },
+          {
+            "action": "DUPLICATE_WEBHOOK",
+            "actor_type": "PROVIDER",
+            "created_at": "2026-10-17T11:31:31.065657Z",
+            "safe_metadata": {
+              "external_event_id": "evt_d4b551f4-17f7-4644-9b9d-7dff46bbb7e0"
+            }
+          }
+        ]
+      },
+      "receipt_http_status": 200,
+      "receipt": {
+        "receipt_number": "SIM-7E8057C8-A4F0-4B4F-B3A1-6A98C10FCF1D",
+        "order_id": "7e8057c8-a4f0-4b4f-b3a1-6a98c10fcf1d",
+        "is_simulated": true,
+        "notice": "SIMULATED TRANSACTION — NO REAL FUNDS MOVED",
+        "issued_at": "2026-10-17T11:31:30.989324Z",
+        "amount_cny": "800.00",
+        "total_vnd": "2847000",
+        "invoice_number": "EVIDENCE-success-d61d8964"
+      }
+    },
+    {
+      "scenario": "failure",
+      "order": {
+        "id": "adedb04c-ba47-41f4-8f41-da3edb1ee5ca",
+        "invoice_id": "50e33288-3e5a-4ae3-b824-9b930dfe5771",
+        "quote_id": "4659791c-8a6c-473d-8418-96e8fb885410",
+        "amount_cny": "800.00",
+        "currency": "CNY",
+        "total_vnd": "2847000",
+        "status": "FAILED",
+        "payment_provider": "MOCK",
+        "confirmation_consent": true,
+        "consent_at": "2026-10-17T11:31:31.245822Z",
+        "consent_version": "demo-v1",
+        "created_at": "2026-10-17T11:31:31.213568Z",
+        "updated_at": "2026-10-17T11:31:31.306859Z",
+        "is_simulated": true,
+        "quote": {
+          "id": "4659791c-8a6c-473d-8418-96e8fb885410",
+          "invoice_id": "50e33288-3e5a-4ae3-b824-9b930dfe5771",
+          "source_amount_cny": "800.00",
+          "source_currency": "CNY",
+          "settlement_currency": "VND",
+          "vnd_per_cny": "3500.000000",
+          "converted_subtotal_vnd": "2800000",
+          "variable_fee_rate_percent": "1.5000",
+          "variable_fee_vnd": "42000",
+          "fixed_fee_vnd": "5000",
+          "total_vnd": "2847000",
+          "rate_source": "DEMO_FIXED",
+          "created_at": "2026-10-17T11:31:31.174542Z",
+          "expires_at": "2026-10-17T11:41:31.173544Z",
+          "is_simulated": true
+        }
+      },
+      "trace": {
+        "items": [
+          {
+            "external_event_id": "evt_01db9f8d-f337-4a95-bd88-d8dcec5bc6c1",
+            "event_type": "MOCK_PAYMENT_STATUS",
+            "provider_status": "FAILED",
+            "received_at": "2026-10-17T11:31:31.303855Z",
+            "processing_outcome": "APPLIED",
+            "signature_verified": true,
+            "safe_metadata": {
+              "is_simulated": true
+            }
+          }
+        ],
+        "audit": [
+          {
+            "action": "ORDER_CREATED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:31.215569Z",
+            "safe_metadata": {}
+          },
+          {
+            "action": "HUMAN_CONSENT_RECORDED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:31.245822Z",
+            "safe_metadata": {
+              "quote_id": "4659791c-8a6c-473d-8418-96e8fb885410",
+              "total_vnd": "2847000",
+              "consent_version": "demo-v1"
+            }
+          },
+          {
+            "action": "PROVIDER_OUTCOME_REQUESTED",
+            "actor_type": "OPERATOR",
+            "created_at": "2026-10-17T11:31:31.272709Z",
+            "safe_metadata": {
+              "outcome": "FAILED"
+            }
+          },
+          {
+            "action": "WEBHOOK_APPLIED",
+            "actor_type": "PROVIDER",
+            "created_at": "2026-10-17T11:31:31.302853Z",
+            "safe_metadata": {
+              "external_event_id": "evt_01db9f8d-f337-4a95-bd88-d8dcec5bc6c1"
+            }
+          }
+        ]
+      },
+      "receipt_http_status": 409,
+      "receipt": null
+    },
+    {
+      "scenario": "expiry",
+      "order": {
+        "id": "90cde08a-75ce-4f97-89df-5b4908a37c19",
+        "invoice_id": "e1c842aa-74fc-4b2e-b4f7-5a5d0e92d7b1",
+        "quote_id": "c9c631e2-9ab1-4d45-88c0-270b718c8760",
+        "amount_cny": "800.00",
+        "currency": "CNY",
+        "total_vnd": "2847000",
+        "status": "EXPIRED",
+        "payment_provider": "MOCK",
+        "confirmation_consent": false,
+        "consent_at": null,
+        "consent_version": null,
+        "created_at": "2026-10-17T11:31:31.433390Z",
+        "updated_at": "2026-10-17T11:31:31.472337Z",
+        "is_simulated": true,
+        "quote": {
+          "id": "c9c631e2-9ab1-4d45-88c0-270b718c8760",
+          "invoice_id": "e1c842aa-74fc-4b2e-b4f7-5a5d0e92d7b1",
+          "source_amount_cny": "800.00",
+          "source_currency": "CNY",
+          "settlement_currency": "VND",
+          "vnd_per_cny": "3500.000000",
+          "converted_subtotal_vnd": "2800000",
+          "variable_fee_rate_percent": "1.5000",
+          "variable_fee_vnd": "42000",
+          "fixed_fee_vnd": "5000",
+          "total_vnd": "2847000",
+          "rate_source": "DEMO_FIXED",
+          "created_at": "2026-10-17T11:11:31.448109Z",
+          "expires_at": "2026-10-17T11:21:31.448109Z",
+          "is_simulated": true
+        }
+      },
+      "trace": {
+        "items": [],
+        "audit": [
+          {
+            "action": "ORDER_CREATED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:31.435569Z",
+            "safe_metadata": {}
+          },
+          {
+            "action": "QUOTE_EXPIRED",
+            "actor_type": "SYSTEM",
+            "created_at": "2026-10-17T11:31:31.469177Z",
+            "safe_metadata": {}
+          }
+        ]
+      },
+      "receipt_http_status": 409,
+      "receipt": null
+    },
+    {
+      "scenario": "cancellation",
+      "order": {
+        "id": "450bcca1-c73c-4fa3-a817-545230aff1e7",
+        "invoice_id": "9119fec0-9af3-49a3-b268-e7c7d6aa171a",
+        "quote_id": "91bdfcc9-38bb-4c76-86d2-4e2939d78842",
+        "amount_cny": "800.00",
+        "currency": "CNY",
+        "total_vnd": "2847000",
+        "status": "CANCELLED",
+        "payment_provider": "MOCK",
+        "confirmation_consent": false,
+        "consent_at": null,
+        "consent_version": null,
+        "created_at": "2026-10-17T11:31:31.578335Z",
+        "updated_at": "2026-10-17T11:31:31.606449Z",
+        "is_simulated": true,
+        "quote": {
+          "id": "91bdfcc9-38bb-4c76-86d2-4e2939d78842",
+          "invoice_id": "9119fec0-9af3-49a3-b268-e7c7d6aa171a",
+          "source_amount_cny": "800.00",
+          "source_currency": "CNY",
+          "settlement_currency": "VND",
+          "vnd_per_cny": "3500.000000",
+          "converted_subtotal_vnd": "2800000",
+          "variable_fee_rate_percent": "1.5000",
+          "variable_fee_vnd": "42000",
+          "fixed_fee_vnd": "5000",
+          "total_vnd": "2847000",
+          "rate_source": "DEMO_FIXED",
+          "created_at": "2026-10-17T11:31:31.548053Z",
+          "expires_at": "2026-10-17T11:41:31.548053Z",
+          "is_simulated": true
+        }
+      },
+      "trace": {
+        "items": [],
+        "audit": [
+          {
+            "action": "ORDER_CREATED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:31.580857Z",
+            "safe_metadata": {}
+          },
+          {
+            "action": "ORDER_CANCELLED",
+            "actor_type": "STUDENT",
+            "created_at": "2026-10-17T11:31:31.605450Z",
+            "safe_metadata": {}
+          }
+        ]
+      },
+      "receipt_http_status": 409,
+      "receipt": null
+    }
+  ]
+}

@@ -1,0 +1,705 @@
+openapi: 3.0.3
+info:
+  title: Insurance Cross-border Payment Demo API
+  version: 0.1.0
+  description: Draft contract for Codex. Mock provider and synthetic FX only; zero real transfers.
+servers:
+- url: http://localhost:8000
+security:
+- BearerAuth: []
+paths:
+  /api/v1/health:
+    get:
+      summary: Health check
+      operationId: get_api_v1_health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+      security: []
+  /api/v1/demo/session:
+    post:
+      summary: Local-only demo sign-in
+      operationId: post_api_v1_demo_session
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '403': &id001
+          description: Error envelope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionRequest'
+      security: []
+      description: Only when DEMO_MODE is enabled. Issue short-lived signed session; never deploy as production
+        authentication.
+  /api/v1/invoices:
+    get:
+      summary: List current user invoices
+      operationId: get_api_v1_invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceList'
+        '401': *id001
+  /api/v1/invoices/{invoice_id}:
+    get:
+      summary: Get invoice
+      operationId: get_api_v1_invoices_invoice_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401': *id001
+        '404': *id001
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/v1/quotes:
+    post:
+      summary: Get persisted demo CNY/VND quote
+      operationId: post_api_v1_quotes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FxQuote'
+        '401': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQuote'
+  /api/v1/orders:
+    post:
+      summary: Create order from quote
+      operationId: post_api_v1_orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+      parameters:
+      - &id002
+        name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+    get:
+      summary: List own payment orders
+      operationId: get_api_v1_orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        '401': *id001
+  /api/v1/orders/{order_id}:
+    get:
+      summary: Order details/status
+      operationId: get_api_v1_orders_order_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401': *id001
+        '404': *id001
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/v1/orders/{order_id}/confirm:
+    post:
+      summary: Confirm precise quote with human consent
+      operationId: post_api_v1_orders_order_id_confirm
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmOrder'
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - *id002
+  /api/v1/orders/{order_id}/cancel:
+    post:
+      summary: Cancel before provider processing
+      operationId: post_api_v1_orders_order_id_cancel
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/v1/orders/{order_id}/events:
+    get:
+      summary: Sanitized event timeline
+      operationId: get_api_v1_orders_order_id_events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+        '401': *id001
+        '403': *id001
+        '404': *id001
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/v1/orders/{order_id}/receipt:
+    get:
+      summary: Simulated receipt for succeeded order
+      operationId: get_api_v1_orders_order_id_receipt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+        '401': *id001
+        '404': *id001
+        '409': *id001
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /api/v1/demo/orders/{order_id}/simulate:
+    post:
+      summary: Operator demo provider outcome
+      operationId: post_api_v1_demo_orders_order_id_simulate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationResult'
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateRequest'
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      description: Available only in DEMO_MODE to OPERATOR. Must generate signed provider event; cannot write
+        order status directly.
+  /api/v1/webhooks/mock:
+    post:
+      summary: Verified provider webhook
+      operationId: post_api_v1_webhooks_mock
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookAck'
+        '401': *id001
+        '409': *id001
+        '422': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockWebhookEvent'
+      parameters:
+      - name: X-Mock-Timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          description: UNIX timestamp seconds
+      - name: X-Mock-Signature
+        in: header
+        required: true
+        schema:
+          type: string
+          description: HMAC SHA256 over timestamp dot raw body
+      security: []
+      description: Signed event body, ±5 min timestamp tolerance; deduplicate external_event_id; compare amount+currency
+        to stored transaction.
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: signed-demo-session
+  schemas:
+    Health:
+      type: object
+      required:
+      - status
+      - demo_mode
+      properties:
+        status:
+          type: string
+          example: ok
+        demo_mode:
+          type: boolean
+    SessionRequest:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: string
+          enum:
+          - STUDENT
+          - OPERATOR
+        operator_code:
+          type: string
+          description: Required for OPERATOR; server checks DEMO_OPERATOR_CODE from environment.
+    SessionResponse:
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          example: bearer
+        expires_in:
+          type: integer
+          example: 3600
+        role:
+          type: string
+    Invoice:
+      type: object
+      required:
+      - id
+      - invoice_number
+      - country_code
+      - institution_name
+      - beneficiary_name
+      - amount_cny
+      - currency
+      - due_date
+      - source_type
+      - is_real_beneficiary
+      properties:
+        id: &id003
+          type: string
+          format: uuid
+        invoice_number:
+          type: string
+        country_code:
+          type: string
+          example: CN
+        institution_name:
+          type: string
+        beneficiary_name:
+          type: string
+        fee_type:
+          type: string
+        amount_cny:
+          type: string
+          pattern: ^\d+(\.\d{1,2})?$
+          example: '800.00'
+          description: String decimal; never JS float for monetary calculations
+        currency:
+          type: string
+          enum:
+          - CNY
+        due_date:
+          type: string
+          format: date
+        source_type:
+          type: string
+          enum:
+          - SYNTHETIC
+        is_real_beneficiary:
+          type: boolean
+          enum:
+          - false
+    InvoiceList:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+    CreateQuote:
+      type: object
+      required:
+      - invoice_id
+      - settlement_currency
+      properties:
+        invoice_id: *id003
+        settlement_currency:
+          type: string
+          enum:
+          - VND
+    FxQuote:
+      type: object
+      required:
+      - id
+      - invoice_id
+      - source_amount_cny
+      - vnd_per_cny
+      - converted_subtotal_vnd
+      - variable_fee_vnd
+      - fixed_fee_vnd
+      - total_vnd
+      - rate_source
+      - expires_at
+      properties:
+        id: *id003
+        invoice_id: *id003
+        source_amount_cny:
+          type: string
+          pattern: ^\d+(\.\d{1,2})?$
+          example: '800.00'
+          description: String decimal; never JS float for monetary calculations
+        source_currency:
+          type: string
+          enum:
+          - CNY
+        settlement_currency:
+          type: string
+          enum:
+          - VND
+        vnd_per_cny:
+          type: string
+          example: '3500.000000'
+        converted_subtotal_vnd: &id004
+          type: string
+          pattern: ^\d+$
+          example: '2847000'
+          description: VND integer string
+        variable_fee_rate_percent:
+          type: string
+          example: '1.5000'
+        variable_fee_vnd:
+          type: string
+          example: '42000'
+        fixed_fee_vnd:
+          type: string
+          example: '5000'
+        total_vnd: *id004
+        rate_source:
+          type: string
+          enum:
+          - DEMO_FIXED
+        created_at: &id005
+          type: string
+          format: date-time
+        expires_at: *id005
+        is_simulated:
+          type: boolean
+          enum:
+          - true
+    CreateOrder:
+      type: object
+      required:
+      - invoice_id
+      - quote_id
+      properties:
+        invoice_id: *id003
+        quote_id: *id003
+    ConfirmOrder:
+      type: object
+      required:
+      - quote_id
+      - consent
+      - consent_version
+      properties:
+        quote_id: *id003
+        consent:
+          type: boolean
+          enum:
+          - true
+        consent_version:
+          type: string
+          example: demo-v1
+    Order:
+      type: object
+      required:
+      - id
+      - invoice_id
+      - quote_id
+      - status
+      - total_vnd
+      - currency
+      - is_simulated
+      - created_at
+      properties:
+        id: *id003
+        invoice_id: *id003
+        quote_id: *id003
+        status:
+          type: string
+          enum:
+          - AWAITING_CONFIRMATION
+          - PROCESSING
+          - SUCCEEDED
+          - FAILED
+          - CANCELLED
+          - EXPIRED
+        amount_cny:
+          type: string
+          pattern: ^\d+(\.\d{1,2})?$
+          example: '800.00'
+          description: String decimal; never JS float for monetary calculations
+        currency:
+          type: string
+          enum:
+          - CNY
+        total_vnd: *id004
+        payment_provider:
+          type: string
+          enum:
+          - MOCK
+        is_simulated:
+          type: boolean
+          enum:
+          - true
+        created_at: *id005
+        updated_at: *id005
+        consent_at:
+          type: string
+          format: date-time
+          nullable: true
+    OrderList:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+    SimulateRequest:
+      type: object
+      required:
+      - outcome
+      properties:
+        outcome:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+        reason:
+          type: string
+          maxLength: 200
+    SimulationResult:
+      type: object
+      required:
+      - queued
+      - external_event_id
+      properties:
+        queued:
+          type: boolean
+        external_event_id:
+          type: string
+    MockWebhookEvent:
+      type: object
+      required:
+      - external_event_id
+      - provider_payment_id
+      - order_id
+      - event_timestamp
+      - status
+      - amount_vnd
+      - currency
+      properties:
+        external_event_id:
+          type: string
+        provider_payment_id:
+          type: string
+        order_id: *id003
+        event_timestamp: *id005
+        status:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+        amount_vnd: *id004
+        currency:
+          type: string
+          enum:
+          - VND
+    WebhookAck:
+      type: object
+      required:
+      - accepted
+      - duplicate
+      properties:
+        accepted:
+          type: boolean
+        duplicate:
+          type: boolean
+    Event:
+      type: object
+      required:
+      - external_event_id
+      - event_type
+      - received_at
+      - processing_outcome
+      properties:
+        external_event_id:
+          type: string
+        event_type:
+          type: string
+        provider_status:
+          type: string
+        received_at: *id005
+        processing_outcome:
+          type: string
+          enum:
+          - APPLIED
+          - DUPLICATE
+          - IGNORED
+          - REJECTED
+    EventList:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Receipt:
+      type: object
+      required:
+      - receipt_number
+      - order_id
+      - is_simulated
+      - notice
+      - issued_at
+      properties:
+        receipt_number:
+          type: string
+        order_id: *id003
+        is_simulated:
+          type: boolean
+          enum:
+          - true
+        notice:
+          type: string
+          example: SIMULATED TRANSACTION — NO REAL FUNDS MOVED
+        issued_at: *id005
+    ApiError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - code
+          - message
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            request_id:
+              type: string

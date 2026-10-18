@@ -1,0 +1,59 @@
+{
+  "captured_at": "2026-10-17T14:15:28.381534+00:00",
+  "transport": "Actual HTTP against running FastAPI",
+  "data_provenance": "QA account and self-authored invoice/document; FX is actual upstream/cache reference data",
+  "capabilities": {
+    "accounts": true,
+    "invoice_management": true,
+    "reference_fx_provider": "Frankfurter",
+    "reference_fx_url": "https://frankfurter.dev/",
+    "policy_documents": true,
+    "payment_mode": "SANDBOX",
+    "live_payments_configured": false,
+    "sandbox_enabled": true
+  },
+  "reference_rate": {
+    "base": "CNY",
+    "quote": "VND",
+    "rate": "3864.070000",
+    "rate_date": "2026-10-16",
+    "fetched_at": "2026-10-17T13:34:03.536250Z",
+    "source": "FRANKFURTER_REFERENCE",
+    "source_url": "https://frankfurter.dev/",
+    "is_stale": false,
+    "notice": "Daily reference rate; not an executable provider FX offer"
+  },
+  "quote": {
+    "id": "15e5f0b6-8bd1-4a2f-a9d1-d9d518dc4bbf",
+    "invoice_id": "6c0c4c96-98ce-4a7c-a1b3-4ce71e132228",
+    "source_amount_cny": "800.00",
+    "source_currency": "CNY",
+    "settlement_currency": "VND",
+    "vnd_per_cny": "3864.070000",
+    "converted_subtotal_vnd": "3091256",
+    "variable_fee_rate_percent": "0.0000",
+    "variable_fee_vnd": "0",
+    "fixed_fee_vnd": "0",
+    "total_vnd": "3091256",
+    "rate_source": "FRANKFURTER_REFERENCE",
+    "rate_date": "2026-10-16",
+    "rate_fetched_at": "2026-10-17T13:34:03.536250Z",
+    "rate_is_stale": false,
+    "created_at": "2026-10-17T14:15:28.240925Z",
+    "expires_at": "2026-10-17T14:25:28.239410Z",
+    "is_simulated": false,
+    "purpose": "REFERENCE_ESTIMATE"
+  },
+  "checks": {
+    "registration_cookie_session": true,
+    "user_invoice": true,
+    "actual_reference_fx": true,
+    "decimal_conversion": true,
+    "no_order_on_quote": true,
+    "document_upload_and_citation": true,
+    "download_byte_integrity": true,
+    "document_deleted": true,
+    "invoice_archived": true,
+    "logout_revoked": true
+  }
+}

@@ -1,0 +1,8 @@
+DEMO TEST DATA - NOT A REAL DOCUMENT
+Invoice number: DEMO-USD-200
+Issuer: Demo University
+Beneficiary: Demo Education
+Total due: USD 200.00
+Due date: 2026-11-15
+Currency: USD
+Synthetic software test only.

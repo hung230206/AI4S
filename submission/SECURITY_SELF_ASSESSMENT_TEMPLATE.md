@@ -1,0 +1,32 @@
+# Security self-assessment — student-finance MVP
+
+Self-assessment dated 2026-10-18, not independent certification. Production money transfer, bank custody and insurer activation remain disabled.
+
+## Permissions and controls
+
+- Registered users have private initially empty workspaces. Argon2id hashes passwords; opaque revocable session tokens are stored as hashes. Cookies are HttpOnly/SameSite Lax and must be Secure under HTTPS. Mutations require allowed origin and CSRF. Login/signup throttling persists. Wallets, entries, plans, invoice sources, documents and financial records are owner scoped.
+- The student assistant reads/computes/retrieves only; no financial action is executed from a response. Uploaded instructions cannot invoke tools, choose a payee, change amounts or confirm payments. Assistant answers use grounded rules and original excerpts, not generative output.
+- OCR suggestions require explicit owner review before invoice creation. A used source cannot silently become a second invoice. Original bytes, pages and source lines are private and downloadable after ownership checks.
+- Ledger balances are user-declared. Server Decimal validates amounts/currencies/dates. Request hashes and per-owner keys distinguish retries from changed data. Locks and a partial unique occurrence index prevent double posting. Forecast excludes posted occurrences; void retains the audit record and restores the planned event. CSV quotes/escapes cells and prefixes formula-leading content.
+- Parsing has file/page/pixel limits. Pillow normalizes images; PDFium renders scans. Node receives server-controlled temporary paths, not arbitrary uploaded commands/URLs. Language models are local and pinned. At most two OCR processes run concurrently, with 75-second timeouts. Temporary rendered images are removed. Document contents are not sent to an OCR/LLM service.
+- Frankfurter receives public currency pairs/dates only. Reference data has date/source/stale metadata and age bounds. Native projections remain usable without fabricated FX valuation.
+- Payment retains exact-quote consent, authorization, server-calculated amounts and idempotency. Separate operator simulation requires a server-validated local code in demo mode. Signed provider events pass timestamp/amount/currency checks and terminal locks. Receipts state SIMULATED TRANSACTION — NO REAL FUNDS MOVED.
+- Secrets, databases, models and failed browser traces are ignored. Evidence omits passwords/tokens/signatures. Source scanning checks copies of local session/webhook/operator secrets.
+
+- Automatic SUCCESS/DECLINED are owner-selectable sandbox methods, consent-bound before intent creation; they schedule provider events rather than grant an operator role or bypass the signed webhook. A disabled worker rejects these methods. Advanced MANUAL simulate/replay remains operator-only.
+- Public references require a source URL and retain a user-declared provenance kind; that label is not issuer certification. Case ZIP exports enforce ownership and omit authentication secrets, but intentionally include the owner original document; the UI warns before sharing.
+
+## Verification
+
+111 backend tests cover the existing adversarial payment/account/finance/OCR cases plus consent-bound automatic sandbox methods, delayed signed delivery, worker-disabled rejection, scenario/request conflicts, evidence-owner boundaries and declared document provenance. Fifteen complete browser workflows passed through LAN, including A-Z success and decline/retry. Eleven actual-HTTP acceptance checks include a public original PDF and source-byte identity. Exact results are in IMPLEMENTATION_REPORT.md.
+
+## Open risks and deployment requirements
+
+1. No custody/transfer provider, supported Chinese student-fee corridor or production bank integration is configured. Sandbox receipts and declared ledger entries are not bank-verified payment proof.
+2. HTTP/LAN and development database credentials are local-test settings. Public deployment requires HTTPS/Secure cookies, least-privilege database roles, managed secrets, backups, monitoring and retention/deletion controls. Another physical device/router isolation was not tested here.
+3. Email verification/recovery, MFA, centralized abuse monitoring and independent penetration testing are absent. Registration responses can reveal whether an email is registered.
+4. Bounded parsing is not a full hostile-document sandbox/antivirus system. Shared operation needs isolated worker resources, account/storage quotas and malware scanning. Invoice imports have an initial 100-source account limit; broader policy/account storage controls need work. Retained invoice originals do not yet have a user-facing deletion/retention workflow.
+5. OCR smoke samples do not establish real-world accuracy. Field parsing and keyword/synonym retrieval can miss context or return irrelevant passages. Compare originals; no medical/legal/coverage decision is automated. The assistant is not a generative LLM or full semantic RAG system.
+6. Forecasts omit undeclared items. Invoice plans are snapshots. Same-day projections are end-of-day values, not intraday liquidity guarantees. No realtime or executable FX is promised.
+7. Runtime npm audit reports zero vulnerabilities. Full audit retains five high findings in the existing development-tool chain: https://github.com/advisories/GHSA-vfj7-8cjw-p6xm . No incompatible forced downgrade was applied. Python vulnerability auditing was not performed. Package/model/native notices are retained; exported metadata is not legal certification.
+8. Docker/Unix startup, public deployment, load/failover and production accessibility certification were not executed. One pre-existing Starlette TestClient/httpx warning remains. Application audit tables are not tamper-proof against privileged administrators.

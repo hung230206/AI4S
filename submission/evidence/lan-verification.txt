@@ -1,0 +1,14 @@
+Date: 2026-10-17
+LAN URL: http://192.168.1.2:3000
+Listener: frontend 0.0.0.0:3000; API 127.0.0.1:8000; PostgreSQL 127.0.0.1:5434
+No firewall changes; existing enabled Node.js Public rules found.
+Backend pre-change pytest -q: 75 passed in 21.10s.
+Backend final pytest -q: 76 passed in 24.60s; one existing Starlette deprecation warning.
+Initial LAN Playwright: 3 passed, 4 failed; discovered HTTP-IP crypto.randomUUID incompatibility.
+Fixed checkout UUID generation using crypto.getRandomValues.
+Final PLAYWRIGHT_BASE_URL=http://192.168.1.2:3000 npm run test:e2e: 7 passed in 47.8s.
+Final npm run lint: exit 0, max warnings 0.
+Final npx tsc --noEmit: exit 0.
+check_mvp_live.py --url http://192.168.1.2:3000: PASS.
+LAN and localhost /api/v1/health via frontend proxy: HTTP 200.
+Second physical device / router client isolation: not yet verified.

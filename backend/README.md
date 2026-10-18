@@ -1,0 +1,5 @@
+# FastAPI mock-payment backend
+
+Entry point: `app.main:app`. See root RUNBOOK.md for tested Windows startup, Unix equivalents, PostgreSQL configuration, migrations, seed and pytest commands. Run `python ../scripts/bootstrap.py` before starting. Use `alembic upgrade head` and `python -m app.seed`; do not deploy the archival raw SQL alongside Alembic.
+
+`requirements.lock.txt` records the actual installed/tested environment. `.venv` is ignored. Tests use a separate PostgreSQL database ending `_test` and truncate its application tables. The current 101-test suite covers accounts/CSRF, reviewed invoice OCR, finance ledgers/plans/projections, grounded assistance, reference FX, documents and the mock payment engine. OCR needs Node.js, `npm ci` in frontend and one-time `python scripts/setup_ocr.py` from the kit root. No external payment/OCR account is required. Frankfurter needs internet for fresh observations; unit tests mock upstream responses, while `scripts/check_student_finance_live.py` verifies actual HTTP/OCR/FX separately. See STUDENT_FINANCE_GUIDE.md and docs/17_CHALLENGE_IMPLEMENTATION.md.

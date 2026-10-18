@@ -1,0 +1,15 @@
+{
+  "label": "ALL VALUES SYNTHETIC - NOT LIVE FX OR INSURANCE PRICE",
+  "invoice_number": "DEMO-CN-INS-2026-001",
+  "amount_cny": "800.00",
+  "source_currency": "CNY",
+  "settlement_currency": "VND",
+  "vnd_per_cny": "3500.000000",
+  "converted_subtotal_vnd": "2800000",
+  "variable_fee_rate_percent": "1.5000",
+  "variable_fee_vnd": "42000",
+  "fixed_fee_vnd": "5000",
+  "total_vnd": "2847000",
+  "rate_source": "DEMO_FIXED",
+  "ttl_seconds": 600
+}

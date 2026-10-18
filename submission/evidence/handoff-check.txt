@@ -1,0 +1,1 @@
+HANDOFF VALID: YAML schema references, source, fixtures, Decimal money calculation, docs present.

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "happy_path",
+    "given": "Valid quote and consent, signed mock success",
+    "expected_status": "SUCCEEDED",
+    "expected_result": "Receipt simulated, no real funds"
+  },
+  {
+    "id": "failed_payment",
+    "given": "Signed mock failure",
+    "expected_status": "FAILED",
+    "expected_result": "No receipt; retry new order"
+  },
+  {
+    "id": "cancel_before_confirm",
+    "given": "Cancel before provider request",
+    "expected_status": "CANCELLED",
+    "expected_result": "No provider intent"
+  },
+  {
+    "id": "expired_quote",
+    "given": "Quote expires before confirm",
+    "expected_status": "EXPIRED_OR_REJECTED",
+    "expected_result": "Cannot process"
+  },
+  {
+    "id": "quote_mismatch",
+    "given": "Confirm with different quote ID",
+    "expected_status": "REJECTED",
+    "expected_result": "409 QUOTE_MISMATCH"
+  },
+  {
+    "id": "client_tamper_amount",
+    "given": "Browser tries altering 800 CNY to 1 CNY",
+    "expected_status": "REJECTED",
+    "expected_result": "Server amount authoritative"
+  },
+  {
+    "id": "confirm_twice",
+    "given": "Same confirm idempotency key twice",
+    "expected_status": "PROCESSING",
+    "expected_result": "One provider request"
+  },
+  {
+    "id": "idempotency_conflict",
+    "given": "Same key different payload",
+    "expected_status": "REJECTED",
+    "expected_result": "409 conflict"
+  },
+  {
+    "id": "duplicate_event",
+    "given": "Replay same provider event ID",
+    "expected_status": "SUCCEEDED",
+    "expected_result": "One transition and receipt"
+  },
+  {
+    "id": "invalid_hmac",
+    "given": "Forged provider success event",
+    "expected_status": "REJECTED",
+    "expected_result": "401, no state update"
+  },
+  {
+    "id": "stale_hmac_timestamp",
+    "given": "Signed event with stale timestamp",
+    "expected_status": "REJECTED",
+    "expected_result": "401, no state update"
+  },
+  {
+    "id": "event_amount_mismatch",
+    "given": "Signed status with wrong currency/amount",
+    "expected_status": "REJECTED",
+    "expected_result": "No successful receipt"
+  },
+  {
+    "id": "out_of_order_after_success",
+    "given": "Receive failure after success",
+    "expected_status": "SUCCEEDED",
+    "expected_result": "No terminal rollback"
+  },
+  {
+    "id": "cross_user_access",
+    "given": "Other student reads an order",
+    "expected_status": "REJECTED",
+    "expected_result": "403/404"
+  },
+  {
+    "id": "simulate_forbidden",
+    "given": "Student attempts operator-only mock simulation",
+    "expected_status": "REJECTED",
+    "expected_result": "403"
+  },
+  {
+    "id": "operator_disabled_prod",
+    "given": "DEMO_MODE false",
+    "expected_status": "REJECTED",
+    "expected_result": "No simulation route"
+  },
+  {
+    "id": "parallel_confirms",
+    "given": "Concurrent client confirms",
+    "expected_status": "PROCESSING",
+    "expected_result": "One provider attempt"
+  }
+]

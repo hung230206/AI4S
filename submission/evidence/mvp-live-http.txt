@@ -1,0 +1,1 @@
+MVP LIVE HTTP PASS: Frankfurter CNY/VND=3864.070000, observation=2026-10-16; account/invoice/quote/document/download/delete/logout verified.

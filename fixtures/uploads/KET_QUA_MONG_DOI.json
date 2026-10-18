@@ -1,0 +1,185 @@
+{
+  "created_date": "2026-10-18",
+  "provenance": "All documents and amounts are self-authored synthetic software test fixtures. No real student, institution, policy or payment.",
+  "invoices": [
+    {
+      "file": "01_Hoa_don/01_en_800.png",
+      "language": "en",
+      "method": "LOCAL_TESSERACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-EN-800",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "800.00",
+        "due_date": "2026-11-01"
+      }
+    },
+    {
+      "file": "01_Hoa_don/02_vi_1200.jpg",
+      "language": "vi",
+      "method": "LOCAL_TESSERACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-VI-1200",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "1200.00",
+        "due_date": "2026-11-08"
+      }
+    },
+    {
+      "file": "01_Hoa_don/03_zh_5000.png",
+      "language": "zh",
+      "method": "LOCAL_TESSERACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-ZH-5000",
+        "institution_name": "测试大学",
+        "beneficiary_name": "测试教育",
+        "amount_cny": "5000.00",
+        "due_date": "2026-11-15"
+      }
+    },
+    {
+      "file": "01_Hoa_don/04_scan_en_950.pdf",
+      "language": "en",
+      "method": "LOCAL_TESSERACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-SCAN-950",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "950.00",
+        "due_date": "2026-10-28"
+      }
+    },
+    {
+      "file": "01_Hoa_don/05_text_vi_1500.pdf",
+      "language": "vi",
+      "method": "TEXT_EXTRACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-TEXT-1500",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "1500.00",
+        "due_date": "2026-11-04"
+      }
+    },
+    {
+      "file": "01_Hoa_don/06_en_675.txt",
+      "language": "en",
+      "method": "TEXT_EXTRACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-TXT-675",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "675.50",
+        "due_date": "2026-11-11"
+      }
+    },
+    {
+      "file": "01_Hoa_don/07_vi_2400.md",
+      "language": "vi",
+      "method": "TEXT_EXTRACT",
+      "expected_fields": {
+        "invoice_number": "DEMO-20261018-MD-2400",
+        "institution_name": "Demo University",
+        "beneficiary_name": "Demo Education",
+        "amount_cny": "2400.00",
+        "due_date": "2026-11-22"
+      }
+    }
+  ],
+  "policies": [
+    {
+      "file": "02_Bao_hiem/01_policy_vi_text.pdf",
+      "language": "vi",
+      "pages": 3,
+      "method": "TEXT_EXTRACT",
+      "queries": [
+        {
+          "query": "Hồ sơ bồi thường",
+          "expected_page": 2,
+          "contains": "hóa đơn viện phí"
+        },
+        {
+          "query": "loại trừ",
+          "expected_page": 3,
+          "contains": "phẫu thuật thẩm mỹ"
+        },
+        {
+          "query": "thời hạn",
+          "expected_page": 1,
+          "contains": "31/10/2027"
+        },
+        {
+          "query": "XYZNOANSWER2026",
+          "expected_matches": 0
+        }
+      ]
+    },
+    {
+      "file": "02_Bao_hiem/02_policy_en_scan.pdf",
+      "language": "en",
+      "pages": 2,
+      "method": "LOCAL_TESSERACT",
+      "queries": [
+        {
+          "query": "claims",
+          "expected_page": 1,
+          "contains": "hospital invoices"
+        },
+        {
+          "query": "exclusions",
+          "expected_page": 2,
+          "contains": "elective cosmetic"
+        }
+      ]
+    },
+    {
+      "file": "02_Bao_hiem/03_policy_zh.png",
+      "language": "zh",
+      "pages": 1,
+      "method": "LOCAL_TESSERACT",
+      "queries": [
+        {
+          "query": "理赔",
+          "expected_page": 1,
+          "contains": "理赔"
+        }
+      ]
+    },
+    {
+      "file": "02_Bao_hiem/04_policy_vi.txt",
+      "language": "vi",
+      "pages": 1,
+      "method": "TEXT_EXTRACT",
+      "queries": [
+        {
+          "query": "hồ sơ bồi thường",
+          "expected_page": 1,
+          "contains": "hóa đơn viện phí"
+        }
+      ]
+    }
+  ],
+  "negative_cases": [
+    {
+      "file": "03_Thu_loi/01_non_cny_usd.txt",
+      "target": "invoice",
+      "expected": "currency is null; amount_cny not suggested; warning to review currency"
+    },
+    {
+      "file": "03_Thu_loi/02_blank.pdf",
+      "target": "invoice",
+      "expected_error": "DOCUMENT_NO_TEXT"
+    },
+    {
+      "file": "03_Thu_loi/03_invalid.pdf",
+      "target": "invoice",
+      "expected_error": "DOCUMENT_INVALID"
+    },
+    {
+      "file": "03_Thu_loi/04_unsupported.csv",
+      "target": "invoice",
+      "expected_error": "DOCUMENT_TYPE_UNSUPPORTED"
+    }
+  ]
+}
