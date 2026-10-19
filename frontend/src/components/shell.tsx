@@ -48,7 +48,6 @@ export const useAuth = () => useContext(Auth);
 const nav = [
   {href: "/", key: "nav_dashboard", icon: LayoutDashboard},
   {href: "/copilot", key: "nav_copilot", icon: MessageCircle},
-  {href: "/knowledge", key: "nav_knowledge", icon: BookOpen},
   {href: "/invoices", key: "nav_invoices", icon: FileText},
   {href: "/finance", key: "nav_finance", icon: Wallet},
   {href: "/rates", key: "nav_rates", icon: TrendingUp},

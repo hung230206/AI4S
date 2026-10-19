@@ -1,0 +1,119 @@
+{
+  "at": "2026-10-19T13:52:21.666241+00:00",
+  "origin": "http://127.0.0.1:8106",
+  "items": [
+    {
+      "slug": "iac-picc-terms-2024",
+      "document_id": "c5406292-7236-4379-9749-8e09202d7dfc",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/IC/tkk/01/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+      "source_pages": 36,
+      "published_pages": 36,
+      "sha256": "475583b89bc7fd522d07335bd7fff82e7bee1db92b7e74fa80b8fa4fdd858832",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "iac-picc-product-info",
+      "document_id": "41796b70-1337-4a59-b28f-d79af88e899d",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "b4106dbc46e9f39929f01347ecbdf3f8e51edaa3ff2ef41c208f21bddacbea99",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "iac-claims-standard-2024",
+      "document_id": "c6459df6-bd36-48ed-bc29-0084133fcdd6",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/module/download/downfile.jsp?classid=0&filename=253ba2d6743c4fe8a5aa5ca651b88bbf.pdf",
+      "source_pages": 16,
+      "published_pages": 1,
+      "sha256": "483d8420f6d2690399e0b9ef12db3fdbd93e605e0c8398a29ce9310d1b2697e6",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nfra-health-measures-2019",
+      "document_id": "9f5bf3cb-a42e-4792-9962-d3f0252acf4a",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1027050",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "c8b5730a8f9634c0b0aa520d0dc5669b03521ee853cfe258fc8fb74ce8dd915a",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nfra-shortterm-notice-2021",
+      "document_id": "21c07634-55a8-4715-ad8c-57d075fb141f",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "a1aeb34c29e2ec2d05fc7bfd23a8a2f52dd52870ca1894152479ef17c02ab1b3",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nhsa-student-insurance-2025",
+      "document_id": "4e90733a-5e9f-4a72-a95f-1542118f1ca6",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "0d812ffad98c518e4ed5335485b6d28dd3a43df80448c4683bb5df85758803a9",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nhsa-crossprovince-rules-2022",
+      "document_id": "ef96d9bd-9e6d-4438-a248-7006524f7e35",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nhsa.gov.cn/art/2022/7/26/art_104_8629.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "e665f4e6499cdc1b5ddbe7ca3c9c13b3104fabb6f4357e1add05b54ba692a1f0",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nhsa-crossprovince-guide-2025",
+      "document_id": "8f0bcd42-0585-4dc7-b21d-ac54598ee4bc",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nhsa.gov.cn/art/2025/6/7/art_14_16754.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "9d62d04397f1a6754402f384e161296f5c496b4f2c72c2cc66276d3c362b0aea",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    }
+  ],
+  "fixture_sources_unpublished": [
+    "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+    "955cd27d-a03e-55a4-aea3-e6aa48856893",
+    "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+  ],
+  "actual_model_calls": 0,
+  "excluded_sources_withdrawn": [],
+  "excluded_sources_absent_from_public_library": true,
+  "status": "PASS"
+}

@@ -1,5 +1,8 @@
 // Reviewed interface copy. Original documents and user data are never translated.
 export const phrases: Record<string, {en: string; zh: string}> = {
+  "Dữ liệu tài khoản được xử lý tại máy chủ theo quyền hiện tại.": {en: "Account data is processed on the server under your current permissions.", zh: "按当前权限在服务器处理账户数据。"},
+  "Câu trả lời được xử lý tại máy chủ; chưa gửi tới Gemini.": {en: "This answer is processed on the server; nothing was sent to Gemini.", zh: "在服务器处理回答，未发送至 Gemini。"},
+  "Tài liệu đã thay đổi hoặc được gỡ. Hãy hỏi lại để dùng nguồn mới.": {en: "A document changed or was withdrawn. Ask again to use current sources.", zh: "文档已更新或撤下，请重新提问以使用当前来源。"},
   "Đã cập nhật tên hiển thị.": {
     "en": "Display name updated.",
     "zh": "显示名称已更新。"

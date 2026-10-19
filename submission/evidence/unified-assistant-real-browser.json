@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-19T13:42:34.809Z",
+  "origin": "http://127.0.0.1:3105",
+  "fictional_content_only": false,
+  "public_official_content_only": true,
+  "actual_generation_requests": 1,
+  "generation_elapsed_seconds": 3.561,
+  "status": "PASS",
+  "provider": "GEMINI",
+  "model": "gemini-3.5-flash-lite",
+  "answer": "Theo các tài liệu quy định, sản phẩm bảo hiểm sức khỏe ngắn hạn (có thời gian bảo hiểm từ một năm trở xuống) không có điều khoản bảo đảm tái tục [R2]. Cụ thể, các sản phẩm này được định nghĩa là không chứa điều khoản bảo đảm tái tục [R2], và khi hết thời hạn bảo hiểm, bên mua bảo hiểm phải nộp đơn xin tái tục, được sự đồng ý của doanh nghiệp bảo hiểm và đóng phí để có hợp đồng mới [R1].",
+  "citations": [
+    {
+      "id": "R1",
+      "page": 1,
+      "revision": 6,
+      "href": "/knowledge/c9752a60-1bd4-4251-80a5-41e3ee3b935c?revision=6#page-1"
+    },
+    {
+      "id": "R2",
+      "page": 1,
+      "revision": 6,
+      "href": "/knowledge/053e50cf-8bec-4173-9f68-c7dac1db4607?revision=6#page-1"
+    }
+  ],
+  "consent_withdrawn_after_test": true
+}

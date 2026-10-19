@@ -1,0 +1,20 @@
+
+Running 13 tests using 1 worker
+
+(node:21836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\gemini.spec.ts:22:5 › Gemini chat sends bounded conversation context, displays sources and clears locally (3.9s)
+  ok  2 tests\gemini.spec.ts:46:5 › provider quota fallback is explicit without a mode picker (2.6s)
+  ok  3 tests\gemini.spec.ts:55:5 › no key keeps local assistant available without a mode picker (2.7s)
+  ok  4 tests\gemini.spec.ts:64:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (2.7s)
+  ok  5 tests\gemini.spec.ts:82:5 › feature click opens fixed binary consent, decline does not grant and details are public (3.9s)
+  ok  6 tests\gemini.spec.ts:101:5 › preview stays local, revoking disables Gemini and account page exposes controls (4.8s)
+  ok  7 tests\gemini.spec.ts:116:5 › an in-flight Enter request cannot be sent twice and permission dialog fits mobile locales (7.5s)
+  ok  8 tests\gemini.spec.ts:141:5 › an older UI cannot consent to a newer unseen notice version (5.6s)
+  ok  9 tests\gemini.spec.ts:150:5 › OCR asks per file, declining sends no bytes and agreeing continues the original operation (5.6s)
+  ok 10 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (14.4s)
+  ok 11 tests\rag.spec.ts:75:5 › admin file upload requires per-file agreement and original file can be replaced (5.2s)
+  ok 12 tests\rag.spec.ts:99:5 › regular users cannot administer and legacy knowledge page opens the one assistant (2.4s)
+  ok 13 tests\rag.spec.ts:108:5 › one pending question asks consent once, cites RAG answer and later uses general Gemini (2.8s)
+
+  13 passed (1.3m)

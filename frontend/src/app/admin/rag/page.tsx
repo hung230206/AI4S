@@ -54,7 +54,7 @@ export default function RagAdminPage() {
   }
   if (!user?.is_rag_admin) return <><Heading eyebrow="ADMIN · RAG" title={t.admin}>{t.denied}</Heading><button className="button primary" onClick={() => logout().catch(e => setError(e.message))}>{t.login}</button><ErrorBox message={error}/></>;
   return <>
-    <Heading eyebrow="ADMIN · TOPIC D" title={t.admin}>{t.adminIntro}</Heading><p className="info-note">{t.sourceNote}</p><Link className="text-link" href="/knowledge">{t.title} →</Link><ErrorBox message={error}/>{message && <p role="status" className="success-note">{message}</p>}
+    <Heading eyebrow="ADMIN · TOPIC D" title={t.admin}>{t.adminIntro}</Heading><p className="info-note">{t.sourceNote}</p><Link className="text-link" href="/copilot">{t.title} →</Link><ErrorBox message={error}/>{message && <p role="status" className="success-note">{message}</p>}
     <div className="copilot-actions"><button className="button primary" disabled={busy} onClick={() => {setEditing(undefined); setForm(blank()); setFormOpen(true); setFile(undefined); setMode("text"); setFileKey(k => k + 1);}}>{t.add}</button><button className="button secondary" disabled={busy} onClick={() => {setTrash(v => !v); setSelected(undefined); setFormOpen(false);}}>{trash ? t.active : t.trash}</button></div>
     {formOpen && <form className="card detail-card form-stack rag-editor" onSubmit={e => {e.preventDefault(); act(save);}}>
       <h2>{editing ? t.edit : t.add}</h2>

@@ -51,11 +51,8 @@ test("admin account manages publication, edits invalidate old sources, trash and
   await publish(page, title);
   await page.screenshot({path: "../submission/evidence/screenshots/rag/admin-published.png", fullPage: true});
   await page.getByRole("link", {name: "Hỏi đáp bảo hiểm từ tài liệu →", exact: true}).click();
-  await page.getByLabel("Nguồn để tra cứu", {exact: true}).selectOption({label: title});
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("outpatient specialist benefit");
-  await page.getByRole("button", {name: "Tìm câu trả lời", exact: true}).click();
-  await expect(page.locator(".rag-answer")).toContainText("7,654");
-  const sourceHref = await page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true}).first().getAttribute("href");
+  await page.locator(".rag-library summary").click();
+  const sourceHref = await page.getByRole("link", {name: title + " ↗", exact: true}).getAttribute("href");
   expect(sourceHref).toContain("revision=2");
   await page.goto("/admin/rag");
   await card.getByRole("button", {name: "Sửa", exact: true}).click();
@@ -64,11 +61,10 @@ test("admin account manages publication, edits invalidate old sources, trash and
   await expect(card).toContainText("Bản nháp"); await publish(page, title);
   await page.goto(sourceHref!);
   await expect(page.getByRole("alert", {name: "Lỗi thao tác"})).toContainText("RAG_SOURCE_RETIRED");
-  await page.goto("/knowledge"); await page.getByLabel("Nguồn để tra cứu", {exact: true}).selectOption({label: title});
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("outpatient specialist benefit");
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
-  await expect(page.locator(".rag-answer")).toContainText("8,765");
-  await page.screenshot({path: "../submission/evidence/screenshots/rag/student-citations.png", fullPage: true});
+  await page.goto("/knowledge"); await expect(page).toHaveURL(/\/copilot$/);
+  await page.locator(".rag-library summary").click();
+  await page.getByRole("link", {name: title + " ↗", exact: true}).click();
+  await expect(page.locator(".policy-source")).toContainText("8,765");
   await page.goto("/admin/rag"); await card.getByRole("button", {name: "Chuyển vào thùng rác", exact: true}).click();
   await card.getByRole("button", {name: "Xác nhận", exact: true}).click(); await expect(card).toHaveCount(0);
   await page.getByRole("button", {name: "Thùng rác", exact: true}).click(); await expect(card).toContainText(title);
@@ -100,67 +96,37 @@ test("admin file upload requires per-file agreement and original file can be rep
   await page.screenshot({path: "../submission/evidence/screenshots/rag/admin-mobile.png", fullPage: true});
 });
 
-test("regular users cannot administer and missing evidence abstains without a model call", async ({page}) => {
+test("regular users cannot administer and legacy knowledge page opens the one assistant", async ({page}) => {
   await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo")); await page.goto("/admin/rag");
   await expect(page.getByText("Bạn cần đăng nhập bằng tài khoản quản trị kho RAG.", {exact: true})).toBeVisible();
-  await dismissWelcome(page);
-  expect((await page.request.get("/api/v1/admin/rag/documents")).status()).toBe(401); // Demo bearer is kept only in app memory.
-  await page.goto("/knowledge");
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Bảo hiểm thai sản được trả bao nhiêu?");
-  await page.getByRole("button", {name: "Tìm câu trả lời", exact: true}).click();
-  await expect(page.locator(".rag-answer")).toContainText("Chưa có đủ thông tin");
-  await expect(page.locator(".rag-answer .citation-card")).toHaveCount(0);
+  await page.goto("/knowledge"); await dismissWelcome(page);
+  await expect(page).toHaveURL(/\/copilot$/);
+  await expect(page.getByRole("heading", {name: "Trợ lý du học", exact: true})).toBeVisible();
+  await expect(page.locator('nav a[href="/knowledge"]')).toHaveCount(0);
 });
 
-test("RAG Gemini mode asks binary consent, preview stays local and answer links its cited source", async ({page}) => {
+test("one pending question asks consent once, cites RAG answer and later uses general Gemini", async ({page}) => {
   let sends = 0;
   await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo"));
-  await page.route("**/api/v1/rag/documents", async route => {const response = await route.fetch(); await route.fulfill({json: {...await response.json(), gemini_configured: true}});});
-  await page.route("**/api/v1/rag/ask", async route => {
-    sends++; expect(route.request().postDataJSON().use_gemini).toBe(true);
-    await route.fulfill({json: {status: "EVIDENCE_FOUND", provider: "GEMINI", method: "BM25_RAG_GEMINI", answer: "Fictional policy answer from cited evidence.", missing_concepts: [], notice: "Test only", citations: [{source_id: "R1", document_id: "114ae7bd-ee08-5092-ab9f-d3830ff2b330", revision: 1, title: "Fictional policy source", publisher: "Demo team", filename: "sample.txt", page: 1, excerpt: "Original sample excerpt", document_kind: "TEST_FIXTURE", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"}]}});
+  await page.route("**/api/v1/finance/assistant/status", route => route.fulfill({json: {gemini_configured: true, model: "test-model"}}));
+  await page.route("**/api/v1/study-assistant/chat", async route => {
+    sends++; const body = route.request().postDataJSON(); expect(body.use_gemini).toBe(true);
+    const rag = sends === 1;
+    await route.fulfill({json: {route: rag ? "RAG" : "GEMINI", provider: "GEMINI", answer: rag ? "Theo tài liệu kiểm thử [R1]." : "General study guidance", actions: [], executed_actions: [], citations: rag ? [{source_id: "R1", title: "Test source", excerpt: "Fictional terms", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1", document_kind: "TEST_FIXTURE"}] : []}});
   });
-  await page.goto("/knowledge"); await dismissWelcome(page);
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Outpatient benefit limit");
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
-  const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
-  await expect(dialog).toContainText("Đồng ý sẽ tiếp tục câu hỏi đang chờ");
-  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click(); expect(sends).toBe(0);
-  await page.getByRole("button", {name: "Bật trả lời RAG + Gemini", exact: true}).click();
-  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
-  await expect(dialog).not.toBeVisible();
-  expect(sends).toBe(0); // Enabling alone must not replay the declined question.
-  await page.getByRole("button", {name: "Xem dữ liệu sẽ gửi", exact: true}).click();
-  await expect(page.locator(".privacy-preview")).toContainText('"sent": false'); expect(sends).toBe(0);
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
-  await expect(page.locator(".rag-answer")).toContainText("Fictional policy answer"); expect(sends).toBe(1);
-  await expect(page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
-  await page.getByRole("button", {name: "Thu hồi quyền Gemini", exact: true}).click();
-  await expect(page.getByRole("button", {name: "Bật trả lời RAG + Gemini", exact: true})).toBeVisible();
-});
-
-test("a pending RAG question continues through Gemini only after agreement; Shift Enter never sends", async ({page}) => {
-  let sends = 0;
-  await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo"));
-  await page.route("**/api/v1/rag/documents", async route => {const response = await route.fetch(); await route.fulfill({json: {...await response.json(), gemini_configured: true}});});
-  await page.route("**/api/v1/rag/ask", async route => {
-    sends++; const payload = route.request().postDataJSON();
-    expect(payload.use_gemini).toBe(true); expect(payload.privacy_revision).toBeGreaterThan(0);
-    await route.fulfill({json: {status: "EVIDENCE_FOUND", provider: "GEMINI", model: "gemini-3.5-flash-lite", method: "BM25_RAG_GEMINI", answer: "Theo điều khoản mẫu, hạn mức ngoại trú là 2.000 CNY/năm [R1].", missing_concepts: [], notice: "Test only", citations: [{source_id: "R1", document_id: "114ae7bd-ee08-5092-ab9f-d3830ff2b330", revision: 1, title: "Demo student health policy — fictional terms", publisher: "Demo team", filename: "sample.txt", page: 1, excerpt: "Fictional annual outpatient limit: CNY 2,000.", document_kind: "TEST_FIXTURE", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"}]}});
-  });
-  await page.goto("/knowledge"); await dismissWelcome(page);
-  const question = page.getByLabel("Câu hỏi bảo hiểm", {exact: true});
-  await question.fill("Quyền lợi ngoại trú có hạn mức bao nhiêu?"); await question.press("Shift+Enter");
-  await expect(question).toHaveValue(/\n$/); expect(sends).toBe(0);
+  await page.goto("/copilot"); await dismissWelcome(page);
+  const question = page.getByLabel("Câu hỏi cho trợ lý", {exact: true});
+  await question.fill("Bảo hiểm có tái tục không?"); await question.press("Shift+Enter"); expect(sends).toBe(0);
   await question.press("Enter");
   const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
   await expect(dialog).toBeVisible(); expect(sends).toBe(0);
-  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
-  await expect(dialog).not.toBeVisible(); await expect(page.locator(".rag-answer")).toContainText("2.000 CNY");
-  expect(sends).toBe(1); await expect(page.locator(".rag-answer")).toContainText("gemini-3.5-flash-lite");
-  await expect(page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true})).toBeVisible();
-  await page.locator(".rag-answer").scrollIntoViewIfNeeded();
-  await page.screenshot({path: "../submission/evidence/screenshots/rag/rag-llm-unified.png"});
-  await question.press("Enter"); await expect.poll(() => sends).toBe(2);
-  await expect(dialog).not.toBeVisible(); // Current session grant is reused, never silently renewed.
+  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click();
+  await expect(dialog).not.toBeVisible(); expect(sends).toBe(0); await expect(question).not.toHaveValue("");
+  await question.press("Enter"); await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+  await expect(page.locator(".copilot-answer")).toContainText("Theo tài liệu"); expect(sends).toBe(1);
+  await expect(page.getByRole("link", {name: "Test source ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
+  await question.fill("Cách thích nghi với việc du học?"); await question.press("Enter");
+  await expect(page.locator(".copilot-turn")).toHaveCount(2); expect(sends).toBe(2);
+  await expect(dialog).not.toBeVisible();
+  await page.screenshot({path: "../submission/evidence/screenshots/rag/unified-study-assistant.png", fullPage: true});
 });

@@ -1,0 +1,12 @@
+
+Running 36 tests using 1 worker
+
+(node:9704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 tests\acceptance.spec.ts:45:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (40.2s)
+(node:23052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 tests\acceptance.spec.ts:104:5 › declined test method requires renewed consent and allows a successful retry (10.9s)
+(node:16048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (949ms)

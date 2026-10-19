@@ -1,3 +1,7 @@
+## Một Trợ lý du học
+
+Mở `/copilot`: câu hỏi được tự định tuyến sang RAG + Gemini hoặc Gemini tổng quát. Không có hai ô chat hoặc nút chọn chế độ. `/knowledge` chuyển về cùng trợ lý; trang nguồn và admin RAG được giữ lại. [Luồng và kiểm thử](docs/UNIFIED_STUDY_ASSISTANT.md).
+
 ## China-only RAG corpus (19 October 2026)
 
 Competition selection: [dated review and excluded source](docs/CHINA_RAG_COMPETITION_SELECTION.md). The active local/online shared library contains 8 selected current China references: 3 IAC, 2 NFRA, 3 NHSA; fictional library fixtures are drafts. Original product wording, disclosure metadata, regulations and public social-insurance guidance are explicitly distinguished. Source registry, scope, actual validation and reproduction: [China corpus report](docs/23_CHINA_RAG_CORPUS.md). Local original/prepared files: output/China_RAG_Corpus (excluded from public Git/ZIP). Current provider availability and the pending Render model setting are recorded in IMPLEMENTATION_REPORT.md; a rate-limited extractive fallback is not a generated LLM answer.

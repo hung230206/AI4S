@@ -1,15 +1,15 @@
 # Test kho RAG và tài khoản quản trị
 
-- Người dùng: https://ai4s-demo.onrender.com/knowledge — **Hỏi đáp bảo hiểm RAG** trên menu.
+- Người dùng: https://ai4s-demo.onrender.com/copilot — **Trợ lý du học** duy nhất trên menu; đường dẫn /knowledge tự chuyển về đây.
 - Quản trị: https://ai4s-demo.onrender.com/admin/rag — đăng nhập bằng tài khoản test trong `.local/RAG_ADMIN_TEST.txt` hoặc `.local/rag-admin-test.json` trên máy dự án. Đây là tệp riêng, không nằm trên GitHub hoặc ZIP bàn giao. Tài khoản thường và mã vận hành sandbox không có quyền quản trị.
 
-Luồng mới tại **Hỏi đáp bảo hiểm RAG**: hỏi → tìm đoạn phù hợp trong kho → Gemini giải thích bằng ngôn ngữ giao diện → đối chiếu trang nguồn. Lần hỏi đầu mở popup **Đồng ý / Không đồng ý** trước khi gửi tới Google. Đồng ý tiếp tục câu hỏi đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu trích đoạn. Có thể xem trước dữ liệu gửi hoặc thu hồi quyền.
+Luồng tự động trong **Trợ lý du học** khi câu hỏi cần tài liệu: hỏi → tìm đoạn phù hợp trong kho → Gemini giải thích bằng ngôn ngữ giao diện → đối chiếu trang nguồn. Lần hỏi đầu mở popup **Đồng ý / Không đồng ý** trước khi gửi tới Google. Đồng ý tiếp tục câu hỏi đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu trích đoạn. Có thể xem trước dữ liệu gửi hoặc thu hồi quyền.
 
-Gemini 3.8 đã tái hiện lỗi 503/timeout; cấu hình mới ưu tiên 3.5 Flash-Lite. Nếu máy chủ còn cấu hình 3.8, giới hạn lần thử đầu 8 giây rồi thử một model dự phòng, trong tổng hạn 25 giây. Giao diện ghi đúng model thực sự trả lời. Khi cả hai không trả lời, hệ thống hiển thị trích đoạn và lý do lỗi, không giả làm câu trả lời AI.
+Gemini 3.8 đã tái hiện lỗi 503/timeout; cấu hình mới ưu tiên 3.5 Flash-Lite. Nếu máy chủ còn cấu hình 3.8, giới hạn lần thử đầu 8 giây rồi thử một model dự phòng, trong tổng hạn 25 giây. Phản hồi API ghi đúng model thực sự trả lời. Khi cả hai không trả lời, hệ thống hiển thị trích đoạn và lý do lỗi, không giả làm câu trả lời AI.
 
 ## Tài liệu Trung Quốc và tệp mẫu để thử
 
-Tài liệu thật để tải lên: `output/China_RAG_Corpus/prepared/`, điền thông tin trong `metadata.csv`. Không nhập lại bản trùng vào kho đang có đủ 8 nguồn. Chọn nguồn NFRA 2021 rồi hỏi: **Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?**
+Tài liệu thật để tải lên: `output/China_RAG_Corpus/prepared/`, điền thông tin trong `metadata.csv`. Không nhập lại bản trùng vào kho đang có đủ 8 nguồn. Trong Trợ lý du học, hỏi: **Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?**
 
 Nếu chỉ muốn thử CRUD bằng tài liệu giả lập, mở `fixtures/rag_upload_samples/`: có `student-policy-sample-en.txt`, `claims-guide-sample-vi.md`, `insurance-glossary-sample-zh.txt`. Đây là bản rời của ba nguồn mẫu tự soạn đã có trong kho, dùng để thử thêm/thay tệp; không phải hợp đồng thật. `README.md` trong thư mục ghi thông tin metadata và câu hỏi đối chiếu. Không tải README thành nguồn bảo hiểm.
 
@@ -19,8 +19,8 @@ Nếu chỉ muốn thử CRUD bằng tài liệu giả lập, mở `fixtures/rag
 2. Chọn **Soạn văn bản** hoặc **Tải PDF / ảnh / TXT**. Tải tệp cần chọn **Đồng ý** trong popup xử lý đúng tệp. Lưu thành **bản nháp**; người dùng chưa thấy tài liệu.
 3. **Đọc và kiểm tra**: đối chiếu từng trang, xem SHA-256 và số đoạn. Nhập câu hỏi, bấm **Thử truy xuất bản nháp**; bước này chạy nội bộ, chưa gửi Google.
 4. Bấm **Xuất bản**. Popup có hai nút Đồng ý / Không đồng ý và link chi tiết. Đồng ý xác nhận quyền công bố, nội dung đã kiểm tra và không chứa thông tin cá nhân/nhạy cảm. Người dùng trong ứng dụng mới có thể đọc, tải và hỏi từ nguồn này.
-5. Mở **Hỏi đáp bảo hiểm RAG**, chọn nguồn và hỏi. Nếu đã cấu hình Gemini, lần đầu chọn **Đồng ý** trong popup để tiếp tục câu hỏi qua RAG + Gemini. Kết quả có giải thích, trích đoạn gốc, trang, phiên bản và nút **Đọc trang nguồn**. Không có bằng chứng thì báo thiếu thông tin và không gọi LLM để đoán.
-6. Trong phiên đã cấp quyền, câu hỏi tiếp theo tự qua RAG rồi Gemini. Có thể **Xem dữ liệu sẽ gửi**, **Thu hồi quyền Gemini** hoặc chọn **Trích đoạn tại máy chủ**. Tối đa ba đoạn, không gửi tệp gốc/hồ sơ cá nhân. Enter gửi, Shift+Enter xuống dòng. Chọn **Bật trả lời RAG + Gemini** sau khi từ chối chỉ bật quyền, không tự gửi lại câu đã từ chối.
+5. Mở **Trợ lý du học** và hỏi, không cần chọn nguồn hoặc chế độ. Nếu đã cấu hình Gemini, lần đầu chọn **Đồng ý** trong popup để tiếp tục câu hỏi qua RAG + Gemini. Kết quả có giải thích, trích đoạn gốc, trang, phiên bản và liên kết tên nguồn. Không có bằng chứng thì báo thiếu thông tin và không gọi LLM để đoán.
+6. Trong phiên đã cấp quyền, câu hỏi tiếp theo tự được phân loại: cần tài liệu thì RAG rồi Gemini, tổng quát thì Gemini trực tiếp. Có thể **Xem dữ liệu sẽ gửi**, **Thu hồi quyền Gemini** . Khi Gemini lỗi, trợ lý ghi rõ và chỉ hiển thị trích đoạn. Tối đa ba đoạn, không gửi tệp gốc/hồ sơ cá nhân. Enter gửi, Shift+Enter xuống dòng. Sau khi từ chối, câu hỏi vẫn ở ô nhập; chỉ gửi tiếp khi bạn chủ động hỏi và đồng ý.
 7. Quay lại admin **Sửa**. Văn bản tự soạn sửa trực tiếp được; PDF/ảnh phải **Thay tệp gốc** để giữ trích dẫn khớp nguồn. Mọi sửa đổi đưa tài liệu về nháp và cập nhật chỉ mục trong cùng giao dịch. Kiểm tra rồi xuất bản lại.
 8. Mở liên kết trích dẫn phiên bản cũ để kiểm tra: hệ thống báo nguồn đã thay đổi. Hỏi lại sẽ dùng phiên bản mới.
 9. **Gỡ xuất bản** hoặc **Chuyển vào thùng rác**: không dùng nguồn này cho câu hỏi mới. Thùng rác có thể khôi phục thành nháp. Lịch sử giữ thao tác, phiên bản và mã băm; không có chức năng khôi phục toàn bộ nội dung phiên bản cũ.

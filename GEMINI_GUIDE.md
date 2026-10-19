@@ -1,16 +1,16 @@
 # Gemini và RAG trong Demo
 
-## Hỏi đáp bảo hiểm: RAG + Gemini
+## Một Trợ lý du học: tự chọn RAG hoặc Gemini
 
-Mở `/knowledge`, chọn nguồn và nhập câu hỏi. Ứng dụng tìm các đoạn phù hợp trong kho do admin xuất bản, rồi đưa tối đa ba đoạn cho Gemini giải thích bằng ngôn ngữ giao diện. Kết quả có đoạn gốc, trang và phiên bản để đối chiếu. Không đủ nguồn thì báo thiếu thông tin, không gọi model để suy đoán quyền lợi.
+Mở `/copilot` và nhập câu hỏi. Không cần chọn chế độ hoặc nguồn; `/knowledge` tự chuyển về cùng màn hình trợ lý. Ứng dụng tìm các đoạn phù hợp trong kho do admin xuất bản, rồi đưa tối đa ba đoạn cho Gemini giải thích bằng ngôn ngữ giao diện. Kết quả có đoạn gốc, trang và phiên bản để đối chiếu. Không đủ nguồn thì báo thiếu thông tin, không gọi model để suy đoán quyền lợi.
 
-Lần đầu bấm hỏi mở popup **Đồng ý / Không đồng ý** với link chi tiết. Đồng ý tiếp tục câu đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu tại máy chủ. Có thể xem trước dữ liệu gửi, chọn **Trích đoạn tại máy chủ** hoặc thu hồi quyền. Enter gửi; Shift+Enter xuống dòng. Quyền theo phiên, tối đa một giờ, không tự gia hạn.
+Lần đầu bấm hỏi mở popup **Đồng ý / Không đồng ý** với link chi tiết. Đồng ý tiếp tục câu đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu tại máy chủ. Có thể xem trước dữ liệu gửi hoặc thu hồi quyền. Không có nút chọn RAG/Gemini; nhà cung cấp lỗi sẽ được thông báo rõ. Enter gửi; Shift+Enter xuống dòng. Quyền theo phiên, tối đa một giờ, không tự gia hạn.
 
 Kho live/local đã nạp 8 nguồn Trung Quốc thật; ba mẫu tự soạn được giữ ở bản nháp. Bản cài mới trước khi chạy importer vẫn khởi tạo ba mẫu kiểm thử. Xem docs/23_CHINA_RAG_CORPUS.md. Các nguồn do admin xuất bản được dùng chung trong ứng dụng; hồ sơ cá nhân không tự đưa vào kho. Luồng quản trị, tài khoản test và tệp upload: [RAG_GUIDE.md](RAG_GUIDE.md).
 
 ## Trợ lý du học
 
-`/copilot` bắt đầu ở **Tra cứu trực tiếp**. Chọn Gemini để mở popup cấp quyền; cấp quyền ở đây chỉ bật chế độ, không tự gửi câu hỏi. Chỉ các lượt hội thoại Gemini cùng quyền còn hiệu lực mới được dùng làm lịch sử giới hạn. Không tự chuyển nội dung đã tra cứu nội bộ sang Google.
+`/copilot` tự phân loại câu hỏi ở máy chủ. Câu hỏi bảo hiểm/điều khoản/tài liệu → truy xuất RAG → Gemini diễn giải dựa trên nguồn. Câu hỏi du học tổng quát → Gemini trực tiếp. Không đủ chứng cứ thì không dùng kiến thức mô hình để đoán quyền lợi. Dữ liệu tài chính tài khoản vẫn xử lý nội bộ trong cấu hình miễn phí. Đồng ý tiếp tục đúng câu đang chờ; Không đồng ý không gửi câu hỏi. Chi tiết và kiểm thử: docs/UNIFIED_STUDY_ASSISTANT.md.
 
 Giao diện cấp phạm vi SAMPLE_ASSISTANT cố định: câu hỏi, tối đa ba lượt gần nhất và tối đa ba đoạn mẫu/tham khảo phù hợp. Không cấp quyền dữ liệu thu chi, tóm tắt hợp đồng cá nhân hoặc hồ sơ bồi thường. Khi thích hợp, các đoạn từ kho RAG đã xuất bản được điền vào các vị trí ngữ cảnh còn trống, vẫn giữ tổng tối đa ba đoạn.
 

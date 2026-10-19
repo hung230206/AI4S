@@ -11,6 +11,7 @@ fs.mkdirSync(screenshots, {recursive: true});
 execFileSync(python, [path.join(root, "scripts/create_student_finance_fixtures.py")]);
 
 async function register(page: Page) {
+  await page.route("**/api/v1/finance/assistant/status", route => route.fulfill({json: {gemini_configured: false, model: null}}));
   await page.goto("/");
   await page.getByRole("button", {name: "Tạo tài khoản", exact: true}).click();
   await page.getByLabel("Họ và tên", {exact: true}).fill("Student Finance QA");
@@ -56,7 +57,6 @@ test("native ledger, planned shortfall, actual confirmation and bounded assistan
   await page.getByRole("button", {name: "Xác nhận hủy ghi nhận", exact: true}).click();
   await expect(page.getByRole("status")).toContainText("Đã hủy ghi nhận");
   await page.getByRole("link", {name: "Trợ lý du học", exact: true}).click();
-  await page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true}).click();
   await page.getByRole("button", {name: "30 ngày tới tôi có đủ tiền không?", exact: true}).click();
   await expect(page.locator(".copilot-answer")).toContainText("-200.00 CNY");
   await page.getByLabel("Câu hỏi cho trợ lý", {exact: true}).fill("Thanh toán ngay giúp tôi");
@@ -115,10 +115,10 @@ test("scanned policy PDF OCR produces a cited answer on a phone", async ({page})
   await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Scanned QA policy", exact: true})).toBeVisible({timeout: 75000});
   await page.getByRole("link", {name: "Trợ lý du học", exact: true}).click();
-  await page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true}).click();
   await page.getByRole("button", {name: "Hồ sơ bồi thường gồm những gì?", exact: true}).click();
-  await expect(page.locator(".copilot-source")).toContainText("hospital invoices");
-  await expect(page.locator(".copilot-source")).toContainText("Trang 1");
+  const ownedSource = page.locator(".copilot-source").filter({hasText: "Scanned QA policy"});
+  await expect(ownedSource).toContainText("hospital invoices");
+  await expect(ownedSource).toContainText("Trang 1");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({path: path.join(screenshots, "policy-ocr-citation-mobile.png"), fullPage: true});
