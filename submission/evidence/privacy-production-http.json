@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-19T07:14:35.527982+00:00",
+  "at": "2026-10-19T07:23:59.372683+00:00",
   "origin": "http://localhost:3104",
   "checks": [
     "default_off_server_gate_and_no_financial_actions",
@@ -14,5 +14,5 @@
   "real_model_calls": 0,
   "release": "local",
   "status": "PASS",
-  "elapsed_seconds": 4.61
+  "elapsed_seconds": 12.094
 }

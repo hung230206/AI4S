@@ -50,6 +50,7 @@ All supplementary scopes and acknowledgement checkboxes start unchecked. Explici
 ### Data minimisation and disclosure
 
 - History is optional, at most three earlier Gemini turns from the same permission revision. Earlier local replies are never silently forwarded. The backend discards ungranted history even if a modified client includes it.
+- New policy-source uploads default to private `USER_PROVIDED`, including when opening another policy form; a sample label requires a deliberate choice. Existing labels are not retroactively authenticated.
 - Document retrieval is optional, owner-scoped, at most three excerpts. In demo mode the provenance filter applies **before** top-k retrieval. User-provided private documents are excluded, even when they rank higher than samples.
 - Budget/invoice and reviewed-policy contexts are separate optional scopes, disabled in demo mode. `PAID_PRIVATE` is an operator configuration requiring verified paid billing, provider terms/DPA and legal review; changing the flag is not itself proof of compliance. It does not enable claim-record sharing.
 - Claim cases, attachments, medical descriptions, original file bytes, passwords, authentication cookies and operator/API keys are excluded from model evidence. A conservative text tripwire rejects recognisable emails, long phone/identity-like numbers and credential/medical labels before external dispatch. This is not a complete DLP or anonymisation system.

@@ -27,7 +27,9 @@ async function setup(page: Page) {
   const pack = path.join(folder, "samples.zip"); await download.saveAs(pack);
   execFileSync(python, ["-c", "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])", pack, folder]);
   await page.getByRole("button", {name: "Thêm hợp đồng", exact: true}).click();
+  await expect(page.locator(".insurance-source-upload select")).toHaveValue("USER_PROVIDED");
   await page.getByLabel("Tệp hợp đồng (PDF, ảnh, TXT)", {exact: true}).setInputFiles(path.join(folder, "demo-policy.txt"));
+  await page.locator(".insurance-source-upload select").selectOption("TEST_FIXTURE");
   await page.getByRole("button", {name: "Tải lên và đọc tài liệu", exact: true}).click();
   await expect(page.getByText("Văn bản nguồn để đối chiếu", {exact: false}).first()).toBeVisible({timeout: 30000});
   await expect(page.getByLabel("Nạp trường từ review-fields.json (chưa lưu)", {exact: true})).toBeEnabled();

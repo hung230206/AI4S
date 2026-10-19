@@ -7,6 +7,7 @@ This section supersedes older Gemini outbound-data defaults below. Local impleme
 - Enter sends; Shift+Enter inserts a newline. IME composition does not submit, and an in-flight guard prevents duplicate Enter/click requests.
 - Direct lookup is selected on page load. Gemini requires explicit session permission. Supplementary scopes and confirmations start unchecked; refusal does not disable internal OCR, retrieval, budgets or payment workflows.
 - Server-side grants require a matching revision, notice version and data mode, expire after at most one hour and require valid authentication. New demo tokens have a nonce; legacy shared tokens cannot grant AI permission. Old UI code cannot approve an unseen new notice.
+- New policy-source uploads default to private USER_PROVIDED, and opening a new policy form resets that choice. Sample provenance requires a deliberate choice.
 - History, document excerpts, finance/invoices and reviewed-policy summaries are separate optional groups. Unpaid DEMO_ONLY blocks the last two and filters personal documents before retrieval. Claim records, attachments, medical descriptions and original bytes are excluded from model evidence.
 - A local preview shows eligible context without calling Google. Recognisable sensitive identifiers/secrets trigger rejection before dispatch. Revocation/logout stops future sends; it cannot recall in-flight processing or copies already held by Google. Local lookup replies are not silently forwarded as Gemini history.
 - Public `/privacy`, selected-file/server-processing explanations, disabled unused device permissions, audit metadata without chat text, and all-device logout for personal accounts.
@@ -24,7 +25,7 @@ The published contest allocates 30% to security/compliance and requests permissi
 | Intermediate targeted backend suite | 70 passed; the final full suite includes the two later backend boundary cases |
 | Development browser regression | 29 passed in 116.779 seconds, includes the two development operator UI flows |
 | Earlier focused chat browser suite | 7 passed in 13.507 seconds |
-| **Final standalone production browser suite** | **29 passed** in 85.727 seconds, 0 unexpected/skipped/flaky; includes eight chat/privacy cases |
+| **Final standalone production browser suite** | **29 passed** in 249.828 seconds, 0 unexpected/skipped/flaky; includes eight chat/privacy cases |
 | Lint / TypeScript / standalone Webpack build | all exit 0 |
 | Alembic check/migration | no pending model/schema operations; c41a15fa8b20 applied to local app DB without deleting existing data |
 | Final actual-HTTP privacy acceptance | **7 groups passed**, no model request; cookie/CSRF, preview/filtering, revoke, login isolation, logout-all and security headers |
