@@ -23,6 +23,7 @@ from app import gemini
 from app.rag import Metadata
 
 SOURCES = ROOT / "scripts/china_rag_sources.json"
+SELECTION = ROOT / "scripts/china_rag_competition_review.json"
 OUTPUT = ROOT / "output/China_RAG_Corpus"
 HOSTS = {"www.iachina.cn", "www.nfra.gov.cn", "www.nhsa.gov.cn"}
 MAX_BYTES = 5 * 1024 * 1024
@@ -49,6 +50,31 @@ HINTS = [
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def excluded_sources():
+    return json.loads(SELECTION.read_text(encoding="utf-8"))["excluded"]
+
+
+def reject_excluded(records):
+    excluded = {record["url"] for record in excluded_sources()}
+    if any(record.get("url", record.get("source_url")) in excluded for record in records):
+        raise ValueError("Withdrawn competition source found; regenerate the prepared manifest")
+
+
+def retire_excluded(client, documents, checked):
+    exclusions = {record["url"]: record for record in excluded_sources()}
+    receipts = []
+    for doc in documents:
+        if doc.get("source_kind") != "PUBLIC_REFERENCE" or doc.get("source_url") not in exclusions:
+            continue
+        operation = "ALREADY_WITHDRAWN"
+        if doc["published"] and not doc["deleted"]:
+            checked(client.post(f"/admin/rag/documents/{doc['id']}/unpublish", json={"revision": doc["revision"]}))
+            operation = "UNPUBLISHED"
+        receipts.append({"document_id": doc["id"], "source_url": doc["source_url"], "operation": operation,
+                         "reason": exclusions[doc["source_url"]]["reason"]})
+    return receipts
 
 
 def allowed_url(url):
@@ -120,6 +146,7 @@ def annotate(text):
 
 def prepare(cache):
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))
+    reject_excluded(sources)
     for folder in (OUTPUT / "raw", OUTPUT / "prepared"): folder.mkdir(parents=True, exist_ok=True)
     records = []
     for source in sources:
@@ -166,6 +193,7 @@ def prepare(cache):
 def import_sources(url, credentials_path, publish, retire_fixtures, evidence):
     if not publish: raise ValueError("Pass --publish only for an authorized, reviewed publication run")
     manifest = json.loads((OUTPUT / "manifest.json").read_text(encoding="utf-8"))
+    reject_excluded(manifest["sources"])
     credentials = json.loads(credentials_path.read_text(encoding="utf-8"))
     result = {"at": datetime.now(timezone.utc).isoformat(), "origin": url, "items": [], "fixture_sources_unpublished": [], "actual_model_calls": 0}
     def checked(response, status=200):
@@ -177,6 +205,7 @@ def import_sources(url, credentials_path, publish, retire_fixtures, evidence):
         client.headers["X-CSRF-Token"] = account["csrf_token"]
         try:
             listing = checked(client.get("/admin/rag/documents")); notice = listing["publication_notice"]
+            result["excluded_sources_withdrawn"] = retire_excluded(client, listing["items"], checked)
             for record in manifest["sources"]:
                 raw = (OUTPUT / "prepared" / record["prepared_file"]).read_bytes()
                 if sha(raw) != record["prepared_sha256"]: raise ValueError("Prepared file changed after review")
@@ -214,6 +243,9 @@ def import_sources(url, credentials_path, publish, retire_fixtures, evidence):
                     if doc["source_kind"] == "TEST_FIXTURE" and doc["published"] and not doc["deleted"]:
                         checked(client.post(f"/admin/rag/documents/{doc['id']}/unpublish", json={"revision": doc["revision"]}))
                         result["fixture_sources_unpublished"].append(doc["id"])
+            active = checked(client.get("/rag/documents"))["items"]
+            reject_excluded(active)
+            result["excluded_sources_absent_from_public_library"] = True
             result["status"] = "PASS"
         except Exception as error:
             result.update(status="FAIL", failure=str(error)[:200]); raise

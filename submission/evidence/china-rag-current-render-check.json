@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-19T13:23:07.158740+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "actual_model_calls": 0,
+  "active_sources": 8,
+  "withdrawn_detail_download_and_scoped_retrieval_blocked": [
+    "1a21385f-80ba-45ca-aeaa-bb09f837d67a"
+  ],
+  "withdrawn_source_absent_from_unscoped_retrieval": true,
+  "status": "PASS"
+}

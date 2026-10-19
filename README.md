@@ -1,6 +1,6 @@
 ## China-only RAG corpus (19 October 2026)
 
-The active local/online shared library contains 9 official China references: 4 IAC, 2 NFRA, 3 NHSA; fictional library fixtures are drafts. Original product wording, disclosure metadata, regulations and public social-insurance guidance are explicitly distinguished. Source registry, scope, actual validation and reproduction: [China corpus report](docs/23_CHINA_RAG_CORPUS.md). Local original/prepared files: output/China_RAG_Corpus (excluded from public Git/ZIP). Current provider availability and the pending Render model setting are recorded in IMPLEMENTATION_REPORT.md; a rate-limited extractive fallback is not a generated LLM answer.
+Competition selection: [dated review and excluded source](docs/CHINA_RAG_COMPETITION_SELECTION.md). The active local/online shared library contains 8 selected current China references: 3 IAC, 2 NFRA, 3 NHSA; fictional library fixtures are drafts. Original product wording, disclosure metadata, regulations and public social-insurance guidance are explicitly distinguished. Source registry, scope, actual validation and reproduction: [China corpus report](docs/23_CHINA_RAG_CORPUS.md). Local original/prepared files: output/China_RAG_Corpus (excluded from public Git/ZIP). Current provider availability and the pending Render model setting are recorded in IMPLEMENTATION_REPORT.md; a rate-limited extractive fallback is not a generated LLM answer.
 
 ## Managed Topic D RAG (19 October 2026)
 

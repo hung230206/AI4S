@@ -1,0 +1,18 @@
+{
+  "reviewed_on": "2026-10-19",
+  "purpose": "One-time selection of current China references for the competition demo; no long-term monitoring service.",
+  "qualification": "Regulatory effectiveness, product sale status and guidance currency are different checks. This is a dated source review, not a legal certification or an individual eligibility decision.",
+  "retained": [
+    {"slug": "iac-picc-terms-2024", "kind": "PRODUCT_WORDING", "decision": "Retain the wording matching code 2024-008; matching IAC metadata displays in sale. Actual issued contract governs.", "evidence_url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html"},
+    {"slug": "iac-picc-product-info", "kind": "PRODUCT_METADATA", "decision": "Official disclosure currently displays 在售; does not establish coverage or personal eligibility.", "evidence_url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html"},
+    {"slug": "iac-claims-standard-2024", "kind": "INDUSTRY_STANDARD", "decision": "Issued standard effective 2025-02-19, still listed in IAC standards library; no replacement found in this review. Not legislation.", "evidence_url": "https://www.iachina.cn/module/download/downfile.jsp?classid=0&filename=253ba2d6743c4fe8a5aa5ca651b88bbf.pdf", "additional_evidence_url": "https://wap.iachina.cn/col/col83/"},
+    {"slug": "nfra-health-measures-2019", "kind": "REGULATION", "decision": "Government policy page labels 现行有效. The repealed predecessor is the 2006 text, not this 2019 version.", "evidence_url": "https://jrj.beijing.gov.cn/2024zcwj/gjzcfg2024/202409/t20240906_3792019.html"},
+    {"slug": "nfra-shortterm-notice-2021", "kind": "REGULATORY_NOTICE", "decision": "MOFCOM legal registry labels 现行有效; NFRA retains the promulgated notice. Scope excludes group insurance.", "evidence_url": "https://policy.mofcom.gov.cn/claw/clawContent.shtml?id=87884", "additional_evidence_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198"},
+    {"slug": "nhsa-student-insurance-2025", "kind": "PUBLIC_GUIDANCE", "decision": "Retain for the social/commercial insurance distinction; official article remains published. Illustrative figures are not a universal current benefit schedule or foreign-student eligibility proof.", "evidence_url": "https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html"},
+    {"slug": "nhsa-crossprovince-rules-2022", "kind": "REGULATORY_NOTICE", "decision": "Still cited as a governing basis by the Xinjiang healthcare authority in September 2026 alongside the supplementary 2024 notice; no repeal found. Apply within its scope and current local implementation.", "evidence_url": "https://ylbzj.xinjiang.gov.cn/ylbzj/zcj/202609/579c4492a36e48578ae2c745fb38a555.shtml", "additional_evidence_url": "https://www.nhsa.gov.cn/art/2022/7/26/art_104_8629.html"},
+    {"slug": "nhsa-crossprovince-guide-2025", "kind": "PUBLIC_GUIDANCE", "decision": "Official operational guide remains published. Filing routes are guidance; current local rules govern eligibility and administration.", "evidence_url": "https://www.nhsa.gov.cn/art/2025/6/7/art_14_16754.html"}
+  ],
+  "excluded": [
+    {"slug": "iac-aviva-stopped-info", "url": "https://www.iachina.cn/IC/tkk/02/01ad48f5-003b-49f0-b062-562cc4c400b6.html", "reason": "Official IAC disclosure says 停用 since 2024-03-12. User requests current competition references only; withdraw from public retrieval and the upload package.", "stopped_on": "2024-03-12"}
+  ]
+}

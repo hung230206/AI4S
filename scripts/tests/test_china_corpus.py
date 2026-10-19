@@ -72,11 +72,41 @@ def test_download_bounds_bytes_and_does_not_retry_access_denied(monkeypatch):
 
 def test_source_manifest_is_china_only_and_does_not_include_2017_test_catalogue():
     sources = json.loads(corpus.SOURCES.read_text(encoding="utf-8"))
-    assert len(sources) == 9 and len({s["slug"] for s in sources}) == 9
+    assert len(sources) == 8 and len({s["slug"] for s in sources}) == 8
     assert all(corpus.allowed_url(s["url"]) for s in sources)
     assert all("col5644" not in s["url"] and "col5643" not in s["url"] for s in sources)
-    stopped = next(s for s in sources if s["slug"] == "iac-aviva-stopped-info")
-    assert "STOPPED" in stopped["scope"] and "not successfully downloaded" in stopped["scope"]
+    assert not any(s["slug"] == "iac-aviva-stopped-info" for s in sources)
+    review = json.loads(corpus.SELECTION.read_text(encoding="utf-8"))
+    assert {s["slug"] for s in sources} == {s["slug"] for s in review["retained"]}
+
+
+def test_stale_manifest_cannot_republish_the_withdrawn_competition_source():
+    withdrawn = corpus.excluded_sources()[0]
+    with pytest.raises(ValueError, match="regenerate"):
+        corpus.reject_excluded([{"url": withdrawn["url"]}])
+    with pytest.raises(ValueError, match="regenerate"):
+        corpus.reject_excluded([{"source_url": withdrawn["url"]}])
+
+
+def test_withdrawal_targets_only_reviewed_public_source_and_is_idempotent():
+    url = corpus.excluded_sources()[0]["url"]
+    documents = [
+        {"id": "obsolete", "source_kind": "PUBLIC_REFERENCE", "source_url": url, "revision": 4, "published": True, "deleted": False},
+        {"id": "already-draft", "source_kind": "PUBLIC_REFERENCE", "source_url": url, "revision": 3, "published": False, "deleted": False},
+        {"id": "private", "source_kind": "USER_POLICY", "source_url": url, "revision": 1, "published": True, "deleted": False},
+        {"id": "retained", "source_kind": "PUBLIC_REFERENCE", "source_url": "https://www.nhsa.gov.cn/retained", "revision": 1, "published": True, "deleted": False},
+    ]
+    calls = []
+    def handler(request):
+        calls.append((request.url.path, json.loads(request.content)))
+        return httpx.Response(200, json={})
+    with httpx.Client(base_url="https://example.test/api/v1", transport=httpx.MockTransport(handler)) as client:
+        receipts = corpus.retire_excluded(client, documents, lambda response: response.raise_for_status())
+        assert calls == [("/api/v1/admin/rag/documents/obsolete/unpublish", {"revision": 4})]
+        assert [r["operation"] for r in receipts] == ["UNPUBLISHED", "ALREADY_WITHDRAWN"]
+        documents[0]["published"] = False
+        corpus.retire_excluded(client, documents, lambda response: response.raise_for_status())
+        assert len(calls) == 1
 
 
 def test_bad_draft_retrieval_never_reaches_publication(tmp_path, monkeypatch):

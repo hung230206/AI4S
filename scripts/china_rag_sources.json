@@ -1,11 +1,130 @@
 [
-  {"slug":"iac-picc-terms-2024","cache":"iac-picc-health-2024.pdf","title":"[IAC · 2024] PICC Health 健康金福 — điều khoản y tế","publisher":"中国人民健康保险股份有限公司 / 中国保险行业协会披露","url":"https://www.iachina.cn/IC/tkk/01/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html","download":"https://www.iachina.cn/IC/tkk/03/d846266e-7f6a-40c9-aa58-97e216d2f71f_TERMS.PDF","format":"pdf","category":"POLICY","date":"Product wording code 人保健康[2024]医疗保险008号; no publication day asserted","scope":"Commercial policy wording, not an issued personal policy. Physical PDF pages include the cover. Terms and eligibility depend on the actual contract; no Vietnamese student's eligibility or current sale availability is confirmed.","question":"Thời gian chờ của hợp đồng này là bao lâu?","expected":["等待期"]},
-  {"slug":"iac-picc-product-info","cache":"iac-picc-health-info.html","title":"[IAC · Snapshot] PICC 健康金福 — công ty, mã và trạng thái công bố","publisher":"中国保险行业协会 / 中国人民健康保险股份有限公司","url":"https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html","format":"metadata","category":"GLOSSARY","date":"Undated disclosure page; retrieved snapshot only","scope":"Product metadata only. The page displays 在售; this is the page's snapshot, not a real-time sale guarantee. It does not establish benefits or prove that any person can buy the policy.","question":"Công ty phát hành và mã điều khoản của sản phẩm 健康金福 là gì?","expected":["008","中国人民健康保险"]},
-  {"slug":"iac-aviva-stopped-info","cache":"iac-aviva-stopped-info.html","title":"[IAC · ĐÃ NGỪNG] 中英人寿爱心保 — dữ liệu công bố lưu trữ","publisher":"中国保险行业协会 / 中英人寿保险有限公司","url":"https://www.iachina.cn/IC/tkk/02/01ad48f5-003b-49f0-b062-562cc4c400b6.html","format":"metadata","category":"GLOSSARY","date":"Disclosure states stopped on 2024-03-12","scope":"STOPPED product metadata only, not a recommendation or current sale offer. Product wording PDF was not successfully downloaded and is not represented as read. No coverage or renewal entitlement can be inferred from this metadata.","question":"Sản phẩm 爱心保 đã ngừng vào ngày nào?","expected":["2024","03","12","停用"]},
-  {"slug":"iac-claims-standard-2024","cache":"iac-claims-53-2024.pdf","title":"[IAC · T/IAC 53-2024] Quy chuẩn dịch vụ bồi thường","publisher":"中国保险行业协会","url":"https://www.iachina.cn/module/download/downfile.jsp?classid=0&filename=253ba2d6743c4fe8a5aa5ca651b88bbf.pdf","format":"pdf-transcript","category":"CLAIMS","date":"Published 2024-11-19; effective 2025-02-19","scope":"Industry claims-service standard, not a product contract, automatic claim approval or individual payment promise. Processed transcript retains original physical PDF page markers; standard-reference hyphens are typographically normalized.","question":"Dịch vụ bồi thường bảo hiểm phải tuân theo những nguyên tắc nào?","expected":["客户","合规"]},
-  {"slug":"nfra-health-measures-2019","cache":"nfra-health-2019.json","title":"[NFRA · 2019] Quy định quản lý bảo hiểm sức khỏe","publisher":"中国银保监会 / 国家金融监督管理总局法规公开库","url":"https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1027050","download":"https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1027050.json","format":"nfra-json","category":"POLICY","date":"Published 2019-11-12; stated effective 2019-12-01","scope":"Regulatory text, not an insurance product. Historical promulgation/effective dates are retained; this snapshot is not an exhaustive legal currency check or a personal coverage decision.","question":"Bảo hiểm sức khỏe gồm những loại nào?","expected":["医疗保险","疾病保险"]},
-  {"slug":"nfra-shortterm-notice-2021","cache":"nfra-shortterm-2021.json","title":"[NFRA · 2021] Bảo hiểm ngắn hạn và không bảo đảm tái tục","publisher":"中国银保监会办公厅 / 国家金融监督管理总局公开库","url":"https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198","download":"https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=958198.json","format":"nfra-json","category":"POLICY","date":"2021-01-11; 银保监办发〔2021〕7号","scope":"Regulatory notice about individual short-term health insurance; its stated scope excludes group insurance. Do not apply it to every long-term/group contract or infer a user's renewal right.","question":"Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?","expected":["不保证续保"]},
-  {"slug":"nhsa-student-insurance-2025","cache":"nhsa-student-2025.html","title":"[NHSA · 2025] Bảo hiểm học sinh thương mại và医保 cơ bản","publisher":"国家医疗保障局","url":"https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html","format":"nhsa-html","category":"GLOSSARY","date":"2025-01-26","scope":"Chinese basic social medical insurance education and student commercial-insurance distinction. General publication figures are not an individual's reimbursement promise. It does not prove that a Vietnamese/international student is eligible for the public scheme.","question":"Bảo hiểm thương mại 学生平安险 có thay thế bảo hiểm y tế cơ bản không?","expected":["基本医疗保险","商业保险"]},
-  {"slug":"nhsa-crossprovince-rules-2022","cache":"nhsa-crossprovince-reg-2022.html","title":"[NHSA · 2022] Quy tắc thanh toán BHYT công khác tỉnh","publisher":"国家医疗保障局 / 财政部","url":"https://www.nhsa.gov.cn/art/2022/7/26/art_104_8629.html","format":"nhsa-html","category":"CLAIMS","date":"Published 2022-07-26; procedure effective 2023-01-01; 医保发〔2022〕22号","scope":"Basic social medical insurance direct settlement BETWEEN CHINESE PROVINCES. It is not international payment, commercial-policy coverage or automatic public-insurance eligibility for a foreign student. Local eligibility and policy rules still apply.","question":"Khám khác tỉnh thực hiện theo danh mục và chính sách của nơi nào?","expected":["就医地","参保地"]},
-  {"slug":"nhsa-crossprovince-guide-2025","cache":"nhsa-crossprovince-2025.html","title":"[NHSA · 2025] Hướng dẫn đăng ký khám khác tỉnh","publisher":"国家医疗保障局","url":"https://www.nhsa.gov.cn/art/2025/6/7/art_14_16754.html","format":"nhsa-html","category":"CLAIMS","date":"2025-06-07","scope":"Public social-insurance filing guidance, not an app integration. Demo does not file a registration, contact authorities or establish foreign-student entitlement. Requirements depend on the participant's actual locality and status.","question":"Đăng ký khám khác tỉnh gồm những bước nào?","expected":["备案"]}
+  {
+    "slug": "iac-picc-terms-2024",
+    "cache": "iac-picc-health-2024.pdf",
+    "title": "[IAC · 2024] PICC Health 健康金福 — điều khoản y tế",
+    "publisher": "中国人民健康保险股份有限公司 / 中国保险行业协会披露",
+    "url": "https://www.iachina.cn/IC/tkk/01/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+    "download": "https://www.iachina.cn/IC/tkk/03/d846266e-7f6a-40c9-aa58-97e216d2f71f_TERMS.PDF",
+    "format": "pdf",
+    "category": "POLICY",
+    "date": "Product wording code 人保健康[2024]医疗保险008号; no publication day asserted",
+    "scope": "Commercial policy wording, not an issued personal policy. Physical PDF pages include the cover. Terms and eligibility depend on the actual contract; no Vietnamese student's eligibility or current sale availability is confirmed.",
+    "question": "Thời gian chờ của hợp đồng này là bao lâu?",
+    "expected": [
+      "等待期"
+    ]
+  },
+  {
+    "slug": "iac-picc-product-info",
+    "cache": "iac-picc-health-info.html",
+    "title": "[IAC · Snapshot] PICC 健康金福 — công ty, mã và trạng thái công bố",
+    "publisher": "中国保险行业协会 / 中国人民健康保险股份有限公司",
+    "url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+    "format": "metadata",
+    "category": "GLOSSARY",
+    "date": "Undated disclosure page; retrieved snapshot only",
+    "scope": "Product metadata only. The page displays 在售; this is the page's snapshot, not a real-time sale guarantee. It does not establish benefits or prove that any person can buy the policy.",
+    "question": "Công ty phát hành và mã điều khoản của sản phẩm 健康金福 là gì?",
+    "expected": [
+      "008",
+      "中国人民健康保险"
+    ]
+  },
+  {
+    "slug": "iac-claims-standard-2024",
+    "cache": "iac-claims-53-2024.pdf",
+    "title": "[IAC · T/IAC 53-2024] Quy chuẩn dịch vụ bồi thường",
+    "publisher": "中国保险行业协会",
+    "url": "https://www.iachina.cn/module/download/downfile.jsp?classid=0&filename=253ba2d6743c4fe8a5aa5ca651b88bbf.pdf",
+    "format": "pdf-transcript",
+    "category": "CLAIMS",
+    "date": "Published 2024-11-19; effective 2025-02-19",
+    "scope": "Industry claims-service standard, not a product contract, automatic claim approval or individual payment promise. Processed transcript retains original physical PDF page markers; standard-reference hyphens are typographically normalized.",
+    "question": "Dịch vụ bồi thường bảo hiểm phải tuân theo những nguyên tắc nào?",
+    "expected": [
+      "客户",
+      "合规"
+    ]
+  },
+  {
+    "slug": "nfra-health-measures-2019",
+    "cache": "nfra-health-2019.json",
+    "title": "[NFRA · 2019] Quy định quản lý bảo hiểm sức khỏe",
+    "publisher": "中国银保监会 / 国家金融监督管理总局法规公开库",
+    "url": "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1027050",
+    "download": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=1027050.json",
+    "format": "nfra-json",
+    "category": "POLICY",
+    "date": "Published 2019-11-12; stated effective 2019-12-01",
+    "scope": "Regulatory text, not an insurance product. Historical promulgation/effective dates are retained; this snapshot is not an exhaustive legal currency check or a personal coverage decision.",
+    "question": "Bảo hiểm sức khỏe gồm những loại nào?",
+    "expected": [
+      "医疗保险",
+      "疾病保险"
+    ]
+  },
+  {
+    "slug": "nfra-shortterm-notice-2021",
+    "cache": "nfra-shortterm-2021.json",
+    "title": "[NFRA · 2021] Bảo hiểm ngắn hạn và không bảo đảm tái tục",
+    "publisher": "中国银保监会办公厅 / 国家金融监督管理总局公开库",
+    "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+    "download": "https://www.nfra.gov.cn/cn/static/data/DocInfo/SelectByDocId/data_docId=958198.json",
+    "format": "nfra-json",
+    "category": "POLICY",
+    "date": "2021-01-11; 银保监办发〔2021〕7号",
+    "scope": "Regulatory notice about individual short-term health insurance; its stated scope excludes group insurance. Do not apply it to every long-term/group contract or infer a user's renewal right.",
+    "question": "Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?",
+    "expected": [
+      "不保证续保"
+    ]
+  },
+  {
+    "slug": "nhsa-student-insurance-2025",
+    "cache": "nhsa-student-2025.html",
+    "title": "[NHSA · 2025] Bảo hiểm học sinh thương mại và医保 cơ bản",
+    "publisher": "国家医疗保障局",
+    "url": "https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html",
+    "format": "nhsa-html",
+    "category": "GLOSSARY",
+    "date": "2025-01-26",
+    "scope": "Chinese basic social medical insurance education and student commercial-insurance distinction. General publication figures are not an individual's reimbursement promise. It does not prove that a Vietnamese/international student is eligible for the public scheme.",
+    "question": "Bảo hiểm thương mại 学生平安险 có thay thế bảo hiểm y tế cơ bản không?",
+    "expected": [
+      "基本医疗保险",
+      "商业保险"
+    ]
+  },
+  {
+    "slug": "nhsa-crossprovince-rules-2022",
+    "cache": "nhsa-crossprovince-reg-2022.html",
+    "title": "[NHSA · 2022] Quy tắc thanh toán BHYT công khác tỉnh",
+    "publisher": "国家医疗保障局 / 财政部",
+    "url": "https://www.nhsa.gov.cn/art/2022/7/26/art_104_8629.html",
+    "format": "nhsa-html",
+    "category": "CLAIMS",
+    "date": "Published 2022-07-26; procedure effective 2023-01-01; 医保发〔2022〕22号",
+    "scope": "Basic social medical insurance direct settlement BETWEEN CHINESE PROVINCES. It is not international payment, commercial-policy coverage or automatic public-insurance eligibility for a foreign student. Local eligibility and policy rules still apply.",
+    "question": "Khám khác tỉnh thực hiện theo danh mục và chính sách của nơi nào?",
+    "expected": [
+      "就医地",
+      "参保地"
+    ]
+  },
+  {
+    "slug": "nhsa-crossprovince-guide-2025",
+    "cache": "nhsa-crossprovince-2025.html",
+    "title": "[NHSA · 2025] Hướng dẫn đăng ký khám khác tỉnh",
+    "publisher": "国家医疗保障局",
+    "url": "https://www.nhsa.gov.cn/art/2025/6/7/art_14_16754.html",
+    "format": "nhsa-html",
+    "category": "CLAIMS",
+    "date": "2025-06-07",
+    "scope": "Public social-insurance filing guidance, not an app integration. Demo does not file a registration, contact authorities or establish foreign-student entitlement. Requirements depend on the participant's actual locality and status.",
+    "question": "Đăng ký khám khác tỉnh gồm những bước nào?",
+    "expected": [
+      "备案"
+    ]
+  }
 ]

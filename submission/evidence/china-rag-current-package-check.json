@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "active_raw_and_prepared_hash_pairs": 8,
+  "prepared_file_count": 8,
+  "zip_entries": 20,
+  "zip_sha256": "2515a2a6d9e0de6c3a4da714e90c2e42bb24a861ff2e4d454168c2530045a0d2",
+  "excluded_source_not_in_upload_package": true
+}

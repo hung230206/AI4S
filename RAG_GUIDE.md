@@ -9,7 +9,7 @@ Gemini 3.8 đã tái hiện lỗi 503/timeout; cấu hình mới ưu tiên 3.5 F
 
 ## Tài liệu Trung Quốc và tệp mẫu để thử
 
-Tài liệu thật để tải lên: `output/China_RAG_Corpus/prepared/`, điền thông tin trong `metadata.csv`. Không nhập lại bản trùng vào kho đang có đủ 9 nguồn. Chọn nguồn NFRA 2021 rồi hỏi: **Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?**
+Tài liệu thật để tải lên: `output/China_RAG_Corpus/prepared/`, điền thông tin trong `metadata.csv`. Không nhập lại bản trùng vào kho đang có đủ 8 nguồn. Chọn nguồn NFRA 2021 rồi hỏi: **Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?**
 
 Nếu chỉ muốn thử CRUD bằng tài liệu giả lập, mở `fixtures/rag_upload_samples/`: có `student-policy-sample-en.txt`, `claims-guide-sample-vi.md`, `insurance-glossary-sample-zh.txt`. Đây là bản rời của ba nguồn mẫu tự soạn đã có trong kho, dùng để thử thêm/thay tệp; không phải hợp đồng thật. `README.md` trong thư mục ghi thông tin metadata và câu hỏi đối chiếu. Không tải README thành nguồn bảo hiểm.
 
@@ -25,7 +25,7 @@ Nếu chỉ muốn thử CRUD bằng tài liệu giả lập, mở `fixtures/rag
 8. Mở liên kết trích dẫn phiên bản cũ để kiểm tra: hệ thống báo nguồn đã thay đổi. Hỏi lại sẽ dùng phiên bản mới.
 9. **Gỡ xuất bản** hoặc **Chuyển vào thùng rác**: không dùng nguồn này cho câu hỏi mới. Thùng rác có thể khôi phục thành nháp. Lịch sử giữ thao tác, phiên bản và mã băm; không có chức năng khôi phục toàn bộ nội dung phiên bản cũ.
 
-Kho live/local hiện có 9 nguồn tham khảo Trung Quốc thật (IAC, NFRA, NHSA); ba mẫu tự soạn đã gỡ về nháp. Xem docs/23_CHINA_RAG_CORPUS.md và output/China_RAG_Corpus/README.md để chọn nguồn, upload và hỏi thử. Nguồn công khai thật cần URL gốc và quyền sử dụng do admin kiểm tra. RAG không train lại Gemini và không xác minh tài liệu là thật. Nó bổ sung hỏi đáp có nguồn cho Topic D; phân tích quyền lợi và chuẩn bị hồ sơ ở **Bảo hiểm & hồ sơ** vẫn yêu cầu người dùng đối chiếu hợp đồng.
+Kho live/local hiện có 8 nguồn tham khảo Trung Quốc thật (IAC, NFRA, NHSA); ba mẫu tự soạn đã gỡ về nháp. Xem docs/23_CHINA_RAG_CORPUS.md và output/China_RAG_Corpus/README.md để chọn nguồn, upload và hỏi thử. Nguồn công khai thật cần URL gốc và quyền sử dụng do admin kiểm tra. RAG không train lại Gemini và không xác minh tài liệu là thật. Nó bổ sung hỏi đáp có nguồn cho Topic D; phân tích quyền lợi và chuẩn bị hồ sơ ở **Bảo hiểm & hồ sơ** vẫn yêu cầu người dùng đối chiếu hợp đồng.
 
 ## Tạo admin trên máy khác
 

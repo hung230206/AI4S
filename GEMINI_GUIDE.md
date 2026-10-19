@@ -6,7 +6,7 @@ Mở `/knowledge`, chọn nguồn và nhập câu hỏi. Ứng dụng tìm các 
 
 Lần đầu bấm hỏi mở popup **Đồng ý / Không đồng ý** với link chi tiết. Đồng ý tiếp tục câu đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu tại máy chủ. Có thể xem trước dữ liệu gửi, chọn **Trích đoạn tại máy chủ** hoặc thu hồi quyền. Enter gửi; Shift+Enter xuống dòng. Quyền theo phiên, tối đa một giờ, không tự gia hạn.
 
-Kho live/local đã nạp 9 nguồn Trung Quốc thật; ba mẫu tự soạn được giữ ở bản nháp. Bản cài mới trước khi chạy importer vẫn khởi tạo ba mẫu kiểm thử. Xem docs/23_CHINA_RAG_CORPUS.md. Các nguồn do admin xuất bản được dùng chung trong ứng dụng; hồ sơ cá nhân không tự đưa vào kho. Luồng quản trị, tài khoản test và tệp upload: [RAG_GUIDE.md](RAG_GUIDE.md).
+Kho live/local đã nạp 8 nguồn Trung Quốc thật; ba mẫu tự soạn được giữ ở bản nháp. Bản cài mới trước khi chạy importer vẫn khởi tạo ba mẫu kiểm thử. Xem docs/23_CHINA_RAG_CORPUS.md. Các nguồn do admin xuất bản được dùng chung trong ứng dụng; hồ sơ cá nhân không tự đưa vào kho. Luồng quản trị, tài khoản test và tệp upload: [RAG_GUIDE.md](RAG_GUIDE.md).
 
 ## Trợ lý du học
 

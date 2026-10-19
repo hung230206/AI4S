@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-19T13:23:13.031294+00:00",
+  "origin": "http://127.0.0.1:8106",
+  "actual_model_calls": 0,
+  "active_sources": 8,
+  "withdrawn_detail_download_and_scoped_retrieval_blocked": [
+    "bfc3dca7-f93d-4698-969a-cf34586dfc0a"
+  ],
+  "withdrawn_source_absent_from_unscoped_retrieval": true,
+  "status": "PASS"
+}

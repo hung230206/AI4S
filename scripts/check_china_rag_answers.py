@@ -26,7 +26,7 @@ def main():
         client.headers["X-CSRF-Token"] = auth["csrf_token"]
         try:
             listing = checked(client.get("/rag/documents"))["items"]
-            assert len(listing) == 9 and all(d["source_kind"] == "PUBLIC_REFERENCE" and d["jurisdiction"] == "CN" for d in listing)
+            assert len(listing) == 8 and all(d["source_kind"] == "PUBLIC_REFERENCE" and d["jurisdiction"] == "CN" for d in listing)
             result["published_china_reference_count"] = len(listing)
             negative = checked(client.post("/rag/ask", json={"question": "Bitcoin price tomorrow?", "language": "en"}))
             assert negative["status"] == "INSUFFICIENT_INFORMATION" and not negative["citations"]

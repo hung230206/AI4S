@@ -1,3 +1,13 @@
+# Competition corpus selection — 19 October 2026
+
+Applied the user's request for current references only. The local and Render libraries now contain **8 selected China references: 3 IAC, 2 NFRA and 3 NHSA**. The stopped 中英人寿爱心保 metadata (IAC: stopped 2024-03-12) is unpublished and excluded from the active upload package. Administrative history is preserved. The 2019/2021 regulations remain because government registries label them effective; the 2022 notice is still cited by a healthcare authority in September 2026. Product wording, standards and explanatory guides remain explicitly distinct from legislation. Dated primary-source decisions: docs/CHINA_RAG_COMPETITION_SELECTION.md and scripts/china_rag_competition_review.json. No long-term monitoring system or application/schema change was added.
+
+Actual validation: **17 offline importer checks pass (2.58s)**. All **8 local and 8 Render sources** pass real retrieval, exact citation offsets and download hashes. On both databases the excluded source is absent from the public listing, public detail/download/scoped retrieval return 404, and unscoped retrieval never cites it. The importer rejects stale manifests containing that excluded URL. Evidence: china-rag-current-selection-tests.xml, china-rag-current-local-import.json, china-rag-current-render-import.json, china-rag-current-local-check.json and china-rag-current-render-check.json. Zero Gemini calls were made; this does not resolve or re-test the previously reported provider quota limitation. The updated local corpus ZIP has only the 8 selected sources; no original publisher bodies or secrets are committed.
+
+Data changes are already applied online and require no Render redeploy. Source-only commit uses [skip render]. The nine-source section below and its earlier test receipts describe the historical first import, not the current active count.
+
+---
+
 # Current data release — nine official China RAG references (19 October 2026)
 
 The user's requested China-only corpus is published in local and Render databases: 4 IAC source records, 2 NFRA regulatory texts and 3 NHSA public-insurance rules/guides. It includes the actual IAC-hosted PICC Health product PDF (36 physical pages), product disclosure metadata with explicit snapshot/stopped status, the IAC claims-service standard, health-insurance rules and social-insurance guidance. The two raw PDFs total 52 physical pages; seven other raw objects are HTML/JSON. 78,670 characters were extracted before labelled index annotations. Metadata is not represented as product cover or guaranteed current sale; a stopped-product PDF that failed download is not claimed as read. The investigated 2017 IAC test catalogue and 2020 NHSA handbook were not imported.
