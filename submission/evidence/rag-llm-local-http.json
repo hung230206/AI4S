@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-19T09:34:29.159539+00:00",
+  "origin": "http://127.0.0.1:8105",
+  "checks": [
+    "real_admin_login_and_regular_account_denied",
+    "per_file_acknowledgement_draft_isolation_and_local_admin_preview",
+    "publication_student_answer_exact_page_offsets_and_original_hash",
+    "unsupported_insurance_question_abstains",
+    "session_consent_gate_and_no_dispatch_preview",
+    "edit_and_replace_reindex_unpublish_old_revision_rejected",
+    "trash_restore_draft_and_revision_history"
+  ],
+  "actual_model_calls": 1,
+  "real_funds_moved": false,
+  "release": "local",
+  "generation_elapsed_seconds": 2.266,
+  "generated_model": "gemini-3.5-flash-lite",
+  "model_fallback_from": null,
+  "provider": "GEMINI",
+  "fallback_reason": null,
+  "provider_status": "PASS",
+  "generated_sample_answer": "According to the fictional source, outpatient rehabilitation has an annual sample limit of CNY 6,789 [R1].",
+  "core_status": "PASS",
+  "status": "PASS",
+  "elapsed_seconds": 3.578
+}

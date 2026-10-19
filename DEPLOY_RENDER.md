@@ -80,4 +80,4 @@ Nguồn chính thức, đối chiếu ngày 18/10/2026:
 
 ## Chatbot Gemini tùy chọn
 
-Trong Environment của service hiện có, đặt `GEMINI_ENABLED=true`, `GEMINI_API_KEY` bằng khóa mới của project và `GEMINI_MODEL=gemini-3.8-flash`; timeout mặc định 25 giây. Sau đó deploy latest commit. Khóa chỉ lưu ở Render, không đặt trong render.yaml hoặc NEXT_PUBLIC_*. Không có khóa thì Tra cứu trực tiếp vẫn hoạt động. Hướng dẫn và các kiểm thử thật: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).
+Trong Environment của service hiện có, đặt `GEMINI_ENABLED=true`, `GEMINI_API_KEY` bằng khóa mới của project và `GEMINI_MODEL=gemini-3.5-flash-lite`; timeout mặc định 25 giây. Sau đó deploy latest commit. Khóa chỉ lưu ở Render, không đặt trong render.yaml hoặc NEXT_PUBLIC_*. Không có khóa thì Tra cứu trực tiếp vẫn hoạt động. Hướng dẫn và các kiểm thử thật: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).

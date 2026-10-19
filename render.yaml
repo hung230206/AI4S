@@ -36,6 +36,14 @@ services:
         value: "true"
       - key: OCR_MAX_WORKERS
         value: "1"
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GEMINI_FALLBACK_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GEMINI_PRIMARY_TIMEOUT_SECONDS
+        value: "8"
+      - key: GEMINI_TIMEOUT_SECONDS
+        value: "25"
       - key: NODE_OPTIONS
         value: --max-old-space-size=192
       - key: MALLOC_ARENA_MAX

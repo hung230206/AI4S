@@ -1,3 +1,37 @@
+# Current release — combined RAG + Gemini and timeout recovery (19 October 2026)
+
+## Delivered behaviour and diagnosis
+
+The knowledge page now has one primary flow: question -> published-source retrieval -> explicit binary consent if missing -> Gemini explanation from those passages -> original page/revision citations. Agree continues the pending question using the returned permission revision. Disagree dispatches nothing; enabling AI later never replays the declined question. Original-excerpt lookup, preview, withdrawal/expiry, Enter/Shift+Enter/IME handling and missing-evidence abstention remain. Copilot keeps its opt-in mode and benefits from the same corrected gateway.
+
+With the same key, a tiny structured probe returned HTTP 503 from gemini-3.8-flash, while 3.5 Flash-Lite succeeded in 1.375s. The default and Render blueprint now select 3.5 Flash-Lite with low thinking. Existing explicit 3.8 settings can use one alternate: first attempt at most 8s if a distinct alternate is enabled, both within the original 25s total deadline. Cancellation bounds complete attempts including body reads. Auth/quota/bad-input/invalid-output failures never retry. Blank/identical alternates do not duplicate calls. One admitted app question may make at most two Google requests. Model metadata is server-owned and API/UI show the actual model. No key was changed or published.
+
+A full local source-grounded request using the old 3.8 setting completed via the alternate in 9.422s. With 3.5 directly configured, real HTTP generation completed in 2.266s and real browser generation in 1.623s. These are individual measurements, not guarantees. Missing evidence abstains before generation; failures retain labelled original excerpts. Source-only prompting/citation validation is not proof of semantic correctness.
+
+Deployment status: local acceptance complete; exact live application release and provider acceptance will be recorded after deployment.
+
+## Exact completed checks
+
+| Check | Actual result | Evidence under submission/evidence/ |
+|---|---|---|
+| Baseline full backend | 209 passed, 158.48s | rag-llm-baseline.xml / .txt |
+| Targeted Gemini + RAG | 48 passed, 16.65s | rag-llm-targeted.xml / .txt |
+| Final full backend | 216 passed, 196.03s | rag-llm-full-backend.xml / .txt |
+| Targeted standalone browser | 5 passed | rag-llm-browser-targeted.json / .txt |
+| Complete standalone production browser | 35 passed; no failed/flaky/skipped | rag-llm-browser-production.json / .txt |
+| Lint / TypeScript / standalone webpack build | exit 0 each | rag-llm-lint.txt / -typescript.txt / -build.txt |
+| Real local HTTP administrator + RAG | 7 groups PASS; provider GEMINI, amount/citation checked | rag-llm-local-http.json |
+| Real local browser, no model response mocks | PASS, permission withdrawn afterward | rag-llm-real-browser.json; screenshots/rag/rag-llm-real.png |
+| Provider diagnosis / bounded alternate | real 3.8 failure and 3.5 success | rag-llm-provider-probes.json; rag-llm-local-generation.json |
+
+The same two development-only operator UI cases were excluded from the production suite; backend operator tests remain included. The isolated insurance_payment_test and rag_browser_test databases were used; no user database was cleared. One existing Starlette/httpx TestClient deprecation warning remains. The initial lint failure (ref read during render) was fixed with state-backed rendering; initial output is retained. Standard backend/browser regression generation is mocked. Separately named real provider checks used fictional self-authored sources only. No real funds moved. No further database migration is required.
+
+Research/limits: docs/22_TOPIC_D_MANAGED_RAG.md. User instructions: RAG_GUIDE.md and GEMINI_GUIDE.md. Credentials remain in ignored .local files and server settings. Backend PowerShell: `.venv/Scripts/python.exe -m pytest -q`; Unix: `.venv/bin/python -m pytest -q`. Frontend: `npm run lint`, `npx tsc --noEmit`, `npm run build -- --webpack`; browser: `npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt' --reporter=list,json` against the standalone QA origin and isolated database. Real API: `python scripts/check_rag_live.py --url <origin> --admin-credentials .local/rag-admin-test.json --with-gemini`. Real local UI after enabling the QA provider: `node scripts/check_rag_browser_real.mjs http://localhost:3104`.
+
+Earlier provider TIMEOUT results and the extractive-default knowledge UI below are historical and superseded by this release's evidence.
+
+---
+
 # Current release — managed Topic D RAG and administrator accounts (19 October 2026)
 
 ## Delivered behaviour

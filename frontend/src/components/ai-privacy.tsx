@@ -8,7 +8,7 @@ import {useI18n} from "./i18n-provider";
 import {useAuth} from "./shell";
 import {ErrorBox} from "./ui";
 
-export function AiPrivacyControls({value, onChange, onEnabled, requested = false, onDismiss}: {value: AiPermission | undefined; onChange: (value: AiPermission) => void; onEnabled?: () => void; requested?: boolean; onDismiss?: () => void}) {
+export function AiPrivacyControls({value, onChange, onEnabled, requested = false, onDismiss, continuation}: {value: AiPermission | undefined; onChange: (value: AiPermission) => void; onEnabled?: (value: AiPermission) => void; requested?: boolean; onDismiss?: () => void; continuation?: string}) {
   const {token} = useAuth(); const {locale} = useI18n(); const t = privacyText(locale);
   const ref = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
@@ -28,7 +28,7 @@ export function AiPrivacyControls({value, onChange, onEnabled, requested = false
     setBusy(true); setError("");
     try {
       const next = await api<AiPermission>("/privacy/ai-permission", token, {revision: value.revision, notice_version: enabled ? AI_PRIVACY_NOTICE_VERSION : value.notice_version, enabled, ...(enabled ? {preset: "SAMPLE_ASSISTANT"} : {})});
-      onChange(next); close(); if (enabled) onEnabled?.();
+      onChange(next); if (enabled) onEnabled?.(next); close();
     } catch (e) {
       setError((e as Error).message);
       // Refresh stale revisions without automatically retrying or granting anything.
@@ -41,7 +41,7 @@ export function AiPrivacyControls({value, onChange, onEnabled, requested = false
     {!visible && <ErrorBox message={error}/>}
     <dialog ref={ref} className="privacy-dialog" aria-labelledby="ai-privacy-title" onCancel={e => {if (busy) e.preventDefault(); else close();}}>
       <form className="form-stack" onSubmit={e => {e.preventDefault(); save(true);}}>
-        <h2 id="ai-privacy-title" tabIndex={-1}>{t.title}</h2><p>{t.purpose}</p><p className="privacy-important">{value?.data_mode === "PAID_PRIVATE" ? t.paid : t.demo}</p>
+        <h2 id="ai-privacy-title" tabIndex={-1}>{t.title}</h2><p>{t.purpose}</p>{continuation && <p className="info-note">{continuation}</p>}<p className="privacy-important">{value?.data_mode === "PAID_PRIVATE" ? t.paid : t.demo}</p>
         <p className="small">{t.adult} {t.nonSensitive}</p>
         <a className="text-link" href="/privacy#gemini" target="_blank" rel="noreferrer">{t.details} ↗</a><ErrorBox message={error}/>
         {value?.notice_version !== AI_PRIVACY_NOTICE_VERSION && <p role="alert">{t.noticeChanged}</p>}

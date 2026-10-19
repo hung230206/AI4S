@@ -297,7 +297,7 @@ def ask(body: RagQuestion, request: Request, user=Depends(student), db=Depends(g
         if not generated.source_ids: raise gemini.GeminiFailure("UNGROUNDED_RESPONSE")
         allowed = {m["source_id"] for m in matches}
         if not set(generated.source_ids) <= allowed: raise gemini.GeminiFailure("INVALID_RESPONSE")
-        response = {**result, "provider": "GEMINI", "method": "BM25_RAG_GEMINI", "model": settings.gemini_model,
+        response = {**result, "provider": "GEMINI", "method": "BM25_RAG_GEMINI", "model": generated.model_used, "model_fallback_from": generated.model_fallback_from,
                 "answer": generated.answer, "citations": [m for m in matches if m["source_id"] in generated.source_ids]}
     except gemini.GeminiFailure as exc:
         response = {**result, "fallback_reason": exc.code}

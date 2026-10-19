@@ -121,19 +121,46 @@ test("RAG Gemini mode asks binary consent, preview stays local and answer links 
     await route.fulfill({json: {status: "EVIDENCE_FOUND", provider: "GEMINI", method: "BM25_RAG_GEMINI", answer: "Fictional policy answer from cited evidence.", missing_concepts: [], notice: "Test only", citations: [{source_id: "R1", document_id: "114ae7bd-ee08-5092-ab9f-d3830ff2b330", revision: 1, title: "Fictional policy source", publisher: "Demo team", filename: "sample.txt", page: 1, excerpt: "Original sample excerpt", document_kind: "TEST_FIXTURE", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"}]}});
   });
   await page.goto("/knowledge"); await dismissWelcome(page);
-  await page.getByRole("button", {name: "Gemini diễn giải", exact: true}).click();
+  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Outpatient benefit limit");
+  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
   const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
+  await expect(dialog).toContainText("Đồng ý sẽ tiếp tục câu hỏi đang chờ");
   await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click(); expect(sends).toBe(0);
-  await page.getByRole("button", {name: "Gemini diễn giải", exact: true}).click();
+  await page.getByRole("button", {name: "Bật trả lời RAG + Gemini", exact: true}).click();
   await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(dialog).not.toBeVisible();
-  await expect(page.getByRole("button", {name: "Gemini diễn giải", exact: true})).toHaveAttribute("aria-pressed", "true");
-  await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Outpatient benefit limit");
+  expect(sends).toBe(0); // Enabling alone must not replay the declined question.
   await page.getByRole("button", {name: "Xem dữ liệu sẽ gửi", exact: true}).click();
   await expect(page.locator(".privacy-preview")).toContainText('"sent": false'); expect(sends).toBe(0);
   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
   await expect(page.locator(".rag-answer")).toContainText("Fictional policy answer"); expect(sends).toBe(1);
   await expect(page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
   await page.getByRole("button", {name: "Thu hồi quyền Gemini", exact: true}).click();
-  await expect(page.getByRole("button", {name: "Trích đoạn tại máy chủ", exact: true})).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", {name: "Bật trả lời RAG + Gemini", exact: true})).toBeVisible();
+});
+
+test("a pending RAG question continues through Gemini only after agreement; Shift Enter never sends", async ({page}) => {
+  let sends = 0;
+  await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo"));
+  await page.route("**/api/v1/rag/documents", async route => {const response = await route.fetch(); await route.fulfill({json: {...await response.json(), gemini_configured: true}});});
+  await page.route("**/api/v1/rag/ask", async route => {
+    sends++; const payload = route.request().postDataJSON();
+    expect(payload.use_gemini).toBe(true); expect(payload.privacy_revision).toBeGreaterThan(0);
+    await route.fulfill({json: {status: "EVIDENCE_FOUND", provider: "GEMINI", model: "gemini-3.5-flash-lite", method: "BM25_RAG_GEMINI", answer: "Theo điều khoản mẫu, hạn mức ngoại trú là 2.000 CNY/năm [R1].", missing_concepts: [], notice: "Test only", citations: [{source_id: "R1", document_id: "114ae7bd-ee08-5092-ab9f-d3830ff2b330", revision: 1, title: "Demo student health policy — fictional terms", publisher: "Demo team", filename: "sample.txt", page: 1, excerpt: "Fictional annual outpatient limit: CNY 2,000.", document_kind: "TEST_FIXTURE", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"}]}});
+  });
+  await page.goto("/knowledge"); await dismissWelcome(page);
+  const question = page.getByLabel("Câu hỏi bảo hiểm", {exact: true});
+  await question.fill("Quyền lợi ngoại trú có hạn mức bao nhiêu?"); await question.press("Shift+Enter");
+  await expect(question).toHaveValue(/\n$/); expect(sends).toBe(0);
+  await question.press("Enter");
+  const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
+  await expect(dialog).toBeVisible(); expect(sends).toBe(0);
+  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+  await expect(dialog).not.toBeVisible(); await expect(page.locator(".rag-answer")).toContainText("2.000 CNY");
+  expect(sends).toBe(1); await expect(page.locator(".rag-answer")).toContainText("gemini-3.5-flash-lite");
+  await expect(page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true})).toBeVisible();
+  await page.locator(".rag-answer").scrollIntoViewIfNeeded();
+  await page.screenshot({path: "../submission/evidence/screenshots/rag/rag-llm-unified.png"});
+  await question.press("Enter"); await expect.poll(() => sends).toBe(2);
+  await expect(dialog).not.toBeVisible(); // Current session grant is reused, never silently renewed.
 });

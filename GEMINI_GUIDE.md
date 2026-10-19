@@ -1,79 +1,59 @@
-# Chatbot Gemini trong Demo
+# Gemini và RAG trong Demo
 
-## Thay đổi quyền riêng tư 19/10/2026 — thay thế mặc định cũ
+## Hỏi đáp bảo hiểm: RAG + Gemini
 
-Trang luôn bắt đầu ở Tra cứu trực tiếp. Cấp quyền tự nguyện ở Cài đặt quyền Gemini, chọn nhóm ngữ cảnh, xem trước rồi gửi. Enter gửi; Shift+Enter xuống dòng. Các lần Gemini trước chỉ được gửi lại khi đã chọn quyền lịch sử; không chuyển nội dung tra cứu nội bộ sang AI. Quyền theo phiên, tối đa một giờ, có thể thu hồi tại chat/Tài khoản.
+Mở `/knowledge`, chọn nguồn và nhập câu hỏi. Ứng dụng tìm các đoạn phù hợp trong kho do admin xuất bản, rồi đưa tối đa ba đoạn cho Gemini giải thích bằng ngôn ngữ giao diện. Kết quả có đoạn gốc, trang và phiên bản để đối chiếu. Không đủ nguồn thì báo thiếu thông tin, không gọi model để suy đoán quyền lợi.
 
-Mặc định DEMO_ONLY chặn ngữ cảnh tài chính/tóm tắt hợp đồng cá nhân; chỉ truy xuất mẫu/tham khảo công khai khi có quyền tài liệu. Google miễn phí có thể dùng nội dung để cải thiện dịch vụ và có người đánh giá. Không sử dụng dữ liệu riêng/nhạy cảm; tra cứu trực tiếp vẫn đọc tài liệu cá nhân mà không gọi Google. Chi tiết: PRIVACY_GUIDE.md và docs/21_PRIVACY_PERMISSIONS_RESEARCH.md.
+Lần đầu bấm hỏi mở popup **Đồng ý / Không đồng ý** với link chi tiết. Đồng ý tiếp tục câu đang chờ; Không đồng ý không gửi câu hỏi và vẫn cho phép tra cứu tại máy chủ. Có thể xem trước dữ liệu gửi, chọn **Trích đoạn tại máy chủ** hoặc thu hồi quyền. Enter gửi; Shift+Enter xuống dòng. Quyền theo phiên, tối đa một giờ, không tự gia hạn.
 
+Kho có sẵn ba nguồn mẫu tự soạn, không phải hợp đồng bảo hiểm thật. Các nguồn do admin xuất bản được dùng chung trong ứng dụng; hồ sơ cá nhân không tự đưa vào kho. Luồng quản trị, tài khoản test và tệp upload: [RAG_GUIDE.md](RAG_GUIDE.md).
 
-Mở **Trợ lý du học** (`/copilot`). Nếu máy chủ đã cấu hình khóa, **Gemini AI** được chọn sẵn. Bạn có thể hỏi về số dư, lịch thu/chi, hóa đơn, tỷ giá hoặc tài liệu đã tải lên; hỏi tiếp ngay trong cùng cuộc trò chuyện. Gemini trả lời theo ngôn ngữ giao diện Việt/Anh/Trung.
+## Trợ lý du học
 
-- **Gemini AI**: gửi câu hỏi, tối đa 3 lượt hội thoại gần nhất và phần dữ liệu liên quan tới Google để soạn câu trả lời. Thẻ nguồn bên dưới giúp mở trang đối chiếu hoặc đọc đoạn trích và số trang.
-- **Tra cứu trực tiếp**: dùng dữ liệu và quy tắc của app, không gọi Gemini. Đây cũng là phản hồi dự phòng khi model lỗi, hết lượt gọi hoặc phản hồi quá thời gian; giao diện sẽ ghi rõ lý do.
-- **Xóa cuộc trò chuyện**: xóa ngữ cảnh trong tab. App không lưu hội thoại vào database; tải lại trang bắt đầu cuộc trò chuyện mới. Google có chính sách xử lý dữ liệu riêng.
+`/copilot` bắt đầu ở **Tra cứu trực tiếp**. Chọn Gemini để mở popup cấp quyền; cấp quyền ở đây chỉ bật chế độ, không tự gửi câu hỏi. Chỉ các lượt hội thoại Gemini cùng quyền còn hiệu lực mới được dùng làm lịch sử giới hạn. Không tự chuyển nội dung đã tra cứu nội bộ sang Google.
 
-Trợ lý chỉ đọc và giải thích. Chuyển tiền, đổi tiền, ghi sổ và xác nhận giao dịch vẫn cần người dùng thực hiện trong luồng riêng. Số dư là dữ liệu tự khai báo; kết quả AI có thể sai và cần đối chiếu nguồn. Tỷ giá là tham chiếu theo ngày; phần thanh toán vẫn là sandbox.
+Giao diện cấp phạm vi SAMPLE_ASSISTANT cố định: câu hỏi, tối đa ba lượt gần nhất và tối đa ba đoạn mẫu/tham khảo phù hợp. Không cấp quyền dữ liệu thu chi, tóm tắt hợp đồng cá nhân hoặc hồ sơ bồi thường. Khi thích hợp, các đoạn từ kho RAG đã xuất bản được điền vào các vị trí ngữ cảnh còn trống, vẫn giữ tổng tối đa ba đoạn.
 
-## Thử từ A tới Z
+Google miễn phí có chính sách xử lý dữ liệu riêng. Luồng demo chỉ dành cho nội dung mẫu/công khai không nhạy cảm; xem [thông báo quyền riêng tư](PRIVACY_GUIDE.md) và [điều khoản Google](https://ai.google.dev/gemini-api/terms). Chat không thực hiện thanh toán, đổi tiền, phê duyệt bảo hiểm hay gửi hồ sơ.
 
-1. Tạo tài khoản riêng, thêm sổ CNY số dư `1000.00`.
-2. Thêm kế hoạch chi `1200.00 CNY`, hạn trong 5 ngày.
-3. Chọn Gemini và hỏi: **30 ngày tới tôi có đủ tiền không?** Kiểm tra số dư cuối kỳ `-200.00 CNY` với thẻ nguồn ngân sách.
-4. Hỏi tiếp: **Giải thích lại bằng hai câu ngắn.**
-5. Tải tệp bảo hiểm mẫu trong Test A–Z lên Tài liệu bảo hiểm; hỏi **Hồ sơ bồi thường gồm những gì?** Đối chiếu đoạn trích, loại tài liệu và trang gốc.
-6. Hỏi **Thanh toán giúp tôi ngay**: app chỉ hướng dẫn kiểm tra, không tạo giao dịch hoặc trừ tiền.
-7. Chọn **Tra cứu trực tiếp**, hỏi lại để thử chế độ không gọi AI ngoài.
+## Model và giới hạn chờ
 
-Khi demo Gemini, dùng dữ liệu mẫu hoặc đã ẩn danh. Không gửi hồ sơ y tế, dữ liệu cá nhân hoặc tài liệu bí mật vào gói miễn phí: [điều khoản Gemini về dữ liệu](https://ai.google.dev/gemini-api/terms#unpaid-services) giải thích cách Google xử lý đầu vào/đầu ra. Chọn tra cứu trực tiếp cho nội dung nhạy cảm.
+Kiểm tra cùng khóa đã tái hiện Gemini 3.8 trả 503; Gemini 3.5 Flash-Lite trả lời thành công. Cấu hình mới ưu tiên `gemini-3.5-flash-lite`, với thinking thấp. API và giao diện hiển thị model thực sự trả lời.
 
-## Cấu hình trên máy chủ
+Nếu cấu hình cũ vẫn dùng 3.8, lần thử đầu có hạn 8 giây, rồi chỉ thử thêm một model dự phòng khi timeout, lỗi mạng/5xx hoặc model không khả dụng. Cả hai lần nằm trong tổng hạn 25 giây. Không thử lại khi sai khóa, hết quota, dữ liệu sai hoặc đầu ra không hợp lệ. Một câu hỏi có thể phát sinh tối đa hai lần gọi Google; hạn mức câu hỏi của ứng dụng giữ nguyên.
 
-Khóa chỉ đặt trong `.env` của backend hoặc Environment của hosting. Không đưa vào frontend, GitHub, ảnh chụp hay tài liệu bàn giao.
+Nếu không có model trả lời hợp lệ, kết quả được ghi rõ là tra cứu/trích đoạn dự phòng cùng mã lý do. Citation IDs không bảo đảm mọi câu AI đều đúng; luôn đối chiếu đoạn nguồn.
+
+## Cấu hình máy chủ
+
+Chỉ đặt trong `.env` hoặc Environment của hosting, không đặt trong frontend hoặc `NEXT_PUBLIC_*`:
 
 ```dotenv
 GEMINI_ENABLED=true
-GEMINI_API_KEY=<nhập khóa mới trong môi trường máy chủ>
-GEMINI_MODEL=gemini-3.8-flash
+GEMINI_API_KEY=<khóa trong môi trường máy chủ>
+GEMINI_MODEL=gemini-3.5-flash-lite
+GEMINI_FALLBACK_MODEL=gemini-3.5-flash-lite
+GEMINI_PRIMARY_TIMEOUT_SECONDS=8
 GEMINI_TIMEOUT_SECONDS=25
+GEMINI_DATA_MODE=DEMO_ONLY
 ```
 
-Khởi động lại backend sau khi thay đổi. Bản local hiện đã cấu hình và đã gọi Gemini thật. Bản Render cần nhập các biến trên tại **ai4s-demo → Environment**, rồi **Manual Deploy → Deploy latest commit**. Không nhập khóa vào `NEXT_PUBLIC_*`. Xem [DEPLOY_RENDER.md](DEPLOY_RENDER.md).
+Khởi động lại backend sau khi đổi cấu hình; Render cần deploy. Blueprint đã khai báo các lựa chọn model/timeout, không chứa API key. Không có khóa thì tra cứu nội bộ vẫn hoạt động. Có thể để GEMINI_FALLBACK_MODEL trống để tắt lần gọi dự phòng; nếu hai model giống nhau thì chỉ gọi một lần.
 
-Model hiện được kiểm thử là `gemini-3.8-flash`; quyền truy cập và quota phụ thuộc project Google, không có cam kết miễn phí hoặc không giới hạn. `gemini-2.5-flash` trả 404 với project mới trong lần thử này; [tài liệu model](https://ai.google.dev/gemini-api/docs/models) ghi nhận hạn chế truy cập 2.5 với project mới. Không có tự động đổi model hay thử lại nhiều lần gây phát sinh lượt gọi.
+## Kiểm thử
 
-Nếu khóa đã xuất hiện trong chat hoặc nơi chia sẻ, tạo khóa thay thế trong Google AI Studio, cập nhật môi trường rồi thu hồi khóa cũ theo [hướng dẫn của Google](https://ai.google.dev/gemini-api/docs/api-key#security-and-secret-management).
-
-## Kiểm thử cho team
-
-PowerShell:
+Từ thư mục dự án, PowerShell:
 
 ```powershell
 cd backend
 .venv/Scripts/python.exe -m pytest -q
 cd ../frontend
-npx playwright test
+npm run lint
+npx tsc --noEmit
 cd ..
-backend/.venv/Scripts/python.exe scripts/check_gemini_live.py
+backend/.venv/Scripts/python.exe scripts/check_rag_live.py --url https://ai4s-demo.onrender.com --admin-credentials .local/rag-admin-test.json --with-gemini
 ```
 
-Unix:
+Unix thay đường dẫn Python bằng `backend/.venv/bin/python` (hoặc `.venv/bin/python` khi đang trong backend). Bộ pytest và trình duyệt thông thường dùng model giả lập; `--with-gemini` mới phát sinh yêu cầu thật với nội dung kiểm thử tự soạn. `scripts/check_rag_browser_real.mjs` kiểm tra giao diện với một yêu cầu Google thật, chỉ cho phép máy QA localhost.
 
-```sh
-cd backend
-.venv/bin/python -m pytest -q
-cd ../frontend
-npx playwright test
-cd ..
-backend/.venv/bin/python scripts/check_gemini_live.py
-```
-
-Backend tests và ba kiểm thử UI Gemini dùng dữ liệu/provider giả lập để không tiêu quota. Lệnh `check_gemini_live.py` là kiểm tra thật, tạo tài khoản QA với dữ liệu tự soạn và gọi model đúng 3 lần; chỉ chạy khi muốn kiểm tra kết nối thực. Các máy chủ và database phải đang chạy.
-
-## Cách triển khai
-
-Backend gọi REST [`generateContent`](https://ai.google.dev/api/generate-content) bằng HTTPX qua host cố định, khóa trong header. Model nhận dữ liệu đã giới hạn từ các truy vấn có điều kiện chủ sở hữu: tối đa 8 sổ ngân sách, 5 hóa đơn, 5 lịch gần nhất, tỷ giá có nguồn và 3 đoạn tài liệu khớp từ khóa. Email, mật khẩu, token, thông tin bên nhận và tệp gốc không được lấy vào ngữ cảnh tự động. Câu hỏi/tài liệu vẫn có thể chứa thông tin bạn tự nhập nên cần kiểm tra trước khi gửi.
-
-Phản hồi JSON phải qua kiểm tra schema, trạng thái hoàn thành và danh sách mã nguồn. Nguồn và đường dẫn hiển thị do máy chủ gắn lại; model không tạo nút thao tác. Không dùng function calling, agent thực thi, Google Search hoặc vector database. Trích xuất OCR/tìm kiếm từ khóa vẫn chạy ở máy chủ; Gemini là lớp diễn giải bổ sung.
-
-Giới hạn hiện tại: 500 ký tự/câu hỏi, 6 tin nhắn lịch sử, ngữ cảnh 40.000 ký tự, đầu ra tối đa 1.200 token và timeout 25 giây mặc định. Có giới hạn bền vững 20 lần/tài khoản+IP/15 phút và 60 lần/IP proxy/15 phút. Giới hạn quota của Google có thể thấp hơn. Chưa có lưu hội thoại dài hạn, streaming từng token, tìm kiếm ngữ nghĩa hay xác minh tự động rằng mọi câu văn của AI đều đúng với trích dẫn.
+Kết quả thực tế và phiên bản triển khai: [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md). Cơ sở kỹ thuật: [docs/22_TOPIC_D_MANAGED_RAG.md](docs/22_TOPIC_D_MANAGED_RAG.md).

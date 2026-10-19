@@ -1,3 +1,7 @@
+## Combined RAG generation amendment — 19 October 2026
+
+The knowledge-page primary question flow is retrieve -> binary consent -> Gemini synthesis -> original citations. Refusal dispatches no question; server lookup remains. Scope, session/revision/expiry and post-generation source checks are retained. The default model is 3.5 Flash-Lite; a distinct configured alternate is attempted at most once for transient/unavailable-model errors, with an 8s first-attempt cap and the same 25s total deadline. No auth/quota/bad-input/invalid-output retries. A question may make up to two requests to the fixed Google host; responses identify the actual model. Existing no-payment/no-claims-decision controls remain. Exact validation: current IMPLEMENTATION_REPORT.md. This supersedes older default-mode/provider statements below.
+
 # Managed Topic D RAG security amendment — 19 October 2026
 
 Administration requires a personal authenticated session plus the server-assigned is_rag_admin capability. Demo operators and public registrations cannot elevate themselves. Random test credentials are kept outside source/ZIP; server provisioning never silently promotes existing students or resets existing passwords. Ordinary cookie/CSRF/origin/login-throttling protections apply.

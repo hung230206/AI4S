@@ -24,4 +24,4 @@ Questions with expected source facts:
 - Vietnamese guide: **Hồ sơ bồi thường cần giấy tờ gì?** → sample claim form, hospital invoice and relevant medical records; no insurer submission is performed.
 - Chinese glossary: **免赔额是什么意思？** → the portion of eligible costs that may need to be borne personally; check actual policy conditions.
 
-Use **original excerpts at the server** for the verified path. The real Gemini generation check timed out in this release; the application labels its extractive fallback rather than representing it as a generated answer. See `../../RAG_GUIDE.md` and `../../IMPLEMENTATION_REPORT.md`.
+The combined flow retrieves passages first and lets Gemini explain them after explicit consent. The server also supports original excerpts without an external model. Gemini 3.8 reproduced provider errors; the latest gateway uses 3.5 Flash-Lite by default, with one bounded alternate-model attempt for existing 3.8 configurations. Inspect the actual test/deployment results in `../../IMPLEMENTATION_REPORT.md`; usage instructions are in `../../RAG_GUIDE.md`.

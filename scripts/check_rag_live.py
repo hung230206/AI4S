@@ -81,11 +81,17 @@ def main():
             pending = checked(user.post("/rag/preview", json=cloud)); assert not pending["sent"] and len(pending["excerpts"]) <= 3
             if args.with_gemini:
                 result["actual_model_calls"] = 1
+                generation_started = time.monotonic()
                 generated = checked(user.post("/rag/ask", json=cloud))
+                result["generation_elapsed_seconds"] = round(time.monotonic()-generation_started, 3)
+                result["generated_model"] = generated.get("model")
+                result["model_fallback_from"] = generated.get("model_fallback_from")
                 result["provider"] = generated["provider"]; result["fallback_reason"] = generated.get("fallback_reason")
                 result["provider_status"] = "PASS" if generated["provider"] == "GEMINI" else "FALLBACK"
                 if generated["provider"] == "GEMINI":
                     assert generated["citations"] and generated["executed_actions"] == []
+                    assert generated["method"] == "BM25_RAG_GEMINI"
+                    assert "6789" in "".join(c for c in generated["answer"] if c.isdigit())
                     result["generated_sample_answer"] = generated["answer"]
             result["checks"].append("session_consent_gate_and_no_dispatch_preview")
             old_revision = doc["revision"]

@@ -1,3 +1,23 @@
+# Combined RAG generation and bounded Gemini fallback — 19 October 2026
+
+This update supersedes the older extractive-default UI and provider TIMEOUT limitation below. The knowledge page now has one primary question flow: retrieve published evidence, obtain binary consent if needed, then synthesize from the retrieved passages. Agreement continues the pending question with the newly returned permission revision; declining dispatches nothing. Enabling AI later does not replay a declined question. Server-only lookup and explicit permission withdrawal remain available. Missing evidence still abstains before generation. Original citation/page/revision checks and post-generation permission/source revalidation are retained.
+
+Diagnosis used the same server key and a tiny fictional prompt: gemini-3.8-flash returned HTTP 503, while gemini-3.5-flash-lite returned a valid structured answer in 1.375s. This is evidence of the observed model/service failure, not a claim that 3.8 is permanently unavailable. The full source-grounded local request using the former 3.8 setting completed via the alternate in 9.422s. With 3.5 configured directly, actual HTTP acceptance generated a grounded answer in 2.266s. These are individual measurements, not a latency guarantee.
+
+The default is now 3.5 Flash-Lite with low thinking. Existing 3.8 configurations can try one explicit server-configured alternate on timeout, network/5xx or unavailable model. asyncio.wait_for bounds each complete attempt, including response-body reads, and both attempts share the existing overall deadline. The primary gets at most 8s if an alternate is configured; the total remains 25s by default. No alternate attempt occurs for authentication/quota errors, bad input or invalid model output, or if the alternate is blank/identical. An admitted app question can therefore make up to two upstream calls. API responses report the actual model and optional fallback_from metadata; model output cannot set this server transport metadata. All candidates stay at the fixed Google host with the same bounded excerpts and existing consent.
+
+The RAG prompt asks for a concise explanation grounded in the passages, inline source markers and explicit missing-information/sample qualifications. It does not request exposure of chain-of-thought. Lexical retrieval quality and semantic correctness remain separate limitations; no model training or new vector search is claimed.
+
+Primary references consulted for this change:
+
+- Model capabilities/latency intent: https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite
+- REST JSON response format: https://ai.google.dev/gemini-api/docs/generate-content/structured-output
+- Supported 3.8 thinking levels: https://ai.google.dev/gemini-api/docs/generate-content/whats-new-gemini-3.8
+
+Actual runs, deployment state and receipts are recorded in IMPLEMENTATION_REPORT.md and submission/evidence/rag-llm-*. Browser regression tests mock generation; the separate real browser/API checks are explicitly identified.
+
+---
+
 # Topic D — managed insurance retrieval-augmented generation
 
 Reviewed 19 October 2026. This document describes implemented engineering behaviour, not insurance advice or a compliance certification.

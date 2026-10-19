@@ -481,7 +481,7 @@ def assistant(body: AssistantInput, request: Request, user=Depends(student), db=
     try:
         result = gemini.generate(body.message, history, body.language, evidence)
         selected = list(dict.fromkeys(result.source_ids))
-        return {"method": "GEMINI_GROUNDED", "provider": "GEMINI", "model": settings.gemini_model, "intent": fallback["intent"], "answer": result.answer,
+        return {"method": "GEMINI_GROUNDED", "provider": "GEMINI", "model": result.model_used, "model_fallback_from": result.model_fallback_from, "intent": fallback["intent"], "answer": result.answer,
                 "citations": [citations[source_id] for source_id in selected], "actions": fallback["actions"], "executed_actions": [],
                 "notice": "Gemini diễn giải dữ liệu tham chiếu; hãy đối chiếu nguồn. Không thực hiện hành động tài chính."}
     except gemini.GeminiFailure as exc:

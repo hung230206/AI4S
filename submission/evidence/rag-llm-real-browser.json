@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-19T09:38:22.823Z",
+  "origin": "http://localhost:3104",
+  "fictional_content_only": true,
+  "actual_generation_requests": 1,
+  "generation_elapsed_seconds": 1.623,
+  "status": "PASS",
+  "provider": "GEMINI",
+  "model": "gemini-3.5-flash-lite",
+  "model_fallback_from": null,
+  "answer": "Theo tài liệu mẫu (fictional terms), quyền lợi ngoại trú có hạn mức hàng năm là CNY 2.000 đối với các chi phí khám chữa bệnh ngoại trú hợp lệ [R1]. Khoản khấu trừ (deductible) mẫu là CNY 100 cho mỗi lần khám [R1]. Xin lưu ý đây là các điều khoản mẫu mang tính thử nghiệm phần mềm, không xác nhận bảo hiểm thực tế và cần có sự xác nhận từ công ty bảo hiểm thực tế [R1].",
+  "citations": [
+    {
+      "id": "R1",
+      "page": 1,
+      "revision": 1,
+      "href": "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"
+    }
+  ],
+  "consent_withdrawn_after_test": true
+}

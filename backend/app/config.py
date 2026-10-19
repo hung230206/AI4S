@@ -26,7 +26,9 @@ class Settings(BaseSettings):
     ocr_max_workers: int = Field(default=2, ge=1, le=2)
     gemini_enabled: bool = False
     gemini_api_key: SecretStr = Field(default=SecretStr(""), repr=False, exclude=True)
-    gemini_model: str = Field(default="gemini-3.8-flash", pattern=r"^[a-z0-9][a-z0-9.-]{1,79}$")
+    gemini_model: str = Field(default="gemini-3.5-flash-lite", pattern=r"^[a-z0-9][a-z0-9.-]{1,79}$")
+    gemini_fallback_model: str = Field(default="gemini-3.5-flash-lite", pattern=r"^(?:[a-z0-9][a-z0-9.-]{1,79})?$")
+    gemini_primary_timeout_seconds: int = Field(default=8, ge=2, le=20)
     gemini_timeout_seconds: int = Field(default=25, ge=5, le=45)
     # PAID_PRIVATE requires an operator-verified paid Google Cloud project/DPA.
     gemini_data_mode: str = Field(default="DEMO_ONLY", pattern=r"^(DEMO_ONLY|PAID_PRIVATE)$")

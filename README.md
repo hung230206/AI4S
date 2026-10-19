@@ -1,12 +1,12 @@
 ## Managed Topic D RAG (19 October 2026)
 
-User Q&A: `/knowledge`. Administrator CRUD/publication: `/admin/rag` with a server-provisioned account. See [RAG_GUIDE.md](RAG_GUIDE.md) for the complete admin-to-student test flow and [research/method](docs/22_TOPIC_D_MANAGED_RAG.md). Credentials are in an ignored private local file, never in this repository. Gemini still requires binary session consent; the source library can be searched locally without a model.
+User Q&A: `/knowledge` now retrieves passages and lets Gemini synthesize a cited explanation after binary consent. The gateway uses 3.5 Flash-Lite with a bounded alternate for older model settings. Actual tests/deployment: IMPLEMENTATION_REPORT.md. Administrator CRUD/publication: `/admin/rag` with a server-provisioned account. See [RAG_GUIDE.md](RAG_GUIDE.md) for the complete admin-to-student test flow and [research/method](docs/22_TOPIC_D_MANAGED_RAG.md). Credentials are in an ignored private local file, never in this repository. Gemini still requires binary session consent; the source library can be searched locally without a model.
 
 # Demo Student Finance MVP
 
 ## AI privacy and keyboard update — 19 October 2026
 
-Chat: Enter sends, Shift+Enter inserts a newline, IME composition does not submit. Direct lookup is the default. Optional Gemini now requires explicit session permission, selectable context groups, preview and revocation. Read [PRIVACY_GUIDE.md](PRIVACY_GUIDE.md) and [research/security design](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).
+Chat: Enter sends, Shift+Enter inserts a newline, IME composition does not submit. Copilot starts in direct lookup; knowledge-page questions offer RAG + Gemini after explicit permission. Gemini uses the fixed sample/public-data preset, preview and revocation. Read [PRIVACY_GUIDE.md](PRIVACY_GUIDE.md) and [research/security design](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).
 
 The free demo uses `GEMINI_DATA_MODE=DEMO_ONLY`: no personal budget or reviewed-policy context is sent to Gemini; personal `USER_PROVIDED` documents are excluded. Use direct lookup for private records. A paid-private deployment requires operator/legal verification, not merely changing a flag. Run `python -m alembic upgrade head` from `backend/` before starting an existing checkout.
 

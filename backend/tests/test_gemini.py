@@ -1,4 +1,6 @@
+import asyncio
 import json
+import time
 from uuid import uuid4
 import httpx
 import pytest
@@ -21,6 +23,7 @@ def enabled(monkeypatch):
     monkeypatch.setattr(settings, "gemini_enabled", True)
     monkeypatch.setattr(settings, "gemini_api_key", SecretStr("fake_test_key_not_a_real_credential"))
     monkeypatch.setattr(settings, "gemini_data_mode", "PAID_PRIVATE")
+    monkeypatch.setattr(settings, "gemini_model", "gemini-3.8-flash")
 
 
 def register(client):
@@ -140,17 +143,62 @@ def test_timeout_and_unconfigured_are_explicit_fallbacks(client, enabled, monkey
     assert client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True, "privacy_revision": 1}).json()["fallback_reason"] == "NOT_CONFIGURED"
 
 
-@pytest.mark.parametrize("status,code", [(401, "AUTH_ERROR"), (403, "AUTH_ERROR"), (404, "MODEL_UNAVAILABLE"), (429, "PROVIDER_RATE_LIMIT"), (503, "UNAVAILABLE")])
+@pytest.mark.parametrize("status,code", [(400, "INVALID_REQUEST"), (401, "AUTH_ERROR"), (403, "AUTH_ERROR"), (404, "MODEL_UNAVAILABLE"), (429, "PROVIDER_RATE_LIMIT"), (503, "UNAVAILABLE")])
 def test_transport_uses_server_header_and_sanitizes_provider_errors(enabled, monkeypatch, status, code):
-    real_client = httpx.Client
+    real_client = httpx.AsyncClient
+    requests = []
     def handler(request):
+        requests.append(request)
         assert request.headers["x-goog-api-key"] == settings.gemini_api_key.get_secret_value()
         assert request.url.host == "generativelanguage.googleapis.com" and not request.url.query
         return httpx.Response(status, json={"error": {"message": "upstream private details"}})
-    monkeypatch.setattr(httpx, "Client", lambda **kwargs: real_client(transport=httpx.MockTransport(handler), **kwargs))
+    monkeypatch.setattr(httpx, "AsyncClient", lambda **kwargs: real_client(transport=httpx.MockTransport(handler), **kwargs))
     with pytest.raises(gemini.GeminiFailure) as error:
         gemini.request_json({"test": True})
     assert str(error.value) == code
+    assert len(requests) == (2 if status in {404, 503} else 1)
+
+
+@pytest.mark.parametrize("failure", ["TIMEOUT", "UNAVAILABLE", "MODEL_UNAVAILABLE"])
+def test_transient_failure_uses_one_alternate_and_reports_actual_model(enabled, monkeypatch, failure):
+    calls = []
+    async def upstream(payload, model, seconds):
+        calls.append((model, seconds))
+        if len(calls) == 1: raise gemini.GeminiFailure(failure)
+        return candidate(answer="Fictional sample limit: CNY 2,000 [R1].", ids=["R1"])
+    monkeypatch.setattr(gemini, "_request_once", upstream)
+    result = gemini.generate("outpatient limit", [], "en", [{"id": "R1", "kind": "ORIGINAL_DOCUMENT_EXCERPT", "data": {"excerpt": "Fictional limit CNY 2,000"}}])
+    assert [model for model, _ in calls] == ["gemini-3.8-flash", "gemini-3.5-flash-lite"]
+    assert calls[0][1] <= 8 and calls[1][1] <= settings.gemini_timeout_seconds
+    assert result.model_used == "gemini-3.5-flash-lite" and result.model_fallback_from == "gemini-3.8-flash"
+    assert result.source_ids == ["R1"]
+    assert set(result.model_dump()) == {"answer", "source_ids"}  # Transport metadata is not model output.
+
+
+def test_total_deadline_cancels_both_slow_attempts(enabled, monkeypatch):
+    monkeypatch.setattr(settings, "gemini_timeout_seconds", .06)
+    monkeypatch.setattr(settings, "gemini_primary_timeout_seconds", .02)
+    cancelled = []
+    async def slow(payload, model, seconds):
+        try: await asyncio.sleep(10)
+        finally: cancelled.append(model)
+    monkeypatch.setattr(gemini, "_request_once", slow)
+    started = time.monotonic()
+    with pytest.raises(gemini.GeminiFailure, match="TIMEOUT"):
+        gemini.request_json({})
+    assert time.monotonic() - started < .5
+    assert cancelled == ["gemini-3.8-flash", "gemini-3.5-flash-lite"]
+
+
+@pytest.mark.parametrize("fallback", ["", "gemini-3.8-flash"])
+def test_disabled_or_same_fallback_does_not_duplicate_provider_calls(enabled, monkeypatch, fallback):
+    monkeypatch.setattr(settings, "gemini_fallback_model", fallback)
+    calls = []
+    async def unavailable(payload, model, seconds):
+        calls.append(model); raise httpx.ReadTimeout("not returned to client")
+    monkeypatch.setattr(gemini, "_request_once", unavailable)
+    with pytest.raises(gemini.GeminiFailure, match="TIMEOUT"): gemini.request_json({})
+    assert calls == ["gemini-3.8-flash"]
 
 
 def test_gemini_requests_are_rate_limited_without_changing_ledger(client, enabled, monkeypatch):

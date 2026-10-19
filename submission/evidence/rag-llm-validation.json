@@ -1,0 +1,100 @@
+{
+  "status": "LOCAL_PASS_LIVE_PENDING",
+  "baseline_backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "209",
+    "time": "158.323",
+    "timestamp": "2026-10-19T16:24:22.537549+07:00",
+    "hostname": "Hung"
+  },
+  "targeted_backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "48",
+    "time": "16.572",
+    "timestamp": "2026-10-19T16:29:49.562027+07:00",
+    "hostname": "Hung"
+  },
+  "full_backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "216",
+    "time": "195.832",
+    "timestamp": "2026-10-19T16:31:48.045188+07:00",
+    "hostname": "Hung"
+  },
+  "targeted_browser": {
+    "startTime": "2026-10-19T09:35:05.918Z",
+    "duration": 26115.798000000003,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "production_browser": {
+    "startTime": "2026-10-19T09:35:44.248Z",
+    "duration": 139517.793,
+    "expected": 35,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "lint_exit": 0,
+  "typescript_exit": 0,
+  "build_exit": 0,
+  "local_actual_http": {
+    "at": "2026-10-19T09:34:29.159539+00:00",
+    "origin": "http://127.0.0.1:8105",
+    "checks": [
+      "real_admin_login_and_regular_account_denied",
+      "per_file_acknowledgement_draft_isolation_and_local_admin_preview",
+      "publication_student_answer_exact_page_offsets_and_original_hash",
+      "unsupported_insurance_question_abstains",
+      "session_consent_gate_and_no_dispatch_preview",
+      "edit_and_replace_reindex_unpublish_old_revision_rejected",
+      "trash_restore_draft_and_revision_history"
+    ],
+    "actual_model_calls": 1,
+    "real_funds_moved": false,
+    "release": "local",
+    "generation_elapsed_seconds": 2.266,
+    "generated_model": "gemini-3.5-flash-lite",
+    "model_fallback_from": null,
+    "provider": "GEMINI",
+    "fallback_reason": null,
+    "provider_status": "PASS",
+    "generated_sample_answer": "According to the fictional source, outpatient rehabilitation has an annual sample limit of CNY 6,789 [R1].",
+    "core_status": "PASS",
+    "status": "PASS",
+    "elapsed_seconds": 3.578
+  },
+  "local_actual_browser": {
+    "at": "2026-10-19T09:38:22.823Z",
+    "origin": "http://localhost:3104",
+    "fictional_content_only": true,
+    "actual_generation_requests": 1,
+    "generation_elapsed_seconds": 1.623,
+    "status": "PASS",
+    "provider": "GEMINI",
+    "model": "gemini-3.5-flash-lite",
+    "model_fallback_from": null,
+    "answer": "Theo tài liệu mẫu (fictional terms), quyền lợi ngoại trú có hạn mức hàng năm là CNY 2.000 đối với các chi phí khám chữa bệnh ngoại trú hợp lệ [R1]. Khoản khấu trừ (deductible) mẫu là CNY 100 cho mỗi lần khám [R1]. Xin lưu ý đây là các điều khoản mẫu mang tính thử nghiệm phần mềm, không xác nhận bảo hiểm thực tế và cần có sự xác nhận từ công ty bảo hiểm thực tế [R1].",
+    "citations": [
+      {
+        "id": "R1",
+        "page": 1,
+        "revision": 1,
+        "href": "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1"
+      }
+    ],
+    "consent_withdrawn_after_test": true
+  },
+  "real_funds_moved": false
+}
