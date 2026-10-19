@@ -1,0 +1,115 @@
+{
+  "at": "2026-10-19T13:58:58.167849+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "provider_requests": [
+    {
+      "route": "RAG",
+      "seconds": 3.578,
+      "reply": {
+        "route": "RAG",
+        "intent": "DOCUMENT_EVIDENCE",
+        "executed_actions": [],
+        "actions": [],
+        "notice": "Thông tin để tham khảo và đối chiếu; không thực hiện giao dịch hoặc quyết định quyền lợi.",
+        "provider": "GEMINI",
+        "method": "RAG_GEMINI",
+        "answer": "Theo các tài liệu quy định, sản phẩm bảo hiểm sức khỏe ngắn hạn là sản phẩm có thời gian bảo hiểm từ một năm trở xuống và không chứa điều khoản bảo đảm tái tục [R2]. Khi hết thời hạn bảo hiểm, người mua bảo hiểm cần phải nộp đơn xin tái tục lại và phải được công ty bảo hiểm đồng ý cũng như đóng phí để có hợp đồng bảo hiểm mới [R1].",
+        "model": "gemini-3.5-flash-lite",
+        "citations": [
+          {
+            "document_id": "89c77422-dca9-405f-bf22-d490c22b3cef",
+            "revision": 4,
+            "chunk_id": "33ebbcfc-95e1-43dc-a416-9a3e3495093e",
+            "page": 1,
+            "start": 1418,
+            "end": 2292,
+            "excerpt": "urance; ngắn hạn short term; thời gian chờ waiting period; bồi thường hồ sơ chi trả claims service]\n保险公司开发的短期健康保险产品应当在保险条款中对保险期间、保险责任、责任免除、理赔条件、退保约定，以及保费交纳方式、等待期设置，保险金额、免赔额、赔付比例等产品关键信息进行清晰、明确、无歧义的表述。\n三、\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal; ngắn hạn short term]\n保险公司开发的短期健康保险产品中包含续保责任的，应当在保险条款中明确表述为\n[Demo indexing hints only, not official translation: tái tục bảo đảm gia hạn renewal; không bảo đảm tái tục non guaranteed renewal]\n“不保证续保”条款。不保证续保条款中至少应当包含以下内容：\n本产品保险期间为一年（或不超过一年）。保险期间届满，投保人需要重新向保险公司申请投保本产品，并经保险人同意，交纳保险费，获得新的保险合同。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n保险公司不得在短期健康保险产品条款、宣传材料中使用\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal]\n",
+            "title": "[NFRA · 2021] Bảo hiểm ngắn hạn và không bảo đảm tái tục",
+            "publisher": "中国银保监会办公厅 / 国家金融监督管理总局公开库",
+            "filename": "nfra-shortterm-notice-2021.txt",
+            "source_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+            "document_kind": "PUBLIC_REFERENCE",
+            "sha256": "a1aeb34c29e2ec2d05fc7bfd23a8a2f52dd52870ca1894152479ef17c02ab1b3",
+            "category": "POLICY",
+            "language": "zh",
+            "jurisdiction": "CN",
+            "score": 26.12509,
+            "matched_terms": [
+              "dam",
+              "han",
+              "khoe",
+              "ngan",
+              "suc",
+              "tuc"
+            ],
+            "concepts": [
+              "claim",
+              "deductible",
+              "documents",
+              "premium",
+              "waiting"
+            ],
+            "origin": "SHARED",
+            "href": "/knowledge/89c77422-dca9-405f-bf22-d490c22b3cef?revision=4#page-1",
+            "source_id": "R1"
+          },
+          {
+            "document_id": "bbe95534-c348-47c9-afeb-08f16346fdb8",
+            "revision": 4,
+            "chunk_id": "2ce24905-f4c5-42db-87c4-9b3f86a68c4e",
+            "page": 1,
+            "start": 1439,
+            "end": 2313,
+            "excerpt": "成部分，坚持健康保险的保障属性，鼓励保险公司遵循审慎、稳健原则，不断丰富健康保险产品，改进健康保险服务，扩大健康保险覆盖面，并通过有效管理和市场竞争降低健康保险价格和经营成本，提升保障水平。\n第四条\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n健康保险按照保险期限分为长期健康保险和短期健康保险。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal]\n长期健康保险，是指保险期间超过一年或者保险期间虽不超过一年但含有保证续保条款的健康保险。\n长期护理保险保险期间不得低于\n5年。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal; ngắn hạn short term]\n短期健康保险，是指保险期间为一年以及一年以下且不含有保证续保条款的健康保险。\n[Demo indexing hints only, not official translation: tái tục bảo đảm gia hạn renewal]\n保证续保条款，是指在前一保险期间届满前，投保人提出续保申请，保险公司必须按照原条款和约定费率继续承保的合同约定。\n第五条\n医疗保险按照保险金的给付性质分为费用补偿型医疗保险和定额给付型医疗保险。\n费用补偿型医疗保险，是指根据被保险人实际发生的医疗、康复费用支出，按照约定的标准确定保险金数额的医疗保险。\n定额给付型医疗保险，是指按照约定的数额给付保险金的医疗保险。\n",
+            "title": "[NFRA · 2019] Quy định quản lý bảo hiểm sức khỏe",
+            "publisher": "中国银保监会 / 国家金融监督管理总局法规公开库",
+            "filename": "nfra-health-measures-2019.txt",
+            "source_url": "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1027050",
+            "document_kind": "PUBLIC_REFERENCE",
+            "sha256": "c8b5730a8f9634c0b0aa520d0dc5669b03521ee853cfe258fc8fb74ce8dd915a",
+            "category": "POLICY",
+            "language": "zh",
+            "jurisdiction": "CN",
+            "score": 22.76399,
+            "matched_terms": [
+              "dam",
+              "han",
+              "khoe",
+              "ngan",
+              "suc",
+              "tuc"
+            ],
+            "concepts": [],
+            "origin": "SHARED",
+            "href": "/knowledge/bbe95534-c348-47c9-afeb-08f16346fdb8?revision=4#page-1",
+            "source_id": "R2"
+          }
+        ]
+      }
+    },
+    {
+      "route": "GEMINI",
+      "seconds": 2.235,
+      "reply": {
+        "route": "GEMINI",
+        "intent": "STUDY_GUIDANCE",
+        "executed_actions": [],
+        "actions": [],
+        "notice": "Thông tin để tham khảo và đối chiếu; không thực hiện giao dịch hoặc quyết định quyền lợi.",
+        "provider": "GEMINI",
+        "method": "GEMINI_GENERAL",
+        "answer": "Chào bạn! Đối với sinh viên mới du học, việc sắp xếp học tập hiệu quả rất quan trọng để thích nghi với môi trường mới. Dưới đây là một số hướng dẫn chung: \n\n1. **Lên kế hoạch thời gian:** Kết hợp giữa lịch học trên lớp, thời gian tự học và thời gian nghỉ ngơi.\n2. **Hiểu rõ chương trình học:** Đọc kỹ đề cương môn học (syllabus) và nắm bắt các mốc thời gian nộp bài, thi cử.\n3. **Tận dụng tài nguyên:** Sử dụng thư viện, các buổi hỗ trợ học tập của trường và kết nối với cố vấn học tập.\n4. **Quản lý tài chính và bảo hiểm:** Theo dõi chi phí học tập, sinh hoạt phí và nắm rõ các quyền lợi bảo hiểm du học của bạn thông qua ứng dụng để yên tâm học tập.\n\nChúc bạn có một khởi đầu suôn sẻ tại nước ngoài!",
+        "model": "gemini-3.5-flash-lite",
+        "citations": [
+          {
+            "source_id": "G1",
+            "title": "Hướng dẫn Demo",
+            "href": "/copilot"
+          }
+        ]
+      }
+    }
+  ],
+  "no_private_content": true,
+  "status": "PASS"
+}

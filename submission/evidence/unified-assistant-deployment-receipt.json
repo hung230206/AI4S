@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-19T14:00:58.770716+00:00",
+  "status": "PASS",
+  "release": "04aae9b4b0e9f8de0bd35045dceebf5bf153c9c4",
+  "url": "https://ai4s-demo.onrender.com/copilot",
+  "render_deploy": "dep-dbb22rtg1s2s73dvo1e0",
+  "configured_model": "gemini-3.5-flash-lite",
+  "published_sources": 8,
+  "source_hashes_match_selected_corpus": true,
+  "legacy_knowledge_redirect": "/copilot",
+  "streamed_next_redirect": true,
+  "actual_online_generation": "unified-assistant-render-real.json",
+  "screenshot": "screenshots/rag/unified-assistant-render.png"
+}

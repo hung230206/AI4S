@@ -45,3 +45,7 @@ node scripts/check_rag_browser_real.mjs http://127.0.0.1:3105 china
 ```
 
 Unix uses `.venv/bin/python` and `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3105 npx playwright test`. Start the compiled frontend and backend first, configure matching proxy/origins, and enable the mock-provider worker for the full payment browser suite. Real-provider acceptance requires the locally configured server key and explicit in-app consent; it does not read a key from command arguments. The source excerpt tests use only published public references.
+
+## Verified online release
+
+Render deployment dep-dbb22rtg1s2s73dvo1e0 serves application commit 04aae9b4b0e9f8de0bd35045dceebf5bf153c9c4 at https://ai4s-demo.onrender.com/copilot. The server setting is gemini-3.5-flash-lite. Actual online RAG generation passed in 3.578s and general generation in 2.235s. The eight published-source hashes still match the selected competition corpus. The browser confirms one chat entry and that /knowledge navigates to /copilot. See unified-assistant-deployment-receipt.json and unified-assistant-render-real.json; screenshots/rag/unified-assistant-render.png shows the deployed interface. These checks used public questions/excerpts, revoked the test permission afterward and did not alter private records.
