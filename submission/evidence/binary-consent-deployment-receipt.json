@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-10-19T08:18:27.240386+00:00",
+  "release": "a0f054e6ee26761a8a9863b22ab96789c15d859e",
+  "render_service": "srv-dbab553ncjis73cthbc0",
+  "render_deploy": "dep-dbat2f0m7kps73a6m6v0",
+  "dashboard_status": "Deploy succeeded | Live",
+  "dashboard_started": "2026-10-19 15:13:49 GMT+7",
+  "dashboard_duration": "2m35s",
+  "trigger": "Manual Deploy latest commit after push",
+  "application_url": "https://ai4s-demo.onrender.com",
+  "privacy_groups_passed": 8,
+  "insurance_groups_passed": 7,
+  "real_model_calls_this_change": 0,
+  "real_funds_moved": false,
+  "committed_source_files_exact_secret_scan": {
+    "files": 80,
+    "matches": 0
+  },
+  "browser_proof": "submission/evidence/screenshots/privacy/binary-gemini-live.jpg",
+  "post_deploy_commit_policy": "documentation/evidence only, [skip render]; running release remains the validated application commit"
+}

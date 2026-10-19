@@ -1,0 +1,53 @@
+{
+  "expected": "a0f054e6ee26761a8a9863b22ab96789c15d859e",
+  "status": "PASS",
+  "health": {
+    "status": "ok",
+    "demo_mode": true,
+    "payment_provider": "MOCK",
+    "allow_real_payments": false,
+    "release": "a0f054e6ee26761a8a9863b22ab96789c15d859e",
+    "insurance_workflow": "portfolio-claims-v1"
+  },
+  "observations": [
+    {
+      "at": "2026-10-19T08:14:22.700773+00:00",
+      "http_status": "unavailable"
+    },
+    {
+      "at": "2026-10-19T08:14:57.034420+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:15:13.463718+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:15:29.792277+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:15:45.116446+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:16:01.513589+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:16:17.929769+00:00",
+      "http_status": 200,
+      "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471"
+    },
+    {
+      "at": "2026-10-19T08:16:34.298367+00:00",
+      "http_status": 200,
+      "release": "a0f054e6ee26761a8a9863b22ab96789c15d859e"
+    }
+  ]
+}

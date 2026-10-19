@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-19T08:16:49.441622+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "checks": [
+    "default_off_server_gate_and_no_financial_actions",
+    "explicit_versioned_grant_and_unpaid_scope_restriction",
+    "each_upload_purpose_requires_processing_acknowledgement",
+    "preview_is_local_and_includes_agreed_history_and_filters_private_sources",
+    "sensitive_data_tripwire_before_provider",
+    "revoke_stops_future_dispatch_and_direct_lookup_remains",
+    "session_permission_isolation_and_all_device_logout",
+    "public_privacy_notice_and_unused_device_permissions_disabled"
+  ],
+  "real_funds_moved": false,
+  "real_model_calls": 0,
+  "release": "a0f054e6ee26761a8a9863b22ab96789c15d859e",
+  "status": "PASS",
+  "elapsed_seconds": 8.062
+}

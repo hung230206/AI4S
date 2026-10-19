@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_CHECKS_PASS_DEPLOY_PENDING",
+  "status": "DEPLOYED_CONSENT_CHECKS_PASS",
   "ai_notice": "ai-privacy-2026-10-19-v2",
   "file_notice": "files-2026-10-19-v1",
   "backend": {
@@ -24,5 +24,9 @@
   "typescript_exit": 0,
   "production_build_exit": 0,
   "actual_gemini_calls_this_change": 0,
-  "real_funds_moved": false
+  "real_funds_moved": false,
+  "release": "a0f054e6ee26761a8a9863b22ab96789c15d859e",
+  "privacy_live_groups": 8,
+  "insurance_live_groups": 7,
+  "provider_availability_retested": false
 }
