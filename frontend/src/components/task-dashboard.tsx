@@ -1,4 +1,5 @@
 "use client";
+import {InsuranceEntry} from "@/components/insurance-entry";
 import {tr} from "@/lib/i18n";
 import {useI18n} from "@/components/i18n-provider";
 
@@ -31,6 +32,7 @@ export function TaskDashboard() {
   const pending = orders.find(o => o.status === "PROCESSING" || o.status === "AWAITING_CONFIRMATION");
   const recentInvoice = open[0] || invoices[0];
   return <>
+    <InsuranceEntry/>
     <Heading eyebrow={t("dashboard_eyebrow")} title={t("dashboard_title")}>{t("dashboard_sub")}</Heading>
     <ErrorBox message={error}/>
     <section className="lab-banner"><div><strong>{t("lab_banner_strong")}</strong><p>{t("lab_banner_text")}</p></div><Link className="button primary" href="/test-lab">{t("lab_banner_button")} <ArrowRight size={16}/></Link></section>

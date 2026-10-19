@@ -29,3 +29,13 @@ Choose MANUAL before confirmation and have an authenticated operator request an 
 ## Team preparation
 
 Use one selected official topic, preferably Topic C for this journey. The team must finalize eligibility/registration, the real repository URL and English presentation/narration. See docs/19_COMPETITION_HANDOFF_RESEARCH.md for sourced requirements. Do not call rule routing a generative agent, tracking balances custody, or public references verified personal insurance.
+
+## Optional combined C+D segment (approximately 3 minutes)
+
+1. Open Insurance & Claims. Download the generated self-authored pack. Upload `demo-policy.txt`, load the draft fields, read the page excerpt and explicitly save the reviewed summary.
+2. Compare outpatient and evacuation needs: show the exact criteria match and the evacuation gap, without claiming insurer approval.
+3. Create a CNY budget with 1,000 CNY; plan the 800 CNY premium. Show the 200 CNY projection and unchanged 1,000 CNY current balance. Create the internal premium estimate and, if time permits, run the existing signed sandbox flow.
+4. Create an outpatient preparation case for 500 CNY. Attach the three self-authored files, record external identity/bank readiness, review and mark the checklist ready. Export the ZIP and show original hashes and the policy snapshot. State clearly that nothing was sent to an insurer.
+5. Show a grounded assistant answer with source navigation; use direct lookup if no Gemini key is configured.
+
+Choose this segment instead of repeating the entire older demo; the competition presentation limit remains 10 minutes.

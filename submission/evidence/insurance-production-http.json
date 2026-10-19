@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-19T06:04:12.371694+00:00",
+  "origin": "http://localhost:3102",
+  "checks": [
+    "private_account_and_sandbox_health",
+    "source_review_citation_hash_and_idempotency",
+    "explainable_coverage_match_and_evacuation_gap",
+    "one_premium_plan_1000_current_200_projected",
+    "explicit_consent_signed_sandbox_receipt_no_ledger_debit",
+    "claim_checklist_original_attachments_snapshot_and_export_hashes",
+    "grounded_read_only_insurance_handoff"
+  ],
+  "real_funds_moved": false,
+  "release": "local",
+  "gemini_configured": false,
+  "status": "PASS",
+  "elapsed_seconds": 6.172
+}

@@ -1,3 +1,45 @@
+# Combined Topic C + D — 19 October 2026
+
+Implemented and exercised a working insurance-to-student-finance journey. Research, sources and the distinction between competition requirements and design decisions are recorded in `docs/20_TOPIC_C_D_RESEARCH_AND_IMPLEMENTATION.md`. The official entry still selects one topic; the product combines their tasks.
+
+## Delivered behavior
+
+- `/insurance`: a private reviewed portfolio tied to original documents and page excerpts; edit, archive and restore; explicit unknown fields rather than invented benefit values. Excerpt presence is checked, while interpretation remains the human reviewer's responsibility.
+- Coverage comparison for outpatient, inpatient, accident and evacuation needs: single-policy limits, full period, territory, currency and waiting period; explicit unknown information and possible overlap. Limits are never added and results do not establish claim eligibility.
+- Premium-to-budget bridge: a native-currency planned expense, unchanged current balance and existing cash-flow forecast. One linked CNY internal estimate can enter the existing dated-reference FX, exact consent, asynchronous signed sandbox, receipt and evidence flow. Repeated paths reuse the expense; financial snapshots are preserved and changes are flagged for review. These are user-created estimates, not insurer-issued invoices or premium settlement.
+- Claim preparation: source snapshot at creation, incident/expense/deadline fields, case-specific checklist, private bounded original attachments, corrections/removal, explicit readiness review, user-reported external submission and closure. Export includes the checklist, policy original, attachment hashes and journal; exports serialize against concurrent edits. No insurer API submission or adjudication occurs.
+- On-open expiry/premium/deadline reminders, a dated self-authored test pack, a Vietnamese A-Z walkthrough, three interface languages and light/dark layouts. Dashboard, Test Lab and copilot link to the combined journey.
+- Read-only assistant integration: bounded reviewed policy facts and self-reported case status, with owned citations/navigation. Claim attachment bytes and case medical descriptions are excluded from Gemini. Direct lookup remains available without an AI key.
+
+## Executed verification
+
+| Check | Actual result |
+|---|---|
+| Baseline backend before changes | 138 passed |
+| Final full backend | 164 passed, 0 failures/errors/skips; one existing Starlette TestClient/httpx deprecation warning |
+| Full native development browser suite | 26 passed; 0 unexpected, skipped or flaky |
+| Final standalone production browser suite | 24 passed; 0 unexpected, skipped or flaky. Two development-only manual operator cases were deliberately excluded |
+| Frontend lint / TypeScript / standalone Webpack build | All exit 0; final source fingerprint and browser-JS secret scan in `insurance-build-checks.json` |
+| Actual local HTTP C+D acceptance | Seven groups passed, including source/citation hash, one 800 CNY premium plan, 1,000 CNY current / 200 CNY projected balance, signed sandbox receipt and claim ZIP originals |
+| Actual Gemini HTTP acceptance | Seven groups passed, including one real gemini-3.8-flash reply over the synthetic portfolio/case; no real money moved |
+| Schema and handoff | Alembic current/check passed; fresh QA databases migrated and seeded without resetting old data; original handoff validator and source-secret scan passed |
+
+Exact counts/durations and executed output are saved in `submission/evidence/insurance-validation.json`, `insurance-full-backend.xml`, `insurance-browser-development.json`, `insurance-browser-production.json`, the matching text outputs, `insurance-production-http.json` and `insurance-gemini-live.json`. New desktop/mobile screenshots are under `submission/evidence/screenshots/insurance/` and were visually inspected. Local Docker execution is not claimed.
+
+QA corrected repeated template-file loading, inaccessible exact select labels and asynchronous checkbox display. Production testing then exposed a fast-input race while the source upload was still busy; file selectors now wait for that operation. An intermediate batch hit the persistent signup throttle after repeated runs. The final runs used fresh isolated QA databases; no security rate limit or existing account data was reset.
+
+## Deployment and remaining boundaries
+
+The Render Blueprint preserves the user's requested on-commit auto-deploy behavior. The health endpoint now exposes the Render commit and the C+D workflow marker so the actual running release can be verified after push. Cloud verification is recorded separately after deployment; local success is not represented as a cloud deployment.
+
+Still not developed: live CNY/VND exchange or transfers; insurance purchase/activation; insurer contract or medical-document authenticity verification; insurer claims submission, eligibility decisions or payouts; background email/SMS; intraday FX monitoring. Coverage comparison does not model annual benefit consumption, full policy conditions, every exclusion or coordination between policies. The claim checklist is a referenced general preparation guide, not definitive insurer requirements.
+
+The public demo uses bounded free hosting/database resources and synthetic/anonymized inputs. Gemini must be configured separately on each server and can fall back on provider errors. The supplied local key is not copied into Git or browser assets. No paid resource, competition registration, presentation submission or third-party message was created. `TOPIC_C_D_GUIDE.md` explains the usable flow; English technical/security/demo artifacts and the API contract were updated for team handoff.
+
+---
+
+The sections below are dated historical implementation snapshots; their older counts and limitations do not override this current extension and its evidence.
+
 # Optional Gemini chatbot — 2026-10-19
 
 Integrated the user's Gemini project through a backend-only HTTPX adapter and the existing authenticated study-abroad assistant. Local `.env` holds the key; it is never returned in status, model context, browser requests, source files or handoff artifacts. Direct lookup remains usable without a key. No dependency additions or database migrations were required.

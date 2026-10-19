@@ -41,7 +41,7 @@ Một container giữ cùng origin cho UI/API, tránh cấu hình CORS giữa ha
 
 ## Cập nhật sau khi sửa code
 
-Blueprint đặt `autoDeployTrigger: "off"` để mỗi push không tự phát sinh build ở mọi bản cài. Sau khi push lên `main`, chọn **Manual Deploy → Deploy latest commit** trên service. Không tạo lại DB hoặc xóa tài nguyên chỉ để cập nhật code. Bí mật và bản ghi hiện có được giữ nguyên.
+Blueprint dùng `autoDeployTrigger: commit` theo lựa chọn auto deploy của chủ dự án. Push lên `main` sẽ kích hoạt build khi service đã liên kết Git provider và bật **On Commit**. Nếu chỉ dùng public repository URL mà chưa liên kết Git provider, dùng **Manual Deploy → Deploy latest commit** trên service. Không tạo lại DB hoặc xóa tài nguyên chỉ để cập nhật code. Bí mật và bản ghi hiện có được giữ nguyên.
 
 Nếu thêm custom domain, khai báo `PUBLIC_APP_URL=https://ten-mien-cua-ban` trong Environment và deploy lại. Giữ nguyên `COOKIE_SECURE=true`. Chỉ một origin chính được launcher chấp nhận; không nhập wildcard hoặc danh sách URL vào biến này.
 

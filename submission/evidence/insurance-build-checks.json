@@ -1,0 +1,9 @@
+{
+  "production_build": "PASS",
+  "lint": "PASS",
+  "typescript": "PASS",
+  "frontend_source_sha256": "0d5c4b77f8f2a424d8508e7a158584b5fa732133f3fc487e17348d2a53d566b2",
+  "build_id": "73SL-GQgLCVIPgOP6gFbq",
+  "browser_js_files_scanned": 42,
+  "local_secrets_found": false
+}

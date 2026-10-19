@@ -1,0 +1,12 @@
+"use client";
+import {useState} from "react";
+import {api} from "@/lib/api";
+import {localDate, useInsuranceCopy, type ClaimCase} from "@/lib/insurance";
+export function ClaimEditor({data, token, busy, act, receive}: {data: ClaimCase; token: string; busy: boolean; act: (action: () => Promise<void>) => Promise<void>; receive: (data: ClaimCase) => void}) {
+  const t = useInsuranceCopy();
+  const [fields, setFields] = useState({title: data.title, amount: data.amount, description: data.description, incident_date: data.incident_date, deadline: data.deadline || ""});
+  const [removeId, setRemoveId] = useState("");
+  return <details className="card"><summary>{t("editCase")}</summary><form className="insurance-inline-confirm" onSubmit={e => {e.preventDefault(); act(async () => receive(await api<ClaimCase>(`/insurance/claims/${data.id}/update`, token, {...fields, deadline: fields.deadline || null, revision: data.revision})));}}><fieldset disabled={busy}>
+    <div className="insurance-form-grid"><label>{t("title")}<input required minLength={2} maxLength={150} value={fields.title} onChange={e => setFields({...fields, title: e.target.value})}/></label><label>{t("expense")}<input type="number" min={data.currency === "VND" ? "1" : ".01"} step={data.currency === "VND" ? "1" : ".01"} required value={fields.amount} onChange={e => setFields({...fields, amount: e.target.value})}/></label><label>{t("eventDate")}<input type="date" max={localDate()} required value={fields.incident_date} onChange={e => setFields({...fields, incident_date: e.target.value})}/></label><label>{t("deadline")}<input type="date" min={fields.incident_date} value={fields.deadline} onChange={e => setFields({...fields, deadline: e.target.value})}/></label></div><label>{t("description")}<textarea maxLength={2000} value={fields.description} onChange={e => setFields({...fields, description: e.target.value})}/></label><button className="button secondary">{t("confirm")}</button>
+  </fieldset></form>{data.attachments.map(f => <div className="insurance-attachment" key={f.id}><strong>{f.filename}</strong><label className="insurance-check"><input type="checkbox" checked={removeId === f.id} onChange={e => setRemoveId(e.target.checked ? f.id : "")}/>{t("removeConfirm")}</label><button className="button secondary" disabled={busy || removeId !== f.id} onClick={() => act(async () => receive(await api<ClaimCase>(`/insurance/claims/${data.id}/attachments/${f.id}/remove`, token, {revision: data.revision})))}>{t("remove")}</button></div>)}</details>;
+}

@@ -1,0 +1,116 @@
+"use client";
+import {useCallback, useEffect, useState, type FormEvent} from "react";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {ArrowRight, Download, FileCheck2, ShieldCheck, Plus, CalendarClock} from "lucide-react";
+import {api, downloadOwned, uploadPolicy, downloadPolicy, requestKey, type Policy} from "@/lib/api";
+import {benefitKinds, localDate, useInsuranceCopy, type Benefit, type PortfolioPolicy, type ClaimCase} from "@/lib/insurance";
+import {useAuth} from "@/components/shell";
+import {Heading, ErrorBox} from "@/components/ui";
+
+type Document = Policy & {pages: {page: number; text: string}[]};
+type Wallet = {id: string; name: string; currency: string; balance: string};
+type Fields = {name: string; insurer: string; currency: string; premium: string; premium_due: string; starts_on: string; ends_on: string; territory: string; benefits: Benefit[]; notes: string};
+type Analysis = {results: {kind: string; minimum_limit: string; status: string; possible_overlap: boolean; policies: {policy_id: string; name: string; reasons: string[]; document_id: string; document_kind: string; benefit: Benefit | null}[]}[]};
+const emptyFields = (): Fields => ({name: "", insurer: "", currency: "CNY", premium: "", premium_due: localDate(), starts_on: localDate(), ends_on: localDate(), territory: "CN", notes: "", benefits: benefitKinds.map(kind => ({kind, status: "UNKNOWN", limit: null, deductible: null, reimbursement_percent: null, waiting_days: null, source_page: null, evidence_quote: ""}))});
+const fetchWorkspace = (token: string) => Promise.all([
+  api<{items: PortfolioPolicy[]}>("/insurance/policies", token), api<{items: Policy[]}>("/documents", token),
+  api<{items: ClaimCase[]}>("/insurance/claims", token), api<{items: Wallet[]}>("/finance/wallets", token),
+  api<{reminders: {kind: string; title: string; date: string; href: string}[]}>("/insurance/overview", token),
+]);
+function validLoadedBenefit(value: unknown): value is Benefit {
+  if (!value || typeof value !== "object") return false;
+  const b = value as Record<string, unknown>;
+  if (typeof b.kind !== "string" || !benefitKinds.includes(b.kind) || typeof b.status !== "string" || !["INCLUDED", "EXCLUDED", "UNKNOWN"].includes(b.status) || typeof b.evidence_quote !== "string" || b.evidence_quote.length > 1200) return false;
+  for (const k of ["limit", "deductible"]) if (b[k] !== null && (typeof b[k] !== "string" || !/^\d{1,12}(\.\d{1,2})?$/.test(b[k] as string))) return false;
+  for (const [k, min, max] of [["reimbursement_percent", 0, 100], ["waiting_days", 0, 365], ["source_page", 1, 50]] as const) if (b[k] !== null && (typeof b[k] !== "number" || !Number.isInteger(b[k]) || (b[k] as number) < min || (b[k] as number) > max)) return false;
+  return true;
+}
+
+export default function InsurancePage() {
+  const t = useInsuranceCopy(); const {token, invalidate} = useAuth(); const router = useRouter();
+  const [tab, setTab] = useState("portfolio"); const [policies, setPolicies] = useState<PortfolioPolicy[]>([]); const [docs, setDocs] = useState<Policy[]>([]);
+  const [cases, setCases] = useState<ClaimCase[]>([]); const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [reminders, setReminders] = useState<{kind: string; title: string; date: string; href: string}[]>([]);
+  const [error, setError] = useState(""); const [message, setMessage] = useState(""); const [busy, setBusy] = useState(false); const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<PortfolioPolicy | null>(null); const [formOpen, setFormOpen] = useState(false); const [fields, setFields] = useState<Fields>(emptyFields);
+  const [source, setSource] = useState<Document | null>(null); const [file, setFile] = useState<File | null>(null); const [kind, setKind] = useState("TEST_FIXTURE");
+  const [reviewed, setReviewed] = useState(false); const [saveKey, setSaveKey] = useState(requestKey); const [planPolicy, setPlanPolicy] = useState(""); const [wallet, setWallet] = useState(""); const [archiveId, setArchiveId] = useState("");
+  const [estimateId, setEstimateId] = useState("");
+  const [analysis, setAnalysis] = useState<Analysis | null>(null);
+  const [needs, setNeeds] = useState<Record<string, string>>({OUTPATIENT: "2000", INPATIENT: "100000", EVACUATION: "50000"});
+  const [period, setPeriod] = useState({starts_on: localDate(), ends_on: localDate(), country: "CN", currency: "CNY"});
+  const [claimForm, setClaimForm] = useState({policy_id: "", title: "", benefit_kind: "OUTPATIENT", incident_date: localDate(), amount: "", description: "", deadline: ""});
+  const [claimKey, setClaimKey] = useState(requestKey);
+  const receive = useCallback(([p, d, c, w, o]: Awaited<ReturnType<typeof fetchWorkspace>>) => {
+    setPolicies(p.items); setDocs(d.items); setCases(c.items); setWallets(w.items); setReminders(o.reminders);
+  }, []);
+  const load = useCallback(() => fetchWorkspace(token).then(receive), [token, receive]);
+  useEffect(() => {let active = true; fetchWorkspace(token).then(data => {if (active) receive(data);}).catch(e => {if (active) setError(e.message);}).finally(() => {if (active) setLoading(false);}); return () => {active = false;};}, [token, receive]);
+  async function act(action: () => Promise<void>) {if (busy) return; setBusy(true); setError(""); setMessage(""); try {await action();} catch (e) {setError((e as Error).message);} finally {setBusy(false);}}
+  function change(key: keyof Fields, value: string) {setFields(old => ({...old, [key]: value})); setReviewed(false);}
+  function benefitChange(index: number, key: keyof Benefit, value: string) {
+    setFields(old => ({...old, benefits: old.benefits.map((b, i) => i !== index ? b : key === "status" && value !== "INCLUDED" ? {...b, status: value, limit: null, deductible: null, reimbursement_percent: null, waiting_days: null} : {...b, [key]: ["source_page", "reimbursement_percent", "waiting_days"].includes(key) ? (value === "" ? null : Number(value)) : ["limit", "deductible"].includes(key) ? value || null : value})})); setReviewed(false);
+  }
+  async function selectSource(id: string) {setSource(id ? await api<Document>(`/documents/${id}`, token) : null); setReviewed(false);}
+  function addPolicy() {setEditing(null); setFields(emptyFields()); setSource(null); setReviewed(false); setSaveKey(requestKey()); setFormOpen(true);}
+  async function editPolicy(p: PortfolioPolicy) {setEditing(p); setFields({...p, benefits: benefitKinds.map(k => p.benefits.find(b => b.kind === k) || emptyFields().benefits.find(b => b.kind === k)!)}); await selectSource(p.document_id); setFormOpen(true); setSaveKey(requestKey());}
+  async function importFields(file: File | undefined) {
+    if (!file) return;
+    if (file.size > 100000) throw new Error(t("jsonError"));
+    let data: Fields;
+    try {data = JSON.parse(await file.text());} catch {throw new Error(t("jsonError"));}
+    const keys = ["name", "insurer", "currency", "premium", "premium_due", "starts_on", "ends_on", "territory", "notes"] as const;
+    if (!data || keys.some(k => typeof data[k] !== "string") || !Array.isArray(data.benefits) || data.benefits.length > 4 || !data.benefits.every(validLoadedBenefit) || new Set(data.benefits.map(b => b.kind)).size !== data.benefits.length) throw new Error(t("jsonError"));
+    setFields({...Object.fromEntries(keys.map(k => [k, data[k]])) as Omit<Fields, "benefits">, benefits: benefitKinds.map(k => data.benefits.find(b => b.kind === k) || emptyFields().benefits.find(b => b.kind === k)!)}); setReviewed(false); setSaveKey(requestKey());
+  }
+  async function save(event: FormEvent) {event.preventDefault(); await act(async () => {
+    await api(`/insurance/policies${editing ? `/${editing.id}/update` : ""}`, token, {...fields, document_id: source?.id, reviewed, request_key: saveKey, revision: editing?.revision || null});
+    setFormOpen(false); setSource(null); setSaveKey(requestKey()); await load(); invalidate(); setAnalysis(null); setMessage(t("saved"));
+  });}
+
+  return <div className="insurance-workspace">
+    <Heading eyebrow="TOPIC C + D" title={t("insurance")}>{t("subtitle")}</Heading>
+    <div className="info-note insurance-boundary"><ShieldCheck size={22}/><p>{t("boundary")}</p></div>
+    <section className="card insurance-samples"><div><strong>{t("sample")}</strong><p className="small muted">{t("sampleHelp")}</p></div><button className="button secondary" disabled={busy} onClick={() => act(() => downloadOwned("/insurance/sample-pack", token, "demo-insurance-cd-samples.zip"))}><Download size={17}/>{t("download")}</button></section>
+    <div className="insurance-tabs" role="tablist" aria-label={t("insurance")}>{["portfolio", "analysis", "claims"].map(k => <button key={k} role="tab" aria-selected={tab === k} onClick={() => {setTab(k); setError("");}}>{t(k)}</button>)}</div>
+    <ErrorBox message={error}/>{message && <div className="success" role="status">{message}</div>}
+    {loading ? <p role="status">{t("busy")}</p> : <>
+      {tab === "portfolio" && <>
+        <section className="card insurance-reminders"><h2><CalendarClock size={20}/>{t("reminders")}</h2>{!reminders.length ? <p className="muted">{t("noReminders")}</p> : <ul>{reminders.map((r, i) => <li key={i}><Link href={r.href}>{t(r.kind)} · {r.title} · {r.date}</Link></li>)}</ul>}</section>
+        <div className="section-heading"><h2>{t("portfolio")}</h2><button className="button primary" onClick={addPolicy}><Plus size={17}/>{t("addPolicy")}</button></div>
+        {formOpen && <section className="card insurance-editor" aria-label={t("editPolicy")}><h2>{t("editPolicy")}</h2>
+          <div className="insurance-source-upload"><label>{t("sourceFile")}<input type="file" disabled={busy} accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.md" onChange={e => setFile(e.target.files?.[0] || null)}/></label><label>{t("sourceKind")}<select value={kind} onChange={e => setKind(e.target.value)}>{["TEST_FIXTURE", "USER_PROVIDED"].map(k => <option value={k} key={k}>{t(k)}</option>)}</select></label><button className="button secondary" disabled={!file || busy} onClick={() => act(async () => {const doc = await uploadPolicy(token, file!, file!.name, "", "auto", kind); await selectSource(doc.id); await load();})}>{t("upload")}</button></div>
+          <label>{t("existing")}<select disabled={busy} value={source?.id || ""} onChange={e => act(() => selectSource(e.target.value))}><option value="">{t("choose")}</option>{docs.map(d => <option key={d.id} value={d.id}>{d.title} · {t(d.document_kind)}</option>)}</select></label>
+          {source && <details open className="insurance-source"><summary>{t("sourceText")} · {t(source.document_kind)}</summary><button className="text-link" onClick={() => act(() => downloadPolicy(token, source))}>{t("original")}</button>{source.pages.map(p => <div key={p.page}><strong>{t("page")} {p.page}</strong><pre>{p.text}</pre></div>)}</details>}
+          <label className="insurance-json">{t("fieldsJson")}<input type="file" disabled={busy} accept=".json,application/json" onChange={e => {const selected = e.target.files?.[0]; e.target.value = ""; act(() => importFields(selected));}}/></label>
+          <form onSubmit={save}><fieldset disabled={busy}><div className="insurance-form-grid">
+            {(["name", "insurer", "premium", "premium_due", "starts_on", "ends_on"] as const).map(k => <label key={k}>{t(k === "premium_due" ? "due" : k === "starts_on" ? "starts" : k === "ends_on" ? "ends" : k)}<input required maxLength={k === "name" || k === "insurer" ? 150 : undefined} type={k.endsWith("_on") || k === "premium_due" ? "date" : k === "premium" ? "number" : "text"} min={k === "premium" ? "0" : undefined} step={k === "premium" ? fields.currency === "VND" ? "1" : "0.01" : undefined} value={fields[k]} onChange={e => change(k, e.target.value)}/></label>)}
+            <label>{t("currency")}<select value={fields.currency} onChange={e => change("currency", e.target.value)}><option>CNY</option><option>VND</option></select></label><label>{t("territory")}<select value={fields.territory} onChange={e => change("territory", e.target.value)}>{["CN", "VN", "WORLD"].map(k => <option value={k} key={k}>{t(k)}</option>)}</select></label>
+          </div><p className="small muted">{t("citationHelp")}</p>
+          <div className="insurance-benefit-grid">{fields.benefits.map((b, i) => <fieldset className="insurance-benefit" key={b.kind}><legend>{t(b.kind)}</legend><label>{t("benefit")}<select aria-label={`${t(b.kind)} · ${t("benefit")}`} value={b.status} onChange={e => benefitChange(i, "status", e.target.value)}>{["UNKNOWN", "INCLUDED", "EXCLUDED"].map(s => <option value={s} key={s}>{t(s)}</option>)}</select></label>
+            {b.status === "INCLUDED" && <div className="insurance-form-grid">{(["limit", "deductible", "reimbursement_percent", "waiting_days"] as const).map(k => <label key={k}>{t(k === "reimbursement_percent" ? "percent" : k === "waiting_days" ? "waiting" : k)}<input aria-label={`${t(b.kind)} · ${k}`} type="number" min="0" max={k === "reimbursement_percent" ? 100 : k === "waiting_days" ? 365 : undefined} step={k === "limit" || k === "deductible" ? fields.currency === "VND" ? "1" : ".01" : "1"} value={b[k] ?? ""} onChange={e => benefitChange(i, k, e.target.value)}/></label>)}</div>}
+            <label>{t("page")}<input aria-label={`${t(b.kind)} · ${t("page")}`} type="number" min="1" max="50" value={b.source_page ?? ""} onChange={e => benefitChange(i, "source_page", e.target.value)} required={b.status !== "UNKNOWN"}/></label><label>{t("quote")}<textarea aria-label={`${t(b.kind)} · ${t("quote")}`} maxLength={1200} value={b.evidence_quote} onChange={e => benefitChange(i, "evidence_quote", e.target.value)} required={b.status !== "UNKNOWN"}/></label>
+          </fieldset>)}</div>
+          <label>{t("notes")}<textarea maxLength={2000} value={fields.notes} onChange={e => change("notes", e.target.value)}/></label><label className="insurance-check"><input type="checkbox" checked={reviewed} onChange={e => setReviewed(e.target.checked)}/><span>{t("reviewed")}</span></label><div className="insurance-actions"><button className="button primary" disabled={!source || !reviewed || busy}>{busy ? t("busy") : t("save")}</button><button type="button" className="button secondary" onClick={() => setFormOpen(false)}>{t("cancel")}</button></div></fieldset></form>
+        </section>}
+        {!policies.length && <p className="card empty">{t("noPolicy")}</p>}
+        <div className="insurance-policy-grid">{policies.map(p => <article key={p.id} className="card insurance-policy"><span className="badge neutral">{t(p.document_kind)}{!p.active && ` · ${t("archived")}`}</span><h3>{p.name}</h3><p className="muted">{p.insurer}</p><dl className="meta-list"><div><dt>{t("premium")}</dt><dd>{p.premium} {p.currency}</dd></div><div><dt>{t("due")}</dt><dd>{p.premium_due}</dd></div><div><dt>{t("starts")}</dt><dd>{p.starts_on} → {p.ends_on}</dd></div><div><dt>{t("territory")}</dt><dd>{t(p.territory)}</dd></div></dl><div className="insurance-tags">{p.benefits.map(b => <span key={b.kind} className={`badge ${b.status === "EXCLUDED" ? "neutral" : "reference"}`}>{t(b.kind)} · {t(b.status)}</span>)}</div>
+          {p.plan_needs_review && <p className="error">{t("stalePlan")}</p>}
+          {p.premium_estimate_needs_review && <p className="error">{t("staleEstimate")}</p>}
+          {!p.active && <button className="button secondary" disabled={busy} onClick={() => act(async () => {await api(`/insurance/policies/${p.id}/restore`, token, {revision: p.revision}); await load(); setAnalysis(null);})}>{t("restore")}</button>}
+          {p.active && p.currency === "CNY" && <div className="insurance-premium-estimate">{p.premium_invoice_id ? <Link className="text-link" href={`/invoices/${p.premium_invoice_id}`}>{t("openEstimate")} <ArrowRight size={15}/></Link> : <><button className="text-link" onClick={() => setEstimateId(estimateId === p.id ? "" : p.id)}>{t("estimate")}</button>{estimateId === p.id && <div className="insurance-inline-confirm"><p>{t("estimateHelp")}</p><button className="button secondary" disabled={busy} onClick={() => act(async () => {const r = await api<{invoice: {id: string}}>(`/insurance/policies/${p.id}/premium-invoice`, token, {revision: p.revision, reviewed: true}); await load(); invalidate(); router.push(`/invoices/${r.invoice.id}`);})}>{t("confirm")}</button></div>}</>}</div>}
+          <div className="insurance-actions"><button className="button secondary" disabled={busy} onClick={() => act(() => editPolicy(p))}>{t("edit")}</button>{p.active && !p.finance_plan_id && <button className="button primary" onClick={() => {setPlanPolicy(p.id); setWallet("");}}>{t("plan")}</button>}{p.finance_plan_id && <Link className="text-link" href="/finance">{t("existingPlan")} <ArrowRight size={15}/></Link>}</div>
+          {planPolicy === p.id && <form className="insurance-inline-confirm" onSubmit={e => {e.preventDefault(); act(async () => {await api(`/insurance/policies/${p.id}/plan`, token, {revision: p.revision, wallet_id: wallet, reviewed: true}); setPlanPolicy(""); await load(); invalidate(); setMessage(t("planned"));});}}><label>{t("wallet")}<select aria-label={t("wallet")} required value={wallet} onChange={e => setWallet(e.target.value)}><option value="">{t("choose")}</option>{wallets.filter(w => w.currency === p.currency).map(w => <option value={w.id} key={w.id}>{w.name} · {w.balance} {w.currency}</option>)}</select></label><p className="small">{t("planConfirm")}</p><div className="insurance-actions"><button className="button primary" disabled={!wallet || busy}>{t("confirm")}</button><Link href="/finance" className="text-link">{t("budget")}</Link><button className="text-link" type="button" onClick={() => setPlanPolicy("")}>{t("cancel")}</button></div></form>}
+          {p.active && <details className="insurance-archive"><summary>{t("archive")}</summary><label className="insurance-check"><input type="checkbox" checked={archiveId === p.id} onChange={e => setArchiveId(e.target.checked ? p.id : "")}/>{t("archiveConfirm")}</label><button className="button secondary" disabled={archiveId !== p.id || busy} onClick={() => act(async () => {await api(`/insurance/policies/${p.id}/archive`, token, {revision: p.revision}); setArchiveId(""); setAnalysis(null); await load();})}>{t("archive")}</button></details>}
+        </article>)}</div>
+      </>}
+      {tab === "analysis" && <><section className="card"><h2>{t("analysis")}</h2><p>{t("needsHelp")}</p><form onSubmit={e => {e.preventDefault(); act(async () => {setAnalysis(await api<Analysis>("/insurance/analysis", token, {...period, needs: Object.entries(needs).filter(([, amount]) => amount !== "").map(([kind, minimum_limit]) => ({kind, minimum_limit}))}));});}}><fieldset disabled={busy}><div className="insurance-form-grid">{["starts_on", "ends_on"].map(k => <label key={k}>{t(k === "starts_on" ? "starts" : "ends")}<input type="date" required value={period[k as "starts_on" | "ends_on"]} onChange={e => {setPeriod({...period, [k]: e.target.value}); setAnalysis(null);}}/></label>)}<label>{t("territory")}<select value={period.country} onChange={e => {setPeriod({...period, country: e.target.value}); setAnalysis(null);}}><option value="CN">{t("CN")}</option><option value="VN">{t("VN")}</option></select></label><label>{t("currency")}<select value={period.currency} onChange={e => {setPeriod({...period, currency: e.target.value}); setAnalysis(null);}}><option>CNY</option><option>VND</option></select></label></div><div className="insurance-form-grid">{benefitKinds.map(k => <label key={k}>{t(k)} · {t("minimum")}<input type="number" min="0" step={period.currency === "VND" ? "1" : ".01"} value={needs[k] || ""} onChange={e => {setNeeds({...needs, [k]: e.target.value}); setAnalysis(null);}}/></label>)}</div><button className="button primary" disabled={busy || !Object.values(needs).some(Boolean)}>{t("check")}</button></fieldset></form></section>
+        {analysis && <div className="insurance-analysis" aria-live="polite">{analysis.results.map(r => <article className="card" key={r.kind}><span className={`badge ${r.status === "MEETS_ENTERED_REQUIREMENT" ? "reference" : "neutral"}`}>{t(r.status)}</span><h3>{t(r.kind)} · {r.minimum_limit} {period.currency}</h3>{r.possible_overlap && <p className="info-note">{t("overlap")}</p>}{r.policies.map(p => <details key={p.policy_id} open><summary>{p.name} · {p.reasons.length ? p.reasons.map(t).join("; ") : t("MEETS_ENTERED_REQUIREMENT")}</summary><p className="small muted">{t(p.document_kind)}</p>{p.benefit?.evidence_quote && <blockquote>{p.benefit.evidence_quote}<small>{t("page")} {p.benefit.source_page}</small></blockquote>}</details>)}</article>)}</div>}
+      </>}
+      {tab === "claims" && <><section className="card"><h2>{t("newClaim")}</h2><p>{t("claimHelp")}</p><form onSubmit={e => {e.preventDefault(); act(async () => {const created = await api<ClaimCase>("/insurance/claims", token, {...claimForm, deadline: claimForm.deadline || null, request_key: claimKey}); setClaimKey(requestKey()); router.push(`/insurance/claims/${created.id}`);});}}><fieldset disabled={busy}><div className="insurance-form-grid"><label>{t("portfolio")}<select aria-label={t("portfolio")} required value={claimForm.policy_id} onChange={e => setClaimForm({...claimForm, policy_id: e.target.value})}><option value="">{t("choose")}</option>{policies.filter(p => p.active).map(p => <option value={p.id} key={p.id}>{p.name} · {p.currency}</option>)}</select></label><label>{t("title")}<input required minLength={2} maxLength={150} value={claimForm.title} onChange={e => setClaimForm({...claimForm, title: e.target.value})}/></label><label>{t("benefit")}<select value={claimForm.benefit_kind} onChange={e => setClaimForm({...claimForm, benefit_kind: e.target.value})}>{benefitKinds.map(k => <option key={k} value={k}>{t(k)}</option>)}</select></label><label>{t("eventDate")}<input type="date" max={localDate()} required value={claimForm.incident_date} onChange={e => setClaimForm({...claimForm, incident_date: e.target.value})}/></label><label>{t("expense")}<input type="number" min=".01" step={policies.find(p => p.id === claimForm.policy_id)?.currency === "VND" ? "1" : ".01"} required value={claimForm.amount} onChange={e => setClaimForm({...claimForm, amount: e.target.value})}/></label><label>{t("deadline")}<input type="date" min={claimForm.incident_date} value={claimForm.deadline} onChange={e => setClaimForm({...claimForm, deadline: e.target.value})}/></label></div><label>{t("description")}<textarea maxLength={2000} value={claimForm.description} onChange={e => setClaimForm({...claimForm, description: e.target.value})}/></label><button className="button primary" disabled={busy || !claimForm.policy_id}>{t("newClaim")}</button></fieldset></form></section>
+        <div className="insurance-policy-grid">{!cases.length && <p>{t("noClaims")}</p>}{cases.map(c => <article className="card" key={c.id}><span className="badge neutral">{t(c.status)}</span><h3>{c.title}</h3><p>{c.amount} {c.currency} · {c.incident_date}</p><p className="muted">{c.policy_snapshot.name}</p><Link className="button secondary" href={`/insurance/claims/${c.id}`}><FileCheck2 size={17}/>{t("open")}</Link></article>)}</div>
+      </>}
+    </>}
+  </div>;
+}

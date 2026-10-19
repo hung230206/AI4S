@@ -34,3 +34,9 @@ Self-assessment dated 2026-10-19, not independent certification. Production mone
 ## Cloud configuration
 
 The Free Render Blueprint generates independent session/webhook/operator secrets and does not upload the local .env or database. Only Next is public; its API listens on loopback. Database external IP access is disabled in the Blueprint. Startup requires an explicit PostgreSQL URL, a single HTTPS origin and sandbox-only settings, with Secure cookies. The HTTP exception is limited to an explicitly requested local loopback smoke test. These configuration guards have separate tests. Free hosting is a demo environment, not a production security certification; its database expiration and resource limits are documented in DEPLOY_RENDER.md.
+
+## C+D portfolio and claim preparation — 19 October 2026
+
+All new records reuse account ownership, CSRF/origin validation and user-row transaction locks. Creation request hashes prevent duplicate policies/cases; revisions reject stale corrections and state changes. Claims accept bounded PDF/PNG/JPG/TXT attachments (5 MB each; 8 files / 20 MB per case), force download, and keep original hashes. Signature checks are not malware scanning or authenticity verification. Identity/bank upload categories are disallowed, but users must still avoid personal data hidden in other categories. Demo test files are self-authored.
+
+Claim originals and case medical descriptions are never included in Gemini context. Bounded user-reviewed policy summaries and self-reported case status may be sent when AI is selected. Referenced current and historical policy sources cannot be deleted through the library. Removing a draft file deletes its bytes while retaining its hash in the journal. Submitted cases lock attachment changes. Checklist readiness, coverage comparison and sandbox success are not underwriting, insurer submission, activation, eligibility decisions or payouts.

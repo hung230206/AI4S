@@ -53,6 +53,7 @@ const nav = [
   {href: "/rates", key: "nav_rates", icon: TrendingUp},
   {href: "/history", key: "nav_history", icon: Clock3},
   {href: "/assistant", key: "nav_assistant", icon: BookOpen},
+  {href: "/insurance", key: "nav_insurance", icon: ShieldCheck},
   {href: "/account", key: "nav_account", icon: UserRound},
 ];
 
@@ -158,6 +159,7 @@ export function Shell({children}: {children: React.ReactNode}) {
     (path.startsWith("/checkout") ? t("checkout_label") :
       path.startsWith("/payments") ? t("payments_label") :
         path.startsWith("/receipts") ? t("receipts_label") :
+          path.startsWith("/insurance") ? t("nav_insurance") :
           path === "/test-lab" ? t("testlab_label") :
             path === "/operator" ? t("operator_label") :
               path.endsWith("/edit") ? t("edit_invoice_label") :

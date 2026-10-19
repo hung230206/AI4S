@@ -131,6 +131,11 @@ def download(document_id: UUID, user=Depends(student), db=Depends(get_db, scope=
 
 @router.post("/{document_id}/delete")
 def delete(document_id: UUID, user=Depends(student), db=Depends(get_db, scope="function")):
+    from .models import InsurancePolicy, InsuranceClaim
+    lock_user(db, user)
+    if (db.scalar(select(InsurancePolicy.id).where(InsurancePolicy.document_id == document_id, InsurancePolicy.user_id == user.id)) or
+            db.scalar(select(InsuranceClaim.id).where(InsuranceClaim.user_id == user.id, InsuranceClaim.policy_snapshot["document_id"].astext == str(document_id)))):
+        raise ApiError("DOCUMENT_IN_USE", "Tài liệu đang làm nguồn cho hợp đồng. Giữ bản gốc để đối chiếu hồ sơ và trích dẫn.", 409)
     doc = own(db, document_id, user)
     db.delete(doc)
     audit(db, user, "POLICY_DOCUMENT_DELETED", document_id=str(document_id))

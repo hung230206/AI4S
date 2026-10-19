@@ -362,7 +362,10 @@ def workflow_reply(body, user, db):
     elif any(term in message for term in ("bao hiem", "boi thuong", "loai tru", "claim", "policy", "coverage", "理赔", "保险", "ho so")):
         result = search(Search(question=body.message), user, db)
         citations = [{"title": item["title"], "filename": item["filename"], "page": item["page"], "excerpt": item["excerpt"], "document_id": item["document_id"]} for item in result["matches"]]
-        response.update({"intent": "POLICY_EVIDENCE", "answer": "Tôi tìm thấy các đoạn liên quan dưới đây. Đọc toàn văn tại trang được dẫn trước khi kết luận; đây không phải quyết định quyền lợi hay bồi thường." if citations else "Chưa có chứng cứ phù hợp trong tài liệu của bạn. Tải chính sách lên hoặc thử từ khóa xuất hiện trong bản gốc; tôi không suy đoán quyền lợi còn thiếu.", "citations": citations, "actions": [{"title": "Mở tài liệu bảo hiểm", "href": "/assistant"}]})
+        from .insurance import overview
+        portfolio = overview(user, db)
+        summary = f" Bạn có {portfolio['active_policies']} bản tóm tắt hợp đồng đang hoạt động và {len(portfolio['reminders'])} mục cần xem lại."
+        response.update({"intent": "POLICY_EVIDENCE", "answer": ("Tôi tìm thấy các đoạn liên quan dưới đây. Đọc toàn văn tại trang được dẫn trước khi kết luận; đây không phải quyết định quyền lợi hay bồi thường." if citations else "Chưa có chứng cứ phù hợp trong tài liệu của bạn. Tải chính sách lên hoặc thử từ khóa xuất hiện trong bản gốc; tôi không suy đoán quyền lợi còn thiếu.") + summary, "citations": citations, "actions": [{"title": "Kiểm tra quyền lợi và chuẩn bị hồ sơ", "href": "/insurance"}, {"title": "Mở tài liệu bảo hiểm", "href": "/assistant"}]})
     elif any(term in message for term in ("den han", "hoa don", "invoice", "hoc phi")):
         invoices = list(db.scalars(select(Invoice).where(Invoice.student_id == user.id, Invoice.status == "OPEN").order_by(Invoice.due_date).limit(5)))
         response.update({"intent": "DUE_INVOICES", "answer": "Các hóa đơn đang mở gần hạn nhất trong dữ liệu bạn đã lưu:" if invoices else "Bạn chưa có hóa đơn đang mở. Có thể tải ảnh/PDF để đọc thông tin rồi kiểm tra trước khi lưu.", "citations": [{"title": f"{i.invoice_number}: {display(i.amount_cny, 'CNY')} CNY · hạn {i.due_date}", "href": f"/invoices/{i.id}"} for i in invoices], "actions": [{"title": "Đọc hoặc thêm hóa đơn", "href": "/invoices/new"}]})
@@ -406,6 +409,11 @@ def assistant_evidence(question, user, db):
     result = search(Search(question=question), user, db)
     for index, item in enumerate(result["matches"][:3]):
         add(f"D{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"]}, {key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind")})
+    from .models import InsurancePolicy, InsuranceClaim
+    for index, policy in enumerate(db.scalars(select(InsurancePolicy).where(InsurancePolicy.user_id == user.id, InsurancePolicy.active == True).order_by(InsurancePolicy.created_at.desc()).limit(3))):
+        add(f"P{index + 1}", "USER_REVIEWED_POLICY_SUMMARY", {"starts_on": str(policy.starts_on), "ends_on": str(policy.ends_on), "premium": display(policy.premium, policy.currency), "currency": policy.currency, "premium_due": str(policy.premium_due), "territory": policy.territory, "benefits": policy.benefits, "revision": policy.revision, "notice": "User-reviewed summary, not verified insurance cover or claim approval."}, {"title": "Bản tóm tắt hợp đồng · " + str(policy.ends_on), "href": "/insurance"})
+    for index, claim in enumerate(db.scalars(select(InsuranceClaim).where(InsuranceClaim.user_id == user.id).order_by(InsuranceClaim.created_at.desc()).limit(3))):
+        add(f"C{index + 1}", "CLAIM_PREPARATION_STATUS", {"status": claim.status, "deadline": str(claim.deadline) if claim.deadline else None, "notice": "User-reported preparation status. No medical details, attachments, insurer submission or decision."}, {"title": "Hồ sơ chuẩn bị · " + claim.status, "href": f"/insurance/claims/{claim.id}"})
     return evidence, citations
 
 

@@ -27,6 +27,7 @@ from .fx import router as fx_router, reference_rate
 from .finance import router as finance_router
 from .ocr import router as ocr_router
 from .journey import router as journey_router
+from .insurance import router as insurance_router
 
 
 @asynccontextmanager
@@ -48,6 +49,7 @@ app.include_router(fx_router)
 app.include_router(finance_router)
 app.include_router(ocr_router)
 app.include_router(journey_router)
+app.include_router(insurance_router)
 
 
 @app.middleware("http")
@@ -92,13 +94,15 @@ Key = Annotated[str, Header(alias="Idempotency-Key", min_length=8, max_length=12
 
 @app.get("/api/v1/health")
 def health(db=Depends(get_db, scope="function")):
+    import os
     db.execute(select(1))
-    return {"status": "ok", "demo_mode": settings.demo_mode, "payment_provider": "MOCK", "allow_real_payments": False}
+    return {"status": "ok", "demo_mode": settings.demo_mode, "payment_provider": "MOCK", "allow_real_payments": False,
+            "release": os.environ.get("RENDER_GIT_COMMIT", "local"), "insurance_workflow": "portfolio-claims-v1"}
 
 
 @app.get("/api/v1/capabilities")
 def capabilities():
-    return {"accounts": True, "invoice_management": True, "reference_fx_provider": "Frankfurter", "reference_fx_url": "https://frankfurter.dev/", "policy_documents": True, "local_ocr": True, "multicurrency_ledger": True, "cashflow_forecast": True, "fx_scenarios": True, "guidance_method": "EVIDENCE_AND_SCHEDULE_RULES", "payment_mode": "SANDBOX", "live_payments_configured": False, "sandbox_enabled": settings.demo_mode}
+    return {"accounts": True, "invoice_management": True, "reference_fx_provider": "Frankfurter", "reference_fx_url": "https://frankfurter.dev/", "policy_documents": True, "local_ocr": True, "multicurrency_ledger": True, "cashflow_forecast": True, "fx_scenarios": True, "insurance_portfolio": True, "coverage_comparison": True, "claim_preparation": True, "insurer_submission": False, "guidance_method": "EVIDENCE_AND_SCHEDULE_RULES", "payment_mode": "SANDBOX", "live_payments_configured": False, "sandbox_enabled": settings.demo_mode}
 
 
 @app.post("/api/v1/demo/session")

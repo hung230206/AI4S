@@ -1,4 +1,5 @@
 "use client";
+import {InsuranceEntry} from "@/components/insurance-entry";
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {ArrowRight, MessageCircle, Send, ShieldCheck, Sparkles, Trash2} from "lucide-react";
@@ -56,6 +57,7 @@ export default function CopilotPage() {
   }
 
   return <>
+    <InsuranceEntry/>
     <Heading eyebrow={tr("CHỨNG TỪ · NGÂN SÁCH · TỶ GIÁ")} title={tr("Trợ lý du học")}>
       {tr("Hỏi về kế hoạch tiền, hóa đơn đến hạn hoặc tài liệu bảo hiểm. Mỗi kết quả có dữ liệu để bạn kiểm tra.")}
     </Heading>

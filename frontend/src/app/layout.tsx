@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import {Providers} from "@/components/providers";
 import {Shell} from "@/components/shell";
 import "./globals.css";
+import "./insurance.css";
 export const metadata: Metadata = {
   title: "Demo | Khoản phí du học & tài liệu bảo hiểm",
   description: "Quản lý hóa đơn CNY, tính giá trị tham chiếu bằng VND và tra cứu điều khoản từ tài liệu của bạn. Thanh toán ở chế độ thử nghiệm.",

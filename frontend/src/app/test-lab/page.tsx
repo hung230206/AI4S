@@ -1,4 +1,5 @@
 "use client";
+import {InsuranceEntry} from "@/components/insurance-entry";
 import {tr, localized} from "@/lib/i18n";
 import {useI18n} from "@/components/i18n-provider";
 
@@ -50,6 +51,7 @@ export default function TestLab() {
     {key: "ledger_recorded", title: tr("6. Ghi sổ và xuất bằng chứng"), text: tr("Sandbox không tự trừ tiền trong sổ. Để test ghi sổ, vào Dự phóng, chọn Ghi nhận đã chi và xác nhận riêng cho kỳ hóa đơn. Số dư còn 200 CNY và kế hoạch không bị trừ hai lần. Tải hồ sơ ZIP ở trang giao dịch để team kiểm tra nguồn, consent, sự kiện và nhật ký."), href: "/finance", action: tr("Mở sổ để đối chiếu")},
   ];
   return <>
+    <InsuranceEntry/>
     <Heading eyebrow={tr("CHẠY THỬ CÓ KẾT QUẢ KIỂM TRA")} title={tr("Test trọn luồng từ A đến Z")}>{user?.is_demo ? tr("Bạn đang dùng workspace dữ liệu mẫu chung.") : tr("Tài khoản hiện tại dùng dữ liệu riêng.")} {tr(" Các tệp mẫu do nhóm tự soạn; thanh toán không chuyển tiền thật.")}</Heading>
     {user?.is_demo && <section className="info-note"><div><strong>{tr("Nên tạo tài khoản riêng để test độc lập")}</strong><p>{tr("Dữ liệu trong workspace mẫu được dùng chung. Đăng xuất rồi chọn Tạo tài khoản để bắt đầu với hóa đơn, sổ và tài liệu riêng.")}</p><button className="button secondary" onClick={() => logout().catch(e => setError((e as Error).message))}>{tr("Đăng xuất để tạo tài khoản riêng")}</button></div></section>}
     <ErrorBox message={error}/>

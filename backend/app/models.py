@@ -202,6 +202,67 @@ class PolicyDocument(Identity, Created, Base):
     __table_args__ = (UniqueConstraint("user_id", "sha256", name="uq_document_owner_hash"), CheckConstraint("document_kind IN ('USER_PROVIDED','PUBLIC_REFERENCE','TEST_FIXTURE')", name="ck_policy_document_kind"))
 
 
+class InsurancePolicy(Identity, Created, Base):
+    """Reviewed personal summary. A source document is not proof of issued cover."""
+    __tablename__ = "insurance_portfolio"
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("demo_users.id"), index=True)
+    document_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("policy_documents.id"))
+    name: Mapped[str]
+    insurer: Mapped[str]
+    currency: Mapped[str]
+    premium: Mapped[Decimal] = mapped_column(Numeric(20, 2))
+    premium_due: Mapped[date]
+    starts_on: Mapped[date]
+    ends_on: Mapped[date]
+    territory: Mapped[str]
+    benefits: Mapped[list] = mapped_column(JSONB)
+    notes: Mapped[str]
+    active: Mapped[bool] = mapped_column(default=True)
+    revision: Mapped[int] = mapped_column(default=1)
+    reviewed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    finance_plan_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("finance_plans.id"), unique=True)
+    plan_revision: Mapped[int | None]
+    premium_invoice_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("insurance_invoices.id"), unique=True)
+    request_key: Mapped[str]
+    request_hash: Mapped[str]
+    __table_args__ = (UniqueConstraint("user_id", "request_key"), CheckConstraint("currency IN ('CNY','VND') AND premium >= 0 AND ends_on >= starts_on AND revision > 0", name="ck_portfolio_values"), CheckConstraint("territory IN ('CN','VN','WORLD')", name="ck_portfolio_territory"))
+
+
+class InsuranceClaim(Identity, Created, Base):
+    """Preparation workspace; all insurer communication happens outside this app."""
+    __tablename__ = "insurance_claim_cases"
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("demo_users.id"), index=True)
+    policy_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("insurance_portfolio.id"))
+    title: Mapped[str]
+    benefit_kind: Mapped[str]
+    incident_date: Mapped[date]
+    amount: Mapped[Decimal] = mapped_column(Numeric(20, 2))
+    currency: Mapped[str]
+    description: Mapped[str]
+    deadline: Mapped[date | None]
+    status: Mapped[str] = mapped_column(default="DRAFT")
+    revision: Mapped[int] = mapped_column(default=1)
+    checklist: Mapped[dict] = mapped_column(JSONB, default=dict)
+    policy_snapshot: Mapped[dict] = mapped_column(JSONB)
+    history: Mapped[list] = mapped_column(JSONB, default=list)
+    request_key: Mapped[str]
+    request_hash: Mapped[str]
+    __table_args__ = (UniqueConstraint("user_id", "request_key"), CheckConstraint("amount > 0 AND currency IN ('CNY','VND') AND revision > 0", name="ck_claim_values"), CheckConstraint("status IN ('DRAFT','READY','SUBMITTED_EXTERNALLY','CLOSED')", name="ck_claim_status"), CheckConstraint("benefit_kind IN ('OUTPATIENT','INPATIENT','ACCIDENT','EVACUATION')", name="ck_claim_kind"))
+
+
+class ClaimAttachment(Identity, Created, Base):
+    __tablename__ = "insurance_claim_attachments"
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("demo_users.id"), index=True)
+    claim_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("insurance_claim_cases.id"), index=True)
+    item_code: Mapped[str]
+    filename: Mapped[str]
+    content_type: Mapped[str]
+    byte_size: Mapped[int]
+    sha256: Mapped[str]
+    original_bytes: Mapped[bytes] = mapped_column(LargeBinary)
+    __table_args__ = (UniqueConstraint("claim_id", "sha256"), CheckConstraint("byte_size > 0 AND byte_size <= 5242880", name="ck_claim_attachment_size"))
+
+
 class FinanceWallet(Identity, Created, Base):
     __tablename__ = "finance_wallets"
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("demo_users.id"), index=True)

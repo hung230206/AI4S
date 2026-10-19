@@ -79,3 +79,13 @@ Target addresses: `http://localhost:3000` (UI) and `http://localhost:8000/docs` 
 - Do not use real account credentials, passport data or payment cards.
 
 Sources and known gaps: `docs/09_SOURCES_AND_ASSUMPTIONS.md`. Original user proposal under `reference/`.
+
+## Combined Topic C + D journey (19 October 2026)
+
+Open `/insurance`: upload and review a cited policy, compare coverage needs, plan a native-currency premium, create an explicitly user-authored sandbox fee estimate, and prepare/export a private claim case. Dashboard, Test Lab and copilot link to the journey. Download dated self-authored inputs from the page. See `TOPIC_C_D_GUIDE.md` and `docs/20_TOPIC_C_D_RESEARCH_AND_IMPLEMENTATION.md`. Claims are preparation only; no insurer submission, eligibility decision, payout or real transfer is implemented.
+
+PowerShell: `backend/.venv/Scripts/python.exe scripts/check_insurance_live.py --url http://localhost:3000`
+
+Unix: `backend/.venv/bin/python scripts/check_insurance_live.py --url http://localhost:3000`
+
+The optional `--with-gemini` flag consumes one provider request with synthetic data. Normal acceptance does not require an AI key.

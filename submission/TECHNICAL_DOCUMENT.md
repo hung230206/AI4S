@@ -70,3 +70,7 @@ The Free database expires after 30 days; the web service sleeps on idle and has 
 ## Public deployment verification
 
 The user created the Render Blueprint; runtime commit 3ac84b1 reached Live and passed 10 actual HTTPS core check groups. The public sign-in UI was inspected. The dense original BFSU scanned table returned HTTP 422 OCR_TIMEOUT at the configured 75-second bound; its native success is not proof of Free-host capacity. No paid upgrade was made. See evidence/render-live-http.json, render-public-reference.json and cloud-readiness.json.
+
+## Combined C+D insurance journey — 19 October 2026
+
+The reviewed portfolio feeds explicit coverage comparison, native-currency premium planning and the existing human-consent sandbox. Cases preserve creation-time policy snapshots, original attachment hashes and a revision-controlled journal. Checklist and file edits invalidate readiness. External submission is a user-reported event, with no insurer network call or approval. Exact source excerpts must occur on the declared page; their interpretation remains human reviewed. No annual limits are combined or presented as guaranteed claim payouts. See `docs/20_TOPIC_C_D_RESEARCH_AND_IMPLEMENTATION.md`, `contracts/insurance.openapi.json`, `TOPIC_C_D_GUIDE.md` and `scripts/check_insurance_live.py`. The product combines both task families; official registration still chooses one topic.

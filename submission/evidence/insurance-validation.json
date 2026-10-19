@@ -1,0 +1,24 @@
+{
+  "backend_tests": 164,
+  "backend_failures": 0,
+  "backend_seconds": "61.703",
+  "development_browser": {
+    "startTime": "2026-10-18T22:46:08.906Z",
+    "duration": 223105.667,
+    "expected": 26,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "production_browser": {
+    "startTime": "2026-10-19T06:01:08.188Z",
+    "duration": 78374.18,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "production_excluded": "Two manual operator cases; operator UI intentionally disabled in production",
+  "real_gemini": "insurance-gemini-live.json",
+  "build": "insurance-build-checks.json"
+}

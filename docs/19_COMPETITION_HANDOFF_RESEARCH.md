@@ -16,7 +16,7 @@ Topic C, Cross-border & Student Finance Assistant, is the recommended single foc
 
 The A-Z flow produces actual saved inputs, local neural OCR, a reviewed invoice, reference FX, a budget plan/forecast, declared document provenance, human consent, signed asynchronous sandbox outcomes, explicit ledger confirmation and a downloadable case. A test account can complete success and decline/retry without possessing an operator code. The advanced operator endpoints remain protected.
 
-This is still a bounded workflow MVP. OCR uses a real pre-trained model, while assistant routing, retrieval and cash-flow projections are deterministic. There is no generative LLM, embedding model, independent bank transfer or autonomous investment decision. The team must describe this honestly when discussing the AI scope; the implementation does not guarantee the judges will consider the current agent capability sufficient or award a particular score.
+This remains a bounded workflow MVP. OCR uses a real pre-trained model. As of the 19 October upgrade, optional Gemini generation is integrated over private source evidence; direct retrieval, coverage comparisons and cash-flow projections remain deterministic. There is no embedding model, independent bank transfer or autonomous investment decision. The combined Topic C+D journey and its limits are documented in docs/20_TOPIC_C_D_RESEARCH_AND_IMPLEMENTATION.md. The implementation does not guarantee a judging score or establish dual-topic registration.
 
 ## Real uploaded reference material
 
