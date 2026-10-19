@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:15044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (9.0s)
+  ok 2 tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced (3.5s)
+  ok 3 tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call (1.9s)
+  ok 4 tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source (2.6s)
+
+  4 passed (18.2s)

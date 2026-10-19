@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-19T08:59:41.465417+00:00",
+  "origin": "http://localhost:3104",
+  "checks": [
+    "real_admin_login_and_regular_account_denied",
+    "per_file_acknowledgement_draft_isolation_and_local_admin_preview",
+    "publication_student_answer_exact_page_offsets_and_original_hash",
+    "unsupported_insurance_question_abstains",
+    "session_consent_gate_and_no_dispatch_preview",
+    "edit_and_replace_reindex_unpublish_old_revision_rejected",
+    "trash_restore_draft_and_revision_history"
+  ],
+  "actual_model_calls": 0,
+  "real_funds_moved": false,
+  "release": "local",
+  "core_status": "PASS",
+  "status": "PASS",
+  "elapsed_seconds": 5.672
+}

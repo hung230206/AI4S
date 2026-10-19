@@ -47,7 +47,7 @@ class PasswordChange(Strict):
 
 
 def public_user(user):
-    return {"id": str(user.id), "email": user.email, "display_name": user.display_name, "role": user.role, "is_demo": user.is_demo, "created_at": iso(user.created_at)}
+    return {"id": str(user.id), "email": user.email, "display_name": user.display_name, "role": user.role, "is_demo": user.is_demo, "is_rag_admin": user.is_rag_admin, "created_at": iso(user.created_at)}
 
 
 def throttle(db, request, subject, action, limit=10):

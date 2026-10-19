@@ -1,0 +1,115 @@
+
+Running 4 tests using 1 worker
+
+(node:19756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 frontend\tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (17.7s)
+(node:4224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 frontend\tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced (4.3s)
+  ok 3 frontend\tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call (2.7s)
+  x  4 frontend\tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source (1.0m)
+
+
+  1) frontend\tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "RAG_SOURCE_RETIRED"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <div role="alert" class="error" aria-label="Lỗi thao tác">…</div> aka getByRole('alert', { name: 'Lỗi thao tác' })
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+        2 × locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+          - unexpected value ""
+
+
+      64 |   await expect(card).toContainText("Bản nháp"); await publish(page, title);
+      65 |   await page.goto(sourceHref!);
+    > 66 |   await expect(page.getByRole("alert")).toContainText("RAG_SOURCE_RETIRED");
+         |                                         ^
+      67 |   await page.goto("/knowledge"); await page.getByLabel("Nguồn để tra cứu", {exact: true}).selectOption({label: title});
+      68 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("outpatient specialist benefit");
+      69 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:66:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    frontend\test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: frontend\test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    frontend\test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+    Usage:
+
+        npx playwright show-trace frontend\test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) frontend\tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Browser logs:
+
+    <launching> C:\Program Files\Google\Chrome\Application\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\hungt\AppData\Local\Temp\playwright_chromiumdev_profile-Mrtx2V --remote-debugging-pipe --no-startup-window
+    <launched> pid=17004
+    [pid=17004][err] [17004:12056:1019/160324.367:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+    [pid=17004][err] [17004:12056:1019/160324.374:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+    [pid=17004][err] [17004:12056:1019/160324.374:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+    [pid=17004][err] [17004:12056:1019/160324.502:ERROR:google_apis\gcm\engine\mcs_client.cc:702]   Error code: 401  Error message: Authentication Failed: wrong_secret
+    [pid=17004][err] [17004:12056:1019/160324.503:ERROR:google_apis\gcm\engine\mcs_client.cc:704] Failed to log in to GCM, resetting connection.
+    [pid=17004][err] [17004:12056:1019/160349.651:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+    [pid=17004] <gracefully close start>
+    Call log:
+      - waiting for getByRole('button', { name: 'Xem dữ liệu sẽ gửi', exact: true })
+        - locator resolved to <button disabled type="button" class="text-link">Xem dữ liệu sẽ gửi</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        111 × waiting for element to be visible, enabled and stable
+            - element is not enabled
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      128 |   await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+      129 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Outpatient benefit limit");
+    > 130 |   await page.getByRole("button", {name: "Xem dữ liệu sẽ gửi", exact: true}).click();
+          |                                                                             ^
+      131 |   await expect(page.locator(".privacy-preview")).toContainText('"sent": false'); expect(sends).toBe(0);
+      132 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
+      133 |   await expect(page.locator(".rag-answer")).toContainText("Fictional policy answer"); expect(sends).toBe(1);
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:130:77
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    frontend\test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: frontend\test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    frontend\test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\trace.zip
+    Usage:
+
+        npx playwright show-trace frontend\test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    frontend\tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+    frontend\tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source 
+  2 passed (1.5m)

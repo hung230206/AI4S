@@ -1,0 +1,33 @@
+{
+  "status": "LOCAL_PASS_DEPLOY_PENDING",
+  "backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "209",
+    "time": "173.213",
+    "timestamp": "2026-10-19T15:59:17.248286+07:00",
+    "hostname": "Hung"
+  },
+  "browser": {
+    "startTime": "2026-10-19T09:07:27.325Z",
+    "duration": 98094.278,
+    "expected": 34,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "retrieval_regression": {
+    "questions": 24,
+    "recall_at_3": 1.0,
+    "mean_reciprocal_rank_at_3": 0.7962962962962963,
+    "abstention_accuracy": 1.0,
+    "passed": 24
+  },
+  "lint_exit": 0,
+  "typescript_exit": 0,
+  "production_build_exit": 0,
+  "real_funds_moved": false,
+  "actual_provider_check": "pending deployment"
+}

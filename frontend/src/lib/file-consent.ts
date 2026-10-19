@@ -1,5 +1,5 @@
 export const FILE_NOTICE_VERSION = "files-2026-10-19-v1";
-export type FilePurpose = "documents" | "invoice-ocr" | "claim-attachments";
+export type FilePurpose = "documents" | "invoice-ocr" | "claim-attachments" | "rag-corpus" | "rag-publish";
 export type ConsentRequest = {purpose: FilePurpose; resolve: (accepted: boolean) => void};
 
 export async function requestFileConsent(purpose: FilePurpose): Promise<boolean> {

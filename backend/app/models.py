@@ -30,6 +30,7 @@ class User(Identity, Created, Base):
     email: Mapped[str | None] = mapped_column(String(254), unique=True)
     password_hash: Mapped[str | None]
     is_demo: Mapped[bool] = mapped_column(default=False, server_default=text("false"))
+    is_rag_admin: Mapped[bool] = mapped_column(default=False, server_default=text("false"))
     __table_args__ = (CheckConstraint("role IN ('STUDENT','OPERATOR')"),)
 
 
@@ -216,6 +217,58 @@ class PolicyDocument(Identity, Created, Base):
     source_url: Mapped[str | None]
     document_kind: Mapped[str] = mapped_column(default="USER_PROVIDED", server_default="USER_PROVIDED")
     __table_args__ = (UniqueConstraint("user_id", "sha256", name="uq_document_owner_hash"), CheckConstraint("document_kind IN ('USER_PROVIDED','PUBLIC_REFERENCE','TEST_FIXTURE')", name="ck_policy_document_kind"))
+
+
+class RagDocument(Identity, Created, Base):
+    """Shared knowledge, deliberately separate from private policy/claim documents."""
+    __tablename__ = "rag_documents"
+    title: Mapped[str]
+    publisher: Mapped[str]
+    source_url: Mapped[str | None]
+    source_kind: Mapped[str]
+    license_note: Mapped[str]
+    category: Mapped[str]
+    language: Mapped[str]
+    jurisdiction: Mapped[str]
+    revision: Mapped[int] = mapped_column(default=1)
+    published: Mapped[bool] = mapped_column(default=False)
+    deleted: Mapped[bool] = mapped_column(default=False)
+    origin: Mapped[str]
+    filename: Mapped[str]
+    content_type: Mapped[str]
+    original_bytes: Mapped[bytes] = mapped_column(LargeBinary)
+    sha256: Mapped[str]
+    pages: Mapped[list] = mapped_column(JSONB)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    updated_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("demo_users.id"))
+    __table_args__ = (CheckConstraint("revision > 0 AND (NOT deleted OR NOT published)", name="ck_rag_state"),
+        CheckConstraint("source_kind IN ('PUBLIC_REFERENCE','TEST_FIXTURE')", name="ck_rag_kind"),
+        CheckConstraint("category IN ('POLICY','CLAIMS','GLOSSARY') AND language IN ('vi','en','zh') AND jurisdiction IN ('CN','VN','WORLD')", name="ck_rag_metadata"),)
+
+
+class RagChunk(Identity, Base):
+    __tablename__ = "rag_chunks"
+    document_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("rag_documents.id", ondelete="CASCADE"), index=True)
+    revision: Mapped[int]
+    ordinal: Mapped[int]
+    page: Mapped[int]
+    start: Mapped[int]
+    end: Mapped[int]
+    content: Mapped[str]
+    terms: Mapped[dict] = mapped_column(JSONB)
+    token_count: Mapped[int]
+    __table_args__ = (UniqueConstraint("document_id", "revision", "ordinal"),
+        CheckConstraint('revision > 0 AND page > 0 AND start >= 0 AND "end" > start AND token_count > 0', name="ck_rag_chunk"),)
+
+
+class RagRevision(Identity, Created, Base):
+    __tablename__ = "rag_revisions"
+    document_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("rag_documents.id", ondelete="CASCADE"), index=True)
+    revision: Mapped[int]
+    actor_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("demo_users.id"))
+    action: Mapped[str]
+    snapshot: Mapped[dict] = mapped_column(JSONB)
+    __table_args__ = (UniqueConstraint("document_id", "revision"),)
 
 
 class InsurancePolicy(Identity, Created, Base):

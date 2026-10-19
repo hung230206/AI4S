@@ -1,3 +1,45 @@
+# Current release — managed Topic D RAG and administrator accounts (19 October 2026)
+
+## Delivered behaviour
+
+- `/admin/rag`: personal account sign-in plus server-assigned `is_rag_admin` capability; create authored text or locally extract PDF/image/TXT/MD, inspect pages/hash/chunk count, preview drafts, edit metadata/text, replace original files, publish/unpublish, trash/restore and inspect revision metadata. Public registration/profile and demo/operator sessions cannot acquire this capability.
+- `/knowledge`: published-source library, document selection, original-excerpt answers, optional session-consented Gemini synthesis, insufficient/partial-evidence states, preview-before-send and exact source links. `/knowledge/{id}` checks current publication/revision and provides page text and the original file with SHA-256.
+- Persistent page-aware chunk/index tables; local multilingual BM25 with explicit concepts and Chinese bigrams. At most three excerpts; no embedding API or neural model download required. Original binaries are deferred from ranking/list queries. This is retrieval plus optional generation, not fine-tuning or a claim of semantic/vector embeddings.
+- Revisions, corpus-write locking and transactional reindex ensure edits return sources to draft; stale writes fail. Delete removes a source from retrieval and can be restored as a draft. Old source URLs cannot silently show a new version. Session/consent/publication changes are checked again after generation and timeout fallback.
+- Binary purpose-specific upload and publication popups retain the prior Agree/Disagree UX. Sharing is an explicit admin action. Only declared sample/public materials enter the shared corpus; private policies, personal financial records and claim files stay separate. The copilot can use unused excerpt slots from published sources, keeping its combined excerpt count at three.
+- Gemini uses a source-only insurance rule for RAG, has no tools, validates server-owned citation IDs, and falls back to clearly labelled original excerpts. Gemini 3.8 uses officially supported low thinking and omits deprecated temperature; provider quotas, model selection and timeout are unchanged. Citation IDs do not prove semantic correctness; full-source review remains necessary.
+- Three self-authored CC0 fixture sources and a separate 24-question VI/EN/ZH retrieval regression set. No authentic insurer corpus or model training is claimed. Existing reviewed-policy comparisons and claim preparation are linked from the RAG flow.
+- A random-password dedicated test administrator is provisioned locally; credentials remain only in `.local/rag-admin-test.json` and server secrets. Server provisioning never promotes an existing ordinary account or resets an existing administrator password. No shared/public password is committed or packaged.
+
+Deployment: local acceptance complete; live release/account/provider evidence will be recorded after deployment.
+
+## Exact completed checks
+
+| Check | Actual result | Evidence under submission/evidence/ |
+|---|---|---|
+| Baseline backend | 194 passed, 65.05s | rag-baseline-backend.xml / .txt |
+| Initial RAG API tests | 13 passed, 8.54s | rag-targeted-backend.xml / .txt |
+| Intermediate full suite | 207 passed, 175.54s | rag-full-backend.xml / .txt |
+| Expanded full suite before deferred-binary optimization | 209 passed, 223.20s | rag-final-full-backend.xml / .txt |
+| Final full backend | 209 passed, 173.38s | rag-release-backend.xml / .txt |
+| Final targeted RAG UI in development | 4 passed, 18.2s | rag-browser-development-final.json / .txt |
+| Final standalone production browser suite | 34 passed, no failures/flaky/skipped, 1.6m | rag-browser-production.json / .txt |
+| Lint / TypeScript / standalone webpack build | exit 0 each | rag-release-lint.txt / -typescript.txt / -build.txt |
+| Actual local HTTP admin-to-student lifecycle | 7 groups PASS, no real model call | rag-local-http.json |
+| Retrieval regression | 24/24; Recall@3 1.0, MRR@3 0.7962963, abstention 1.0 | rag-retrieval-evaluation.json |
+| Browser exact-secret scan | 58 JS bundles; zero configured/admin-secret matches | rag-browser-secret-scan.json |
+| Additive migration and schema check | 73c9794e8f35; no additional operations detected | Alembic command output; contracts/rag.openapi.json, database/rag_schema.sql |
+
+Pytest and browser/HTTP checks use separate isolated `_test` databases; no private user database was cleared. Two development-operator browser cases are intentionally excluded from the production run; their API invariants remain covered in pytest. The existing Starlette/httpx TestClient deprecation warning remains. Local user DB migration preserved existing data and added the requested test admin and labelled fictional corpus.
+
+An initial migration check failed because the SQL check used reserved `end` without quoting; PostgreSQL rolled back, and the corrected migration now applies cleanly. Initial browser runs caught ambiguous/wrapped control labels, an unscoped route-announcer alert selector and an automated action before the consent dialog finished. Accessible names and test synchronization were corrected; final complete production results above pass. Initial failed browser reports are retained. The 24 handcrafted retrieval cases are a regression dataset, not independent answer-quality validation.
+
+Commands: backend PowerShell `.venv/Scripts/python.exe -m pytest -q`; Unix `.venv/bin/python -m pytest -q`. Frontend `npm run lint`, `npx tsc --noEmit`, and `npm run build -- --webpack`. Browser PowerShell: `$env:PLAYWRIGHT_BASE_URL='http://localhost:3104'; npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt' --reporter=list,json`. Unix: `PLAYWRIGHT_BASE_URL=http://localhost:3104 npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt' --reporter=list,json`. Browser fixtures inherit the QA API's isolated DATABASE_URL. `python scripts/evaluate_rag.py` runs actual retrieval; `python scripts/check_rag_live.py --url <origin> --admin-credentials .local/rag-admin-test.json` verifies admin/publication/reader lifecycle without a model; `--with-gemini` performs one explicit fictional-content provider call and reports fallback separately.
+
+Research and explicit limits: docs/22_TOPIC_D_MANAGED_RAG.md. User/admin handoff: RAG_GUIDE.md. API extension: contracts/rag.openapi.json (13 paths, 9 schemas). No legal certification, authentic-contract verification, comprehensive DLP, MFA, full erasure/purge, version-content rollback or insurer submission is claimed. Earlier release sections below are historical.
+
+---
+
 # Current release — feature-triggered binary permissions (19 October 2026)
 
 ## Outcome

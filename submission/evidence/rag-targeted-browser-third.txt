@@ -1,0 +1,81 @@
+
+Running 4 tests using 1 worker
+
+(node:10948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (1.7m)
+(node:13952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced (4.7s)
+  ok 3 tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call (2.8s)
+  x  4 tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source (1.0m)
+
+
+  1) tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+
+    Test timeout of 100000ms exceeded.
+
+    Error: locator.fill: Test timeout of 100000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Nội dung tự soạn', { exact: true })
+
+
+      60 |   await page.goto("/admin/rag");
+      61 |   await card.getByRole("button", {name: "Sửa", exact: true}).click();
+    > 62 |   await page.getByLabel("Nội dung tự soạn", {exact: true}).fill(text.replace("7,654", "8,765"));
+         |                                                            ^
+      63 |   await page.getByRole("button", {name: "Lưu bản nháp", exact: true}).click();
+      64 |   await expect(card).toContainText("Bản nháp"); await publish(page, title);
+      65 |   await page.goto(sourceHref!);
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:62:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.press: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Câu hỏi bảo hiểm', { exact: true })
+
+
+      130 |   await page.getByRole("button", {name: "Xem dữ liệu sẽ gửi", exact: true}).click();
+      131 |   await expect(page.locator(".privacy-preview")).toContainText('"sent": false'); expect(sends).toBe(0);
+    > 132 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).press("Enter");
+          |                                                            ^
+      133 |   await expect(page.locator(".rag-answer")).toContainText("Fictional policy answer"); expect(sends).toBe(1);
+      134 |   await expect(page.getByRole("link", {name: "Đọc trang nguồn ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
+      135 |   await page.getByRole("button", {name: "Thu hồi quyền Gemini", exact: true}).click();
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:132:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-RAG-Gemini-mode-asks-b-e6fb0-swer-links-its-cited-source\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+    tests\rag.spec.ts:115:5 › RAG Gemini mode asks binary consent, preview stays local and answer links its cited source 
+  2 passed (2.9m)

@@ -4,6 +4,7 @@ export type Locale = "vi" | "en" | "zh";
 
 const messages: Record<Locale, Record<string, string>> = {
   vi: {
+    nav_knowledge: "Hỏi đáp bảo hiểm RAG", nav_rag_admin: "Quản trị kho RAG",
     // Shell / layout
     nav_dashboard: "Tổng quan",
     nav_copilot: "Trợ lý du học",
@@ -183,6 +184,7 @@ const messages: Record<Locale, Record<string, string>> = {
     notice_simulated: "SIMULATED TRANSACTION — NO REAL FUNDS MOVED",
   },
   en: {
+    nav_knowledge: "Insurance knowledge", nav_rag_admin: "RAG administration",
     // Shell / layout
     nav_dashboard: "Overview",
     nav_copilot: "Study Abroad Assistant",
@@ -362,6 +364,7 @@ const messages: Record<Locale, Record<string, string>> = {
     notice_simulated: "SIMULATED TRANSACTION — NO REAL FUNDS MOVED",
   },
   zh: {
+    nav_knowledge: "保险知识问答", nav_rag_admin: "RAG 知识库管理",
     // Shell / layout
     nav_dashboard: "总览",
     nav_copilot: "留学助手",

@@ -1,0 +1,133 @@
+
+Running 3 tests using 1 worker
+
+(node:8652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (1.9s)
+(node:8940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced (1.7s)
+(node:24556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call (1.0m)
+
+
+  1) tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:
+        1) <button class="selected">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()
+        2) <button class="button primary full">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })
+
+
+      14 |   await page.getByLabel("Email", {exact: true}).fill(admin.email);
+      15 |   await page.getByLabel("Mật khẩu", {exact: true}).fill(admin.password);
+    > 16 |   await page.getByRole("button", {name: "Đăng nhập", exact: true}).click();
+         |                                                                    ^
+      17 |   // The account is intentionally provisioned server-side, never by an elevation API.
+      18 |   const welcome = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
+      19 |   await expect(page.getByRole("button", {name: "Thêm tài liệu", exact: true})).toBeVisible();
+        at loginAdmin (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:16:68)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:36:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:
+        1) <button class="selected">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()
+        2) <button class="button primary full">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })
+
+
+      14 |   await page.getByLabel("Email", {exact: true}).fill(admin.email);
+      15 |   await page.getByLabel("Mật khẩu", {exact: true}).fill(admin.password);
+    > 16 |   await page.getByRole("button", {name: "Đăng nhập", exact: true}).click();
+         |                                                                    ^
+      17 |   // The account is intentionally provisioned server-side, never by an elevation API.
+      18 |   const welcome = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
+      19 |   await expect(page.getByRole("button", {name: "Thêm tài liệu", exact: true})).toBeVisible();
+        at loginAdmin (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:16:68)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:80:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Tìm câu trả lời', exact: true })
+        - locator resolved to <button disabled class="button primary">Tìm câu trả lời</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        111 × waiting for element to be visible, enabled and stable
+            - element is not enabled
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      107 |   await page.goto("/knowledge");
+      108 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("Bảo hiểm thai sản được trả bao nhiêu?");
+    > 109 |   await page.getByRole("button", {name: "Tìm câu trả lời", exact: true}).click();
+          |                                                                          ^
+      110 |   await expect(page.locator(".rag-answer")).toContainText("Chưa có đủ thông tin");
+      111 |   await expect(page.locator(".rag-answer .citation-card")).toHaveCount(0);
+      112 | });
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:109:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+    tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced 
+    tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call 

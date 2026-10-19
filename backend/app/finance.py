@@ -418,6 +418,13 @@ def assistant_evidence(question, user, db, scopes=None):
     result = search_owned(Search(question=question), user, db, ["TEST_FIXTURE", "PUBLIC_REFERENCE"] if settings.gemini_data_mode == "DEMO_ONLY" or not {"finance", "insurance"} & set(scopes) else None) if "documents" in scopes else {"matches": []}
     for index, item in enumerate(result["matches"][:3]):
         add(f"D{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"]}, {key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind")})
+    if "documents" in scopes and len(result["matches"]) < 3:
+        from .rag_index import retrieve
+        shared, _ = retrieve(db, question)
+        for index, item in enumerate(shared[:3 - len(result["matches"])]):
+            href = f"/knowledge/{item['document_id']}?revision={item['revision']}#page-{item['page']}"
+            add(f"K{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"], "revision": item["revision"]},
+                {**{key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind", "revision")}, "href": href})
     from .models import InsurancePolicy
     policies = db.scalars(select(InsurancePolicy).where(InsurancePolicy.user_id == user.id, InsurancePolicy.active == True).order_by(InsurancePolicy.created_at.desc()).limit(3)) if "insurance" in scopes else []
     for index, policy in enumerate(policies):

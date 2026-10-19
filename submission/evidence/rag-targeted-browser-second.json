@@ -1,0 +1,285 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/rag.spec.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "snapshotDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:3104",
+          "channel": "chrome",
+          "headless": true,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "rag.spec.ts",
+      "file": "rag.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "admin account manages publication, edits invalidate old sources, trash and restore",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 101132,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 100000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 100000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 100000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                        "column": 60,
+                        "line": 54
+                      },
+                      "message": "Error: locator.selectOption: Test timeout of 100000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Nguồn để tra cứu', { exact: true })\u001b[22m\n\n\n  52 |   await page.screenshot({path: \"../submission/evidence/screenshots/rag/admin-published.png\", fullPage: true});\n  53 |   await page.getByRole(\"link\", {name: \"Hỏi đáp bảo hiểm từ tài liệu →\", exact: true}).click();\n> 54 |   await page.getByLabel(\"Nguồn để tra cứu\", {exact: true}).selectOption({label: title});\n     |                                                            ^\n  55 |   await page.getByLabel(\"Câu hỏi bảo hiểm\", {exact: true}).fill(\"outpatient specialist benefit\");\n  56 |   await page.getByRole(\"button\", {name: \"Tìm câu trả lời\", exact: true}).click();\n  57 |   await expect(page.locator(\".rag-answer\")).toContainText(\"7,654\");\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:54:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:51:46.585Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-50c083dc647d55edbee8",
+          "file": "rag.spec.ts",
+          "line": 33,
+          "column": 5
+        },
+        {
+          "title": "admin file upload requires per-file agreement and original file can be replaced",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5416,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Thay tệp gốc', exact: true }) resolved to 2 elements:\n    1) <input required=\"\" type=\"file\" accept=\".pdf,.png,.jpg,.jpeg,.webp,.txt,.md\"/> aka getByLabel('Thay tệp gốc')\n    2) <button class=\"button secondary\">Thay tệp gốc</button> aka locator('button').filter({ hasText: 'Thay tệp gốc' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Thay tệp gốc', exact: true })\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Thay tệp gốc', exact: true }) resolved to 2 elements:\n    1) <input required=\"\" type=\"file\" accept=\".pdf,.png,.jpg,.jpeg,.webp,.txt,.md\"/> aka getByLabel('Thay tệp gốc')\n    2) <button class=\"button secondary\">Thay tệp gốc</button> aka locator('button').filter({ hasText: 'Thay tệp gốc' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Thay tệp gốc', exact: true })\u001b[22m\n\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:96:71",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                      "column": 71,
+                      "line": 96
+                    },
+                    "snippet": "  94 |   await expect(page.locator(\".rag-source\")).toContainText(\"source.txt\");\n  95 |   await page.getByLabel(\"Thay tệp gốc\", {exact: true}).setInputFiles({name: \"replacement.txt\", mimeType: \"text/plain\", buffer: Buffer.from(text.replace(\"7,654\", \"9,876\"))});\n> 96 |   await page.getByRole(\"button\", {name: \"Thay tệp gốc\", exact: true}).click();\n     |                                                                       ^\n  97 |   await dialog.getByRole(\"button\", {name: \"Đồng ý\", exact: true}).click();\n  98 |   await expect(page.locator(\".rag-source\")).toContainText(\"9,876\");\n  99 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                        "column": 71,
+                        "line": 96
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Thay tệp gốc', exact: true }) resolved to 2 elements:\n    1) <input required=\"\" type=\"file\" accept=\".pdf,.png,.jpg,.jpeg,.webp,.txt,.md\"/> aka getByLabel('Thay tệp gốc')\n    2) <button class=\"button secondary\">Thay tệp gốc</button> aka locator('button').filter({ hasText: 'Thay tệp gốc' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Thay tệp gốc', exact: true })\u001b[22m\n\n\n  94 |   await expect(page.locator(\".rag-source\")).toContainText(\"source.txt\");\n  95 |   await page.getByLabel(\"Thay tệp gốc\", {exact: true}).setInputFiles({name: \"replacement.txt\", mimeType: \"text/plain\", buffer: Buffer.from(text.replace(\"7,654\", \"9,876\"))});\n> 96 |   await page.getByRole(\"button\", {name: \"Thay tệp gốc\", exact: true}).click();\n     |                                                                       ^\n  97 |   await dialog.getByRole(\"button\", {name: \"Đồng ý\", exact: true}).click();\n  98 |   await expect(page.locator(\".rag-source\")).toContainText(\"9,876\");\n  99 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:96:71"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:53:30.657Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                    "column": 71,
+                    "line": 96
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-c45578fb889b54ddc0e7",
+          "file": "rag.spec.ts",
+          "line": 79,
+          "column": 5
+        },
+        {
+          "title": "regular users cannot administer and missing evidence abstains without a model call",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2035,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:53:59.964Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-31c0cd1ca8b6124d576d",
+          "file": "rag.spec.ts",
+          "line": 103,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T08:51:46.041Z",
+    "duration": 138847.068,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

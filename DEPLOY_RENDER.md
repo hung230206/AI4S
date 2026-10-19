@@ -1,3 +1,7 @@
+## Optional dedicated RAG test administrator
+
+After deploying the migration, set RAG_ADMIN_EMAIL and RAG_ADMIN_PASSWORD as server environment secrets from the private `.local/rag-admin-test.json` file created by `python -m app.rag_admin`. Do not use a public default password or paste it into GitHub. Startup creates a new administrator once, never elevates an existing ordinary account and never resets an existing administrator password. Existing app/database/payment/provider settings stay unchanged. `/admin/rag` uses normal account sign-in; the demo operator code is not an administrator credential. See RAG_GUIDE.md. The additive migration is 73c9794e8f35; reviewed personal invoices/policies/claims are preserved.
+
 # Đưa Demo lên Render từ GitHub
 
 ## Quyền riêng tư Gemini (19/10/2026)

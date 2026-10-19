@@ -1,0 +1,83 @@
+
+Running 3 tests using 1 worker
+
+(node:916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (1.7m)
+(node:17432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced (5.4s)
+(node:13184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 tests\rag.spec.ts:103:5 › regular users cannot administer and missing evidence abstains without a model call (2.0s)
+
+
+  1) tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+
+    Test timeout of 100000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 100000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Nguồn để tra cứu', { exact: true })
+
+
+      52 |   await page.screenshot({path: "../submission/evidence/screenshots/rag/admin-published.png", fullPage: true});
+      53 |   await page.getByRole("link", {name: "Hỏi đáp bảo hiểm từ tài liệu →", exact: true}).click();
+    > 54 |   await page.getByLabel("Nguồn để tra cứu", {exact: true}).selectOption({label: title});
+         |                                                            ^
+      55 |   await page.getByLabel("Câu hỏi bảo hiểm", {exact: true}).fill("outpatient specialist benefit");
+      56 |   await page.getByRole("button", {name: "Tìm câu trả lời", exact: true}).click();
+      57 |   await expect(page.locator(".rag-answer")).toContainText("7,654");
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:54:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-admin-account-manages--f5810-d-sources-trash-and-restore\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Thay tệp gốc', exact: true }) resolved to 2 elements:
+        1) <input required="" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.md"/> aka getByLabel('Thay tệp gốc')
+        2) <button class="button secondary">Thay tệp gốc</button> aka locator('button').filter({ hasText: 'Thay tệp gốc' })
+
+    Call log:
+      - waiting for getByRole('button', { name: 'Thay tệp gốc', exact: true })
+
+
+      94 |   await expect(page.locator(".rag-source")).toContainText("source.txt");
+      95 |   await page.getByLabel("Thay tệp gốc", {exact: true}).setInputFiles({name: "replacement.txt", mimeType: "text/plain", buffer: Buffer.from(text.replace("7,654", "9,876"))});
+    > 96 |   await page.getByRole("button", {name: "Thay tệp gốc", exact: true}).click();
+         |                                                                       ^
+      97 |   await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+      98 |   await expect(page.locator(".rag-source")).toContainText("9,876");
+      99 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\rag.spec.ts:96:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore 
+    tests\rag.spec.ts:79:5 › admin file upload requires per-file agreement and original file can be replaced 
+  1 passed (2.3m)

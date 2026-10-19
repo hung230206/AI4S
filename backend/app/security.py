@@ -70,5 +70,11 @@ def operator(user=Depends(current_user)):
     return user
 
 
+def rag_admin(request: Request, user=Depends(current_user)):
+    if not user.is_rag_admin or user.is_demo or not getattr(request.state, "account_session", None):
+        raise ApiError("FORBIDDEN", "Chỉ tài khoản quản trị kho RAG được thao tác.", 403)
+    return user
+
+
 def lock_user(db, user):
     db.execute(select(User).where(User.id == user.id).with_for_update()).scalar_one()

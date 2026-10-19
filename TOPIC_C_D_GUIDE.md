@@ -1,3 +1,7 @@
+## Managed Topic D RAG (19 October 2026)
+
+User Q&A: `/knowledge`. Administrator CRUD/publication: `/admin/rag` with a server-provisioned account. See [RAG_GUIDE.md](RAG_GUIDE.md) for the complete admin-to-student test flow and [research/method](docs/22_TOPIC_D_MANAGED_RAG.md). Credentials are in an ignored private local file, never in this repository. Gemini still requires binary session consent; the source library can be searched locally without a model.
+
 # Test luồng C + D
 
 ## Quyền AI mới (19/10/2026)

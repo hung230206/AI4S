@@ -75,6 +75,8 @@ def test_generation_has_bounded_history_and_server_owned_citations(client, enabl
     monkeypatch.setattr(gemini, "request_json", fake)
     reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Explain that again", "use_gemini": True, "privacy_revision": 1, "language": "en", "history": [{"role": "user", "content": "What is a budget?"}, {"role": "assistant", "content": "An earlier explanation"}]}).json()
     prompt = json.loads(captured["contents"][0]["parts"][0]["text"])
+    assert captured["generationConfig"]["thinkingConfig"] == {"thinkingLevel": "low"}
+    assert "temperature" not in captured["generationConfig"]
     assert prompt["language"] == "English" and len(prompt["conversation"]) == 2
     assert "tools" not in captured and "fake_test_key" not in json.dumps(captured)
     assert reply["provider"] == "GEMINI" and reply["executed_actions"] == []

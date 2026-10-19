@@ -48,6 +48,7 @@ export const useAuth = () => useContext(Auth);
 const nav = [
   {href: "/", key: "nav_dashboard", icon: LayoutDashboard},
   {href: "/copilot", key: "nav_copilot", icon: MessageCircle},
+  {href: "/knowledge", key: "nav_knowledge", icon: BookOpen},
   {href: "/invoices", key: "nav_invoices", icon: FileText},
   {href: "/finance", key: "nav_finance", icon: Wallet},
   {href: "/rates", key: "nav_rates", icon: TrendingUp},
@@ -150,6 +151,7 @@ export function Shell({children}: {children: React.ReactNode}) {
           </div>
         )}
         <div className="auth-preferences"><ThemeToggle/><LanguageSelector/></div>
+        {path.startsWith("/admin/rag") && <p className="info-note">{t("nav_rag_admin")} · {tr("Đăng nhập bằng tài khoản quản trị được cấp. Tạo tài khoản thường không cấp quyền quản trị.")}</p>}
         <AuthScreen onAccount={accept} onDemo={demo}/>
       </>
     );
@@ -157,7 +159,7 @@ export function Shell({children}: {children: React.ReactNode}) {
   const demoMode = Boolean(user?.is_demo);
   const pageLabel =
     (nav.find(item => item.href === path) ? t(nav.find(item => item.href === path)!.key) : "") ||
-    (path.startsWith("/checkout") ? t("checkout_label") :
+    (path.startsWith("/admin/rag") ? t("nav_rag_admin") : path.startsWith("/knowledge") ? t("nav_knowledge") : path.startsWith("/checkout") ? t("checkout_label") :
       path.startsWith("/payments") ? t("payments_label") :
         path.startsWith("/receipts") ? t("receipts_label") :
           path.startsWith("/insurance") ? t("nav_insurance") :
@@ -190,6 +192,7 @@ export function Shell({children}: {children: React.ReactNode}) {
                 </Link>
               );
             })}
+            {user?.is_rag_admin && <Link className={`nav-item ${path === "/admin/rag" ? "active" : ""}`} href="/admin/rag"><Settings2 size={19}/>{t("nav_rag_admin")}</Link>}
           </nav>
           <div className="sidebar-bottom">
             <div className="corridor">

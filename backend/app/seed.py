@@ -18,6 +18,10 @@ def seed(db):
         values = {k: item[k] for k in ("invoice_number", "country_code", "institution_name", "beneficiary_name", "fee_type", "currency", "source_type", "is_real_beneficiary")}
         values.update(id=uuid.UUID(item["id"]), student_id=STUDENT_ID, amount_cny=Decimal(item["amount"]), due_date=date.fromisoformat(item["due_date"]), status="OPEN")
         db.execute(insert(Invoice).values(**values).on_conflict_do_nothing(index_elements=["id"]))
+    from .rag_seed import seed_rag
+    from .rag_admin import provision_configured
+    seed_rag(db)
+    provision_configured(db)
 
 
 if __name__ == "__main__":

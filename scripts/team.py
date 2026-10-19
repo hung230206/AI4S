@@ -183,7 +183,7 @@ def package(args):
     if env.exists():
         for line in env.read_text(encoding="utf-8").splitlines():
             key, _, value = line.partition("=")
-            if key in {"APP_SESSION_SECRET", "MOCK_WEBHOOK_SECRET", "DEMO_OPERATOR_CODE", "GEMINI_API_KEY"} and len(value.strip()) >= 16:
+            if key in {"APP_SESSION_SECRET", "MOCK_WEBHOOK_SECRET", "DEMO_OPERATOR_CODE", "GEMINI_API_KEY", "RAG_ADMIN_PASSWORD"} and len(value.strip()) >= 16:
                 secrets.append(value.strip().encode())
     records = []
     for path in sorted(selected):

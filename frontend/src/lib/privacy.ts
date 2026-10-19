@@ -58,21 +58,27 @@ export function privacyText(locale: Locale) {return copy[locale];}
 export function fileNotice(locale: Locale, purpose: FilePurpose) {
   const notices = {
     vi: {
+      "rag-corpus": {title: "Cho phép xử lý tài liệu RAG?", summary: "Demo được tải lên, lưu và đọc/OCR tệp bạn chọn trong bản nháp của kho quản trị. Chỉ quản trị viên được đọc bản nháp. Tệp chỉ được chia sẻ sau bước Xuất bản riêng."},
+      "rag-publish": {title: "Đồng ý công bố tài liệu RAG?", summary: "Tài liệu này sẽ được mọi tài khoản trong ứng dụng đọc, tải và dùng làm nguồn hỏi đáp. Các đoạn mẫu/công khai có thể được gửi tới Google Gemini khi người hỏi cấp quyền. Bấm Đồng ý xác nhận bạn đã kiểm tra nội dung, có quyền công bố và tài liệu không có dữ liệu cá nhân, sức khỏe hay bí mật."},
       documents: {title: "Cho phép xử lý tài liệu?", summary: "Demo được tải lên, lưu tệp bạn chọn và đọc/OCR nội dung trên máy chủ để tra cứu, trích dẫn và đối chiếu hợp đồng."},
       "invoice-ocr": {title: "Cho phép đọc hóa đơn?", summary: "Demo được tải lên, lưu tệp bạn chọn và đọc/OCR trên máy chủ để gợi ý mã hóa đơn, số tiền, bên nhận và hạn thanh toán. Bạn đối chiếu trước khi lưu hóa đơn."},
       "claim-attachments": {title: "Cho phép lưu chứng từ hồ sơ?", summary: "Demo được lưu tệp bạn chọn trong hồ sơ bồi thường này để bạn đối chiếu, tải lại và xuất bộ hồ sơ. Không gửi tới công ty bảo hiểm hay Gemini."},
     },
     en: {
+      "rag-corpus": {title: "Allow RAG document processing?", summary: "Allow upload, storage and server-side reading/OCR of the selected file in an administrator-only draft. Sharing requires a separate Publish action."},
+      "rag-publish": {title: "Agree to publish this RAG source?", summary: "All app accounts can read, download and retrieve this source. Sample/public excerpts may be sent to Google Gemini when the questioner consents. Agree confirms you reviewed the content, have publication rights and it contains no personal, health or confidential data."},
       documents: {title: "Allow document processing?", summary: "Allow Demo to upload, store and read/OCR the selected file on the application server for lookup, citations and policy review."},
       "invoice-ocr": {title: "Allow invoice reading?", summary: "Allow Demo to upload, store and read/OCR the selected file on the application server to suggest invoice fields. You review them before saving the invoice."},
       "claim-attachments": {title: "Allow claim attachment storage?", summary: "Allow Demo to store the selected file in this claim for your review, download and export. It is not sent to an insurer or Gemini."},
     },
     zh: {
+      "rag-corpus": {title: "允许处理 RAG 文档？", summary: "允许上传、存储并在应用服务器读取/OCR所选文件，保存为仅管理员可读的草稿。共享需要另行发布。"},
+      "rag-publish": {title: "同意发布此 RAG 来源？", summary: "所有应用账户都能阅读、下载及检索此文档。提问者同意后，示例或公开摘录可能发送至 Google Gemini。同意即确认您已核对内容、拥有发布权，且不含个人、健康或机密数据。"},
       documents: {title: "允许处理文档？", summary: "允许 Demo 上传、存储并在应用服务器读取/OCR所选文件，用于检索、引用和保单核对。"},
       "invoice-ocr": {title: "允许读取账单？", summary: "允许 Demo 上传、存储并在应用服务器读取/OCR所选文件，以建议账单字段。保存前由您核对。"},
       "claim-attachments": {title: "允许保存理赔附件？", summary: "允许 Demo 将所选文件保存到本理赔档案，供您核对、下载及导出。不会发送至保险公司或 Gemini。"},
     },
   };
   const limit = locale === "vi" ? "Chỉ áp dụng cho tệp này. Không gửi tệp gốc tới Gemini, không truy cập tệp khác. Từ chối sẽ hủy tải lên. Chỉ dùng tệp mẫu hoặc đã ẩn danh mà bạn có quyền sử dụng." : locale === "zh" ? "仅限本次所选文件，不向 Gemini 发送原始文件，也不访问其他文件。拒绝即取消上传。仅使用有权使用的示例或匿名文件。" : "Applies only to this selected file. No original bytes go to Gemini and no other files are accessed. Disagree cancels the upload. Use only sample or anonymised files you may use.";
-  return {...notices[locale][purpose], limit};
+  return {...notices[locale][purpose], limit: purpose === "rag-publish" ? (locale === "vi" ? "Có thể gỡ xuất bản hoặc chuyển vào thùng rác để chặn truy xuất mới. Không thể thu hồi bản người dùng đã tải hoặc nội dung đã gửi tới Google. Không đồng ý sẽ giữ bản nháp." : locale === "zh" ? "撤下或移至回收站会阻止新检索，无法撤回用户已下载或已发送给 Google 的内容。不同意则保留草稿。" : "Unpublish or trash to stop new retrieval. Previously downloaded copies or content sent to Google cannot be recalled. Disagree keeps the draft.") : limit};
 }

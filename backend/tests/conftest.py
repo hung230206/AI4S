@@ -10,6 +10,8 @@ os.environ["PROVIDER_WORKER_ENABLED"] = "false"
 # Tests never consume a developer's real Gemini quota. Provider calls are mocked.
 os.environ["GEMINI_ENABLED"] = "false"
 os.environ["GEMINI_API_KEY"] = ""
+os.environ["RAG_ADMIN_EMAIL"] = ""
+os.environ["RAG_ADMIN_PASSWORD"] = ""
 
 import pytest
 from alembic import command

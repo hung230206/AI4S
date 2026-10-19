@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "student-policy-sample-en", "title": "Demo student health policy — fictional terms", "publisher": "Demo team (self-authored)",
+    "source_kind": "TEST_FIXTURE", "license_note": "CC0 — self-authored fictional material for software tests, not an insurer policy.",
+    "category": "POLICY", "language": "en", "jurisdiction": "CN",
+    "content": "SELF-AUTHORED SOFTWARE TEST POLICY. NOT INSURANCE COVER.\n\nOutpatient benefit: eligible outpatient hospital expenses have a sample annual limit of CNY 2,000. The sample deductible is CNY 100 per visit. These fictional terms do not confirm any person's coverage.\n\nInpatient benefit: eligible inpatient hospital treatment has a sample annual limit of CNY 50,000. A waiting period of 30 days applies in this fictional plan.\n\nExclusions: elective cosmetic treatment and routine dental treatment are excluded in this fictional policy. Medical evacuation is not included. An actual insurer must confirm eligibility, exclusions and supporting evidence.\n\nTerritory: the sample benefits apply to eligible treatment in mainland China only. Treatment outside mainland China is outside this sample territory.\n\nClaims documents: a completed claim form, hospital invoice and relevant medical records are requested for this software test. Identity and bank details should be prepared outside Demo. The fictional submission deadline is within 30 days after the incident. No claim is sent or approved by Demo."
+  },
+  {
+    "slug": "claims-guide-sample-vi", "title": "Hướng dẫn chuẩn bị hồ sơ bồi thường — mẫu tự soạn", "publisher": "Nhóm Demo",
+    "source_kind": "TEST_FIXTURE", "license_note": "CC0 — nội dung mẫu tự soạn để kiểm thử, không phải quy trình của nhà bảo hiểm.",
+    "category": "CLAIMS", "language": "vi", "jurisdiction": "CN",
+    "content": "TÀI LIỆU MẪU TỰ SOẠN, CHỈ DÙNG KIỂM THỬ.\n\nHồ sơ bồi thường mẫu gồm đơn yêu cầu bồi thường, hóa đơn viện phí và hồ sơ khám liên quan. Giấy tờ định danh và thông tin nhận tiền giữ ngoài ứng dụng; không tải giấy tờ thật lên bản demo.\n\nBước chuẩn bị: đối chiếu điều khoản, thời hạn và lãnh thổ hợp đồng; thu thập chứng từ mẫu; kiểm tra checklist; xuất bộ hồ sơ để tự kiểm tra. Trạng thái đủ checklist chỉ do người dùng xác nhận, không phải nhà bảo hiểm chấp nhận.\n\nThời hạn nộp trong tình huống mẫu là 30 ngày kể từ sự kiện. Hợp đồng và nhà bảo hiểm thực tế có thể có thời hạn khác; luôn đọc quy tắc gốc.\n\nỨng dụng không gửi hồ sơ cho công ty bảo hiểm, không xét duyệt và không chi trả. Nếu thiếu chứng từ, nội dung không khớp hoặc chưa rõ quyền lợi, liên hệ nhà bảo hiểm qua kênh chính thức trước khi nộp."
+  },
+  {
+    "slug": "insurance-glossary-sample-zh", "title": "保险术语学习卡 — 自编示例", "publisher": "Demo team",
+    "source_kind": "TEST_FIXTURE", "license_note": "CC0 — team-authored educational examples; not contractual or legal advice.",
+    "category": "GLOSSARY", "language": "zh", "jurisdiction": "WORLD",
+    "content": "自编教学示例，不是保险合同。\n\n免赔额是符合条件的费用中可能需要自行承担的部分。报销比例、限额、等待期和除外责任必须结合原始保单核对。\n\n门诊与住院属于不同的就医场景，是否保障及限额取决于具体合同。不能只凭一张账单判断是否可以理赔。\n\n保障缺口可能包括没有列明的保障项目、限额不足、保障期限不匹配或就医地区超出范围。此教学卡不证明任何真实合同存在缺口。\n\n理赔材料、提交时限和收款资料要求由实际保险机构决定。Demo 只协助理解文档与准备清单，不提交、不审核也不支付理赔。"
+  }
+]

@@ -15,7 +15,7 @@ export function requestKey(): string {
 export type Invoice = {id: string; invoice_number: string; institution_name: string; beneficiary_name: string; amount_cny: string; due_date: string; country_code: string; source_type: "SYNTHETIC" | "USER_ENTERED"; status: "OPEN" | "VOID"; notes: string; source_url: string | null; fee_type: string};
 export const feeLabels: Record<string, string> = localized({ANNUAL_HEALTH_INSURANCE_PREMIUM: "Bảo hiểm sức khỏe du học", MEDICAL_SERVICE_FEE: "Phí dịch vụ y tế", OTHER_INSURANCE_FEE: "Phí bảo hiểm khác", TUITION: "Học phí", ACCOMMODATION: "Phí chỗ ở", OTHER_STUDENT_FEE: "Khoản phí du học khác"});
 export type Quote = {id: string; source_amount_cny: string; vnd_per_cny: string; converted_subtotal_vnd: string; variable_fee_rate_percent: string; variable_fee_vnd: string; fixed_fee_vnd: string; total_vnd: string; expires_at: string; rate_source: "DEMO_FIXED" | "FRANKFURTER_REFERENCE"; rate_date: string | null; rate_fetched_at: string | null; rate_is_stale: boolean};
-export type Account = {id: string; email: string | null; display_name: string; role: string; is_demo: boolean; created_at: string};
+export type Account = {id: string; email: string | null; display_name: string; role: string; is_demo: boolean; is_rag_admin?: boolean; created_at: string};
 export type AccountSession = {user: Account; csrf_token: string; expires_at: string};
 export const documentKinds: Record<string, string> = localized({USER_PROVIDED: "Tài liệu do bạn cung cấp", PUBLIC_REFERENCE: "Tài liệu tham khảo công khai", TEST_FIXTURE: "Dữ liệu mẫu tự soạn"});
 export type Policy = {document_kind: string; id: string; title: string; filename: string; page_count: number; byte_size: number; source_url: string | null; created_at: string};

@@ -29,6 +29,7 @@ from .ocr import router as ocr_router
 from .journey import router as journey_router
 from .insurance import router as insurance_router
 from .privacy import router as privacy_router
+from .rag import router as rag_router
 
 
 @asynccontextmanager
@@ -52,6 +53,7 @@ app.include_router(ocr_router)
 app.include_router(journey_router)
 app.include_router(insurance_router)
 app.include_router(privacy_router)
+app.include_router(rag_router)
 
 
 @app.middleware("http")

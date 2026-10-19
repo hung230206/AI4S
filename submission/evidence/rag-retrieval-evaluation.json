@@ -1,0 +1,271 @@
+{
+  "at": "2026-10-19T09:06:00.932624+00:00",
+  "index_method": "bm25-multilingual-v1",
+  "dataset": "24 self-authored regression questions over 3 fictional source documents; not an independent/generalisation benchmark",
+  "questions": 24,
+  "positive_questions": 18,
+  "negative_questions": 6,
+  "recall_at_3": 1.0,
+  "mean_reciprocal_rank_at_3": 0.7962962962962963,
+  "abstention_accuracy": 1.0,
+  "passed": 24,
+  "actual_model_calls": 0,
+  "results": [
+    {
+      "id": "vi-outpatient",
+      "question": "Hạn mức quyền lợi ngoại trú là bao nhiêu?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-inpatient",
+      "question": "Thời gian chờ điều trị nội trú là bao lâu?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-exclusions",
+      "question": "Những trường hợp nào bị loại trừ?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "955cd27d-a03e-55a4-aea3-e6aa48856893",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-territory",
+      "question": "Lãnh thổ áp dụng quyền lợi ở đâu?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "955cd27d-a03e-55a4-aea3-e6aa48856893",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-claims",
+      "question": "Hồ sơ bồi thường cần giấy tờ gì?",
+      "expected": "claims-guide-sample-vi",
+      "passed": true,
+      "retrieved_ids": [
+        "955cd27d-a03e-55a4-aea3-e6aa48856893",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-deadline",
+      "question": "Thời hạn nộp hồ sơ bồi thường mẫu?",
+      "expected": "claims-guide-sample-vi",
+      "passed": true,
+      "retrieved_ids": [
+        "955cd27d-a03e-55a4-aea3-e6aa48856893",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-outpatient",
+      "question": "What is the outpatient benefit limit?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-inpatient",
+      "question": "What waiting period applies to inpatient treatment?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-dental",
+      "question": "Is routine dental treatment excluded?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-evacuation",
+      "question": "Is medical evacuation included?",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-claims",
+      "question": "Which claim documents should I prepare?",
+      "expected": "claims-guide-sample-vi",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "955cd27d-a03e-55a4-aea3-e6aa48856893",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-glossary",
+      "question": "Explain the meaning of a deductible",
+      "expected": "insurance-glossary-sample-zh",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-outpatient",
+      "question": "门诊保障限额是多少？",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-inpatient",
+      "question": "住院等待期是多少天？",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-dental",
+      "question": "牙科治疗是否属于除外责任？",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-claims",
+      "question": "理赔需要准备哪些材料？",
+      "expected": "claims-guide-sample-vi",
+      "passed": true,
+      "retrieved_ids": [
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "955cd27d-a03e-55a4-aea3-e6aa48856893"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-glossary",
+      "question": "免赔额是什么意思？",
+      "expected": "insurance-glossary-sample-zh",
+      "passed": true,
+      "retrieved_ids": [
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-territory",
+      "question": "保障地域包括哪些地区？",
+      "expected": "student-policy-sample-en",
+      "passed": true,
+      "retrieved_ids": [
+        "e1c6a7ca-3df0-528c-a09f-dd629d6f1d01",
+        "114ae7bd-ee08-5092-ab9f-d3830ff2b330",
+        "955cd27d-a03e-55a4-aea3-e6aa48856893"
+      ],
+      "missing_concepts": []
+    },
+    {
+      "id": "vi-absent",
+      "question": "Bảo hiểm thai sản được trả bao nhiêu?",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": [
+        "maternity"
+      ]
+    },
+    {
+      "id": "en-absent",
+      "question": "What is the maternity benefit limit?",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": [
+        "maternity"
+      ]
+    },
+    {
+      "id": "zh-absent",
+      "question": "生育保障限额是多少？",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": [
+        "maternity"
+      ]
+    },
+    {
+      "id": "vi-unrelated",
+      "question": "Giá bitcoin hôm nay?",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": []
+    },
+    {
+      "id": "en-unrelated",
+      "question": "Who won the football tournament?",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": []
+    },
+    {
+      "id": "zh-unrelated",
+      "question": "火星的卫星叫什么？",
+      "expected": null,
+      "passed": true,
+      "retrieved_ids": [],
+      "missing_concepts": []
+    }
+  ]
+}

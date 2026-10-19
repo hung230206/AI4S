@@ -1,4 +1,5 @@
 "use client";
+import {InsuranceRagEntry} from "@/components/insurance-rag-entry";
 import {UploadPrivacyNotice} from "@/components/ai-privacy";
 import {useCallback, useEffect, useState, type FormEvent} from "react";
 import Link from "next/link";
@@ -70,7 +71,7 @@ export default function InsurancePage() {
     setFormOpen(false); setSource(null); setSaveKey(requestKey()); await load(); invalidate(); setAnalysis(null); setMessage(t("saved"));
   });}
 
-  return <div className="insurance-workspace">
+  return <div className="insurance-workspace"><InsuranceRagEntry/>
     <Heading eyebrow="TOPIC C + D" title={t("insurance")}>{t("subtitle")}</Heading>
     <div className="info-note insurance-boundary"><ShieldCheck size={22}/><p>{t("boundary")}</p></div>
     <section className="card insurance-samples"><div><strong>{t("sample")}</strong><p className="small muted">{t("sampleHelp")}</p></div><button className="button secondary" disabled={busy} onClick={() => act(() => downloadOwned("/insurance/sample-pack", token, "demo-insurance-cd-samples.zip"))}><Download size={17}/>{t("download")}</button></section>

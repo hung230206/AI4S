@@ -1,0 +1,325 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/rag.spec.ts",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\playwright.config.ts",
+    "rootDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/hungt/Documents/ChatGPT/Fintech hackathon/Insurance_Crossborder_Payment_Codex_Kit/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "snapshotDir": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:3104",
+          "channel": "chrome",
+          "headless": true,
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "rag.spec.ts",
+      "file": "rag.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "admin account manages publication, edits invalidate old sources, trash and restore",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1928,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n\n    at loginAdmin (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:16:68)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:36:3",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                      "column": 68,
+                      "line": 16
+                    },
+                    "snippet": "  14 |   await page.getByLabel(\"Email\", {exact: true}).fill(admin.email);\n  15 |   await page.getByLabel(\"Mật khẩu\", {exact: true}).fill(admin.password);\n> 16 |   await page.getByRole(\"button\", {name: \"Đăng nhập\", exact: true}).click();\n     |                                                                    ^\n  17 |   // The account is intentionally provisioned server-side, never by an elevation API.\n  18 |   const welcome = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n  19 |   await expect(page.getByRole(\"button\", {name: \"Thêm tài liệu\", exact: true})).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                        "column": 68,
+                        "line": 16
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n\n\n  14 |   await page.getByLabel(\"Email\", {exact: true}).fill(admin.email);\n  15 |   await page.getByLabel(\"Mật khẩu\", {exact: true}).fill(admin.password);\n> 16 |   await page.getByRole(\"button\", {name: \"Đăng nhập\", exact: true}).click();\n     |                                                                    ^\n  17 |   // The account is intentionally provisioned server-side, never by an elevation API.\n  18 |   const welcome = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n  19 |   await expect(page.getByRole(\"button\", {name: \"Thêm tài liệu\", exact: true})).toBeVisible();\n    at loginAdmin (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:16:68)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:36:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:49:25.276Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-account-manages--f5810-d-sources-trash-and-restore\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                    "column": 68,
+                    "line": 16
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-50c083dc647d55edbee8",
+          "file": "rag.spec.ts",
+          "line": 33,
+          "column": 5
+        },
+        {
+          "title": "admin file upload requires per-file agreement and original file can be replaced",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1714,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n\n    at loginAdmin (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:16:68)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:80:3",
+                    "location": {
+                      "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                      "column": 68,
+                      "line": 16
+                    },
+                    "snippet": "  14 |   await page.getByLabel(\"Email\", {exact: true}).fill(admin.email);\n  15 |   await page.getByLabel(\"Mật khẩu\", {exact: true}).fill(admin.password);\n> 16 |   await page.getByRole(\"button\", {name: \"Đăng nhập\", exact: true}).click();\n     |                                                                    ^\n  17 |   // The account is intentionally provisioned server-side, never by an elevation API.\n  18 |   const welcome = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n  19 |   await expect(page.getByRole(\"button\", {name: \"Thêm tài liệu\", exact: true})).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                        "column": 68,
+                        "line": 16
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Đăng nhập', exact: true }) resolved to 2 elements:\n    1) <button class=\"selected\">Đăng nhập</button> aka getByRole('button', { name: 'Đăng nhập' }).first()\n    2) <button class=\"button primary full\">…</button> aka locator('form').getByRole('button', { name: 'Đăng nhập' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })\u001b[22m\n\n\n  14 |   await page.getByLabel(\"Email\", {exact: true}).fill(admin.email);\n  15 |   await page.getByLabel(\"Mật khẩu\", {exact: true}).fill(admin.password);\n> 16 |   await page.getByRole(\"button\", {name: \"Đăng nhập\", exact: true}).click();\n     |                                                                    ^\n  17 |   // The account is intentionally provisioned server-side, never by an elevation API.\n  18 |   const welcome = page.getByRole(\"dialog\", {name: \"Bắt đầu cùng Demo\"});\n  19 |   await expect(page.getByRole(\"button\", {name: \"Thêm tài liệu\", exact: true})).toBeVisible();\n    at loginAdmin (C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:16:68)\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:80:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:49:31.279Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-admin-file-upload-requ-17536-iginal-file-can-be-replaced\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                    "column": 68,
+                    "line": 16
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-c45578fb889b54ddc0e7",
+          "file": "rag.spec.ts",
+          "line": 79,
+          "column": 5
+        },
+        {
+          "title": "regular users cannot administer and missing evidence abstains without a model call",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60473,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts",
+                        "column": 74,
+                        "line": 109
+                      },
+                      "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Tìm câu trả lời', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button disabled class=\"button primary\">Tìm câu trả lời</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    111 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is not enabled\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n\n  107 |   await page.goto(\"/knowledge\");\n  108 |   await page.getByLabel(\"Câu hỏi bảo hiểm\", {exact: true}).fill(\"Bảo hiểm thai sản được trả bao nhiêu?\");\n> 109 |   await page.getByRole(\"button\", {name: \"Tìm câu trả lời\", exact: true}).click();\n      |                                                                          ^\n  110 |   await expect(page.locator(\".rag-answer\")).toContainText(\"Chưa có đủ thông tin\");\n  111 |   await expect(page.locator(\".rag-answer .citation-card\")).toHaveCount(0);\n  112 | });\n    at C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\tests\\rag.spec.ts:109:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T08:49:38.887Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\frontend\\test-results\\rag-regular-users-cannot-a-c4e4c-stains-without-a-model-call\\trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a5d46242f1b05ca2c8ca-31c0cd1ca8b6124d576d",
+          "file": "rag.spec.ts",
+          "line": 103,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T08:49:24.731Z",
+    "duration": 75425.228,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}
