@@ -1,6 +1,20 @@
 # Latest update: optional-AI privacy and keyboard — 19 October 2026
 
-This section supersedes older Gemini outbound-data defaults below. Local implementation and verification are complete; actual online rollout is recorded separately after deployment.
+This section supersedes older Gemini outbound-data defaults below. Implementation and local/online privacy verification are complete.
+
+## Verified online release
+
+Render reports **Deploy succeeded | Live** for application commit **263bbe40b44b831050cc52f6fbfd5b75bf9ae471**, deploy `dep-dbasdr67bikc73apkfq0` (started 19 October 2026, 14:29:49 GMT+7; duration 2m27s). The actual HTTPS health endpoint independently confirmed that exact commit and real payments disabled. The prior feature commit 77c64f5 also deployed successfully; the final commit additionally makes new policy-source documents private by default.
+
+- https://ai4s-demo.onrender.com/copilot — Enter/Shift+Enter, direct lookup by default, optional permission dialog, preview and withdrawal.
+- https://ai4s-demo.onrender.com/privacy — notice available before sign-in.
+- Final online privacy HTTP acceptance: **7 groups passed**, 9.641 seconds. This covers Secure/HttpOnly/SameSite cookies, CSRF rejection, default denial, scope restriction, sensitive-content tripwire, private-source/history filtering, withdrawal, login isolation, all-device logout and unused device/security headers.
+- Final online insurance/sandbox HTTP regression: **7 groups passed**, 15.328 seconds, original/attachment hashes and signed simulated receipt verified; no real money.
+- **External provider limitation:** the final explicit real-Gemini request returned TIMEOUT and the application correctly fell back to direct lookup. That strict provider-success check is recorded as FAIL in `privacy-render-provider-timeout.json`; it is not included among the passing privacy groups. An earlier local real answer succeeded, but current provider availability is not guaranteed. The configured timeout was not increased and no failure was disguised as generated AI text.
+- The live browser showed direct lookup selected, Gemini disabled before permission, all permission/confirmation boxes unchecked and private-data scopes disabled in DEMO_ONLY. The notice opened at its heading and was cancelled without granting access. Screenshots: `screenshots/privacy/permission-live.jpg` and `screenshots/privacy/render-live.jpg` under `submission/evidence/`.
+- Exact-secret checks passed for 55 generated browser JS files, 93 initial staged blobs and 30 final-fix staged blobs. Hosting secrets/DB records were preserved. No rate guard was reset, and no production operator feature was enabled.
+
+The final report/evidence-only Git commit uses `[skip render]` to avoid rebuilding identical application code. The running application release therefore intentionally identifies 263bbe4; subsequent main-branch changes contain handoff records only.
 
 ## Delivered behaviour
 

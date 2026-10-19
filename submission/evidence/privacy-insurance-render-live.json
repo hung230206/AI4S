@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-19T07:32:56.904033+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "checks": [
+    "private_account_and_sandbox_health",
+    "source_review_citation_hash_and_idempotency",
+    "explainable_coverage_match_and_evacuation_gap",
+    "one_premium_plan_1000_current_200_projected",
+    "explicit_consent_signed_sandbox_receipt_no_ledger_debit",
+    "claim_checklist_original_attachments_snapshot_and_export_hashes",
+    "grounded_read_only_insurance_handoff"
+  ],
+  "real_funds_moved": false,
+  "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471",
+  "gemini_configured": true,
+  "status": "PASS",
+  "elapsed_seconds": 15.328
+}

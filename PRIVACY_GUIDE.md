@@ -19,4 +19,6 @@ Không cần cấp camera, micro, vị trí hay quyền đọc toàn bộ máy. 
 
 Thu hồi không xóa được nội dung đã gửi cho Google. Xóa chat chỉ xóa nội dung trong tab. Chưa có chức năng tự xóa toàn bộ tài khoản; xem giới hạn cụ thể trong thông báo. Không dùng kết quả này để tuyên bố dự án đã được chứng nhận tuân thủ pháp luật.
 
+Lượt kiểm tra Gemini online cuối ngày 19/10/2026 bị TIMEOUT. Ứng dụng hiện thông báo và chuyển sang tra cứu nội bộ; không giả làm câu trả lời AI. Các chốt cấp/thu hồi quyền vẫn hoạt động. Kết quả cụ thể được giữ trong báo cáo triển khai.
+
 Nguồn nghiên cứu và cách triển khai: [docs/21_PRIVACY_PERMISSIONS_RESEARCH.md](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).

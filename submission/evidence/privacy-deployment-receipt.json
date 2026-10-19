@@ -1,0 +1,14 @@
+{
+  "service_id": "srv-dbab553ncjis73cthbc0",
+  "deploy_id": "dep-dbasdr67bikc73apkfq0",
+  "application_commit": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471",
+  "status": "LIVE",
+  "trigger": "Manual Deploy latest commit; existing On Commit preference retained",
+  "started_at": "2026-10-19T14:29:49+07:00",
+  "duration": "2m27s",
+  "health_exact_release_verified": true,
+  "privacy_online_groups_passed": 7,
+  "insurance_online_groups_passed": 7,
+  "gemini_real_reply_check": "TIMEOUT; failed strict upstream-success assertion, safe local fallback",
+  "real_funds_moved": false
+}

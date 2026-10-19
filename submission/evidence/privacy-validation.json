@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_PASS",
+  "status": "DEPLOYED_PRIVACY_PASS_PROVIDER_TIMEOUT",
   "backend_tests": 184,
   "production_browser_tests": 29,
   "production_operator_ui_exclusions": 2,
@@ -8,5 +8,9 @@
   "provider_local_retry": "TIMEOUT, explicit direct-lookup fallback; not a successful model reply",
   "notice_version": "ai-privacy-2026-10-19-v1",
   "data_mode_default": "DEMO_ONLY",
-  "real_funds_moved": false
+  "real_funds_moved": false,
+  "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471",
+  "privacy_online_groups": 7,
+  "insurance_online_groups": 7,
+  "external_provider_result": "TIMEOUT; explicit direct-lookup fallback, not a successful generated reply"
 }

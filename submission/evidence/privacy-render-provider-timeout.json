@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-19T07:32:56.901031+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "checks": [
+    "default_off_server_gate_and_no_financial_actions",
+    "explicit_versioned_grant_and_unpaid_scope_restriction",
+    "preview_is_local_and_filters_ungranted_history_and_private_sources",
+    "sensitive_data_tripwire_before_provider"
+  ],
+  "real_funds_moved": false,
+  "real_model_calls": 1,
+  "release": "263bbe40b44b831050cc52f6fbfd5b75bf9ae471",
+  "provider_result": "RULES",
+  "fallback_reason": "TIMEOUT",
+  "status": "FAIL",
+  "failure": "AssertionError: Gemini fallback: TIMEOUT",
+  "elapsed_seconds": 34.11
+}
