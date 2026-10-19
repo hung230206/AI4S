@@ -1,0 +1,356 @@
+FFFFFFFFFFFFFFFFE                                                        [100%]
+=================================== ERRORS ====================================
+_ ERROR at teardown of test_insurance_definition_reaches_general_generation_without_retrieval _
+
+    @pytest.fixture
+    def client():
+>       with ConsentingTestClient(app) as value:
+
+backend\tests\conftest.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\.venv\Lib\site-packages\starlette\testclient.py:522: in __exit__
+    self.exit_stack.close()
+..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\contextlib.py:594: in close
+    self.__exit__(None, None, None)
+..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\contextlib.py:586: in __exit__
+    raise exc_details[1]
+..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\contextlib.py:571: in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\contextlib.py:454: in _exit_wrapper
+    callback(*args, **kwds)
+backend\.venv\Lib\site-packages\starlette\testclient.py:515: in wait_shutdown
+    portal.call(self.wait_shutdown)
+backend\.venv\Lib\site-packages\anyio\from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\.venv\Lib\site-packages\anyio\from_thread.py:382: in start_task_soon
+    self._check_running()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <anyio.from_thread.BlockingPortal object at 0x0000021E2A1B6350>
+
+    def _check_running(self) -> None:
+        if self._event_loop_thread_id is None:
+>           raise RuntimeError("This portal is not running")
+E           RuntimeError: This portal is not running
+
+backend\.venv\Lib\site-packages\anyio\from_thread.py:216: RuntimeError
+================================== FAILURES ===================================
+_ test_general_insurance_concepts_do_not_require_policy_evidence[b\u1ea3o hi\u1ec3m l\xe0 g\xec] _
+
+question = 'b\u1ea3o hi\u1ec3m l\xe0 g\xec'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?] _
+
+question = 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec] _
+
+question = 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u] _
+
+question = 'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?] _
+
+question = 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe] _
+
+question = 'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?] _
+
+question = 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[What is insurance?] _
+
+question = 'What is insurance?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[What is a deductible?] _
+
+question = 'What is a deductible?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[Explain health insurance in simple terms.] _
+
+question = 'Explain health insurance in simple terms.'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[What is the difference between insurance and savings?] _
+
+question = 'What is the difference between insurance and savings?'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f] _
+
+question = '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f] _
+
+question = '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_general_insurance_concepts_do_not_require_policy_evidence[\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d] _
+
+question = '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d'
+
+    @pytest.mark.parametrize('question', [
+        'b\u1ea3o hi\u1ec3m l\xe0 g\xec', 'B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?', 'cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec',
+        'Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u', 'B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?',
+        'Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe', 'Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?',
+        'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+        'What is the difference between insurance and savings?',
+        '\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f', '\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f', '\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d',
+    ])
+    def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+>       assert route_question(question, [])[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:67: AssertionError
+_ test_concept_followups_stay_general_and_multi_turn_policy_followups_keep_sources _
+
+    def test_concept_followups_stay_general_and_multi_turn_policy_followups_keep_sources():
+        concept = [ChatTurn(role='user', content='B\u1ea3o hi\u1ec3m l\xe0 g\xec?'), ChatTurn(role='assistant', content='General explanation')]
+>       assert route_question('V\u1eady cho v\xed d\u1ee5 \u0111i?', concept)[0] == 'GEMINI'
+E       AssertionError: assert 'RAG' == 'GEMINI'
+E         
+E         - GEMINI
+E         + RAG
+
+backend\tests\test_study_assistant.py:86: AssertionError
+___ test_insurance_definition_reaches_general_generation_without_retrieval ____
+  + Exception Group Traceback (most recent call last):\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\tests\\test_study_assistant.py", line 103, in test_insurance_definition_reaches_general_generation_without_retrieval\n  |     response = ask(client, h, 'b\u1ea3o hi\u1ec3m l\xe0 g\xec')\n  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\tests\\test_study_assistant.py", line 43, in ask\n  |     return client.post(P + '/study-assistant/chat', headers=h, json={'message': message, 'privacy_revision': 1, **extra})\n  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 1144, in post\n  |     return self.request(\n  |            ^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\tests\\conftest.py", line 48, in request\n  |     return super().request(method, url, **kwargs)\n  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\testclient.py", line 457, in request\n  |     return super().request(\n  |            ^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 825, in request\n  |     return self.send(request, auth=auth, follow_redirects=follow_redirects)\n  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 914, in send\n  |     response = self._send_handling_auth(\n  |                ^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 942, in _send_handling_auth\n  |     response = self._send_handling_redirects(\n  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 979, in _send_handling_redirects\n  |     response = self._send_single_request(request)\n  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\httpx\\_client.py", line 1014, in _send_single_request\n  |     response = transport.handle_request(request)\n  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\testclient.py", line 354, in handle_request\n  |     raise exc\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\testclient.py", line 351, in handle_request\n  |     portal.call(self.app, scope, receive, send)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\from_thread.py", line 340, in call\n  |     return cast(T_Retval, self.start_task_soon(func, *args).result())\n  |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\concurrent\\futures\\_base.py", line 456, in result\n  |     return self.__get_result()\n  |            ^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\concurrent\\futures\\_base.py", line 401, in __get_result\n  |     raise self._exception\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\_core\\_tasks.py", line 327, in _run_coro\n  |     retval = await self._coro\n  |              ^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\from_thread.py", line 265, in _call_func\n  |     retval = await retval_or_awaitable\n  |              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\applications.py", line 1216, in __call__\n  |     await super().__call__(scope, receive, send)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\applications.py", line 96, in __call__\n  |     await self.middleware_stack(scope, receive, send)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\errors.py", line 164, in __call__\n  |     await self.app(scope, receive, _send)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\telemetry\\_asgi.py", line 151, in __call__\n  |     await self.app(scope, receive, send)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\base.py", line 202, in __call__\n  |     async with create_collapsing_task_group() as task_group:\n  |   File "C:\\Users\\hungt\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py", line 222, in __aexit__\n  |     await self.gen.athrow(typ, value, traceback)\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\_utils.py", line 104, in create_collapsing_task_group\n  |     async with anyio.create_task_group() as tg:\n  |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\_backends\\_asyncio.py", line 847, in __aexit__\n  |     raise BaseExceptionGroup(\n  | BaseExceptionGroup: unhandled errors in a TaskGroup (2 sub-exceptions)\n  +-+---------------- 1 ----------------\n    | Traceback (most recent call last):\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\base.py", line 158, in call_next\n    |     message = await recv_stream.receive()\n    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\streams\\memory.py", line 133, in receive\n    |     raise EndOfStream from None\n    | anyio.EndOfStream\n    | \n    | During handling of the above exception, another exception occurred:\n    | \n    | Traceback (most recent call last):\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\_utils.py", line 105, in create_collapsing_task_group\n    |     yield tg\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\base.py", line 203, in __call__\n    |     response = await self.dispatch_func(request, call_next)\n    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\app\\main.py", line 64, in request_context\n    |     response = await call_next(request)\n    |                ^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\base.py", line 180, in call_next\n    |     raise RuntimeError("No response returned.")\n    | RuntimeError: No response returned.\n    +---------------- 2 ----------------\n    | Traceback (most recent call last):\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\_core\\_tasks.py", line 327, in _run_coro\n    |     retval = await self._coro\n    |              ^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\base.py", line 149, in coro\n    |     await self.app(scope, receive_or_disconnect, send_no_error)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\cors.py", line 91, in __call__\n    |     await self.simple_response(scope, receive, send, request_headers=headers)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\cors.py", line 149, in simple_response\n    |     await self.app(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\middleware\\exceptions.py", line 63, in __call__\n    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\_exception_handler.py", line 42, in wrapped_app\n    |     await app(scope, receive, sender)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\middleware\\asyncexitstack.py", line 18, in __call__\n    |     await self.app(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\routing.py", line 676, in __call__\n    |     await self.middleware_stack(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 2809, in app\n    |     await route.handle(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 1837, in handle\n    |     await self.original_router.handle(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 2892, in handle\n    |     await included_router._handle_selected(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 1863, in _handle_selected\n    |     await original_route.handle(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 1326, in handle\n    |     await effective_context.app(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 166, in app\n    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\_exception_handler.py", line 42, in wrapped_app\n    |     await app(scope, receive, sender)\n    |   File "C:\\Users\\hungt\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py", line 222, in __aexit__\n    |     await self.gen.athrow(typ, value, traceback)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\concurrency.py", line 29, in contextmanager_in_threadpool\n    |     yield await run_in_threadpool(cm.__enter__)\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 152, in app\n    |     response = await f(request)\n    |                ^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 745, in app\n    |     raw_response = await run_endpoint_function(\n    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\routing.py", line 374, in run_endpoint_function\n    |     return await run_in_threadpool(\n    |            ^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\starlette\\concurrency.py", line 34, in run_in_threadpool\n    |     return await anyio.to_thread.run_sync(func)\n    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\to_thread.py", line 65, in run_sync\n    |     return await get_async_backend().run_sync_in_worker_thread(\n    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\_backends\\_asyncio.py", line 2706, in run_sync_in_worker_thread\n    |     return await future\n    |            ^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\anyio\\_backends\\_asyncio.py", line 1100, in run\n    |     result = context.run(func, *args)\n    |              ^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\fastapi\\telemetry\\_api.py", line 244, in _run_sync_endpoint\n    |     return function(**arguments)\n    |            ^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\app\\study_assistant.py", line 115, in chat\n    |     route, permission, history, evidence, citations = context(body, request, user, db)\n    |                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\app\\study_assistant.py", line 62, in context\n    |     owned = search_owned(Search(question=query[:500]), user, db, allowed)["matches"][:3]\n    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\tests\\test_study_assistant.py", line 98, in <lambda>\n    |     monkeypatch.setattr(assistant, 'search_owned', lambda *a: pytest.fail('Definition must not read private documents'))\n    |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |   File "C:\\Users\\hungt\\Documents\\ChatGPT\\Fintech hackathon\\Insurance_Crossborder_Payment_Codex_Kit\\backend\\.venv\\Lib\\site-packages\\_pytest\\outcomes.py", line 162, in __call__\n    |     raise Failed(msg=reason, pytrace=pytrace)\n    | Failed: Definition must not read private documents\n    +------------------------------------\n============================== warnings summary ===============================
+backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR backend\tests\test_study_assistant.py::test_insurance_definition_reaches_general_generation_without_retrieval
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[b\u1ea3o hi\u1ec3m l\xe0 g\xec]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[B\u1ea3o hi\u1ec3m l\xe0 g\xec v\u1eady?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[cho t h\u1ecfi b\u1ea3o hi\u1ec3m l\xe0 g\xec]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[Gi\u1ea3i th\xedch b\u1ea3o hi\u1ec3m m\u1ed9t c\xe1ch d\u1ec5 hi\u1ec3u]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[B\u1ea3o hi\u1ec3m ho\u1ea1t \u0111\u1ed9ng nh\u01b0 th\u1ebf n\xe0o?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[Ph\xe2n bi\u1ec7t b\u1ea3o hi\u1ec3m y t\u1ebf v\xe0 b\u1ea3o hi\u1ec3m s\u1ee9c kh\u1ecfe]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[Ph\xed b\u1ea3o hi\u1ec3m l\xe0 g\xec?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[What is insurance?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[What is a deductible?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[Explain health insurance in simple terms.]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[What is the difference between insurance and savings?]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[\u4ec0\u4e48\u662f\u4fdd\u9669\uff1f]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[\u4fdd\u9669\u662f\u4ec0\u4e48\u610f\u601d\uff1f]
+FAILED backend\tests\test_study_assistant.py::test_general_insurance_concepts_do_not_require_policy_evidence[\u8bf7\u7b80\u5355\u89e3\u91ca\u4e00\u4e0b\u514d\u8d54\u989d]
+FAILED backend\tests\test_study_assistant.py::test_concept_followups_stay_general_and_multi_turn_policy_followups_keep_sources
+FAILED backend\tests\test_study_assistant.py::test_insurance_definition_reaches_general_generation_without_retrieval
+16 failed, 39 deselected, 1 warning, 1 error in 4.75s

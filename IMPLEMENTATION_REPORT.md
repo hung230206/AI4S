@@ -1,3 +1,83 @@
+# Assistant navigation confirmation — local only, 19 October 2026
+
+Implemented automatic navigation proposals for recognised app tasks in the floating assistant. Requests such as “hiện tại có những giao dịch nào đã thành công”, “Tôi muốn thêm hóa đơn” and “Tôi cần quản lý ngân sách” now open a localised confirmation popup. Open page minimises the chat and navigates to the relevant screen; Stay here or Escape preserves the current page and conversation. Reopening the assistant after client-side navigation retains the conversation. History requests can preselect one of the six supported transaction statuses, including success and failure, through validated URL state. Changing the requested status while already on History updates the filter correctly.
+
+Task detection runs locally on the authenticated server before retrieval or external generation, using fixed Vietnamese/English/Chinese intent rules and fixed routes. No account context or question is sent to an external service for navigation. Concept definitions, source-dependent policy questions, how-to questions and negative requests retain the existing chat behaviour. Existing workflow action buttons now also require confirmation when clicked. Client validation rejects external/protocol URLs, admin pages and unsupported query parameters. The native modal initially focuses Stay here; permission withdrawal dismisses outstanding confirmation. Navigation performs no financial action or business-record creation. Chat-based transaction listing remains deferred as requested by the user; the new flow opens the existing owner-scoped History screen.
+
+Actual checks:
+
+- Baseline before implementation: **59 backend tests** and **1 browser keyboard test** passed.
+- Targeted backend routing/regression run: **94 passed**. The first four navigation browser tests passed against the actual local API, with external generation disabled; the fifth permission-withdrawal case passed in the full suite.
+- **Full backend: 311 passed in 140.92s**, with one existing Starlette/httpx deprecation warning.
+- **Full browser: 45 passed (2.8m)**, including five new navigation cases, all existing invoice/payment/insurance/RAG/privacy flows, real OCR, mobile/translated UI, cancellation/Escape, conversation preservation, invalid destination rejection and pending-confirmation withdrawal. No tests skipped.
+- Lint, TypeScript and optimised production build passed. Dedicated desktop/mobile confirmation screenshots were visually inspected. Existing historical regression screenshots were restored; new navigation evidence is stored separately.
+
+Evidence: submission/evidence/navigation-baseline-browser.txt, payment-chat-baseline.txt, navigation-targeted-backend.txt, navigation-targeted-browser.txt, navigation-full-backend.txt/.xml, navigation-full-browser.txt, navigation-lint.txt, navigation-typescript.txt, navigation-build.txt and screenshots/assistant-navigation/. Implementation details and Windows/Unix reproduction commands: docs/ASSISTANT_NAVIGATION_LOCAL.md.
+
+**No commit, push or deployment was performed.** The updated local application remains running at http://localhost:3000 with its API on port 8000. Recognition uses a bounded vocabulary; unsupported phrasing remains in chat and does not acquire navigation privileges. Earlier sections below describe previous work and historical releases.
+
+---
+
+# Product wording and simple consent — local only, 19 October 2026
+
+Updated the user-facing product to use Trợ lý du học / Study-abroad assistant / 留学助手. Provider/model names are absent from ordinary labels, account controls, fallback/error messages, upload notices and normal assistant introductions. Technical provider adapters and compatible API identifiers remain internal. The linked privacy notice accurately identifies the external processor as Google and links its official service terms.
+
+The consent popup now has a short purpose, a readable external-processing statement, an age/terms acknowledgement, one Terms and privacy link, and Agree/Disagree. Numeric conversation-turn/passage limits are no longer presented as user-facing terms. Account settings retain View terms and Withdraw consent. Internal context/resource bounds, private-account isolation and unpaid-provider exclusions remain enforced; no additional data scope is granted. The consent version changed to assistant-privacy-2026-10-19-v3 on client and server, so previous consent requires a fresh agreement rather than being silently reused.
+
+The detailed notice covers actual account access, shared samples, administrator publication, hosting access, provider use of unpaid-service content, retention, withdrawal and deletion limits. It does not make an unconditional promise that data never leaves the system or that leaks cannot happen. Processing information was checked against the current official provider terms: https://ai.google.dev/gemini-api/terms . Research and reproduction details: docs/ASSISTANT_CONSENT_PRODUCT_COPY.md.
+
+Executed checks:
+
+- Before changes: 30 privacy backend tests and 2 browser consent/settings tests passed.
+- Targeted backend: 90 passed. The initial targeted browser run had 16 passes and one stale assertion for the renamed notice text; that assertion was updated and is covered by the passing full suite.
+- **Full backend: 276 passed in 338.33s**, with one existing Starlette/httpx deprecation warning.
+- **Full browser: 40 passed (4.5m)**, including source citations, short bilingual/Chinese consent, withdrawal, outdated notices, file processing, admin publication and all invoice/payment/insurance regressions. No browser tests were skipped.
+- Final lint (zero warnings), TypeScript and optimized production build passed. Dedicated desktop/mobile light/dark consent screenshots were visually checked; final screenshots disable theme transitions for an accurate capture.
+- A real local browser request returned an unbranded assistant introduction through the configured provider (HTTP 200, 5.218s, no fallback). No chat request was sent before agreement. A nine-page audit found no visible model/vendor branding. Test permission was withdrawn afterward; no browser page errors occurred.
+
+Evidence: submission/evidence/simple-consent-full-backend.txt/.xml, simple-consent-full-browser.txt, simple-consent-lint.txt, simple-consent-typescript.txt, simple-consent-build.txt, simple-consent-real-browser.json, and screenshots/simple-consent/. Historical generated regression images were restored; new consent evidence is kept separately.
+
+**No commit, push or deployment was performed.** The local UI remains available at http://localhost:3000 with its API on port 8000. Earlier reports below describe previous local corrections and historical deployed releases.
+
+---
+
+# Insurance concept routing correction — local only, 19 October 2026
+
+Fixed the reported false refusal for “bảo hiểm là gì”. The old keyword router sent every insurance mention to source-only retrieval; the shared Gemini instruction also required excerpts even for basic definitions. Complete educational questions about known insurance concepts now use general Gemini guidance. Specific personal policies, product clauses, country regulations, benefits and legal rights retain the evidence-required RAG route. Mixed definition/coverage questions do not bypass that route. General guidance cannot use an app-guide citation as insurance evidence. Source-only instructions override the education exception.
+
+Follow-ups now retain the preceding question's route instead of treating any earlier insurance word as a RAG trigger. Consecutive source-dependent follow-ups preserve their original retrieval question. No model training, extra classifier API call, permission bypass or fallback from missing policy evidence to model memory was added. Recognition remains a bounded Vietnamese/English/Chinese grammar and vocabulary; unrecognised wording may need further routing improvements.
+
+Actual checks: **28 baseline tests passed** before changing the router; new regression tests reproduced the old failure. The first targeted router/provider run passed **88 tests**. After adding further colloquial/mixed-question cases, the **full backend suite passed 275 tests in 109.87s**, with one existing Starlette/httpx deprecation warning. Tests cover basic definitions in three languages, policy/legal qualifiers, follow-ups, preview consistency, consent, private-data exclusions, source withdrawal and payment restrictions.
+
+Actual browser calls on http://localhost:3000 passed: the exact reported definition used GEMINI_GENERAL (8.521s, no citations/fallback); a simple follow-up example also used GEMINI_GENERAL (2.469s); a China regulatory question used RAG_GEMINI with one citation (17.094s); an unsupported clause returned INSUFFICIENT_INFORMATION with no citations or provider call. There were no browser page errors. Test permission was revoked afterward. Receipts: `submission/evidence/concept-routing-*.txt`, `concept-routing-full-backend.xml`, `concept-routing-real-browser.json`, and `screenshots/floating-assistant/insurance-definition-real.png`.
+
+The local API was restarted with the correction and remains available with the frontend on port 3000. **No commit, push or deployment was performed**, preserving the user's local-only instruction. The source corpus, database schema and frontend implementation were not changed in this correction. Earlier release reports below are historical.
+
+---
+
+# Floating study-abroad assistant — local only, 19 October 2026
+
+Implemented the requested bottom-centred floating assistant in the authenticated shared layout. It is available across application pages and retains the conversation during client-side navigation. The compact launcher expands into a minimal chat with a composer, minimize button and folded source citations. The separate chat navigation item and standalone chat controls were removed; legacy /copilot and /knowledge links open the same global assistant.
+
+Opening the assistant checks current server permission and shows the fixed Agree/Disagree dialog before opening when permission is missing, expired or outdated. Disagree closes without granting or sending a question. Permission details remain linked from the dialog; access management and revocation are visible only in Account settings. Settings synchronize immediately when the widget grants permission. Revocation clears the conversation and ignores late replies. Chat remains memory-only and resets on sign-out/account changes.
+
+New messages and answers scroll the chat container automatically without moving the background page. Enter sends once, Shift+Enter adds a line, and IME composition does not submit. The composer stays visible on mobile and short landscape viewports, with visual-viewport keyboard offsets. Existing automatic RAG/Gemini routing and server privacy checks are unchanged. Public/source text remains distinguished from fictional fixtures inside expanded citations.
+
+Actual validation for this local change:
+
+- Baseline keyboard browser test before the refactor: 1 passed.
+- Final ESLint (zero warnings), TypeScript and optimized Next.js build: passed.
+- Full browser run: 36 passed and 2 failed because the configured browser-admin account did not exist in the local database. No application failure was hidden. Re-running with the existing server-provisioned test administrator (`RAG_BROWSER_ADMIN_CREDENTIALS`) resolved both failures.
+- Final targeted run: **16 passed (46.8s)**, including all 12 floating chat/consent/keyboard/mobile cases and all 4 RAG administration/compatibility cases. The new Account synchronization test is included in this run. Together the runs exercise all 39 current browser cases; no tests were skipped.
+- Actual local UI → API → RAG → Google Gemini call: HTTP 200, RAG_GEMINI, **7.675 seconds**, 2 source citations, no provider fallback and no browser page errors. Only a public China insurance question was used, and permission was revoked after the check.
+- Backend source and schema were unchanged; the earlier 244-test backend result below is historical, not a new run.
+
+Evidence: `submission/evidence/floating-assistant-final-browser.txt`, `floating-assistant-full-browser-initial.txt`, `floating-assistant-lint.txt`, `floating-assistant-typescript.txt`, `floating-assistant-build.txt`, `floating-assistant-live.json`, and `screenshots/floating-assistant/`. Reproduction commands and local testing steps: `docs/FLOATING_ASSISTANT_LOCAL.md`.
+
+**Delivery is local only, as requested. No commit, push or deployment was performed.** The development UI remains at http://localhost:3000 with its API at http://127.0.0.1:8000. The deployed Render application still uses the earlier release described below.
+
+---
+
 # Unified study-abroad assistant — 19 October 2026
 
 Implemented one chat at /copilot; /knowledge redirects to it. Removed manual Gemini/local mode selection and the separate RAG navigation item. The server automatically routes insurance/legal/document questions through original-passage retrieval then source-only Gemini synthesis; general study-abroad questions use Gemini directly. Missing RAG evidence abstains instead of switching to model memory. The eight-source competition corpus and authenticated admin publication remain available; citations still open their versioned source pages. Details: docs/UNIFIED_STUDY_ASSISTANT.md; contract: contracts/study_assistant.openapi.json.

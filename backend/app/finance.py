@@ -447,9 +447,9 @@ def cloud_context(body, request, user, db):
 @router.post("/assistant/preview")
 def preview_assistant(body: AssistantInput, request: Request, user=Depends(student), db=Depends(get_db, scope="function")):
     row, history, evidence, _ = cloud_context(body, request, user, db)
-    return {"recipient": "Google Gemini", "privacy_revision": row.revision, "scopes": row.scopes,
+    return {"recipient": "Google AI service", "privacy_revision": row.revision, "scopes": row.scopes,
             "question": body.message, "conversation": history, "server_evidence": evidence,
-            "notice": "Xem trước tại thời điểm này; không gọi Gemini. Dữ liệu có thể đổi nếu bạn chỉnh sửa trước khi gửi."}
+            "notice": "Xem trước tại thời điểm này; chưa gửi tới dịch vụ AI bên ngoài. Dữ liệu có thể đổi nếu bạn chỉnh sửa trước khi gửi."}
 
 
 @router.post("/assistant")
@@ -483,6 +483,6 @@ def assistant(body: AssistantInput, request: Request, user=Depends(student), db=
         selected = list(dict.fromkeys(result.source_ids))
         return {"method": "GEMINI_GROUNDED", "provider": "GEMINI", "model": result.model_used, "model_fallback_from": result.model_fallback_from, "intent": fallback["intent"], "answer": result.answer,
                 "citations": [citations[source_id] for source_id in selected], "actions": fallback["actions"], "executed_actions": [],
-                "notice": "Gemini diễn giải dữ liệu tham chiếu; hãy đối chiếu nguồn. Không thực hiện hành động tài chính."}
+                "notice": "Trợ lý giải thích dữ liệu tham chiếu; hãy đối chiếu nguồn. Không thực hiện hành động tài chính."}
     except gemini.GeminiFailure as exc:
         return {**fallback, "provider": "RULES", "fallback_reason": exc.code}

@@ -50,9 +50,8 @@ test("admin account manages publication, edits invalidate old sources, trash and
   await expect(card).toContainText("Bản nháp");
   await publish(page, title);
   await page.screenshot({path: "../submission/evidence/screenshots/rag/admin-published.png", fullPage: true});
-  await page.getByRole("link", {name: "Hỏi đáp bảo hiểm từ tài liệu →", exact: true}).click();
-  await page.locator(".rag-library summary").click();
-  const sourceHref = await page.getByRole("link", {name: title + " ↗", exact: true}).getAttribute("href");
+  const published = (await (await page.request.get("/api/v1/rag/documents")).json()).items.find((doc: {title: string}) => doc.title === title);
+  const sourceHref = `/knowledge/${published.id}?revision=${published.revision}`;
   expect(sourceHref).toContain("revision=2");
   await page.goto("/admin/rag");
   await card.getByRole("button", {name: "Sửa", exact: true}).click();
@@ -61,9 +60,8 @@ test("admin account manages publication, edits invalidate old sources, trash and
   await expect(card).toContainText("Bản nháp"); await publish(page, title);
   await page.goto(sourceHref!);
   await expect(page.getByRole("alert", {name: "Lỗi thao tác"})).toContainText("RAG_SOURCE_RETIRED");
-  await page.goto("/knowledge"); await expect(page).toHaveURL(/\/copilot$/);
-  await page.locator(".rag-library summary").click();
-  await page.getByRole("link", {name: title + " ↗", exact: true}).click();
+  const current = (await (await page.request.get("/api/v1/rag/documents")).json()).items.find((doc: {title: string}) => doc.title === title);
+  await page.goto(`/knowledge/${current.id}?revision=${current.revision}`);
   await expect(page.locator(".policy-source")).toContainText("8,765");
   await page.goto("/admin/rag"); await card.getByRole("button", {name: "Chuyển vào thùng rác", exact: true}).click();
   await card.getByRole("button", {name: "Xác nhận", exact: true}).click(); await expect(card).toHaveCount(0);
@@ -99,13 +97,13 @@ test("admin file upload requires per-file agreement and original file can be rep
 test("regular users cannot administer and legacy knowledge page opens the one assistant", async ({page}) => {
   await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo")); await page.goto("/admin/rag");
   await expect(page.getByText("Bạn cần đăng nhập bằng tài khoản quản trị kho RAG.", {exact: true})).toBeVisible();
-  await page.goto("/knowledge"); await dismissWelcome(page);
-  await expect(page).toHaveURL(/\/copilot$/);
-  await expect(page.getByRole("heading", {name: "Trợ lý du học", exact: true})).toBeVisible();
+  await dismissWelcome(page); await page.goto("/knowledge");
+  await expect(page).toHaveURL(/\/(\?assistant=open)?$/);
+  await expect(page.getByRole("dialog", {name: "Đồng ý sử dụng trợ lý?", exact: true})).toBeVisible();
   await expect(page.locator('nav a[href="/knowledge"]')).toHaveCount(0);
 });
 
-test("one pending question asks consent once, cites RAG answer and later uses general Gemini", async ({page}) => {
+test("launcher asks consent once, cites RAG answer and later uses general Gemini", async ({page}) => {
   let sends = 0;
   await page.addInitScript(() => localStorage.setItem("baoan.mode", "demo"));
   await page.route("**/api/v1/finance/assistant/status", route => route.fulfill({json: {gemini_configured: true, model: "test-model"}}));
@@ -114,19 +112,22 @@ test("one pending question asks consent once, cites RAG answer and later uses ge
     const rag = sends === 1;
     await route.fulfill({json: {route: rag ? "RAG" : "GEMINI", provider: "GEMINI", answer: rag ? "Theo tài liệu kiểm thử [R1]." : "General study guidance", actions: [], executed_actions: [], citations: rag ? [{source_id: "R1", title: "Test source", excerpt: "Fictional terms", href: "/knowledge/114ae7bd-ee08-5092-ab9f-d3830ff2b330?revision=1#page-1", document_kind: "TEST_FIXTURE"}] : []}});
   });
-  await page.goto("/copilot"); await dismissWelcome(page);
+  await page.goto("/"); await dismissWelcome(page);
+  await page.getByRole("button", {name: "Mở trợ lý du học", exact: true}).click();
+  const dialog = page.getByRole("dialog", {name: "Đồng ý sử dụng trợ lý?"});
+  await expect(dialog).toBeVisible(); expect(sends).toBe(0);
+  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click();
+  await expect(dialog).not.toBeVisible(); expect(sends).toBe(0);
+  await page.getByRole("button", {name: "Mở trợ lý du học", exact: true}).click();
+  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
   const question = page.getByLabel("Câu hỏi cho trợ lý", {exact: true});
   await question.fill("Bảo hiểm có tái tục không?"); await question.press("Shift+Enter"); expect(sends).toBe(0);
   await question.press("Enter");
-  const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
-  await expect(dialog).toBeVisible(); expect(sends).toBe(0);
-  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click();
-  await expect(dialog).not.toBeVisible(); expect(sends).toBe(0); await expect(question).not.toHaveValue("");
-  await question.press("Enter"); await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
-  await expect(page.locator(".copilot-answer")).toContainText("Theo tài liệu"); expect(sends).toBe(1);
-  await expect(page.getByRole("link", {name: "Test source ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
+  await expect(page.locator(".assistant-answer")).toContainText("Theo tài liệu"); expect(sends).toBe(1);
+  await page.locator(".assistant-sources summary").click();
+  await expect(page.getByRole("link", {name: "[R1] Test source ↗", exact: true})).toHaveAttribute("href", /revision=1#page-1$/);
   await question.fill("Cách thích nghi với việc du học?"); await question.press("Enter");
-  await expect(page.locator(".copilot-turn")).toHaveCount(2); expect(sends).toBe(2);
+  await expect(page.locator(".assistant-turn")).toHaveCount(2); expect(sends).toBe(2);
   await expect(dialog).not.toBeVisible();
   await page.screenshot({path: "../submission/evidence/screenshots/rag/unified-study-assistant.png", fullPage: true});
 });

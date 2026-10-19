@@ -2,7 +2,8 @@
 import {tr} from "@/lib/i18n";
 import {useI18n} from "@/components/i18n-provider";
 
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 import {ArrowUpRight, Clock3, Search, Download} from "lucide-react";
 import {api, Order, Status, labels, time, vnd} from "@/lib/api";
@@ -10,8 +11,14 @@ import {useAuth} from "@/components/shell";
 import {Heading, ErrorBox, StatusBadge} from "@/components/ui";
 import {ContextHelp} from "@/components/user-guide";
 export default function History() {
+  return <Suspense><HistoryContent/></Suspense>;
+}
+function HistoryContent() {
   useI18n();
-  const {token, dataVersion, invalidate} = useAuth(); const [items, setItems] = useState<Order[]>([]); const [error, setError] = useState(""); const [loaded, setLoaded] = useState(false); const [search, setSearch] = useState(""); const [status, setStatus] = useState("");
+  const router = useRouter(); const params = useSearchParams();
+  const requestedStatus = params.get("status") || ""; const status = Object.hasOwn(labels, requestedStatus) ? requestedStatus : "";
+  function setStatus(value: string) {const query = new URLSearchParams(params.toString()); if (Object.hasOwn(labels, value)) query.set("status", value); else query.delete("status"); router.replace("/history" + (query.size ? "?" + query.toString() : ""), {scroll: false});}
+  const {token, dataVersion, invalidate} = useAuth(); const [items, setItems] = useState<Order[]>([]); const [error, setError] = useState(""); const [loaded, setLoaded] = useState(false); const [search, setSearch] = useState("");
   useEffect(() => {api<{items: Order[]}>("/orders", token).then(r => setItems(r.items)).catch(e => setError(e.message)).finally(() => setLoaded(true));}, [token, dataVersion]);
   const filtered = items.filter(o => (!status || o.status === status) && (o.id.includes(search.trim().toLowerCase()) || o.invoice_id.includes(search.trim().toLowerCase())));
   function exportCsv() {const rows = [["order_id", "invoice_id", "created_at_utc", "total_vnd", "status", "payment_mode"], ...filtered.map(o => [o.id, o.invoice_id, o.created_at, o.total_vnd, o.status, "SANDBOX"])]; const blob = new Blob(["\uFEFF" + rows.map(row => row.join(",")).join("\n")], {type: "text/csv;charset=utf-8"}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = "demo-sandbox-history.csv"; a.click(); URL.revokeObjectURL(url);}

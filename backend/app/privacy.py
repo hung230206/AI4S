@@ -12,7 +12,7 @@ from .security import ApiError, student, lock_user
 from .services import audit, iso
 
 router = APIRouter(prefix="/api/v1/privacy", tags=["Privacy permissions"])
-NOTICE_VERSION = "ai-privacy-2026-10-19-v2"
+NOTICE_VERSION = "assistant-privacy-2026-10-19-v3"
 # Purpose presets are defined by the server, never arbitrary client permissions.
 PRESETS = {"QUESTION_ONLY": [], "SAMPLE_ASSISTANT": ["history", "documents"],
            "ACCOUNT_ASSISTANT": ["history", "documents", "finance", "insurance"]}
@@ -57,9 +57,9 @@ def set_permission(body: PermissionInput, request: Request, user=Depends(student
         raise ApiError("PRIVACY_CHANGED", "Quyền đã thay đổi ở tab khác. Tải lại cài đặt quyền riêng tư.", 409)
     if body.enabled:
         if body.notice_version != NOTICE_VERSION or body.preset is None:
-            raise ApiError("AI_CONSENT_REQUIRED", "Hãy đọc thông báo và chọn Đồng ý trước khi bật Gemini.", 403)
+            raise ApiError("AI_CONSENT_REQUIRED", "Hãy đọc điều khoản và chọn Đồng ý trước khi sử dụng trợ lý.", 403)
         if settings.gemini_data_mode == "DEMO_ONLY" and body.preset == "ACCOUNT_ASSISTANT":
-            raise ApiError("AI_SCOPE_UNAVAILABLE", "Gemini demo không nhận dữ liệu tài chính hoặc hợp đồng cá nhân. Dùng tra cứu trực tiếp.", 403)
+            raise ApiError("AI_SCOPE_UNAVAILABLE", "Trợ lý hiện không gửi dữ liệu tài chính hoặc hợp đồng cá nhân tới dịch vụ AI bên ngoài.", 403)
     if row is None:
         row = AiPermission(subject=request.state.privacy_subject, user_id=user.id, revision=0)
         db.add(row)
@@ -81,5 +81,5 @@ def set_permission(body: PermissionInput, request: Request, user=Depends(student
 def require_permission(db, request, user, revision):
     row = permission(db, request, user)
     if not valid(row) or revision != row.revision:
-        raise ApiError("AI_CONSENT_REQUIRED", "Quyền Gemini chưa được cấp, đã hết hạn hoặc vừa thay đổi. Kiểm tra Quyền riêng tư AI; tra cứu trực tiếp vẫn dùng được.", 403)
+        raise ApiError("AI_CONSENT_REQUIRED", "Sự đồng ý sử dụng trợ lý chưa được cấp, đã hết hạn hoặc vừa thay đổi. Hãy mở lại trợ lý để đọc và đồng ý điều khoản.", 403)
     return row

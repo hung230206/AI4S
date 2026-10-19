@@ -43,7 +43,7 @@ def ask(client, h, message, **extra):
     return client.post(P + '/study-assistant/chat', headers=h, json={'message': message, 'privacy_revision': 1, **extra})
 
 
-@pytest.mark.parametrize('message,route', [('Bảo hiểm có bảo đảm tái tục không?', 'RAG'), ('What is a deductible?', 'RAG'), ('短期健康保险保证续保吗？', 'RAG'), ('健康金福等待多久？', 'RAG'), ('Thanh toán BHYT khác tỉnh theo quy định nào?', 'RAG'), ('Điều khoản nào bị loại trừ?', 'RAG'), ('NFRA quy định gì?', 'RAG'), ('Chào bạn', 'GEMINI'), ('How can I adapt to university life?', 'GEMINI'), ('How do I upload a policy document?', 'GEMINI'), ('如何适应留学生活？', 'GEMINI'), ('Please transfer money now', 'WORKFLOW'), ('Thanh toán ngay giúp tôi', 'WORKFLOW')])
+@pytest.mark.parametrize('message,route', [('Bảo hiểm có bảo đảm tái tục không?', 'RAG'), ('What is a deductible?', 'GEMINI'), ('短期健康保险保证续保吗？', 'RAG'), ('健康金福等待多久？', 'RAG'), ('Thanh toán BHYT khác tỉnh theo quy định nào?', 'RAG'), ('Điều khoản nào bị loại trừ?', 'RAG'), ('NFRA quy định gì?', 'RAG'), ('Chào bạn', 'GEMINI'), ('How can I adapt to university life?', 'GEMINI'), ('How do I upload a policy document?', 'GEMINI'), ('如何适应留学生活？', 'GEMINI'), ('Please transfer money now', 'WORKFLOW'), ('Thanh toán ngay giúp tôi', 'WORKFLOW')])
 def test_multilingual_server_routing(message, route):
     assert route_question(message, [])[0] == route
 
@@ -53,6 +53,76 @@ def test_followups_use_previous_user_question_but_new_topic_does_not():
     route, query = route_question('Vậy cần những gì?', history)
     assert route == 'RAG' and 'renewal' in query
     assert route_question('Chào bạn', history)[0] == 'GEMINI'
+
+
+@pytest.mark.parametrize('question', [
+    'bảo hiểm là gì', 'Bảo hiểm là gì vậy?', 'cho t hỏi bảo hiểm là gì',
+    'bảo hiểm là cái gì', 'Bảo hiểm nghĩa là sao?', 'Giải thích giúp t về bảo hiểm',
+    'Giải thích bảo hiểm một cách dễ hiểu', 'Bảo hiểm hoạt động như thế nào?',
+    'Phân biệt bảo hiểm y tế và bảo hiểm sức khỏe', 'Phí bảo hiểm là gì?',
+    'What is insurance?', 'What is a deductible?', 'Explain health insurance in simple terms.',
+    'What is the difference between insurance and savings?',
+    '什么是保险？', '保险是什么意思？', '请简单解释一下免赔额',
+])
+def test_general_insurance_concepts_do_not_require_policy_evidence(question):
+    assert route_question(question, [])[0] == 'GEMINI'
+
+
+@pytest.mark.parametrize('question', [
+    'Bảo hiểm của tôi có chi trả ngoại trú không?',
+    'Bảo hiểm là gì theo luật Trung Quốc?',
+    'Bảo hiểm là gì? Hợp đồng của tôi được bồi thường bao nhiêu?',
+    'Giải thích điều khoản trong hợp đồng này',
+    'What is a deductible in my policy?', 'What is insurance under Chinese law?',
+    'What is the waiting period for PICC health insurance?',
+    'What is insurance? Does my policy cover outpatient treatment?',
+    'What does policy ZXQUNSUPPORTEDVOLCANO mean?',
+    '中国保险法规定的保险是什么？', '我的保险免赔额是多少？',
+])
+def test_specific_insurance_and_law_still_require_evidence(question):
+    assert route_question(question, [])[0] == 'RAG'
+
+
+def test_concept_followups_stay_general_and_multi_turn_policy_followups_keep_sources():
+    concept = [ChatTurn(role='user', content='Bảo hiểm là gì?'), ChatTurn(role='assistant', content='General explanation')]
+    assert route_question('Vậy cho ví dụ đi?', concept)[0] == 'GEMINI'
+    assert route_question('Nói dễ hiểu hơn', concept)[0] == 'GEMINI'
+    policy = [ChatTurn(role='user', content='Insurance renewal conditions?'), ChatTurn(role='assistant', content='Source answer'),
+              ChatTurn(role='user', content='Explain that'), ChatTurn(role='assistant', content='More source explanation')]
+    route, query = route_question('Tell me more', policy)
+    assert route == 'RAG' and 'renewal' in query
+    assert route_question('Bảo hiểm là gì?', policy)[0] == 'GEMINI'
+    assert route_question('Vậy bảo hiểm của tôi chi trả bao nhiêu?', concept)[0] == 'RAG'
+
+
+def test_insurance_definition_reaches_general_generation_without_retrieval(client, enabled, monkeypatch):
+    import app.study_assistant as assistant
+    h, _ = account(client); captured = {}
+    monkeypatch.setattr(assistant, 'retrieve', lambda *a: pytest.fail('Definition must not need the corpus'))
+    monkeypatch.setattr(assistant, 'search_owned', lambda *a: pytest.fail('Definition must not read private documents'))
+    def model(payload):
+        captured.update(payload)
+        return {'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': json.dumps({'answer': 'Giải thích chung: bảo hiểm giúp chia sẻ rủi ro.', 'source_ids': []})}]}}]}
+    monkeypatch.setattr(gemini, 'request_json', model)
+    response = ask(client, h, 'bảo hiểm là gì')
+    assert response.status_code == 200
+    reply = response.json()
+    assert reply['route'] == 'GEMINI' and reply['method'] == 'GEMINI_GENERAL'
+    assert 'chia sẻ rủi ro' in reply['answer'] and reply['citations'] == []
+    prompt = captured['systemInstruction']['parts'][0]['text']
+    assert 'GENERAL_INSURANCE_EDUCATION' in prompt and 'SOURCE_ONLY_INSURANCE_RAG' not in prompt
+    evidence = json.loads(captured['contents'][0]['parts'][0]['text'])['server_evidence']
+    assert all(item['kind'] != 'ORIGINAL_DOCUMENT_EXCERPT' for item in evidence)
+
+
+def test_concept_preview_matches_chat_and_still_requires_consent(client, enabled, monkeypatch):
+    h, _ = account(client, grant=False)
+    monkeypatch.setattr(gemini, 'generate', lambda *a: pytest.fail('No consent or preview may call Google'))
+    assert ask(client, h, 'bảo hiểm là gì').status_code == 403
+    p = client.get(P + '/privacy/ai-permission').json()
+    client.post(P + '/privacy/ai-permission', headers=h, json={'enabled': True, 'revision': p['revision'], 'notice_version': p['notice_version'], 'preset': 'SAMPLE_ASSISTANT'})
+    preview = client.post(P + '/study-assistant/preview', headers=h, json={'message': 'bảo hiểm là gì', 'privacy_revision': 1}).json()
+    assert preview['route'] == 'GEMINI' and preview['sent'] is False
 
 
 def test_direct_gemini_does_not_send_unrelated_library_excerpts(client, enabled, monkeypatch):

@@ -57,6 +57,20 @@ def test_no_preticked_or_old_notice_consent(client, provider, change):
     assert ask(client, h, 1).status_code == 403 and not provider
 
 
+def test_updated_product_terms_need_fresh_consent_without_broadening_scopes(client, provider):
+    h = account(client); old = grant(client, h, ["history", "documents"]).json()
+    with SessionLocal.begin() as db:
+        row = db.scalar(select(AiPermission)); row.notice_version = "ai-privacy-2026-10-19-v2"
+    state = client.get(P + "/privacy/ai-permission").json()
+    assert not state["enabled"] and state["revision"] == old["revision"]
+    assert ask(client, h, old["revision"]).status_code == 403 and not provider
+    stale = client.post(P + "/privacy/ai-permission", headers=h, json={"enabled": True, "revision": state["revision"], "notice_version": "ai-privacy-2026-10-19-v2", "preset": "SAMPLE_ASSISTANT"})
+    assert stale.status_code == 403
+    current = grant(client, h, ["history", "documents"]).json()
+    assert current["enabled"] and set(current["scopes"]) == {"history", "documents"}
+    assert current["revision"] == old["revision"] + 1
+
+
 def test_question_only_ignores_ungranted_history_and_private_context(client, provider):
     h = account(client)
     assert grant(client, h).status_code == 200

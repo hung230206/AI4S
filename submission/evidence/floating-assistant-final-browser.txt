@@ -1,0 +1,23 @@
+
+Running 16 tests using 1 worker
+
+(node:8340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\gemini.spec.ts:28:5 › bottom-centered launcher asks fixed consent on click, decline sends nothing and permission controls stay in account (1.5s)
+  ok  2 tests\gemini.spec.ts:52:5 › one floating chat uses RAG then general Gemini, folds sources and bounds conversation history (1.9s)
+  ok  3 tests\gemini.spec.ts:76:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (1.8s)
+  ok  4 tests\gemini.spec.ts:89:5 › scrolls chat to new answers without moving the page, even after reading older messages (2.0s)
+  ok  5 tests\gemini.spec.ts:104:5 › minimize, route navigation and reopening preserve conversation without repeated consent (2.0s)
+  ok  6 tests\gemini.spec.ts:116:5 › account revocation closes chat, clears context and ignores an in-flight reply (2.2s)
+  ok  7 tests\gemini.spec.ts:134:5 › provider fallback is explicit and a missing key still permits local answers (1.6s)
+  ok  8 tests\gemini.spec.ts:143:5 › permission expiry requires renewed consent before reopening (1.6s)
+  ok  9 tests\gemini.spec.ts:149:5 › account settings immediately reflect consent granted from the floating bar (2.1s)
+  ok 10 tests\gemini.spec.ts:161:5 › mobile light and dark chat, localized consent and short landscape fit the viewport (2.9s)
+  ok 11 tests\gemini.spec.ts:186:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted (2.6s)
+  ok 12 tests\gemini.spec.ts:192:5 › OCR asks per file, declining sends no bytes and agreeing continues original operation (3.0s)
+  ok 13 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (10.7s)
+  ok 14 tests\rag.spec.ts:73:5 › admin file upload requires per-file agreement and original file can be replaced (4.4s)
+  ok 15 tests\rag.spec.ts:97:5 › regular users cannot administer and legacy knowledge page opens the one assistant (2.3s)
+  ok 16 tests\rag.spec.ts:106:5 › launcher asks consent once, cites RAG answer and later uses general Gemini (2.1s)
+
+  16 passed (46.8s)

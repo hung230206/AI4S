@@ -1,0 +1,1 @@
+Source/evidence scan passed: 546 text files; no copies of local session/webhook/operator/Gemini secrets.

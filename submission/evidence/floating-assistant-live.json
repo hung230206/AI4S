@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-19T14:35:20.861Z",
+  "base_url": "http://localhost:3000",
+  "http_status": 200,
+  "route": "RAG",
+  "provider": "GEMINI",
+  "method": "RAG_GEMINI",
+  "elapsed_ms": 7675,
+  "citation_count": 2,
+  "fallback_reason": null,
+  "page_errors": [],
+  "original_content": "Public China insurance question only; no private account content sent.",
+  "permission_revoked_after_check": true
+}

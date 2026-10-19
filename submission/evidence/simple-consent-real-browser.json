@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-19T15:13:33.818Z",
+  "base_url": "http://localhost:3000",
+  "http_status": 200,
+  "route": "GEMINI",
+  "provider": "GEMINI",
+  "elapsed_ms": 5218,
+  "fallback_reason": null,
+  "answer": "Tôi là Trợ lý du học, chuyên gia hỗ trợ bạn trong các vấn đề lập ngân sách du học, hóa đơn, sử dụng ứng dụng và giải thích các tài liệu bảo hiểm. Tôi có thể giúp bạn giải đáp thắc mắc về tài chính học tập, hướng dẫn sử dụng các tính năng trên ứng dụng và cung cấp kiến thức nền tảng về bảo hiểm du học. Hãy cho tôi biết bạn cần hỗ trợ gì nhé!",
+  "no_chat_call_before_agree": true,
+  "pages": [
+    {
+      "path": "/",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/finance",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/invoices",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/assistant",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/insurance",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/account",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/privacy",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/test-lab",
+      "visible_vendor_names": false
+    },
+    {
+      "path": "/admin/rag",
+      "visible_vendor_names": false
+    }
+  ],
+  "page_errors": [],
+  "permission_revoked_after_check": true
+}

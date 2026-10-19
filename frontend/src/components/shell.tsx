@@ -1,8 +1,9 @@
 "use client";
 import {tr} from "@/lib/i18n";
+import {FloatingAssistant} from "./floating-assistant";
 import {preference, writePreference} from "@/lib/preferences";
 
-import {createContext, useContext, useEffect, useState, useCallback} from "react";
+import {createContext, useContext, useEffect, useState, useCallback, Suspense} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {
@@ -18,7 +19,6 @@ import {
   LogOut,
   Wallet,
   TrendingUp,
-  MessageCircle,
 } from "lucide-react";
 import {api, Account, AccountSession} from "@/lib/api";
 import {AuthScreen} from "@/components/auth-screen";
@@ -47,7 +47,6 @@ export const useAuth = () => useContext(Auth);
 
 const nav = [
   {href: "/", key: "nav_dashboard", icon: LayoutDashboard},
-  {href: "/copilot", key: "nav_copilot", icon: MessageCircle},
   {href: "/invoices", key: "nav_invoices", icon: FileText},
   {href: "/finance", key: "nav_finance", icon: Wallet},
   {href: "/rates", key: "nav_rates", icon: TrendingUp},
@@ -138,7 +137,7 @@ export function Shell({children}: {children: React.ReactNode}) {
     };
   }, [attempt]);
 
-  if (path === "/privacy") return <>{children}</>;
+  if (path === "/privacy") return <Auth.Provider value={{token, user, dataVersion, invalidate, refresh, logout}}>{children}{loaded && token && user && <Suspense fallback={null}><FloatingAssistant key={`${user.id}:${token}`}/></Suspense>}</Auth.Provider>;
   if (!loaded) return <div className="loading" role="status">{t("checking_session")}</div>;
   if (!token)
     return (
@@ -247,6 +246,7 @@ export function Shell({children}: {children: React.ReactNode}) {
           </footer>
         </div>
       </div>
+      <Suspense fallback={null}><FloatingAssistant key={`${user?.id}:${token}`}/></Suspense>
     </Auth.Provider>
   );
 }

@@ -259,7 +259,7 @@ def admin_preview(body: RagQuestion, user=Depends(rag_admin), db=Depends(get_db,
 def cloud_permission(db, request, user, revision):
     permission = require_permission(db, request, user, revision)
     if "documents" not in permission.scopes:
-        raise ApiError("AI_CONSENT_REQUIRED", "Quyền hiện tại chưa cho phép gửi đoạn tài liệu tới Gemini.", 403)
+        raise ApiError("AI_CONSENT_REQUIRED", "Bạn chưa đồng ý xử lý trích đoạn tài liệu cho trợ lý.", 403)
     return permission
 
 
@@ -267,7 +267,7 @@ def cloud_permission(db, request, user, revision):
 def preview(body: RagQuestion, request: Request, user=Depends(student), db=Depends(get_db, scope="function")):
     cloud_permission(db, request, user, body.privacy_revision)
     matches, missing = retrieval(body, db)
-    return {"recipient": "Google Gemini", "question": body.question, "excerpts": matches, "missing_concepts": missing, "sent": False}
+    return {"recipient": "Google AI service", "question": body.question, "excerpts": matches, "missing_concepts": missing, "sent": False}
 
 
 @router.post("/rag/ask")

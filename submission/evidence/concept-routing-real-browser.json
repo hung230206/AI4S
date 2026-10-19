@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-19T14:53:47.863Z",
+  "base_url": "http://localhost:3000",
+  "results": [
+    {
+      "question": "bảo hiểm là gì",
+      "route": "GEMINI",
+      "provider": "GEMINI",
+      "method": "GEMINI_GENERAL",
+      "elapsed_ms": 8521,
+      "citation_count": 0,
+      "fallback_reason": null,
+      "answer": "Bảo hiểm là một hình thức quản lý rủi ro, trong đó người mua đóng phí cho công ty bảo hiểm để nhận được sự hỗ trợ tài chính khi xảy ra các rủi ro được thỏa thuận trước (như ốm đau, tai nạn hoặc chi phí y tế khi du học). Đây là thông tin giáo dục bảo hiểm chung. Vui lòng kiểm tra màn hình ứng dụng để biết thêm chi tiết."
+    },
+    {
+      "question": "Vậy cho ví dụ đơn giản nhé",
+      "route": "GEMINI",
+      "provider": "GEMINI",
+      "method": "GEMINI_GENERAL",
+      "elapsed_ms": 2469,
+      "citation_count": 0,
+      "fallback_reason": null,
+      "answer": "Ví dụ đơn giản: Khi bạn đi du học và mua bảo hiểm y tế, bạn đóng một khoản phí nhỏ hàng tháng cho công ty bảo hiểm. Nếu chẳng may bạn bị ốm phải đi khám bác sĩ tốn 5,000,000 VNĐ, công ty bảo hiểm sẽ chi trả phần lớn hoặc toàn bộ số tiền này theo hợp đồng, giúp bạn giảm bớt gánh nặng tài chính. Đây là thông tin giáo dục bảo hiểm chung. Vui lòng kiểm tra màn hình ứng dụng để biết thêm chi tiết."
+    },
+    {
+      "question": "Theo quy định Trung Quốc, bảo hiểm sức khỏe dài hạn được định nghĩa thế nào?",
+      "route": "RAG",
+      "provider": "GEMINI",
+      "method": "RAG_GEMINI",
+      "elapsed_ms": 17094,
+      "citation_count": 1,
+      "fallback_reason": null
+    },
+    {
+      "question": "Điều khoản ZXQUNSUPPORTEDVOLCANO",
+      "route": "RAG",
+      "provider": "EXTRACTIVE",
+      "method": "AUTOMATIC_RAG",
+      "elapsed_ms": 74,
+      "citation_count": 0,
+      "fallback_reason": null
+    }
+  ],
+  "page_errors": [],
+  "permission_revoked_after_check": true
+}

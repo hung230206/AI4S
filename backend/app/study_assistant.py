@@ -14,17 +14,29 @@ from .rag import published_source
 from .rag_index import normal, retrieve, tokens
 from .security import ApiError, student
 from .services import audit
+from .assistant_navigation import navigation_proposal, navigation_reply
 
 router = APIRouter(prefix="/api/v1/study-assistant", tags=["Study-abroad assistant"])
 SOURCE_TERMS = ("bao hiem", "boi thuong", "hop dong", "dieu khoan", "tai lieu", "quyen loi", "loai tru", "khau tru", "tai tuc", "thoi gian cho", "ngoai tru", "noi tru", "ho so", "luat", "quy dinh", "insurance", "policy", "policies", "claim", "claims", "coverage", "deductible", "exclusion", "renewal", "waiting period", "regulation", "law", "terms", "outpatient", "inpatient", "hospital", "reimbursement", "premium", "benefits", "khac tinh", "跨省", "异地", "门诊", "han muc", "chi tra", "nam vien", "document", "documents", "nfra", "nhsa", "iac", "picc", "保险", "医保", "理赔", "合同", "条款", "免责", "续保", "法律", "规定", "材料", "健康金福", "人保", "等待", "免赔", "保障", "医疗")
-FOLLOWUP = r"^(?:vay|con |the |no |cai do|dieu do|giai thich them|noi ro hon|can nhung gi|what about|and |then|explain that|tell me more|how about|those|that |那|还有|继续|具体|为什么)"
+FOLLOWUP = r"^(?:vay|con |the |no |cai do|dieu do|giai thich them|noi ro hon|noi de hieu hon|cho vi du|can nhung gi|what about|and |then|explain that|tell me more|give an example|how about|those|that |那|还有|继续|具体|为什么)"
+# Recognise complete educational questions, not just the word "insurance".
+# Extra policy, country, legal, product or personal qualifiers deliberately fail
+# this grammar and retain the source-required route below.
+EDUCATION_TOPICS = (
+    "bao hiem", "bao hiem suc khoe", "bao hiem y te", "bao hiem du lich", "bao hiem du hoc", "bao hiem nhan tho", "bao hiem phi nhan tho",
+    "phi bao hiem", "boi thuong bao hiem", "quyen loi bao hiem", "khau tru", "mien thuong", "thoi gian cho", "tai tuc", "dong chi tra", "tiet kiem",
+    "insurance", "health insurance", "medical insurance", "travel insurance", "student insurance", "life insurance", "non-life insurance",
+    "insurance premium", "premium", "deductible", "deductibles", "coverage", "coinsurance", "copayment", "waiting period", "renewal", "savings",
+    "保险", "健康保险", "医疗保险", "人寿保险", "旅行保险", "留学保险", "保费", "免赔额", "等待期", "续保", "共付额",
+)
+EDUCATION_TOPIC = "(?:" + "|".join(re.escape(topic) for topic in sorted(EDUCATION_TOPICS, key=len, reverse=True)) + ")"
 ACTION_TERMS = ("thanh toan ngay", "hay thanh toan", "thanh toan giup", "chuyen tien", "doi tien giup", "please pay", "pay invoice", "pay the", "pay now", "pay my", "transfer money", "exchange my", "convert my", "帮我支付", "转账", "兑换")
 ACCOUNT_TERMS = ("hoa don", "invoice", "den han", "du tien", "30 ngay", "so du", "ngan sach cua", "my budget", "my balance", "my wallet", "账单", "余额")
 GENERIC_SOURCE_WORDS = set("dieu khoan luat quy dinh tai lieu ban goc thong tin hien tai noi dung".split())
 COPY = {
-    "vi": {"missing": "Kho tài liệu hiện chưa có đủ chứng cứ để trả lời câu hỏi này. Tôi không suy đoán điều khoản hoặc quyền lợi còn thiếu.", "local": "Các đoạn gốc liên quan để bạn đối chiếu:", "general": "Tôi có thể hỗ trợ câu hỏi về du học, ngân sách và bảo hiểm. Gemini hiện chưa trả lời được; bạn có thể thử lại sau.", "changed": "Nguồn đã thay đổi hoặc được gỡ. Hãy hỏi lại để dùng tài liệu hiện tại.", "notice": "Thông tin để tham khảo và đối chiếu; không thực hiện giao dịch hoặc quyết định quyền lợi."},
-    "en": {"missing": "The knowledge base has insufficient evidence for this question. I cannot infer missing terms or benefits.", "local": "Relevant original passages to review:", "general": "I can help with studying abroad, budgets and insurance. Gemini is currently unavailable; please try again later.", "changed": "A source changed or was withdrawn. Ask again to use current documents.", "notice": "Guidance for review; no transaction or coverage decision is performed."},
-    "zh": {"missing": "知识库中没有足够证据回答此问题，不能推测缺失条款或保障权益。", "local": "请核对以下相关原文：", "general": "可咨询留学、预算和保险。Gemini 暂不可用，请稍后重试。", "changed": "来源已更新或撤下，请重新提问。", "notice": "仅供参考核对，不执行交易或保障权益决定。"},
+    "vi": {"missing": "Kho tài liệu hiện chưa có đủ chứng cứ để trả lời câu hỏi này. Tôi không suy đoán điều khoản hoặc quyền lợi còn thiếu.", "local": "Các đoạn gốc liên quan để bạn đối chiếu:", "general": "Tôi có thể hỗ trợ câu hỏi về du học, ngân sách và bảo hiểm. Trợ lý hiện chưa tạo được câu trả lời; bạn có thể thử lại sau.", "changed": "Nguồn đã thay đổi hoặc được gỡ. Hãy hỏi lại để dùng tài liệu hiện tại.", "notice": "Thông tin để tham khảo và đối chiếu; không thực hiện giao dịch hoặc quyết định quyền lợi."},
+    "en": {"missing": "The knowledge base has insufficient evidence for this question. I cannot infer missing terms or benefits.", "local": "Relevant original passages to review:", "general": "I can help with studying abroad, budgets and insurance. The assistant cannot generate an answer right now; please try again later.", "changed": "A source changed or was withdrawn. Ask again to use current documents.", "notice": "Guidance for review; no transaction or coverage decision is performed."},
+    "zh": {"missing": "知识库中没有足够证据回答此问题，不能推测缺失条款或保障权益。", "local": "请核对以下相关原文：", "general": "可咨询留学、预算和保险。助手暂时无法生成回答，请稍后重试。", "changed": "来源已更新或撤下，请重新提问。", "notice": "仅供参考核对，不执行交易或保障权益决定。"},
 }
 
 
@@ -36,16 +48,41 @@ def contains(value, terms):
     return any(term in value if re.search(r"[\u4e00-\u9fff]", term) else re.search(r"(?<!\w)" + re.escape(term) + r"(?!\w)", value) for term in terms)
 
 
+def general_insurance_question(value):
+    value = re.sub(r"\s+", " ", value).strip(" \t\r\n?!.,;:？！，。；：")
+    value = re.sub(r"^(?:(?:cho (?:toi|minh|em|t|tao) (?:hoi|biet)|xin hoi|ban oi|please|could you|can you)[ ,]+)+", "", value)
+    value = re.sub(r"(?: (?:vay|nhe|nha|a|ha|v))+$", "", value)
+    topic = EDUCATION_TOPIC
+    article = r"(?:an? |the )?"
+    patterns = (
+        topic,
+        rf"{topic} (?:la gi|la cai gi|nghia la gi|nghia la sao|hoat dong nhu the nao|dung de lam gi|co nhung loai nao)",
+        rf"(?:khai niem|dinh nghia)(?: ve)? {topic}",
+        rf"giai thich(?: giup (?:toi|minh|em|t))?(?: ve)? {topic}(?: (?:mot cach )?(?:de hieu|don gian))?",
+        rf"(?:phan biet|so sanh)(?: giua)? {topic} (?:va|voi) {topic}",
+        rf"(?:what (?:is|are)|define|explain) {article}{topic}(?: in (?:simple|plain) terms)?",
+        rf"what does {article}{topic} mean",
+        rf"how does {article}{topic} work",
+        rf"what is the difference between {article}{topic} and {article}{topic}",
+        rf"(?:什么是|何为){topic}",
+        rf"{topic}(?:是什么|是什么意思|的定义是什么|如何运作)",
+        rf"(?:请)?(?:简单)?(?:解释|介绍)(?:一下)?{topic}",
+    )
+    return any(re.fullmatch(pattern, value) for pattern in patterns)
+
+
 def route_question(message, history):
     value = normal(message)
     if contains(value, ACTION_TERMS): return "WORKFLOW", message
     if contains(value, ("cach tai len", "lam sao tai len", "how to upload", "how do i upload", "dang nhap", "上传文件", "登录")): return "GEMINI", message
+    if general_insurance_question(value): return "GEMINI", message
     if contains(value, SOURCE_TERMS) and not re.search(FOLLOWUP, value): return "RAG", message
     if re.search(FOLLOWUP, value):
-        previous = next((turn.content for turn in reversed(history) if turn.role == "user"), "")
-        if contains(normal(previous), SOURCE_TERMS):
+        previous_index = next((index for index in range(len(history) - 1, -1, -1) if history[index].role == "user"), None)
+        previous_route, previous_query = route_question(history[previous_index].content, history[:previous_index]) if previous_index is not None else (None, "")
+        if previous_route == "RAG":
             # Keep the current question intact; bound combined retrieval context.
-            return "RAG", (message + " " + previous)[:1000]
+            return "RAG", (message + " " + previous_query)[:1000]
     return ("RAG" if contains(value, SOURCE_TERMS) else "GEMINI"), message
 
 
@@ -55,7 +92,7 @@ def context(body, request, user, db):
     history = body.history if permission and "history" in permission.scopes else []
     route, query = route_question(body.message, history)
     if route == "RAG" and cloud and "documents" not in permission.scopes:
-        raise ApiError("AI_CONSENT_REQUIRED", "Cần đồng ý quyền dùng đoạn tài liệu trước khi gửi tới Gemini.", 403)
+        raise ApiError("AI_CONSENT_REQUIRED", "Cần đồng ý xử lý trích đoạn tài liệu trước khi sử dụng trợ lý.", 403)
     evidence = []; citations = []
     if route == "RAG":
         allowed = ["TEST_FIXTURE", "PUBLIC_REFERENCE"] if cloud and settings.gemini_data_mode == "DEMO_ONLY" else None
@@ -102,9 +139,12 @@ def revalidate(db, request, user, body, citations):
 @router.post("/preview")
 def preview(body: StudyChatInput, request: Request, user=Depends(student), db=Depends(get_db, scope="function")):
     require_permission(db, request, user, body.privacy_revision)
+    proposal = navigation_proposal(body.message, body.language)
+    if proposal and not contains(normal(body.message), ACTION_TERMS):
+        return {"route": "WORKFLOW", "recipient": None, "question": body.message, "conversation": [], "server_evidence": [], "sent": False, "navigation": proposal}
     route, permission, history, evidence, citations = context(body, request, user, db)
     gemini.ensure_non_sensitive({"question": body.message, "history": [turn.model_dump() for turn in history], "server_evidence": evidence})
-    return {"route": route, "recipient": "Google Gemini", "question": body.message, "conversation": [turn.model_dump() for turn in history], "server_evidence": evidence, "sent": False}
+    return {"route": route, "recipient": "Google AI service", "question": body.message, "conversation": [turn.model_dump() for turn in history], "server_evidence": evidence, "sent": False}
 
 
 @router.post("/chat")
@@ -112,6 +152,9 @@ def chat(body: StudyChatInput, request: Request, user=Depends(student), db=Depen
     # Guard execution requests before retrieving or sending any context.
     if contains(normal(body.message), ACTION_TERMS):
         return {**workflow_reply(body, user, db), "route": "WORKFLOW", "provider": "RULES", "fallback_reason": "READ_ONLY_GUARD"}
+    proposal = navigation_proposal(body.message, body.language)
+    if proposal:
+        return navigation_reply(proposal, body.language)
     route, permission, history, evidence, citations = context(body, request, user, db)
     text = COPY[body.language]
     base = {"route": route, "intent": "DOCUMENT_EVIDENCE" if route == "RAG" else "STUDY_GUIDANCE", "executed_actions": [], "actions": [], "notice": text["notice"]}

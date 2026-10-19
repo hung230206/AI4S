@@ -1,0 +1,68 @@
+
+Running 17 tests using 1 worker
+
+(node:8856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\gemini.spec.ts:28:5 › bottom-centered launcher asks fixed consent on click, decline sends nothing and permission controls stay in account (2.2s)
+  ok  2 tests\gemini.spec.ts:52:5 › consent uses concise product language and links to complete public processing terms (2.8s)
+  ok  3 tests\gemini.spec.ts:72:5 › one floating chat uses RAG then general Gemini, folds sources and bounds conversation history (2.7s)
+  ok  4 tests\gemini.spec.ts:96:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (2.3s)
+  ok  5 tests\gemini.spec.ts:109:5 › scrolls chat to new answers without moving the page, even after reading older messages (2.4s)
+  ok  6 tests\gemini.spec.ts:124:5 › minimize, route navigation and reopening preserve conversation without repeated consent (2.4s)
+  ok  7 tests\gemini.spec.ts:136:5 › account revocation closes chat, clears context and ignores an in-flight reply (2.6s)
+  ok  8 tests\gemini.spec.ts:154:5 › provider fallback is explicit and a missing key still permits local answers (1.8s)
+  ok  9 tests\gemini.spec.ts:163:5 › permission expiry requires renewed consent before reopening (1.9s)
+  ok 10 tests\gemini.spec.ts:169:5 › account settings immediately reflect consent granted from the floating bar (1.9s)
+  ok 11 tests\gemini.spec.ts:181:5 › mobile light and dark chat, localized consent and short landscape fit the viewport (2.8s)
+  x  12 tests\gemini.spec.ts:206:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted (8.3s)
+(node:11436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 tests\gemini.spec.ts:212:5 › OCR asks per file, declining sends no bytes and agreeing continues original operation (2.7s)
+  ok 14 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (12.4s)
+  ok 15 tests\rag.spec.ts:73:5 › admin file upload requires per-file agreement and original file can be replaced (3.7s)
+  ok 16 tests\rag.spec.ts:97:5 › regular users cannot administer and legacy knowledge page opens the one assistant (2.7s)
+  ok 17 tests\rag.spec.ts:106:5 › launcher asks consent once, cites RAG answer and later uses general Gemini (2.5s)
+
+
+  1) tests\gemini.spec.ts:206:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Đồng ý sử dụng trợ lý?' }).getByRole('alert')
+    Expected substring: "Thông báo quyền đã thay đổi"
+    Received string:    "Điều khoản đã được cập nhật. Tải lại trang để đọc và đồng ý phiên bản mới."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: 'Đồng ý sử dụng trợ lý?' }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Đồng ý sử dụng trợ lý?' }).getByRole('alert')
+        14 × locator resolved to <p role="alert">Điều khoản đã được cập nhật. Tải lại trang để đọc…</p>
+           - unexpected value "Điều khoản đã được cập nhật. Tải lại trang để đọc và đồng ý phiên bản mới."
+
+
+      207 |   await setup(page, true, "future-unseen-notice"); await page.goto("/copilot"); await expect(page).toHaveURL(/\/(\?assistant=open)?$/);
+      208 |   const dialog = page.getByRole("dialog", {name: "Đồng ý sử dụng trợ lý?"});
+    > 209 |   await expect(dialog.getByRole("alert")).toContainText("Thông báo quyền đã thay đổi"); await expect(dialog.getByRole("button", {name: "Đồng ý", exact: true})).toBeDisabled();
+          |                                           ^
+      210 | });
+      211 |
+      212 | test("OCR asks per file, declining sends no bytes and agreeing continues original operation", async ({page}) => {
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\gemini.spec.ts:209:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\gemini-legacy-copilot-URL--065e4--notices-cannot-be-accepted\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\gemini-legacy-copilot-URL--065e4--notices-cannot-be-accepted\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\gemini-legacy-copilot-URL--065e4--notices-cannot-be-accepted\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\gemini-legacy-copilot-URL--065e4--notices-cannot-be-accepted\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\gemini.spec.ts:206:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted 
+  16 passed (1.1m)

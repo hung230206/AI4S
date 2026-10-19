@@ -61,7 +61,7 @@ test("translated screens, nested invoice form and guide retain draft data", asyn
   const routes = [
     ["/account", "Tài khoản của bạn"], ["/assistant", "Tài liệu bảo hiểm"],
     ["/invoices", "Hóa đơn của bạn"], ["/finance", "Ngân sách du học"],
-    ["/rates", "Tỷ giá & ngân sách"], ["/copilot", "Trợ lý du học"],
+    ["/rates", "Tỷ giá & ngân sách"],
     ["/history", "Lịch sử giao dịch"], ["/test-lab", "Thử trọn luồng A → Z"],
   ];
   for (const [route] of routes) {
@@ -89,7 +89,7 @@ test("mobile dark mode has readable surfaces and no horizontal overflow", async 
   await demo(page);
   await page.getByRole("button", {name: "English", exact: true}).click();
   await page.getByRole("button", {name: "Appearance", exact: true}).click();
-  for (const route of ["/", "/finance", "/invoices/new", "/rates", "/copilot", "/test-lab"]) {
+  for (const route of ["/", "/finance", "/invoices/new", "/rates", "/test-lab"]) {
     await page.goto(route);
     await expect(page.locator("main h1")).toBeVisible();
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
