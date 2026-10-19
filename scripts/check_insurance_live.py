@@ -103,10 +103,13 @@ def main():
             direct = checked(client.post("/finance/assistant", json={"message": "Hồ sơ bồi thường gồm những gì?", "use_gemini": False}))
             assert direct["executed_actions"] == [] and any(a["href"] == "/insurance" for a in direct["actions"])
             if args.with_gemini:
-                reply = checked(client.post("/finance/assistant", json={"message": "Tóm tắt phí và thời hạn trong bản tóm tắt bảo hiểm của tôi. Hồ sơ của tôi đang ở trạng thái nào?", "use_gemini": True}))
+                permission = checked(client.get("/privacy/ai-permission"))
+                permission = checked(client.post("/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "scopes": ["documents"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True}))
+                reply = checked(client.post("/finance/assistant", json={"message": "Theo tài liệu mẫu, quyền lợi ngoại trú và hồ sơ bồi thường gồm những gì? Chỉ dẫn từ tài liệu.", "use_gemini": True, "privacy_revision": permission["revision"]}))
                 assert reply.get("provider") == "GEMINI", "Gemini did not return a real provider response"
                 assert reply["executed_actions"] == [] and reply["citations"]
                 evidence["gemini_model"] = reply.get("model")
+                checked(client.post("/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": False}))
             evidence["checks"].append("grounded_read_only_insurance_handoff")
         evidence["status"] = "PASS"
     except Exception as exc:

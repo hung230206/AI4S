@@ -1,0 +1,55 @@
+import type {Locale} from "./i18n";
+export const AI_PRIVACY_NOTICE_VERSION = "ai-privacy-2026-10-19-v1";
+
+export type AiPermission = {enabled: boolean; revision: number; notice_version: string; scopes: string[]; data_mode: "DEMO_ONLY" | "PAID_PRIVATE"; granted_at: string | null; expires_at: string | null; allowed_scopes: string[]};
+const copy = {
+  vi: {
+    noticeChanged: "Thông báo quyền đã thay đổi. Tải lại trang trước khi cấp quyền mới.",
+    title: "Quyền riêng tư AI", manage: "Cài đặt quyền Gemini", enable: "Cho phép và bật Gemini", revoke: "Thu hồi quyền Gemini", cancel: "Tiếp tục tra cứu trực tiếp", close: "Đóng", saving: "Đang lưu…",
+    off: "Chưa cho phép gửi tới Google Gemini.", on: "Đã cho phép trong phiên này, tối đa 1 giờ. Có thể thu hồi bất cứ lúc nào.",
+    purpose: "Gemini là tùy chọn để soạn câu trả lời. Google nhận câu hỏi bạn gửi và chỉ những nhóm ngữ cảnh bạn chọn dưới đây. Từ chối vẫn dùng được tra cứu trực tiếp, OCR và các chức năng khác.",
+    demo: "Bản demo dùng chế độ không gửi dữ liệu tài khoản cá nhân. Với Gemini miễn phí, Google có thể dùng nội dung để cải thiện mô hình và có người đánh giá. Chỉ dùng câu hỏi và tài liệu mẫu/công khai không chứa thông tin cá nhân.",
+    paid: "Máy chủ bật chế độ dữ liệu riêng qua dự án Google trả phí. Google vẫn có thể lưu nội dung có thời hạn để kiểm tra an toàn theo điều khoản dịch vụ. Chỉ bật nhóm dữ liệu cần cho câu hỏi.",
+    history: "Gửi tối đa 3 lượt Gemini gần nhất trong tab này", documents: "Gửi tối đa 3 đoạn tài liệu liên quan", finance: "Gửi tóm tắt ngân sách và hóa đơn", insurance: "Gửi tóm tắt hợp đồng đã đối chiếu",
+    docDemo: "Chỉ tài liệu gắn nhãn mẫu tự soạn hoặc tham khảo công khai; tài liệu cá nhân bị loại ở máy chủ.",
+    excluded: "Luôn loại trừ: mật khẩu, cookie, mã vận hành, tệp gốc, chứng từ và mô tả bệnh trong hồ sơ bồi thường. Không cấp quyền thanh toán, chỉnh sửa hay gửi hồ sơ cho AI.",
+    ack: "Tôi đã đọc thông báo và tự nguyện cho phép Google Gemini xử lý câu hỏi cùng các nhóm đã chọn để trả lời.", adult: "Tôi xác nhận từ 18 tuổi trở lên.", nonSensitive: "Tôi sẽ chỉ gửi dữ liệu mẫu/công khai hoặc đã ẩn danh, không có dữ liệu cá nhân, sức khỏe, định danh hay bí mật.",
+    revokeNote: "Thu hồi chặn các yêu cầu mới. Không thể rút lại nội dung đã gửi hoặc hủy yêu cầu đang xử lý tại Google. Xóa chat chỉ xóa nội dung trong tab, không xóa bản phía Google.",
+    policy: "Thông báo quyền riêng tư", terms: "Điều khoản dữ liệu Gemini", scope: "Các nhóm bổ sung đều tùy chọn; bỏ hết để chỉ gửi câu hỏi và hướng dẫn chung của ứng dụng.",
+    preview: "Xem dữ liệu sẽ gửi", previewTitle: "Xem trước dữ liệu cho Gemini", previewNote: "Chưa gửi tới Google. Đây là dữ liệu tại thời điểm xem; sẽ được kiểm tra quyền lại khi gửi.",
+    keyboard: "Enter để gửi · Shift+Enter xuống dòng", upload: "Tệp bạn chọn chỉ được tải khi bấm nút tải lên. Máy chủ lưu và đọc/OCR nội bộ; không gửi tệp gốc tới Gemini. Chỉ chọn tệp bạn có quyền sử dụng. Ở tài khoản mẫu dùng chung, chỉ tải dữ liệu giả lập; tài liệu riêng cần tài khoản cá nhân.",
+    allSessions: "Đăng xuất trên mọi thiết bị", questionOnly: "Chỉ câu hỏi; chưa cấp thêm nhóm ngữ cảnh.",
+  },
+  en: {
+    noticeChanged: "The permission notice has changed. Reload before granting new permission.",
+    title: "AI privacy", manage: "Gemini permissions", enable: "Allow and enable Gemini", revoke: "Revoke Gemini access", cancel: "Continue with direct lookup", close: "Close", saving: "Saving…",
+    off: "No permission to send to Google Gemini.", on: "Allowed for this session, for up to 1 hour. Revoke at any time.",
+    purpose: "Gemini is optional answer generation. Google receives your submitted question and only the context groups selected below. Refusing does not block direct lookup, OCR or other features.",
+    demo: "Demo mode excludes personal account data. With unpaid Gemini, Google may use content to improve models and human reviewers may read it. Use only non-personal sample/public questions and documents.",
+    paid: "The server uses a paid Google project for private context. Google may still retain content temporarily for safety checks under its terms. Select only the groups needed for your question.",
+    history: "Send up to 3 recent Gemini turns in this tab", documents: "Send up to 3 relevant document excerpts", finance: "Send budget and invoice summaries", insurance: "Send reviewed policy summaries",
+    docDemo: "Only self-authored sample or public-reference documents; personal documents are excluded on the server.",
+    excluded: "Always excluded: passwords, cookies, operator codes, original files, claim attachments and medical descriptions. AI has no payment, editing or claim-submission permissions.",
+    ack: "I have read this notice and voluntarily allow Google Gemini to process my question and selected groups to answer it.", adult: "I confirm I am at least 18 years old.", nonSensitive: "I will send only sample/public or anonymised content, with no personal, health, identity or secret information.",
+    revokeNote: "Revoking blocks new requests. It cannot recall content already sent or cancel a request Google is processing. Clearing chat removes this tab's content, not Google's copies.",
+    policy: "Privacy notice", terms: "Gemini data terms", scope: "All extra groups are optional; leave them unchecked to send only your question and general app guidance.",
+    preview: "Preview data to send", previewTitle: "Gemini data preview", previewNote: "Not sent to Google. This is a snapshot at preview time; permissions are checked again when you send.", keyboard: "Enter to send · Shift+Enter for a new line",
+    upload: "The selected file is uploaded only when you press upload. The server stores and reads/OCRs it locally; original bytes are never sent to Gemini. Upload only files you may use. In the shared sample account, use fictional files only; private documents need a personal account.",
+    allSessions: "Sign out on all devices", questionOnly: "Question only; no extra context groups allowed.",
+  },
+  zh: {
+    noticeChanged: "授权通知已更改，请刷新页面后重新授权。",
+    title: "AI 隐私", manage: "Gemini 权限设置", enable: "允许并启用 Gemini", revoke: "撤销 Gemini 权限", cancel: "继续直接检索", close: "关闭", saving: "正在保存…",
+    off: "尚未允许向 Google Gemini 发送数据。", on: "仅本次登录有效，最长1小时，可随时撤销。",
+    purpose: "Gemini 用于可选的回答生成。Google 仅接收您提交的问题及下方选定的上下文类别。拒绝不影响直接检索、OCR 和其他功能。",
+    demo: "演示模式不发送个人账户数据。免费 Gemini 可能使用内容改进模型，并由人工审核。请仅使用不含个人信息的示例或公开问题及文档。",
+    paid: "服务器使用付费 Google 项目处理私人上下文。Google 仍可能按条款临时保留内容进行安全检查。仅选择当前问题需要的类别。",
+    history: "发送本标签页最近最多3轮 Gemini 对话", documents: "发送最多3段相关文档摘录", finance: "发送预算和账单摘要", insurance: "发送已核对的保单摘要", docDemo: "仅限自编示例或公开参考文档；服务器排除个人文档。",
+    excluded: "始终排除密码、Cookie、操作员代码、原始文件、理赔附件及病情描述。AI 无支付、修改或提交理赔的权限。",
+    ack: "我已阅读通知，并自愿允许 Google Gemini 处理问题及所选类别以生成回答。", adult: "我确认已年满18周岁。", nonSensitive: "我仅发送示例、公开或匿名内容，不含个人、健康、身份信息或秘密。",
+    revokeNote: "撤销会阻止新请求，无法撤回已发送内容或取消 Google 正在处理的请求。清空聊天仅清除本标签页内容，不删除 Google 的副本。",
+    policy: "隐私通知", terms: "Gemini 数据条款", scope: "附加类别均可选；全部不选时仅发送问题和应用通用说明。", preview: "预览将发送的数据", previewTitle: "Gemini 数据预览", previewNote: "尚未发送给 Google。此为预览时的数据，发送时将再次检查权限。", keyboard: "Enter 发送 · Shift+Enter 换行",
+    upload: "仅点击上传后才发送所选文件。服务器在本地存储和读取/OCR，原始文件不会发送给 Gemini。请仅上传有权使用的文件。共享示例账户仅使用虚构文件；私人文档请使用个人账户。", allSessions: "退出所有设备", questionOnly: "仅问题，未授权附加上下文。",
+  },
+};
+export function privacyText(locale: Locale) {return copy[locale];}

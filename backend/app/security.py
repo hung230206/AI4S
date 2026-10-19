@@ -36,6 +36,7 @@ def current_user(request: Request, credentials: HTTPAuthorizationCredentials | N
             if not user or user.role != claims["role"] or user.email:
                 raise ValueError()
             request.state.auth_mode = "demo"
+            request.state.privacy_subject = hashlib.sha256(credentials.credentials.encode()).hexdigest() if claims.get("jti") else None
             return user
         token = session_cookie or ""
         session = db.scalar(select(AuthSession).where(AuthSession.token_hash == hashlib.sha256(token.encode()).hexdigest(), AuthSession.revoked == False, AuthSession.expires_at > now()))
@@ -50,6 +51,7 @@ def current_user(request: Request, credentials: HTTPAuthorizationCredentials | N
             if not hmac.compare_digest(csrf.encode(), session.csrf_token.encode()):
                 raise ApiError("CSRF_INVALID", "Reload the page and retry", 403)
         request.state.account_session = session
+        request.state.privacy_subject = session.token_hash
         request.state.auth_mode = "account"
         return user
     except (BadSignature, SignatureExpired, ValueError, KeyError, TypeError):

@@ -1,4 +1,5 @@
 "use client";
+import {UploadPrivacyNotice} from "@/components/ai-privacy";
 import {use, useCallback, useEffect, useState} from "react";
 import Link from "next/link";
 import {api, API, authHeaders, downloadOwned, time} from "@/lib/api";
@@ -29,7 +30,7 @@ export default function ClaimDetailPage({params}: {params: Promise<{id: string}>
     <Link className="text-link" href="/insurance"><ArrowLeft size={16}/>{t("insurance")}</Link>
     <Heading eyebrow={t("claims")} title={data?.title || t("open")}>{t("claimHelp")}</Heading>
     <div className="info-note insurance-boundary"><ShieldCheck size={22}/><p>{t("boundary")}</p></div>
-    <ErrorBox message={error}/>{error && <button className="text-link" disabled={busy} onClick={() => act(load)}>{t("refresh")}</button>}
+    <UploadPrivacyNotice/><ErrorBox message={error}/>{error && <button className="text-link" disabled={busy} onClick={() => act(load)}>{t("refresh")}</button>}
     {!data ? !error && <p role="status">{t("busy")}</p> : <>
       {["DRAFT", "READY"].includes(data.status) && <ClaimEditor key={data.revision} data={data} token={token} busy={busy} act={act} receive={value => {setData(value); setTarget("");}}/>}
       <section className="card"><div className="section-heading"><h2>{data.amount} {data.currency}</h2><span className="badge neutral">{t(data.status)}</span></div><p>{t(data.benefit_kind)} · {data.incident_date}</p>{data.deadline && <p>{t("deadline")}: {data.deadline}</p>}{data.description && <p className="insurance-preserve">{data.description}</p>}{data.warnings.map(w => <p className="error" key={w}>{t(w)}</p>)}<a className="text-link" href={data.guide_url} target="_blank" rel="noreferrer">{t("guide")} ↗</a></section>

@@ -28,6 +28,7 @@ from .finance import router as finance_router
 from .ocr import router as ocr_router
 from .journey import router as journey_router
 from .insurance import router as insurance_router
+from .privacy import router as privacy_router
 
 
 @asynccontextmanager
@@ -50,6 +51,7 @@ app.include_router(finance_router)
 app.include_router(ocr_router)
 app.include_router(journey_router)
 app.include_router(insurance_router)
+app.include_router(privacy_router)
 
 
 @app.middleware("http")
@@ -114,7 +116,7 @@ def session(body: SessionRequest, db=Depends(get_db, scope="function")):
     user = db.get(User, STUDENT_ID if body.role == "STUDENT" else OPERATOR_ID)
     if not user:
         raise ApiError("DEMO_NOT_SEEDED", "Run python -m app.seed first", 503)
-    return {"access_token": signer.dumps({"sub": str(user.id), "role": user.role}), "token_type": "bearer", "expires_in": 3600, "role": user.role}
+    return {"access_token": signer.dumps({"sub": str(user.id), "role": user.role, "jti": str(uuid.uuid4())}), "token_type": "bearer", "expires_in": 3600, "role": user.role}
 
 
 @app.get("/api/v1/invoices", response_model=InvoiceList)

@@ -85,7 +85,7 @@ export function Shell({children}: {children: React.ReactNode}) {
     accept(await api<AccountSession>("/auth/session", ""));
   }
   async function logout() {
-    if (token.startsWith("csrf:")) await api("/auth/logout", token, {});
+    await api("/auth/logout", token, {});
     writePreference("baoan.mode", "");
     setToken("");
     setUser(null);
@@ -138,6 +138,7 @@ export function Shell({children}: {children: React.ReactNode}) {
     };
   }, [attempt]);
 
+  if (path === "/privacy") return <>{children}</>;
   if (!loaded) return <div className="loading" role="status">{t("checking_session")}</div>;
   if (!token)
     return (
@@ -239,7 +240,7 @@ export function Shell({children}: {children: React.ReactNode}) {
           </div>
           <main id="main-content">{connectionError && <div className="error" role="alert">{connectionError}</div>}{children}</main>
           <footer>
-            {t("footer_copyright")}
+            {t("footer_copyright")} <Link href="/privacy">{tr("Quyền riêng tư")}</Link>
             <span>{demoMode ? t("footer_demo") : t("footer_personal")}</span>
           </footer>
         </div>

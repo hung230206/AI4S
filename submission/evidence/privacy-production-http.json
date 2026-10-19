@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-19T07:14:35.527982+00:00",
+  "origin": "http://localhost:3104",
+  "checks": [
+    "default_off_server_gate_and_no_financial_actions",
+    "explicit_versioned_grant_and_unpaid_scope_restriction",
+    "preview_is_local_and_filters_ungranted_history_and_private_sources",
+    "sensitive_data_tripwire_before_provider",
+    "revoke_stops_future_dispatch_and_direct_lookup_remains",
+    "session_permission_isolation_and_all_device_logout",
+    "public_privacy_notice_and_unused_device_permissions_disabled"
+  ],
+  "real_funds_moved": false,
+  "real_model_calls": 0,
+  "release": "local",
+  "status": "PASS",
+  "elapsed_seconds": 4.61
+}

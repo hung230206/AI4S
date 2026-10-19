@@ -49,6 +49,17 @@ def redact(value):
     return re.sub(r"AIza[0-9A-Za-z_-]{30,}", "[API_KEY_REDACTED]", value)
 
 
+def ensure_non_sensitive(context):
+    """Conservative tripwire, not a guarantee of anonymisation or a DLP system."""
+    from .security import ApiError
+    value = json.dumps(context, ensure_ascii=False)
+    patterns = (r"AIza[0-9A-Za-z_-]{20,}", r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",
+                r"(?<![\w.])\+?\d(?:[ ()-]*\d){8,20}(?![\w.])", r"(?i)bearer\s+[a-z0-9_.-]{12,}",
+                r"(?i)(?:password|mật khẩu|passport|hộ chiếu|cccd|căn cước|diagnosis|chẩn đoán|bank account|số tài khoản)\s*[:=]")
+    if any(re.search(pattern, value) for pattern in patterns):
+        raise ApiError("AI_SENSITIVE_DATA", "Nội dung có thể chứa thông tin cá nhân hoặc bí mật. Xóa/ẩn thông tin đó hoặc chọn Tra cứu trực tiếp; chưa gửi tới Gemini.", 422)
+
+
 def request_json(payload):
     # Fixed provider host; model is validated configuration, never a client URL.
     with httpx.Client(timeout=httpx.Timeout(settings.gemini_timeout_seconds, connect=5), follow_redirects=False) as client:

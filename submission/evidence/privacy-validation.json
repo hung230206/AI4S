@@ -1,0 +1,12 @@
+{
+  "status": "LOCAL_PASS",
+  "backend_tests": 184,
+  "production_browser_tests": 29,
+  "production_operator_ui_exclusions": 2,
+  "privacy_http_groups": 7,
+  "insurance_http_groups": 7,
+  "provider_local_retry": "TIMEOUT, explicit direct-lookup fallback; not a successful model reply",
+  "notice_version": "ai-privacy-2026-10-19-v1",
+  "data_mode_default": "DEMO_ONLY",
+  "real_funds_moved": false
+}

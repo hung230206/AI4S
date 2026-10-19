@@ -1,5 +1,10 @@
 # Test luồng C + D
 
+## Quyền AI mới (19/10/2026)
+
+Gemini mặc định tắt; chỉ bật khi người dùng tự cấp quyền theo phiên. Bản miễn phí không gửi dữ liệu ngân sách/hợp đồng cá nhân hoặc hồ sơ bồi thường. Để hỏi từ `demo-policy.txt`, chọn nhóm đoạn tài liệu mẫu trong Cài đặt quyền Gemini. Tra cứu trực tiếp vẫn dùng tài liệu/tài khoản riêng ở máy chủ. Xem PRIVACY_GUIDE.md.
+
+
 Bản online: https://ai4s-demo.onrender.com/insurance . Gemini đã được cấu hình và kiểm tra gọi thật trên Render.
 
 Mở **Bảo hiểm & hồ sơ** (`/insurance`). Tạo tài khoản riêng để dữ liệu không lẫn với người khác.

@@ -1,3 +1,20 @@
+# Current privacy permission assessment — 19 October 2026
+
+This section supersedes older Gemini outbound-data defaults below. Contest mapping and primary-source research: [docs/21_PRIVACY_PERMISSIONS_RESEARCH.md](../docs/21_PRIVACY_PERMISSIONS_RESEARCH.md). The published contest asks for permission tiers and known risks; no compliance certification is claimed.
+
+- Direct lookup is the default. Cloud AI requires versioned, explicit permission bound to one authenticated session. Supplementary scopes and confirmations are unchecked by default. Revision/expiry/notice/mode are checked on the server; refusing or withdrawing does not disable local functionality.
+- The default unpaid `DEMO_ONLY` mode blocks personal finance/policy scopes, and filters personal documents before retrieval. Only explicitly allowed sample/public excerpts may be sent. Claim records, attachments, medical descriptions, original bytes and credentials are excluded in all modes.
+- History is optional and bounded; local replies are not silently forwarded. Preview makes no model call. Withdrawal blocks future sends, not in-flight processing or copies Google already received. Conversation clearing only clears tab memory.
+- Permission and dispatch-attempt audit metadata never contains questions, replies or attachments. New demo tokens have a nonce to isolate permission from other shared-demo visitors; old shared tokens cannot grant access. Logout revokes the session's optional AI permission. Personal accounts may revoke all login sessions.
+- A conservative sensitive-text tripwire blocks recognisable identifiers/secrets before the model. This is not complete anonymisation: names, unusual identifiers and obfuscated information may be missed; an innocent long number may be rejected.
+- `/privacy` is public before sign-in. Uploads disclose selected-file/server processing. Unused camera, microphone, location, payment and USB capabilities are disabled; no unnecessary device grant is requested.
+
+Known unfinished work: full account erasure/backup deletion, automated retention cleanup, controller identity/contact arrangements, formal transfer/impact assessment, actual billing/DPA verification, age/region operational review, MFA/email verification and independent security testing. Shared sandbox accounts are not private spaces; only fictional data belongs there. Before real-data use, the team must resolve these operational/legal requirements. A consent dialog does not resolve them.
+
+Exact new test counts and online release verification are in the latest IMPLEMENTATION_REPORT.md section and privacy-* evidence. Historical release material follows.
+
+---
+
 # Security self-assessment — student-finance MVP
 
 Self-assessment dated 2026-10-19, not independent certification. Production money transfer, bank custody and insurer activation remain disabled.

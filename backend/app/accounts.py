@@ -119,10 +119,16 @@ def session_info(request: Request, user=Depends(current_user)):
 
 
 @router.post("/logout")
-def logout(request: Request, response: Response, user=Depends(current_user)):
+def logout(request: Request, response: Response, user=Depends(current_user), db=Depends(get_db, scope="function")):
     session = getattr(request.state, "account_session", None)
     if session:
         session.revoked = True
+    from .privacy import permission, NOTICE_VERSION
+    from .services import audit
+    row = permission(db, request, user)
+    if row and row.active:
+        row.active = False; row.scopes = []; row.revision += 1; row.updated_at = now()
+        audit(db, user, "AI_PERMISSION_REVOKED", notice_version=NOTICE_VERSION, revision=row.revision, scopes=[], reason="logout")
     response.delete_cookie("baoan_session", path="/api/v1")
     return {"signed_out": True}
 
@@ -133,6 +139,15 @@ def profile(body: Profile, user=Depends(current_user)):
         raise ApiError("VALIDATION_ERROR", "Name is required", 422)
     user.display_name = body.display_name.strip()
     return {"user": public_user(user)}
+
+
+@router.post("/logout-all")
+def logout_all(request: Request, response: Response, user=Depends(current_user), db=Depends(get_db, scope="function")):
+    if not getattr(request.state, "account_session", None):
+        raise ApiError("FORBIDDEN", "Tài khoản sandbox không có phiên đăng nhập cá nhân.", 403)
+    db.execute(update(AuthSession).where(AuthSession.user_id == user.id).values(revoked=True))
+    response.delete_cookie("baoan_session", path="/api/v1")
+    return {"signed_out_all": True}
 
 
 @router.post("/password")

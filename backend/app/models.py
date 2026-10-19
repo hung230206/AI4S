@@ -178,6 +178,22 @@ class AuthThrottle(Base):
     window_start: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
+class AiPermission(Base):
+    """Optional cloud AI permission, bound to one authenticated session, never a shared user."""
+    __tablename__ = "ai_permissions"
+    subject: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("demo_users.id"), index=True)
+    revision: Mapped[int] = mapped_column(default=1)
+    notice_version: Mapped[str]
+    active: Mapped[bool] = mapped_column(default=False)
+    scopes: Mapped[list] = mapped_column(JSONB, default=list)
+    data_mode: Mapped[str]
+    granted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    __table_args__ = (CheckConstraint("revision > 0"), CheckConstraint("data_mode IN ('DEMO_ONLY','PAID_PRIVATE')"),)
+
+
 class FxObservation(Identity, Created, Base):
     __tablename__ = "fx_observations"
     rate_date: Mapped[date] = mapped_column(unique=True)

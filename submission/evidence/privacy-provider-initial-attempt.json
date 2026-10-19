@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-19T07:10:54.705875+00:00",
+  "origin": "http://localhost:3104",
+  "checks": [
+    "default_off_server_gate_and_no_financial_actions",
+    "explicit_versioned_grant_and_unpaid_scope_restriction",
+    "preview_is_local_and_filters_ungranted_history_and_private_sources",
+    "sensitive_data_tripwire_before_provider"
+  ],
+  "real_funds_moved": false,
+  "real_model_calls": 1,
+  "release": "local",
+  "status": "FAIL",
+  "failure": "AssertionError: ",
+  "elapsed_seconds": 30.86,
+  "note": "One configured provider request was attempted. Initial helper recorded only successful replies; the fallback code was not captured in this attempt. Do not infer a specific upstream error from its elapsed time."
+}

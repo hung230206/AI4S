@@ -1,5 +1,12 @@
 # Demo Student Finance MVP
 
+## AI privacy and keyboard update — 19 October 2026
+
+Chat: Enter sends, Shift+Enter inserts a newline, IME composition does not submit. Direct lookup is the default. Optional Gemini now requires explicit session permission, selectable context groups, preview and revocation. Read [PRIVACY_GUIDE.md](PRIVACY_GUIDE.md) and [research/security design](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).
+
+The free demo uses `GEMINI_DATA_MODE=DEMO_ONLY`: no personal budget or reviewed-policy context is sent to Gemini; personal `USER_PROVIDED` documents are excluded. Use direct lookup for private records. A paid-private deployment requires operator/legal verification, not merely changing a flag. Run `python -m alembic upgrade head` from `backend/` before starting an existing checkout.
+
+
 Optional Gemini chatbot is integrated with server-side credentials, owned sources, recent conversation and direct-lookup fallback. Setup, privacy, actual test evidence and Render configuration: [GEMINI_GUIDE.md](GEMINI_GUIDE.md).
 
 Repository: https://github.com/hung230206/AI4S

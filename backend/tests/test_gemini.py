@@ -20,12 +20,16 @@ def deterministic_rate(monkeypatch):
 def enabled(monkeypatch):
     monkeypatch.setattr(settings, "gemini_enabled", True)
     monkeypatch.setattr(settings, "gemini_api_key", SecretStr("fake_test_key_not_a_real_credential"))
+    monkeypatch.setattr(settings, "gemini_data_mode", "PAID_PRIVATE")
 
 
 def register(client):
     result = client.post(P + "/auth/register", json={"display_name": "Chat Test", "email": f"chat-{uuid4()}@example.com", "password": "chat-test-password-2026"})
     assert result.status_code == 200
-    return {"X-CSRF-Token": result.json()["csrf_token"]}
+    headers = {"X-CSRF-Token": result.json()["csrf_token"]}
+    permission = client.get(P + "/privacy/ai-permission").json()
+    assert client.post(P + "/privacy/ai-permission", headers=headers, json={"enabled": True, "revision": permission["revision"], "notice_version": permission["notice_version"], "scopes": ["history", "documents", "finance", "insurance"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True}).status_code == 200
+    return headers
 
 
 def candidate(answer="Đây là giải thích từ dữ liệu bạn đã khai báo.", ids=None, finish="STOP"):
@@ -53,7 +57,7 @@ def test_direct_lookup_never_calls_provider_even_when_configured(client, enabled
 def test_payment_requests_never_reach_gemini_or_write_money(client, enabled, monkeypatch, question):
     h = register(client)
     monkeypatch.setattr(gemini, "generate", lambda *a: pytest.fail("Action request reached model"))
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": question, "use_gemini": True}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": question, "use_gemini": True, "privacy_revision": 1}).json()
     assert reply["fallback_reason"] == "READ_ONLY_GUARD" and reply["executed_actions"] == []
     assert client.get(P + "/orders").json()["items"] == []
     assert client.get(P + "/finance/entries").json()["items"] == []
@@ -69,7 +73,7 @@ def test_generation_has_bounded_history_and_server_owned_citations(client, enabl
         return candidate(ids=["A1", "A1"])
 
     monkeypatch.setattr(gemini, "request_json", fake)
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Explain that again", "use_gemini": True, "language": "en", "history": [{"role": "user", "content": "What is a budget?"}, {"role": "assistant", "content": "An earlier explanation"}]}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Explain that again", "use_gemini": True, "privacy_revision": 1, "language": "en", "history": [{"role": "user", "content": "What is a budget?"}, {"role": "assistant", "content": "An earlier explanation"}]}).json()
     prompt = json.loads(captured["contents"][0]["parts"][0]["text"])
     assert prompt["language"] == "English" and len(prompt["conversation"]) == 2
     assert "tools" not in captured and "fake_test_key" not in json.dumps(captured)
@@ -87,7 +91,7 @@ def test_other_accounts_documents_and_balances_are_not_sent(client, enabled, mon
         captured.update(payload)
         return candidate()
     monkeypatch.setattr(gemini, "request_json", fake)
-    reply = client.post(P + "/finance/assistant", headers=other, json={"message": "What evidence is needed for claims?", "use_gemini": True})
+    reply = client.post(P + "/finance/assistant", headers=other, json={"message": "What evidence is needed for claims?", "use_gemini": True, "privacy_revision": 1})
     assert reply.status_code == 200
     assert "PRIVATE_OWNER" not in json.dumps(captured)
     assert all(not c.get("document_id") for c in reply.json()["citations"])
@@ -101,7 +105,7 @@ def test_original_policy_excerpt_is_cited_without_sending_the_file(client, enabl
         captured.update(payload)
         return candidate(ids=["D1"])
     monkeypatch.setattr(gemini, "request_json", fake)
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Hồ sơ bồi thường gồm những gì?", "use_gemini": True}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Hồ sơ bồi thường gồm những gì?", "use_gemini": True, "privacy_revision": 1}).json()
     assert reply["citations"][0]["page"] == 1 and "hospital invoices" in reply["citations"][0]["excerpt"]
     assert "inlineData" not in json.dumps(captured) and "fileData" not in json.dumps(captured)
 
@@ -110,7 +114,7 @@ def test_followup_search_retrieves_owned_document_from_previous_question(client,
     h = register(client)
     assert client.post(P + "/documents", headers=h, files={"file": ("claims.txt", b"Claims require hospital invoices and a signed claim form.")}).status_code == 200
     monkeypatch.setattr(gemini, "request_json", lambda *a: candidate(ids=["D1"]))
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Vậy cần những gì?", "use_gemini": True, "history": [{"role": "user", "content": "Hồ sơ bồi thường gồm gì?"}]}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Vậy cần những gì?", "use_gemini": True, "privacy_revision": 1, "history": [{"role": "user", "content": "Hồ sơ bồi thường gồm gì?"}]}).json()
     assert reply["provider"] == "GEMINI" and reply["citations"][0]["source_id"] == "D1"
 
 
@@ -118,7 +122,7 @@ def test_followup_search_retrieves_owned_document_from_previous_question(client,
 def test_invalid_or_blocked_generation_falls_back_honestly(client, enabled, monkeypatch, bad):
     h = register(client)
     monkeypatch.setattr(gemini, "request_json", lambda *a: bad)
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Tôi cần chuẩn bị ngân sách", "use_gemini": True}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Tôi cần chuẩn bị ngân sách", "use_gemini": True, "privacy_revision": 1}).json()
     assert reply["provider"] == "RULES" and reply["fallback_reason"] in {"INVALID_RESPONSE", "BLOCKED_OR_INCOMPLETE"}
     assert reply["method"] == "GROUNDED_WORKFLOW" and reply["executed_actions"] == []
 
@@ -128,10 +132,10 @@ def test_timeout_and_unconfigured_are_explicit_fallbacks(client, enabled, monkey
     def timeout(*a):
         raise httpx.ReadTimeout("private provider diagnostics")
     monkeypatch.setattr(gemini, "request_json", timeout)
-    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True}).json()
+    reply = client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True, "privacy_revision": 1}).json()
     assert reply["fallback_reason"] == "TIMEOUT" and "private provider diagnostics" not in json.dumps(reply)
     monkeypatch.setattr(settings, "gemini_enabled", False)
-    assert client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True}).json()["fallback_reason"] == "NOT_CONFIGURED"
+    assert client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True, "privacy_revision": 1}).json()["fallback_reason"] == "NOT_CONFIGURED"
 
 
 @pytest.mark.parametrize("status,code", [(401, "AUTH_ERROR"), (403, "AUTH_ERROR"), (404, "MODEL_UNAVAILABLE"), (429, "PROVIDER_RATE_LIMIT"), (503, "UNAVAILABLE")])
@@ -154,8 +158,8 @@ def test_gemini_requests_are_rate_limited_without_changing_ledger(client, enable
         return gemini.GeneratedAnswer(answer="A short explanation", source_ids=[])
     monkeypatch.setattr(gemini, "generate", fake)
     for _ in range(20):
-        assert client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True}).status_code == 200
-    result = client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True})
+        assert client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True, "privacy_revision": 1}).status_code == 200
+    result = client.post(P + "/finance/assistant", headers=h, json={"message": "Budget help", "use_gemini": True, "privacy_revision": 1})
     assert result.status_code == 429 and len(calls) == 20
     assert client.get(P + "/finance/entries").json()["items"] == []
 
@@ -164,7 +168,7 @@ def test_gemini_requests_are_rate_limited_without_changing_ledger(client, enable
 def test_invalid_chat_input_is_rejected_before_provider(client, enabled, monkeypatch, extra):
     h = register(client)
     monkeypatch.setattr(gemini, "request_json", lambda *a: pytest.fail("Invalid input reached provider"))
-    result = client.post(P + "/finance/assistant", headers=h, json={"message": "hello", "use_gemini": True, **extra})
+    result = client.post(P + "/finance/assistant", headers=h, json={"message": "hello", "use_gemini": True, "privacy_revision": 1, **extra})
     assert result.status_code == 422
 
 

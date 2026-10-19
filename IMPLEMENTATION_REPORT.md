@@ -1,3 +1,77 @@
+# Latest update: optional-AI privacy and keyboard — 19 October 2026
+
+This section supersedes older Gemini outbound-data defaults below. Local implementation and verification are complete; actual online rollout is recorded separately after deployment.
+
+## Delivered behaviour
+
+- Enter sends; Shift+Enter inserts a newline. IME composition does not submit, and an in-flight guard prevents duplicate Enter/click requests.
+- Direct lookup is selected on page load. Gemini requires explicit session permission. Supplementary scopes and confirmations start unchecked; refusal does not disable internal OCR, retrieval, budgets or payment workflows.
+- Server-side grants require a matching revision, notice version and data mode, expire after at most one hour and require valid authentication. New demo tokens have a nonce; legacy shared tokens cannot grant AI permission. Old UI code cannot approve an unseen new notice.
+- History, document excerpts, finance/invoices and reviewed-policy summaries are separate optional groups. Unpaid DEMO_ONLY blocks the last two and filters personal documents before retrieval. Claim records, attachments, medical descriptions and original bytes are excluded from model evidence.
+- A local preview shows eligible context without calling Google. Recognisable sensitive identifiers/secrets trigger rejection before dispatch. Revocation/logout stops future sends; it cannot recall in-flight processing or copies already held by Google. Local lookup replies are not silently forwarded as Gemini history.
+- Public `/privacy`, selected-file/server-processing explanations, disabled unused device permissions, audit metadata without chat text, and all-device logout for personal accounts.
+
+Competition tier mapping, primary research and limitations: `docs/21_PRIVACY_PERMISSIONS_RESEARCH.md`. Vietnamese walkthrough: `PRIVACY_GUIDE.md`. API extension: `contracts/privacy.openapi.json`.
+
+The published contest allocates 30% to security/compliance and requests permission tiers and known risks. These controls are **not legal-compliance certification**. Full account/backup erasure, automatic retention cleanup, formal legal/transfer assessment and operator privacy-contact procedures remain unfinished. Labels and anonymity attestations are user declarations, not verification. Real-data deployment needs the team's operational/legal review; unpaid Gemini receives only non-personal sample/public/anonymised content.
+
+## Actual verification
+
+| Check | Result |
+|---|---|
+| Isolated baseline from HEAD | 164 passed after supplying matching OCR assets/test DB |
+| Final backend suite | **184 passed**, 0 failures/errors/skips, 48.60 seconds; one existing Starlette/httpx deprecation warning |
+| Intermediate targeted backend suite | 70 passed; the final full suite includes the two later backend boundary cases |
+| Development browser regression | 29 passed in 116.779 seconds, includes the two development operator UI flows |
+| Earlier focused chat browser suite | 7 passed in 13.507 seconds |
+| **Final standalone production browser suite** | **29 passed** in 85.727 seconds, 0 unexpected/skipped/flaky; includes eight chat/privacy cases |
+| Lint / TypeScript / standalone Webpack build | all exit 0 |
+| Alembic check/migration | no pending model/schema operations; c41a15fa8b20 applied to local app DB without deleting existing data |
+| Final actual-HTTP privacy acceptance | **7 groups passed**, no model request; cookie/CSRF, preview/filtering, revoke, login isolation, logout-all and security headers |
+| Actual-HTTP insurance regression | **7 groups passed**, original/attachment hashes and signed sandbox receipt checked; no real money |
+| Provider availability | an earlier synthetic-data answer succeeded; two later local attempts fell back, the instrumented retry reporting **TIMEOUT** at the existing 25-second limit. These attempts are not counted as successful model replies; see privacy-provider-*.json |
+| Secret scanning | 55 browser JS files and 357 source/evidence files, no exact configured-secret matches; final staged scan follows before publication |
+
+Production intentionally excludes `human consent, asynchronous` and `failure has no receipt`, the two development-only operator UI cases. They passed in the development suite; production operator access was not enabled. Test DBs end `_test`. No registration/Gemini rate guard was reset or weakened. Accounts/files in QA are fictional or self-authored.
+
+QA setup corrections: explicit PostgreSQL port 5434 was required; the isolated baseline needed matching migrations/OCR assets and its own DB; browser fixture helpers initially inherited the default DB and were then pointed at the same isolated DB as the API. Final runs above passed after correction. Mobile visual review also corrected checkbox alignment and opening focus so the notice starts at its heading.
+
+## Reproduce
+
+Windows PowerShell, repository root:
+
+```powershell
+& backend/.venv/Scripts/python.exe -m pytest backend/tests -q
+cd frontend
+npm run lint
+npx tsc --noEmit
+$env:PLAYWRIGHT_BASE_URL='http://localhost:3104'
+# Set DATABASE_URL to the same isolated _test DB as the QA API; fixture helpers inherit it.
+npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt'
+```
+
+Unix equivalents:
+
+```sh
+backend/.venv/bin/python -m pytest backend/tests -q
+(cd frontend && npm run lint && npx tsc --noEmit)
+(cd frontend && PLAYWRIGHT_BASE_URL=http://localhost:3104 npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt')
+```
+
+The tested standalone build used BUILD_STANDALONE=true, API_PROXY_TARGET=http://127.0.0.1:8103 and static files copied into its output, served on 3104. The API allowed those explicit test origins. Existing local secrets/configuration/data were retained.
+
+Actual HTTP check (Windows `python` or Unix virtualenv Python):
+
+```sh
+python scripts/check_privacy_live.py --url http://localhost:3104 --evidence submission/evidence/privacy-production-http.json
+```
+
+Add `--with-gemini` for at most one synthetic-data provider request; it may honestly fail on timeout/quota. Online verification uses the same checker against the Render URL and an exact expected release SHA.
+
+Evidence: `submission/evidence/privacy-*` and `submission/evidence/screenshots/privacy/`. The report sections below describe historical releases.
+
+---
+
 # Combined Topic C + D — 19 October 2026
 
 Implemented and exercised a working insurance-to-student-finance journey. Research, sources and the distinction between competition requirements and design decisions are recorded in `docs/20_TOPIC_C_D_RESEARCH_AND_IMPLEMENTATION.md`. The official entry still selects one topic; the product combines their tasks.

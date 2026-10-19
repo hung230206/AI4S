@@ -282,16 +282,19 @@ def test_vnd_precision_and_cross_currency_plan_guard(client, student_headers):
     assert client.post(f"{P}/insurance/policies/{policy['id']}/plan", headers=h, json={"revision": 1, "reviewed": True, "wallet_id": w["id"]}).status_code == 422
 
 
-def test_gemini_evidence_contains_case_status_but_not_health_or_original_files(client, student_headers):
+def test_gemini_evidence_excludes_claim_cases_and_requires_policy_scope(client, student_headers, monkeypatch):
     from app.finance import assistant_evidence
+    from app.config import settings
+    monkeypatch.setattr(settings, "gemini_data_mode", "PAID_PRIVATE")
     from app.models import User
     h = student_headers; policy, _, _ = create(client, h)
     claim, _ = new_claim(client, h, policy, description="PRIVATE_MEDICAL_DETAIL_MUST_STAY_LOCAL")
     with SessionLocal() as db:
         user = db.scalar(select(User).where(User.id == InsurancePolicy.__table__.select().with_only_columns(InsurancePolicy.user_id).scalar_subquery()))
-        evidence, citations = assistant_evidence("policy claim", user, db)
+        evidence, citations = assistant_evidence("policy claim", user, db, ["insurance"])
         raw = json.dumps(evidence)
         assert "PRIVATE_MEDICAL_DETAIL_MUST_STAY_LOCAL" not in raw
         assert any(item["kind"] == "USER_REVIEWED_POLICY_SUMMARY" for item in evidence)
-        assert any(item["kind"] == "CLAIM_PREPARATION_STATUS" for item in evidence)
-        assert any(item.get("href") == f"/insurance/claims/{claim['id']}" for item in citations.values())
+        assert not any(item["kind"] == "CLAIM_PREPARATION_STATUS" for item in evidence)
+        assert not any(item.get("href") == f"/insurance/claims/{claim['id']}" for item in citations.values())
+        assert all(item["kind"] == "APP_GUIDE" for item in assistant_evidence("policy claim", user, db)[0])

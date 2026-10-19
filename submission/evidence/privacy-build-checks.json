@@ -1,0 +1,9 @@
+{
+  "browser_js_files": 55,
+  "source_evidence_files": 357,
+  "exact_local_secrets_found": false,
+  "frontend_source_sha256": "11a299b0470da71a4ae28367286f2687d7b3ea45791b99e3af53a5302f2f8ceb",
+  "lint_exit": 0,
+  "typescript_exit": 0,
+  "webpack_build_exit": 0
+}

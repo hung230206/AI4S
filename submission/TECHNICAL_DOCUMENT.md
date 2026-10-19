@@ -1,3 +1,7 @@
+## Current optional-AI permission boundary (19 October 2026)
+
+`backend/app/privacy.py` and `ai_permissions` enforce session-scoped, revisioned and expiring grants. Assistant requests carry `privacy_revision`; the server determines allowed evidence. Default `DEMO_ONLY` never exports personal finance or policy summaries and filters document provenance before retrieval. Private-mode configuration is not a legal/billing verification. Claim data stays out of model context. The UI defaults to direct lookup, supports selective permission, local preview and revocation; Enter sends and Shift+Enter adds a newline. Public privacy notice, upload disclosures and all-device logout complete the user controls. See docs/21_PRIVACY_PERMISSIONS_RESEARCH.md for tier mapping, sources, threat cases and limits.
+
 # Demo — Student Finance Participant MVP
 
 Current implementation, 2026-10-19. The user clarified their screenshot as competition-problem analysis and requested a working upgrade along that analysis. The team retains the official Topic C/D submission choice; no competition submission was performed. The Free Render demo is now live at https://ai4s-demo.onrender.com; exact verification and limits are in IMPLEMENTATION_REPORT.md.

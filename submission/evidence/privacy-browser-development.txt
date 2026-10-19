@@ -1,0 +1,41 @@
+
+Running 29 tests using 1 worker
+
+(node:22448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\acceptance.spec.ts:44:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (12.3s)
+  ok  2 tests\acceptance.spec.ts:102:5 › declined test method requires renewed consent and allows a successful retry (10.8s)
+(node:18640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (1.4s)
+  ok  4 tests\flows.spec.ts:40:5 › human consent, asynchronous signed success, duplicate, receipt (5.8s)
+  ok  5 tests\flows.spec.ts:82:5 › mobile cancellation and safe retry (3.3s)
+  ok  6 tests\flows.spec.ts:95:5 › failure has no receipt and operator code is verified (4.8s)
+  ok  7 tests\gemini.spec.ts:23:5 › Gemini chat sends bounded conversation context, displays sources and clears locally (2.9s)
+  ok  8 tests\gemini.spec.ts:48:5 › provider quota fallback is explicit and direct lookup sends no chat history (2.2s)
+  ok  9 tests\gemini.spec.ts:67:5 › no key keeps direct lookup available without offering an active Gemini mode (958ms)
+  ok 10 tests\gemini.spec.ts:74:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (1.5s)
+  ok 11 tests\gemini.spec.ts:92:5 › permission choices default off, cancel does not grant and privacy notice is public (1.6s)
+  ok 12 tests\gemini.spec.ts:107:5 › preview stays local, revoking disables Gemini and account page exposes controls (2.3s)
+
+  ok 13 tests\insurance.spec.ts:45:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP (13.9s)
+
+  ok 14 tests\insurance.spec.ts:119:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio (3.7s)
+  ok 15 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (2.6s)
+  ok 16 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (5.3s)
+  ok 17 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (3.1s)
+  ok 18 tests\onboarding.spec.ts:20:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (3.3s)
+  ok 19 tests\onboarding.spec.ts:47:5 › guided invoice journey explains inputs and calculates a quote without a payment (3.3s)
+  ok 20 tests\onboarding.spec.ts:80:5 › insurance entry opens its own workflow and route-specific help without an invoice (1.7s)
+  ok 21 tests\preferences.spec.ts:16:5 › sign-in preferences preserve input, persist on reload, and synchronize tabs (1.9s)
+  ok 22 tests\preferences.spec.ts:44:5 › system theme follows device changes, explicit selection takes priority (882ms)
+  ok 23 tests\preferences.spec.ts:57:5 › translated screens, nested invoice form and guide retain draft data (5.0s)
+  ok 24 tests\preferences.spec.ts:87:5 › mobile dark mode has readable surfaces and no horizontal overflow (3.7s)
+  ok 25 tests\preferences.spec.ts:107:5 › preferences tolerate unavailable local storage (817ms)
+  ok 26 tests\preferences.spec.ts:122:5 › invalid saved preferences fall back to Vietnamese and device theme (692ms)
+
+  ok 27 tests\student-finance.spec.ts:31:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (4.4s)
+  ok 28 tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis (5.5s)
+  ok 29 tests\student-finance.spec.ts:107:5 › scanned policy PDF OCR produces a cited answer on a phone (4.2s)
+
+  29 passed (1.9m)

@@ -1,5 +1,12 @@
 # Chatbot Gemini trong Demo
 
+## Thay đổi quyền riêng tư 19/10/2026 — thay thế mặc định cũ
+
+Trang luôn bắt đầu ở Tra cứu trực tiếp. Cấp quyền tự nguyện ở Cài đặt quyền Gemini, chọn nhóm ngữ cảnh, xem trước rồi gửi. Enter gửi; Shift+Enter xuống dòng. Các lần Gemini trước chỉ được gửi lại khi đã chọn quyền lịch sử; không chuyển nội dung tra cứu nội bộ sang AI. Quyền theo phiên, tối đa một giờ, có thể thu hồi tại chat/Tài khoản.
+
+Mặc định DEMO_ONLY chặn ngữ cảnh tài chính/tóm tắt hợp đồng cá nhân; chỉ truy xuất mẫu/tham khảo công khai khi có quyền tài liệu. Google miễn phí có thể dùng nội dung để cải thiện dịch vụ và có người đánh giá. Không sử dụng dữ liệu riêng/nhạy cảm; tra cứu trực tiếp vẫn đọc tài liệu cá nhân mà không gọi Google. Chi tiết: PRIVACY_GUIDE.md và docs/21_PRIVACY_PERMISSIONS_RESEARCH.md.
+
+
 Mở **Trợ lý du học** (`/copilot`). Nếu máy chủ đã cấu hình khóa, **Gemini AI** được chọn sẵn. Bạn có thể hỏi về số dư, lịch thu/chi, hóa đơn, tỷ giá hoặc tài liệu đã tải lên; hỏi tiếp ngay trong cùng cuộc trò chuyện. Gemini trả lời theo ngôn ngữ giao diện Việt/Anh/Trung.
 
 - **Gemini AI**: gửi câu hỏi, tối đa 3 lượt hội thoại gần nhất và phần dữ liệu liên quan tới Google để soạn câu trả lời. Thẻ nguồn bên dưới giúp mở trang đối chiếu hoặc đọc đoạn trích và số trang.

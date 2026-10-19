@@ -341,6 +341,7 @@ class AssistantInput(Strict):
     use_gemini: bool = False
     language: Literal["vi", "en", "zh"] = "vi"
     history: list[ChatTurn] = Field(default_factory=list, max_length=6)
+    privacy_revision: int | None = Field(default=None, ge=1)
 
     @field_validator("message")
     @classmethod
@@ -386,35 +387,62 @@ def assistant_status(user=Depends(student)):
     return {"gemini_configured": configured(), "model": settings.gemini_model if configured() else None, "read_only": True, "history_stored": False}
 
 
-def assistant_evidence(question, user, db):
+def assistant_evidence(question, user, db, scopes=None):
     from .documents import search, Search
-    data = forecast(30, user, db)
+    from .config import settings
+    scopes = set(scopes or [])
+    if settings.gemini_data_mode == "DEMO_ONLY":
+        scopes -= {"finance", "insurance"}
+    data = forecast(30, user, db) if "finance" in scopes else None
     evidence = []; citations = {}
 
     def add(source_id, kind, facts, citation):
         evidence.append({"id": source_id, "kind": kind, "data": facts})
         citations[source_id] = {"source_id": source_id, **citation}
 
-    for index, wallet in enumerate(data["wallets"][:8]):
+    add("G1", "APP_GUIDE", {"description": "Demo: read-only student finance and insurance guidance; original files, health records, identifiers and credentials are never sent to the model.", "sandbox_only": True}, {"title": "Hướng dẫn Demo", "href": "/copilot"})
+    for index, wallet in enumerate(data["wallets"][:8] if data else []):
         facts = {key: wallet[key] for key in ("name", "currency", "current_balance", "projected_balance", "minimum_balance", "first_shortfall_date")}
         facts.update({"from": data["from"], "to": data["to"], "basis": "User-declared ledger and schedules; no bank connection"})
         add(f"B{index + 1}", "BUDGET", facts, {"title": f"{wallet['name']}: {wallet['current_balance']} → {wallet['projected_balance']} {wallet['currency']}", "href": "/finance"})
-    add("A1", "ACCOUNT_DATA_AVAILABILITY", {"wallet_count": len(data["wallets"]), "budget_days": 30, "notice": data["notice"], "upcoming_events": [{key: item[key] for key in ("title", "kind", "amount", "currency", "due_date")} for item in data["events"][:5]]}, {"title": "Ngân sách · dữ liệu do bạn khai báo", "href": "/finance"})
-    if data["reference_rate"]:
+    if data:
+        add("A1", "ACCOUNT_DATA_AVAILABILITY", {"wallet_count": len(data["wallets"]), "budget_days": 30, "notice": data["notice"], "upcoming_events": [{key: item[key] for key in ("title", "kind", "amount", "currency", "due_date")} for item in data["events"][:5]]}, {"title": "Ngân sách · dữ liệu do bạn khai báo", "href": "/finance"})
+    if data and data["reference_rate"]:
         rate = data["reference_rate"]
         add("F1", "DAILY_REFERENCE_FX", {key: rate[key] for key in ("rate", "rate_date", "is_stale", "notice")}, {"title": "Frankfurter · " + rate["rate_date"], "url": "https://frankfurter.dev/"})
-    invoices = list(db.scalars(select(Invoice).where(Invoice.student_id == user.id, Invoice.status == "OPEN").order_by(Invoice.due_date).limit(5)))
+    invoices = list(db.scalars(select(Invoice).where(Invoice.student_id == user.id, Invoice.status == "OPEN").order_by(Invoice.due_date).limit(5))) if "finance" in scopes else []
     for index, invoice in enumerate(invoices):
         add(f"I{index + 1}", "OPEN_INVOICE", {"amount_cny": display(invoice.amount_cny, "CNY"), "due_date": invoice.due_date.isoformat(), "fee_type": invoice.fee_type, "source_type": invoice.source_type}, {"title": f"{invoice.invoice_number}: {display(invoice.amount_cny, 'CNY')} CNY · {invoice.due_date}", "href": f"/invoices/{invoice.id}"})
-    result = search(Search(question=question), user, db)
+    from .documents import search_owned
+    from .config import settings
+    result = search_owned(Search(question=question), user, db, ["TEST_FIXTURE", "PUBLIC_REFERENCE"] if settings.gemini_data_mode == "DEMO_ONLY" else None) if "documents" in scopes else {"matches": []}
     for index, item in enumerate(result["matches"][:3]):
         add(f"D{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"]}, {key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind")})
-    from .models import InsurancePolicy, InsuranceClaim
-    for index, policy in enumerate(db.scalars(select(InsurancePolicy).where(InsurancePolicy.user_id == user.id, InsurancePolicy.active == True).order_by(InsurancePolicy.created_at.desc()).limit(3))):
+    from .models import InsurancePolicy
+    policies = db.scalars(select(InsurancePolicy).where(InsurancePolicy.user_id == user.id, InsurancePolicy.active == True).order_by(InsurancePolicy.created_at.desc()).limit(3)) if "insurance" in scopes else []
+    for index, policy in enumerate(policies):
         add(f"P{index + 1}", "USER_REVIEWED_POLICY_SUMMARY", {"starts_on": str(policy.starts_on), "ends_on": str(policy.ends_on), "premium": display(policy.premium, policy.currency), "currency": policy.currency, "premium_due": str(policy.premium_due), "territory": policy.territory, "benefits": policy.benefits, "revision": policy.revision, "notice": "User-reviewed summary, not verified insurance cover or claim approval."}, {"title": "Bản tóm tắt hợp đồng · " + str(policy.ends_on), "href": "/insurance"})
-    for index, claim in enumerate(db.scalars(select(InsuranceClaim).where(InsuranceClaim.user_id == user.id).order_by(InsuranceClaim.created_at.desc()).limit(3))):
-        add(f"C{index + 1}", "CLAIM_PREPARATION_STATUS", {"status": claim.status, "deadline": str(claim.deadline) if claim.deadline else None, "notice": "User-reported preparation status. No medical details, attachments, insurer submission or decision."}, {"title": "Hồ sơ chuẩn bị · " + claim.status, "href": f"/insurance/claims/{claim.id}"})
     return evidence, citations
+
+
+def cloud_context(body, request, user, db):
+    from .privacy import require_permission
+    from .gemini import ensure_non_sensitive
+    row = require_permission(db, request, user, body.privacy_revision)
+    history = [turn.model_dump() for turn in body.history] if "history" in row.scopes else []
+    previous = [turn["content"] for turn in history if turn["role"] == "user"]
+    question = " ".join([body.message, *previous[-1:]])[:500]
+    evidence, citations = assistant_evidence(question, user, db, row.scopes)
+    ensure_non_sensitive({"question": body.message, "conversation": history, "server_evidence": evidence})
+    return row, history, evidence, citations
+
+
+@router.post("/assistant/preview")
+def preview_assistant(body: AssistantInput, request: Request, user=Depends(student), db=Depends(get_db, scope="function")):
+    row, history, evidence, _ = cloud_context(body, request, user, db)
+    return {"recipient": "Google Gemini", "privacy_revision": row.revision, "scopes": row.scopes,
+            "question": body.message, "conversation": history, "server_evidence": evidence,
+            "notice": "Xem trước tại thời điểm này; không gọi Gemini. Dữ liệu có thể đổi nếu bạn chỉnh sửa trước khi gửi."}
 
 
 @router.post("/assistant")
@@ -435,16 +463,16 @@ def assistant(body: AssistantInput, request: Request, user=Depends(student), db=
         return {**fallback, "provider": "RULES", "fallback_reason": "READ_ONLY_GUARD"}
     if not gemini.configured():
         return {**fallback, "provider": "RULES", "fallback_reason": "NOT_CONFIGURED"}
+    row, history, evidence, citations = cloud_context(body, request, user, db)
     throttle(db, request, str(user.id), "GEMINI_USER", limit=20)
     throttle(db, request, "all", "GEMINI_APP", limit=60)
-    previous_questions = [turn.content for turn in body.history if turn.role == "user"]
-    retrieval_question = " ".join([body.message, *previous_questions[-1:]])[:500]
-    evidence, citations = assistant_evidence(retrieval_question, user, db)
+    audit(db, user, "AI_REQUEST_DISPATCHED", notice_version=row.notice_version, revision=row.revision,
+          scopes=row.scopes, data_mode=row.data_mode, model=settings.gemini_model, evidence_count=len(evidence))
     # Release DB/advisory locks before waiting on the external model. Only bounded
     # usage counters and reference-rate cache writes have been made here.
     db.commit()
     try:
-        result = gemini.generate(body.message, [turn.model_dump() for turn in body.history], body.language, evidence)
+        result = gemini.generate(body.message, history, body.language, evidence)
         selected = list(dict.fromkeys(result.source_ids))
         return {"method": "GEMINI_GROUNDED", "provider": "GEMINI", "model": settings.gemini_model, "intent": fallback["intent"], "answer": result.answer,
                 "citations": [citations[source_id] for source_id in selected], "actions": fallback["actions"], "executed_actions": [],

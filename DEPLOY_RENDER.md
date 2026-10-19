@@ -1,5 +1,12 @@
 # Đưa Demo lên Render từ GitHub
 
+## Quyền riêng tư Gemini (19/10/2026)
+
+Giữ `GEMINI_DATA_MODE=DEMO_ONLY` (mặc định nếu không đặt biến). Bản miễn phí không gửi sổ tài chính hoặc tóm tắt hợp đồng cá nhân sang Google. Người dùng vẫn phải tự cấp quyền theo phiên; dữ liệu tài liệu mẫu/công khai chỉ gửi khi chọn nhóm tương ứng. Không đặt `PAID_PRIVATE` để vượt giới hạn: cần kiểm tra dự án Google thực sự trả phí, điều khoản/DPA, vùng hỗ trợ và nghĩa vụ dữ liệu của đơn vị vận hành trước. Migration `c41a15fa8b20` được launcher chạy trước khi phục vụ web; dữ liệu cũ được giữ nguyên.
+
+Sau deploy, kiểm tra `python scripts/check_privacy_live.py --url https://ai4s-demo.onrender.com --with-gemini --evidence submission/evidence/privacy-render-live.json`. Lệnh tạo tài khoản QA và dùng dữ liệu tự soạn, tối đa một lượt Gemini; bỏ `--with-gemini` nếu không muốn gọi mô hình. Không gửi khóa vào tham số dòng lệnh hoặc chat.
+
+
 Phương án được chọn: hosting miễn phí để demo, chạy độc lập với máy cá nhân. Đây chưa phải môi trường vận hành tiền thật. App luôn dùng MOCK, không chuyển tiền hoặc kích hoạt bảo hiểm.
 
 ## Bấm để bắt đầu

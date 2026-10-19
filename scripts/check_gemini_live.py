@@ -32,15 +32,17 @@ def main():
         request("POST", "/finance/plans", json={"wallet_id": wallet["id"], "title": "Self-authored test rent", "kind": "EXPENSE", "amount": "1200.00", "category": "HOUSING", "due_date": (day + timedelta(days=5)).isoformat(), "recurrence": "NONE"})
         policy = "Self-authored software test policy, NOT real insurance. Claims require hospital invoices and a signed claim form. No coverage or actual payment is created by this test."
         request("POST", "/documents", files={"file": ("self-authored-gemini-qa.txt", policy.encode(), "text/plain")}, data={"title": "Self-authored QA policy", "document_kind": "TEST_FIXTURE"})
-        messages = ["30 ngày tới tôi có đủ tiền không? Hãy nêu số dư cuối kỳ đúng như nguồn.", "Giải thích lại câu trả lời trước bằng 2 câu ngắn.", "Hồ sơ bồi thường trong tài liệu tôi tải lên cần những gì?"]
+        permission = request("GET", "/privacy/ai-permission")
+        permission = request("POST", "/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "scopes": ["documents", "history"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True})
+        messages = ["Theo tài liệu mẫu, hồ sơ bồi thường cần những gì?", "Giải thích lại câu trả lời trước bằng 2 câu ngắn.", "Hồ sơ bồi thường trong tài liệu tôi tải lên cần những gì?"]
         history = []
         for index, message in enumerate(messages):
-            reply = request("POST", "/finance/assistant", json={"message": message, "use_gemini": True, "language": "vi", "history": history[-6:]})
+            reply = request("POST", "/finance/assistant", json={"message": message, "use_gemini": True, "privacy_revision": permission["revision"], "language": "vi", "history": history[-6:]})
             assert reply.get("provider") == "GEMINI", "Provider fallback: " + str(reply.get("fallback_reason"))
             assert reply["executed_actions"] == [] and reply["answer"]
             if index == 0:
-                assert any(c.get("source_id") == "B1" for c in reply["citations"])
-                checks["real_generated_budget_with_owned_source"] = True
+                assert any(c.get("source_id") == "D1" for c in reply["citations"])
+                checks["real_generated_sample_answer_with_granted_source"] = True
             if index == 1:
                 checks["real_multiturn_follow_up"] = True
             if index == 2:
@@ -56,6 +58,7 @@ def main():
         local = request("POST", "/finance/assistant", json={"message": "30 ngày tới tôi có đủ tiền không?", "use_gemini": False})
         assert local["method"] == "GROUNDED_WORKFLOW" and "-200.00 CNY" in local["answer"]
         checks["direct_lookup_still_available"] = True
+        request("POST", "/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": False})
     output = Path(args.output); output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps({"recorded_at": datetime.now(timezone.utc).isoformat(), "base_url": args.url, "elapsed_seconds": round(time.monotonic() - started, 3), "checks": checks, "replies_from_real_gemini": replies, "real_payments": False}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"PASS: {len(checks)} checks, 3 actual model replies; no payment or ledger entry created. Evidence: {output}")

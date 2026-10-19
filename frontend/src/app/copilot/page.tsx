@@ -1,6 +1,6 @@
 "use client";
 import {InsuranceEntry} from "@/components/insurance-entry";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {ArrowRight, MessageCircle, Send, ShieldCheck, Sparkles, Trash2} from "lucide-react";
 import {tr} from "@/lib/i18n";
@@ -9,6 +9,8 @@ import {api, documentKinds} from "@/lib/api";
 import {useAuth} from "@/components/shell";
 import {Heading, ErrorBox} from "@/components/ui";
 import {ContextHelp} from "@/components/user-guide";
+import {AiPrivacyControls} from "@/components/ai-privacy";
+import {privacyText, type AiPermission} from "@/lib/privacy";
 
 type Reply = {
   answer: string; intent: string; notice: string; method: string;
@@ -17,7 +19,7 @@ type Reply = {
   citations: {title: string; href?: string; url?: string; excerpt?: string; filename?: string; page?: number; source_id?: string; document_kind?: string}[];
 };
 type Availability = {gemini_configured: boolean; model: string | null};
-type Turn = {question: string; reply: Reply};
+type Turn = {question: string; reply: Reply; privacyRevision?: number};
 const reasons: Record<string, string> = {
   NOT_CONFIGURED: "Gemini chưa được cấu hình. Đang dùng tra cứu trực tiếp.",
   TIMEOUT: "Gemini phản hồi chậm. Đang dùng tra cứu trực tiếp.",
@@ -29,9 +31,13 @@ const prompts = ["30 ngày tới tôi có đủ tiền không?", "Hóa đơn nà
 
 export default function CopilotPage() {
   const {locale} = useI18n();
+  const privacy = privacyText(locale);
   const {token} = useAuth();
   const [availability, setAvailability] = useState<Availability>();
   const [useGemini, setUseGemini] = useState(false);
+  const [permission, setPermission] = useState<AiPermission>();
+  const [preview, setPreview] = useState<unknown>();
+  const inFlight = useRef(false);
   const [message, setMessage] = useState("");
   const [history, setHistory] = useState<Turn[]>([]);
   const [busy, setBusy] = useState(false);
@@ -39,21 +45,45 @@ export default function CopilotPage() {
   useEffect(() => {
     let active = true;
     api<Availability>("/finance/assistant/status", token).then(value => {
-      if (active) {setAvailability(value); setUseGemini(value.gemini_configured);}
+      if (active) {setAvailability(value); setUseGemini(false);}
     }).catch(() => {if (active) {setAvailability({gemini_configured: false, model: null}); setUseGemini(false);}});
     return () => {active = false;};
   }, [token]);
+  useEffect(() => {
+    if (!permission?.enabled || !permission.expires_at) return;
+    const timer = setTimeout(() => {setUseGemini(false); setPermission(value => value ? {...value, enabled: false, scopes: []} : value); setPreview(undefined);}, Math.max(0, new Date(permission.expires_at).getTime() - Date.now()));
+    return () => clearTimeout(timer);
+  }, [permission]);
+  useEffect(() => {
+    let active = true;
+    const refresh = () => api<AiPermission>("/privacy/ai-permission", token).then(value => {if (active) {setPermission(value); if (!value.enabled) setUseGemini(false);}}).catch(() => {if (active) {setPermission(undefined); setUseGemini(false);}});
+    refresh(); window.addEventListener("focus", refresh);
+    return () => {active = false; window.removeEventListener("focus", refresh);};
+  }, [token]);
 
-  async function ask(question: string) {
-    if (busy || !availability || question.trim().length < 2) return;
-    setBusy(true); setError(""); setMessage(question);
-    const recent = history.slice(-3).flatMap(turn => [
+  function chatBody(question: string) {
+    const recent = history.filter(turn => turn.reply.provider === "GEMINI" && turn.privacyRevision === permission?.revision).slice(-3).flatMap(turn => [
       {role: "user", content: turn.question}, {role: "assistant", content: turn.reply.answer.slice(0, 4000)},
     ]);
+    return {message: question, use_gemini: useGemini, language: locale,
+      privacy_revision: useGemini ? permission?.revision : undefined,
+      history: useGemini && permission?.scopes.includes("history") ? recent : []};
+  }
+
+  async function ask(question: string) {
+    if (inFlight.current || !availability || question.trim().length < 2 || (useGemini && !permission?.enabled)) return;
+    inFlight.current = true;
+    setBusy(true); setError(""); setMessage(question); setPreview(undefined);
     try {
-      const reply = await api<Reply>("/finance/assistant", token, {message: question, use_gemini: useGemini, language: locale, history: useGemini ? recent : []});
-      setHistory(items => [...items, {question, reply}]); setMessage("");
-    } catch (e) {setError((e as Error).message);} finally {setBusy(false);}
+      const reply = await api<Reply>("/finance/assistant", token, chatBody(question));
+      setHistory(items => [...items, {question, reply, privacyRevision: useGemini ? permission?.revision : undefined}]); setMessage("");
+    } catch (e) {setError((e as Error).message);} finally {inFlight.current = false; setBusy(false);}
+  }
+  async function showPreview() {
+    if (inFlight.current) return;
+    inFlight.current = true; setBusy(true); setError("");
+    try {setPreview(await api("/finance/assistant/preview", token, chatBody(message)));}
+    catch (e) {setError((e as Error).message);} finally {inFlight.current = false; setBusy(false);}
   }
 
   return <>
@@ -62,21 +92,22 @@ export default function CopilotPage() {
       {tr("Hỏi về kế hoạch tiền, hóa đơn đến hạn hoặc tài liệu bảo hiểm. Mỗi kết quả có dữ liệu để bạn kiểm tra.")}
     </Heading>
     <ContextHelp title={tr("Trợ lý có thể tự làm gì?")}>
-      <p>{tr("Gemini diễn giải dữ liệu tài khoản và đoạn tài liệu liên quan, có thể hiểu câu hỏi nối tiếp. Tra cứu trực tiếp dùng quy tắc của ứng dụng và không gọi AI bên ngoài.")}</p>
+      <p>{privacy.purpose}</p>
       <p>{tr("Trợ lý không tự ghi thu/chi, sửa hóa đơn, đổi tiền, thanh toán hoặc xác nhận giao dịch. Các nút bên dưới chỉ mở màn hình để bạn kiểm tra và tự thao tác.")}</p>
     </ContextHelp>
     <ErrorBox message={error}/>
     <section className="card copilot-card">
       <div className="copilot-toolbar">
         <div className="prompt-chips" role="group" aria-label={tr("Chế độ trả lời")}>
-          <button type="button" aria-pressed={useGemini} disabled={busy || !availability?.gemini_configured} onClick={() => setUseGemini(true)}><Sparkles size={15}/> Gemini AI</button>
+          <button type="button" aria-pressed={useGemini} disabled={busy || !availability?.gemini_configured || !permission?.enabled} onClick={() => setUseGemini(true)}><Sparkles size={15}/> Gemini AI</button>
           <button type="button" aria-pressed={!useGemini} disabled={busy || !availability} onClick={() => setUseGemini(false)}>{tr("Tra cứu trực tiếp")}</button>
         </div>
         <button type="button" className="text-link" disabled={busy || !history.length} onClick={() => {setHistory([]); setError("");}}><Trash2 size={15}/> {tr("Xóa cuộc trò chuyện")}</button>
       </div>
+      <AiPrivacyControls value={permission} onChange={next => {setPermission(next); setHistory([]); setPreview(undefined); if (!next.enabled) setUseGemini(false);}} onEnabled={() => setUseGemini(Boolean(availability?.gemini_configured))}/>
       <p className="small muted copilot-privacy">
         {!availability ? tr("Đang kiểm tra kết nối trợ lý…") : useGemini
-          ? <>{availability.model} · {tr("Khi gửi, câu hỏi, 3 lượt hội thoại gần nhất và dữ liệu/tài liệu liên quan được gửi tới Google Gemini. Không gửi tệp gốc. Dùng dữ liệu mẫu hoặc đã ẩn danh; nội dung nhạy cảm nên chọn Tra cứu trực tiếp. Hãy kiểm tra nguồn trước khi sử dụng câu trả lời.")}</>
+          ? <>{availability.model} · Google Gemini · {permission?.scopes.length ? permission.scopes.map(scope => privacy[scope as "history" | "documents" | "finance" | "insurance"]).join(" · ") : privacy.questionOnly}</>
           : tr("Tra cứu trực tiếp dùng dữ liệu đã lưu và quy tắc. Nội dung câu hỏi không được gửi tới Gemini.")}
         {availability && !availability.gemini_configured && <> {tr("Gemini chưa được cấu hình. Đang dùng tra cứu trực tiếp.")}</>}
       </p>
@@ -103,9 +134,16 @@ export default function CopilotPage() {
       {busy && <p role="status">{tr(useGemini ? "Gemini đang đối chiếu dữ liệu và soạn câu trả lời…" : "Đang kiểm tra dữ liệu và nguồn…")}</p>}
       <form className="copilot-composer" onSubmit={event => {event.preventDefault(); ask(message);}}>
         <label className="sr-only" htmlFor="copilot-message">{tr("Câu hỏi cho trợ lý")}</label>
-        <textarea id="copilot-message" required minLength={2} maxLength={500} rows={2} disabled={busy} value={message} onChange={e => setMessage(e.target.value)} placeholder={tr("Ví dụ: tháng tới tôi có đủ tiền trả tiền nhà không?")}/>
+        <textarea id="copilot-message" required minLength={2} maxLength={500} rows={2} disabled={busy} value={message} onChange={e => {setMessage(e.target.value); setPreview(undefined);}} onKeyDown={e => {
+          if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && e.nativeEvent.keyCode !== 229) {
+            e.preventDefault(); if (!e.repeat) e.currentTarget.form?.requestSubmit();
+          }
+        }} aria-describedby="chat-keyboard-help" placeholder={tr("Ví dụ: tháng tới tôi có đủ tiền trả tiền nhà không?")}/>
         <button className="button primary" disabled={busy || !availability || message.trim().length < 2}><Send size={17}/> {tr("Gửi câu hỏi")}</button>
       </form>
+      <p className="small muted" id="chat-keyboard-help">{privacy.keyboard}</p>
+      {useGemini && <button type="button" className="text-link" disabled={busy || message.trim().length < 2} onClick={showPreview}>{privacy.preview}</button>}
+      {preview !== undefined && <details className="privacy-preview" open><summary>{privacy.previewTitle}</summary><p className="small muted">{privacy.previewNote}</p><pre>{JSON.stringify(preview, null, 2)}</pre></details>}
       <p className="small muted">{tr("Hội thoại chỉ giữ trong tab hiện tại; tải lại trang hoặc xóa cuộc trò chuyện sẽ làm mới ngữ cảnh.")}</p>
     </section>
   </>;

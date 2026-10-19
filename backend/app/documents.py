@@ -144,7 +144,14 @@ def delete(document_id: UUID, user=Depends(student), db=Depends(get_db, scope="f
 
 @router.post("/search")
 def search(body: Search, user=Depends(student), db=Depends(get_db, scope="function")):
+    return search_owned(body, user, db)
+
+
+def search_owned(body, user, db, allowed_kinds=None):
+    """Provider callers restrict provenance BEFORE retrieval, not just after top-k."""
     query = select(PolicyDocument).where(PolicyDocument.user_id == user.id)
+    if allowed_kinds is not None:
+        query = query.where(PolicyDocument.document_kind.in_(allowed_kinds))
     if body.document_id:
         own(db, body.document_id, user)
         query = query.where(PolicyDocument.id == body.document_id)
