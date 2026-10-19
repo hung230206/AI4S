@@ -1,4 +1,5 @@
 
+import {requestFileConsent, fileConsentHeader} from "./file-consent";
 import {tr, localized, localeTag} from "@/lib/i18n";
 // Same-origin by default: friends on LAN must never call their own localhost.
 export const API = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -60,8 +61,9 @@ export function authHeaders(token: string): Record<string, string> {
 }
 
 export async function uploadPolicy(token: string, file: File, title: string, sourceUrl: string, language = "auto", documentKind = "USER_PROVIDED"): Promise<Policy> {
+  if (!await requestFileConsent("documents")) return Promise.reject(new Error(tr("Đã hủy tải lên.")));
   const body = new FormData(); body.append("file", file); body.append("title", title); body.append("source_url", sourceUrl); body.append("language", language); body.append("document_kind", documentKind);
-  const response = await fetch(`${API}/api/v1/documents`, {method: "POST", credentials: "include", headers: authHeaders(token), body});
+  const response = await fetch(`${API}/api/v1/documents`, {method: "POST", credentials: "include", headers: {...authHeaders(token), ...fileConsentHeader("documents")}, body});
   const result = await response.json();
   if (!response.ok) throw new Error(result.error?.message || tr("Không tải được tài liệu"));
   return result;

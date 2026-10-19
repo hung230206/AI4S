@@ -20,6 +20,7 @@ from pypdf import PdfReader
 import pypdfium2 as pdfium
 from sqlalchemy import select, func
 from .config import ROOT, settings
+from .file_consent import require_file_consent
 from .db import get_db
 from .models import InvoiceImport
 from .security import student, ApiError
@@ -199,7 +200,7 @@ def public_import(obj):
 
 
 @router.post("")
-def upload(file: UploadFile = File(...), language: Literal["auto", "en", "vi", "zh"] = Form("auto"), user=Depends(student), db=Depends(get_db, scope="function")):
+def upload(file: UploadFile = File(...), language: Literal["auto", "en", "vi", "zh"] = Form("auto"), file_consent=Depends(require_file_consent("invoice-ocr")), user=Depends(student), db=Depends(get_db, scope="function")):
     raw = file.file.read(MAX_BYTES + 1)
     if len(raw) > MAX_BYTES:
         raise ApiError("DOCUMENT_TOO_LARGE", "Maximum 5 MB", 413)
@@ -215,7 +216,7 @@ def upload(file: UploadFile = File(...), language: Literal["auto", "en", "vi", "
     extracted = {**suggestions(pages), "language": language}
     obj = InvoiceImport(user_id=user.id, filename=filename, original_bytes=raw, content_type=mime, sha256=sha, pages=pages, suggestions=extracted, method=method)
     db.add(obj); db.flush()
-    audit(db, user, "INVOICE_EXTRACTED", import_id=str(obj.id), method=method)
+    audit(db, user, "INVOICE_EXTRACTED", import_id=str(obj.id), method=method, processing_consent=file_consent)
     return public_import(obj)
 
 

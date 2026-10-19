@@ -44,7 +44,7 @@ def main():
             evidence["checks"].append("private_account_and_sandbox_health")
             pack = client.get("/insurance/sample-pack"); assert pack.status_code == 200
             with ZipFile(io.BytesIO(pack.content)) as archive: files = {name: archive.read(name) for name in archive.namelist()}
-            source = checked(client.post("/documents", data={"title": "C+D self-authored policy", "document_kind": "TEST_FIXTURE"}, files={"file": ("demo-policy.txt", files["demo-policy.txt"], "text/plain")}))
+            source = checked(client.post("/documents", headers={"X-Processing-Consent": "documents:files-2026-10-19-v1"}, data={"title": "C+D self-authored policy", "document_kind": "TEST_FIXTURE"}, files={"file": ("demo-policy.txt", files["demo-policy.txt"], "text/plain")}))
             fields = json.loads(files["review-fields.json"])
             body = {**fields, "document_id": source["id"], "reviewed": True, "request_key": str(uuid4())}
             invalid = {**body, "reviewed": False}
@@ -87,7 +87,7 @@ def main():
             base = f"/insurance/claims/{case['id']}"
             checked(client.post(base + "/transition", json={"revision": case["revision"], "status": "READY", "confirmed": True}), 422)
             for code, filename in [("INVOICE", "claim-invoice.txt"), ("MEDICAL_RECORD", "claim-medical-record.txt"), ("CLAIM_FORM", "claim-claim-form.txt")]:
-                case = checked(client.post(base + "/attachments", data={"revision": case["revision"], "item_code": code}, files={"file": (filename, files[filename], "text/plain")}))
+                case = checked(client.post(base + "/attachments", headers={"X-Processing-Consent": "claim-attachments:files-2026-10-19-v1"}, data={"revision": case["revision"], "item_code": code}, files={"file": (filename, files[filename], "text/plain")}))
             for item in case["checklist"]:
                 if item["offline_only"]:
                     case = checked(client.post(base + "/checklist", json={"revision": case["revision"], "code": item["code"], "prepared_externally": True}))
@@ -104,7 +104,7 @@ def main():
             assert direct["executed_actions"] == [] and any(a["href"] == "/insurance" for a in direct["actions"])
             if args.with_gemini:
                 permission = checked(client.get("/privacy/ai-permission"))
-                permission = checked(client.post("/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "scopes": ["documents"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True}))
+                permission = checked(client.post("/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "preset": "SAMPLE_ASSISTANT"}))
                 reply = checked(client.post("/finance/assistant", json={"message": "Theo tài liệu mẫu, quyền lợi ngoại trú và hồ sơ bồi thường gồm những gì? Chỉ dẫn từ tài liệu.", "use_gemini": True, "privacy_revision": permission["revision"]}))
                 assert reply.get("provider") == "GEMINI", "Gemini did not return a real provider response"
                 assert reply["executed_actions"] == [] and reply["citations"]

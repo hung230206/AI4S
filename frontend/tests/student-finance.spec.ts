@@ -73,6 +73,7 @@ test("real image OCR, mandatory review, source download, invoice plan and FX ana
   await page.goto("/invoices/new");
   await page.getByLabel("Tệp hóa đơn", {exact: true}).setInputFiles(path.join(root, ".local/qa-documents/invoice-ocr.png"));
   await page.getByRole("button", {name: "Đọc và điền thông tin", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByLabel("Mã hóa đơn", {exact: true})).toHaveValue("STUDENT-OCR-2026", {timeout: 75000});
   await expect(page.getByLabel("Số tiền (CNY)", {exact: true})).toHaveValue("800.00");
   const save = page.getByRole("button", {name: "Lưu hóa đơn", exact: true});
@@ -111,6 +112,7 @@ test("scanned policy PDF OCR produces a cited answer on a phone", async ({page})
   await page.getByLabel("Tệp chính sách (PDF, ảnh, TXT hoặc MD)", {exact: true}).setInputFiles(path.join(root, ".local/qa-documents/policy-scanned.pdf"));
   await page.getByLabel("Tên tài liệu", {exact: true}).fill("Scanned QA policy");
   await page.getByRole("button", {name: "Tải lên và trích xuất", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Scanned QA policy", exact: true})).toBeVisible({timeout: 75000});
   await page.getByRole("link", {name: "Trợ lý du học", exact: true}).click();
   await page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true}).click();

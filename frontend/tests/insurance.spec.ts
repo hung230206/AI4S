@@ -31,6 +31,7 @@ async function setup(page: Page) {
   await page.getByLabel("Tệp hợp đồng (PDF, ảnh, TXT)", {exact: true}).setInputFiles(path.join(folder, "demo-policy.txt"));
   await page.locator(".insurance-source-upload select").selectOption("TEST_FIXTURE");
   await page.getByRole("button", {name: "Tải lên và đọc tài liệu", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByText("Văn bản nguồn để đối chiếu", {exact: false}).first()).toBeVisible({timeout: 30000});
   await expect(page.getByLabel("Nạp trường từ review-fields.json (chưa lưu)", {exact: true})).toBeEnabled();
   await page.getByLabel("Nạp trường từ review-fields.json (chưa lưu)", {exact: true}).setInputFiles(path.join(folder, "review-fields.json"));
@@ -93,6 +94,7 @@ test("combined C+D journey: reviewed source, gap, premium budget, signed sandbox
   for (const [code, filename] of [["Hóa đơn viện phí", "claim-invoice.txt"], ["Bệnh án / hồ sơ khám", "claim-medical-record.txt"], ["Đơn yêu cầu bồi thường", "claim-claim-form.txt"]]) {
     const item = page.locator(".insurance-checklist article").filter({has: page.getByRole("heading", {name: code, exact: true})});
     await item.locator("input[type=file]").setInputFiles(path.join(folder, filename));
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
     await expect(item.getByText(filename, {exact: true})).toBeVisible();
   }
   for (const label of ["Giấy tờ định danh: giữ bên ngoài", "Thông tin nhận tiền: giữ bên ngoài"]) {

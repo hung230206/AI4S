@@ -1,4 +1,5 @@
 "use client";
+import {requestFileConsent, fileConsentHeader} from "@/lib/file-consent";
 import {tr, localized} from "@/lib/i18n";
 import {useI18n} from "@/components/i18n-provider";
 
@@ -18,8 +19,9 @@ export function InvoiceImportBox({onApply}: {onApply: (draft: InvoiceDraft) => v
   async function extract() {
     if (!file) return; setBusy(true); setError("");
     try {
+      if (!await requestFileConsent("invoice-ocr")) return;
       const body = new FormData(); body.append("file", file); body.append("language", language);
-      const response = await fetch(`${API}/api/v1/invoice-imports`, {method: "POST", credentials: "include", headers: authHeaders(token), body});
+      const response = await fetch(`${API}/api/v1/invoice-imports`, {method: "POST", credentials: "include", headers: {...authHeaders(token), ...fileConsentHeader("invoice-ocr")}, body});
       const result = await response.json();
       if (!response.ok) {
         const errors: Record<string, string> = {OCR_NOT_READY: tr("Nhận dạng chữ chưa sẵn sàng trên máy chủ. Bạn vẫn có thể nhập tay."), OCR_BUSY: tr("Máy chủ đang đọc chứng từ khác. Hãy thử lại sau ít phút."), OCR_TIMEOUT: tr("Tệp mất quá lâu để đọc. Hãy dùng ít trang hơn hoặc ảnh rõ hơn."), OCR_FAILED: tr("Không đọc được ảnh. Hãy chụp rõ hơn hoặc nhập thông tin bằng tay."), DOCUMENT_INVALID: tr("Tệp bị lỗi hoặc không đúng định dạng. Hãy thử bản gốc hoặc ảnh khác."), DOCUMENT_NO_TEXT: tr("Chưa đọc được chữ trong tệp. Hãy dùng ảnh rõ hơn hoặc nhập tay."), DOCUMENT_TOO_LARGE: tr("Tệp vượt giới hạn 5 MB, 5 trang hoặc 16 megapixel."), DOCUMENT_TYPE_UNSUPPORTED: tr("Hãy dùng PNG, JPG, WebP, PDF, TXT hoặc MD.")};

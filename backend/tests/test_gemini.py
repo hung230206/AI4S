@@ -28,7 +28,7 @@ def register(client):
     assert result.status_code == 200
     headers = {"X-CSRF-Token": result.json()["csrf_token"]}
     permission = client.get(P + "/privacy/ai-permission").json()
-    assert client.post(P + "/privacy/ai-permission", headers=headers, json={"enabled": True, "revision": permission["revision"], "notice_version": permission["notice_version"], "scopes": ["history", "documents", "finance", "insurance"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True}).status_code == 200
+    assert client.post(P + "/privacy/ai-permission", headers=headers, json={"enabled": True, "revision": permission["revision"], "notice_version": permission["notice_version"], "preset": "ACCOUNT_ASSISTANT"}).status_code == 200
     return headers
 
 

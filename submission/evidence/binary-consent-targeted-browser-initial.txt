@@ -1,0 +1,57 @@
+
+Running 9 tests using 1 worker
+
+(node:22460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\gemini.spec.ts:21:5 › Gemini chat sends bounded conversation context, displays sources and clears locally (6.3s)
+  ok 2 tests\gemini.spec.ts:46:5 › provider quota fallback is explicit and direct lookup sends no chat history (3.5s)
+  ok 3 tests\gemini.spec.ts:65:5 › no key keeps direct lookup available without offering an active Gemini mode (2.3s)
+  ok 4 tests\gemini.spec.ts:72:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (2.6s)
+  ok 5 tests\gemini.spec.ts:90:5 › feature click opens fixed binary consent, decline does not grant and details are public (2.1s)
+  ok 6 tests\gemini.spec.ts:110:5 › preview stays local, revoking disables Gemini and account page exposes controls (2.4s)
+  ok 7 tests\gemini.spec.ts:125:5 › an in-flight Enter request cannot be sent twice and permission dialog fits mobile locales (2.5s)
+  ok 8 tests\gemini.spec.ts:150:5 › an older UI cannot consent to a newer unseen notice version (1.3s)
+  x  9 tests\gemini.spec.ts:159:5 › OCR asks per file, declining sends no bytes and agreeing continues the original operation (7.3s)
+
+
+  1) tests\gemini.spec.ts:159:5 › OCR asks per file, declining sends no bytes and agreeing continues the original operation 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByText('Fictional invoice', { exact: true })
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" getByText('Fictional invoice', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Fictional invoice', { exact: true })
+        13 × locator resolved to <pre class="policy-source">Fictional invoice</pre>
+           - unexpected value "hidden"
+
+
+      178 |   await page.screenshot({path: "../submission/evidence/screenshots/privacy/binary-ocr-vi.png"});
+      179 |   await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+    > 180 |   await expect(page.getByText("Fictional invoice", {exact: true})).toBeVisible(); expect(uploads).toBe(1);
+          |                                                                    ^
+      181 | });
+      182 |
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\gemini.spec.ts:180:68
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\gemini-OCR-asks-per-file-d-3c098-nues-the-original-operation\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\gemini-OCR-asks-per-file-d-3c098-nues-the-original-operation\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\gemini-OCR-asks-per-file-d-3c098-nues-the-original-operation\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\gemini-OCR-asks-per-file-d-3c098-nues-the-original-operation\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\gemini.spec.ts:159:5 › OCR asks per file, declining sends no bytes and agreeing continues the original operation 
+  8 passed (33.4s)

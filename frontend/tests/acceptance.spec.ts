@@ -33,6 +33,7 @@ async function importInvoice(page: Page, filename: string, amount: string) {
   await page.getByLabel("Tệp hóa đơn", {exact: true}).setInputFiles(path.join(root, "fixtures/uploads/01_Hoa_don", filename));
   await page.getByLabel("Ngôn ngữ hóa đơn", {exact: true}).selectOption("en");
   await page.getByRole("button", {name: "Đọc và điền thông tin", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByLabel("Số tiền (CNY)", {exact: true})).toHaveValue(amount, {timeout: 75000});
   await expect(page.getByRole("button", {name: "Lưu hóa đơn", exact: true})).toBeDisabled();
   await page.getByRole("checkbox", {name: "Tôi đã đối chiếu số tiền, bên nhận, mã hóa đơn và hạn thanh toán với tệp gốc.", exact: true}).check();
@@ -65,6 +66,7 @@ test("owner completes upload, budget, policy, automatic signed payment, ledger a
   await page.getByLabel("Loại nguồn tài liệu", {exact: true}).selectOption("TEST_FIXTURE");
   await page.getByLabel("Tên tài liệu", {exact: true}).fill("Acceptance self-authored policy");
   await page.getByRole("button", {name: "Tải lên và trích xuất", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Acceptance self-authored policy", exact: true})).toBeVisible();
   await page.getByLabel("Câu hỏi hoặc từ khóa", {exact: true}).fill("hồ sơ bồi thường");
   await page.getByRole("button", {name: "Tìm trong tài liệu", exact: true}).click();

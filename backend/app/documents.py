@@ -12,6 +12,7 @@ from fastapi.responses import Response
 from pydantic import Field, AnyHttpUrl, TypeAdapter, ValidationError
 from pypdf import PdfReader
 from sqlalchemy import select
+from .file_consent import require_file_consent
 from .db import get_db
 from .models import PolicyDocument
 from .schemas import Strict
@@ -83,7 +84,7 @@ def own(db, document_id, user):
 
 
 @router.post("")
-def upload(file: UploadFile = File(...), title: str = Form(""), source_url: str = Form(""), language: Literal["auto", "en", "vi", "zh"] = Form("auto"), document_kind: Literal["USER_PROVIDED", "PUBLIC_REFERENCE", "TEST_FIXTURE"] = Form("USER_PROVIDED"), user=Depends(student), db=Depends(get_db, scope="function")):
+def upload(file: UploadFile = File(...), title: str = Form(""), source_url: str = Form(""), language: Literal["auto", "en", "vi", "zh"] = Form("auto"), document_kind: Literal["USER_PROVIDED", "PUBLIC_REFERENCE", "TEST_FIXTURE"] = Form("USER_PROVIDED"), file_consent=Depends(require_file_consent("documents")), user=Depends(student), db=Depends(get_db, scope="function")):
     raw = file.file.read(MAX_BYTES + 1)
     if len(raw) > MAX_BYTES:
         raise ApiError("DOCUMENT_TOO_LARGE", "Maximum upload size is 5 MB", 413)
@@ -108,7 +109,7 @@ def upload(file: UploadFile = File(...), title: str = Form(""), source_url: str 
     doc = PolicyDocument(user_id=user.id, title=title, filename=filename, content_type=mime, byte_size=len(raw), sha256=sha, original_bytes=raw, pages=pages, source_url=source_url or None, document_kind=document_kind)
     db.add(doc)
     db.flush()
-    audit(db, user, "POLICY_DOCUMENT_UPLOADED", document_id=str(doc.id))
+    audit(db, user, "POLICY_DOCUMENT_UPLOADED", document_id=str(doc.id), processing_consent=file_consent)
     return public_document(doc)
 
 

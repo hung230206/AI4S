@@ -9,14 +9,12 @@ async function openChat(page: Page, configured = true) {
   await expect(page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true})).toBeEnabled();
 }
 
-async function allowGemini(page: Page, history = false) {
-  await page.getByRole("button", {name: "Cài đặt quyền Gemini", exact: true}).click();
-  const dialog = page.getByRole("dialog", {name: "Quyền riêng tư AI"});
-  if (history) await dialog.getByLabel("Gửi tối đa 3 lượt Gemini gần nhất trong tab này", {exact: true}).check();
-  await dialog.getByLabel("Tôi xác nhận từ 18 tuổi trở lên.", {exact: true}).check();
-  await dialog.getByLabel(/Tôi sẽ chỉ gửi dữ liệu/).check();
-  await dialog.getByLabel(/Tôi đã đọc thông báo/).check();
-  await dialog.getByRole("button", {name: "Cho phép và bật Gemini", exact: true}).click();
+async function allowGemini(page: Page) {
+  await page.getByRole("button", {name: "Gemini AI", exact: true}).click();
+  const dialog = page.getByRole("dialog", {name: "Cho phép dùng Gemini?"});
+  await expect(dialog.getByRole("checkbox")).toHaveCount(0);
+  await expect(dialog.getByRole("button")).toHaveCount(2);
+  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(dialog).not.toBeVisible();
 }
 
@@ -27,7 +25,7 @@ test("Gemini chat sends bounded conversation context, displays sources and clear
     await route.fulfill({json: {provider: "GEMINI", model: "gemini-test", method: "GEMINI_GROUNDED", intent: "BUDGET_NEXT_STEP", answer: "Test reply from owned budget data.", executed_actions: [], actions: [{title: "Check budget", href: "/finance"}], citations: [{source_id: "B1", title: "Test budget source", href: "/finance"}, {source_id: "D1", title: "Self-authored test policy", document_kind: "TEST_FIXTURE", page: 1, excerpt: "Self-authored test excerpt."}], notice: "Test response"}});
   });
   await openChat(page);
-  await allowGemini(page, true);
+  await allowGemini(page);
   await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator(".copilot-privacy")).toContainText("Google Gemini");
   await page.getByLabel("Câu hỏi cho trợ lý", {exact: true}).fill("Giải thích ngân sách của tôi");
@@ -53,7 +51,7 @@ test("provider quota fallback is explicit and direct lookup sends no chat histor
     await route.fulfill({json: {provider: "RULES", method: "GROUNDED_WORKFLOW", answer: "Local account data", fallback_reason: mode ? "PROVIDER_RATE_LIMIT" : undefined, actions: [], citations: [], executed_actions: [], notice: "Local"}});
   });
   await openChat(page);
-  await allowGemini(page, true);
+  await allowGemini(page);
   await page.getByLabel("Câu hỏi cho trợ lý", {exact: true}).fill("Hỏi về ngân sách");
   await page.getByRole("button", {name: "Gửi câu hỏi", exact: true}).click();
   await expect(page.locator(".copilot-fallback")).toContainText("giới hạn lượt gọi");
@@ -89,19 +87,24 @@ test("Enter sends once, Shift Enter adds a newline and IME Enter never submits",
   await box.fill(" "); await box.press("Enter"); expect(sent).toHaveLength(1);
 });
 
-test("permission choices default off, cancel does not grant and privacy notice is public", async ({page}) => {
+test("feature click opens fixed binary consent, decline does not grant and details are public", async ({page}) => {
+  let grants = 0;
+  await page.route("**/api/v1/privacy/ai-permission", async route => {if (route.request().method() === "POST") grants++; await route.continue();});
   await openChat(page);
   await expect(page.getByRole("button", {name: "Tra cứu trực tiếp", exact: true})).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toBeDisabled();
-  await page.getByRole("button", {name: "Cài đặt quyền Gemini", exact: true}).click();
+  await page.getByRole("button", {name: "Gemini AI", exact: true}).click();
   const dialog = page.getByRole("dialog");
-  for (const checkbox of await dialog.getByRole("checkbox").all()) await expect(checkbox).not.toBeChecked();
-  await expect(dialog.getByRole("button", {name: "Cho phép và bật Gemini", exact: true})).toBeDisabled();
-  await expect(dialog.getByLabel("Gửi tóm tắt ngân sách và hóa đơn", {exact: true})).toBeDisabled();
-  await page.keyboard.press("Escape"); await expect(dialog).not.toBeVisible();
-  await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toBeDisabled();
+  await expect(dialog.getByRole("checkbox")).toHaveCount(0);
+  await expect(dialog.getByRole("button")).toHaveCount(2);
+  await expect(dialog.getByRole("link")).toHaveAttribute("href", "/privacy#gemini");
+  await expect(dialog).toContainText("tối đa 3 lượt Gemini");
+  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click();
+  await expect(dialog).not.toBeVisible(); expect(grants).toBe(0);
+  await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toHaveAttribute("aria-pressed", "false");
+  await page.getByRole("button", {name: "Gemini AI", exact: true}).click();
+  await page.keyboard.press("Escape"); await expect(dialog).not.toBeVisible(); expect(grants).toBe(0);
   await page.context().clearCookies(); await page.evaluate(() => localStorage.clear());
-  await page.goto("/privacy"); await expect(page.getByRole("heading", {name: "Thông báo quyền riêng tư", exact: true})).toBeVisible();
+  await page.goto("/privacy#gemini"); await expect(page.getByRole("heading", {name: "Thông báo quyền riêng tư", exact: true})).toBeVisible();
 });
 
 test("preview stays local, revoking disables Gemini and account page exposes controls", async ({page}) => {
@@ -113,10 +116,10 @@ test("preview stays local, revoking disables Gemini and account page exposes con
   await expect(page.locator(".privacy-preview")).toContainText("Explain policy coverage");
   await expect(page.locator(".privacy-preview")).toContainText("APP_GUIDE"); expect(sent).toBe(0);
   await page.getByRole("button", {name: "Thu hồi quyền Gemini", exact: true}).click();
-  await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toBeDisabled();
+  await expect(page.getByRole("button", {name: "Gemini AI", exact: true})).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator(".privacy-preview")).toHaveCount(0);
-  await page.goto("/account"); await expect(page.getByRole("heading", {name: "Quyền riêng tư AI", exact: true})).toBeVisible();
-  await expect(page.getByRole("button", {name: "Cài đặt quyền Gemini", exact: true})).toBeEnabled();
+  await page.goto("/account"); await expect(page.getByRole("heading", {name: "Cho phép dùng Gemini?", exact: true})).toBeVisible();
+  await expect(page.getByRole("button", {name: "Xem quyền Gemini", exact: true})).toBeEnabled();
 });
 
 test("an in-flight Enter request cannot be sent twice and permission dialog fits mobile locales", async ({page}) => {
@@ -130,27 +133,50 @@ test("an in-flight Enter request cannot be sent twice and permission dialog fits
   release(); await expect(page.locator(".copilot-turn")).toHaveCount(1);
   await page.setViewportSize({width: 390, height: 844});
   await page.getByRole("button", {name: "English", exact: true}).click();
-  await page.getByRole("button", {name: "Gemini permissions", exact: true}).click();
-  const mobileDialog = page.getByRole("dialog", {name: "AI privacy", exact: true});
+  await page.getByRole("button", {name: "View Gemini access", exact: true}).click();
+  const mobileDialog = page.getByRole("dialog", {name: "Allow Gemini?", exact: true});
   await expect(mobileDialog).toBeVisible();
-  await expect(mobileDialog.getByRole("heading", {name: "AI privacy", exact: true})).toBeInViewport();
+  await expect(mobileDialog.getByRole("heading", {name: "Allow Gemini?", exact: true})).toBeInViewport();
   expect(await mobileDialog.evaluate(element => element.scrollTop)).toBe(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({path: "../submission/evidence/screenshots/privacy/permission-mobile-en.png", fullPage: true});
   await page.keyboard.press("Escape");
   await page.getByRole("button", {name: "中文", exact: true}).click();
-  await page.getByRole("button", {name: "Gemini 权限设置", exact: true}).click();
-  await expect(page.getByRole("dialog", {name: "AI 隐私", exact: true})).toBeVisible();
+  await page.getByRole("button", {name: "查看 Gemini 权限", exact: true}).click();
+  await expect(page.getByRole("dialog", {name: "允许使用 Gemini？", exact: true})).toBeVisible();
   await page.screenshot({path: "../submission/evidence/screenshots/privacy/permission-mobile-zh.png", fullPage: true});
 });
 
 test("an older UI cannot consent to a newer unseen notice version", async ({page}) => {
   await page.route("**/api/v1/privacy/ai-permission", route => route.fulfill({json: {enabled: false, revision: 0, notice_version: "future-unseen-notice", scopes: [], data_mode: "DEMO_ONLY", allowed_scopes: ["history", "documents"]}}));
   await openChat(page);
-  await page.getByRole("button", {name: "Cài đặt quyền Gemini", exact: true}).click();
+  await page.getByRole("button", {name: "Xem quyền Gemini", exact: true}).click();
   const dialog = page.getByRole("dialog");
-  await dialog.getByLabel("Tôi xác nhận từ 18 tuổi trở lên.", {exact: true}).check();
-  await dialog.getByLabel(/Tôi sẽ chỉ gửi dữ liệu/).check(); await dialog.getByLabel(/Tôi đã đọc thông báo/).check();
   await expect(dialog.getByRole("alert")).toContainText("Thông báo quyền đã thay đổi");
-  await expect(dialog.getByRole("button", {name: "Cho phép và bật Gemini", exact: true})).toBeDisabled();
+  await expect(dialog.getByRole("button", {name: "Đồng ý", exact: true})).toBeDisabled();
+});
+
+test("OCR asks per file, declining sends no bytes and agreeing continues the original operation", async ({page}) => {
+  let uploads = 0;
+  await page.route("**/api/v1/invoice-imports", async route => {
+    uploads++;
+    expect(route.request().headers()["x-processing-consent"]).toBe("invoice-ocr:files-2026-10-19-v1");
+    await route.fulfill({json: {id: "qa-import", filename: "fictional.txt", method: "TEXT", invoice_id: null, pages: [{page: 1, text: "Fictional invoice"}], suggestions: {fields: {}, currency: "CNY", warnings: []}}});
+  });
+  await openChat(page);
+  await page.goto("/invoices/new");
+  await page.getByLabel("Tệp hóa đơn", {exact: true}).setInputFiles({name: "fictional.txt", mimeType: "text/plain", buffer: Buffer.from("Fictional invoice CNY 800")});
+  const read = page.getByRole("button", {name: "Đọc và điền thông tin", exact: true});
+  await read.click();
+  const dialog = page.getByRole("dialog", {name: "Cho phép đọc hóa đơn?"});
+  await expect(dialog).toBeVisible(); expect(uploads).toBe(0);
+  await expect(dialog.getByRole("checkbox")).toHaveCount(0); await expect(dialog.getByRole("button")).toHaveCount(2);
+  await expect(dialog.getByRole("link")).toHaveAttribute("href", "/privacy#invoice-ocr");
+  await dialog.getByRole("button", {name: "Không đồng ý", exact: true}).click();
+  await expect(read).toBeEnabled(); expect(uploads).toBe(0);
+  await read.click(); await expect(dialog).toBeVisible();
+  await page.screenshot({path: "../submission/evidence/screenshots/privacy/binary-ocr-vi.png"});
+  await dialog.getByRole("button", {name: "Đồng ý", exact: true}).click();
+  await page.getByText("Xem toàn văn đã đọc", {exact: true}).click();
+  await expect(page.getByText("Fictional invoice", {exact: true})).toBeVisible(); expect(uploads).toBe(1);
 });

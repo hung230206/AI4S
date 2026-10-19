@@ -1,24 +1,15 @@
-# Test quyền riêng tư và bàn phím
+# Test popup đồng ý quyền
 
-1. Mở **Trợ lý du học**. Mặc định là **Tra cứu trực tiếp**, không gửi câu hỏi tới Google.
-2. Gõ câu hỏi: **Enter gửi**, **Shift+Enter xuống dòng**. Enter trong lúc bộ gõ đang ghép chữ không gửi.
-3. Bấm **Cài đặt quyền Gemini**. Tất cả ô bổ sung/xác nhận mặc định bỏ chọn. Bấm Escape hoặc tiếp tục tra cứu trực tiếp sẽ không cấp quyền.
-4. Nếu muốn Gemini, đọc thông báo, xác nhận đủ 18 tuổi, chỉ dùng dữ liệu không nhạy cảm và đồng ý xử lý. Chọn thêm lịch sử hoặc đoạn tài liệu nếu cần. Bỏ hết nhóm bổ sung để chỉ gửi câu hỏi và hướng dẫn chung.
-5. Nhập câu hỏi, bấm **Xem dữ liệu sẽ gửi**: chưa gọi Google. Sau đó Enter để gửi.
-6. Bấm **Thu hồi quyền Gemini**. Gemini bị tắt, tra cứu nội bộ vẫn dùng được. Quyền tự hết hạn sau tối đa 1 giờ; đăng nhập ở thiết bị khác cần cấp lại.
-7. Mở **Tài khoản** để quản lý quyền. Tài khoản cá nhân có thêm **Đăng xuất trên mọi thiết bị**.
-8. Đọc **Thông báo quyền riêng tư** ở chân trang hoặc trang đăng nhập; không cần đăng nhập để đọc.
+1. Mở **Trợ lý du học**, bấm **Gemini AI**: popup hiện ngay, không có checkbox.
+2. Popup cho biết phạm vi cố định: câu hỏi, tối đa 3 lượt Gemini gần nhất và 3 đoạn tài liệu mẫu/công khai. Link **Xem chi tiết quyền và cách xử lý dữ liệu** mở thông báo đúng mục trong tab mới.
+3. Chọn **Không đồng ý** hoặc Escape: không cấp quyền; tiếp tục tra cứu trực tiếp. Chọn **Đồng ý**: bật Gemini, chưa gửi câu hỏi. Nút này cũng xác nhận điều kiện tuổi và nội dung nêu trong popup.
+4. Nhập câu hỏi. **Enter gửi**, **Shift+Enter xuống dòng**. Có thể **Xem dữ liệu sẽ gửi** trước khi gửi; xem trước chưa gọi Google.
+5. **Thu hồi quyền Gemini** ở chat hoặc Tài khoản chặn lần gửi tiếp theo. Quyền hết hạn sau tối đa 1 giờ, khi phiên đăng nhập hết hiệu lực hoặc khi thông báo thay đổi. Đăng nhập khác cần cấp riêng.
+6. Khi **Đọc và điền thông tin** hóa đơn, **Tải lên và đọc/trích xuất** tài liệu hoặc chọn chứng từ đính kèm hồ sơ: popup riêng xin phép xử lý đúng tệp đó. Chọn **Không đồng ý** thì không gửi tệp. Chọn **Đồng ý** thì tiếp tục thao tác vừa chọn. Mỗi lần tải tệp hỏi lại; không ghi nhớ bằng localStorage.
+7. Link chi tiết giải thích mục đích, bên xử lý, dữ liệu, lưu trữ, xóa và giới hạn. Các tệp được lưu/xử lý tại máy chủ ứng dụng; không cấp quyền đọc cả máy, camera, micro hay vị trí.
 
-## Vì sao có nhóm dữ liệu bị khóa?
+Gemini không nhận dữ liệu tài chính, hợp đồng cá nhân, hồ sơ bồi thường hoặc tệp gốc qua popup này. Tài liệu mẫu phải có nhãn **Dữ liệu mẫu tự soạn** hoặc **Tài liệu tham khảo công khai**. Mặc định tệp mới là **Tài liệu do bạn cung cấp** và không được gửi cho Gemini.
 
-Bản online mặc định `DEMO_ONLY`. Gemini miễn phí không phù hợp với dữ liệu cá nhân/nhạy cảm. Vì vậy nhóm ngân sách cá nhân và tóm tắt hợp đồng bị khóa ở máy chủ; tài liệu `USER_PROVIDED` không được đưa vào Gemini. Chọn **Tra cứu trực tiếp** để làm việc với chúng. Gemini có thể dùng đoạn mẫu tự soạn/tham khảo công khai nếu bạn cấp quyền; nhãn nguồn vẫn cần bạn kiểm tra.
+Từ chối quyền Gemini không cản OCR hoặc ngân sách. Từ chối xử lý một tệp chỉ hủy lần tải tệp đó. Thu hồi không xóa được nội dung đã gửi cho Google; xóa chat chỉ xóa tab. Chưa có tự xóa toàn bộ tài khoản hoặc lịch xóa tự động. Lần kiểm tra provider trước thay đổi này bị TIMEOUT; bản này không tuyên bố đã sửa khả năng đáp ứng của Google.
 
-Để test AI theo tài liệu, tải bộ mẫu từ **Bảo hiểm & hồ sơ**, upload `demo-policy.txt` với nhãn **Dữ liệu mẫu tự soạn**, cấp quyền **Gửi tối đa 3 đoạn tài liệu liên quan**, rồi hỏi về quyền lợi/hồ sơ trong tài liệu mẫu.
-
-Không cần cấp camera, micro, vị trí hay quyền đọc toàn bộ máy. Chọn tệp chỉ chọn đúng tệp; nút tải lên mới gửi tới máy chủ. Dữ liệu mẫu dùng chung không phải không gian riêng.
-
-Thu hồi không xóa được nội dung đã gửi cho Google. Xóa chat chỉ xóa nội dung trong tab. Chưa có chức năng tự xóa toàn bộ tài khoản; xem giới hạn cụ thể trong thông báo. Không dùng kết quả này để tuyên bố dự án đã được chứng nhận tuân thủ pháp luật.
-
-Lượt kiểm tra Gemini online cuối ngày 19/10/2026 bị TIMEOUT. Ứng dụng hiện thông báo và chuyển sang tra cứu nội bộ; không giả làm câu trả lời AI. Các chốt cấp/thu hồi quyền vẫn hoạt động. Kết quả cụ thể được giữ trong báo cáo triển khai.
-
-Nguồn nghiên cứu và cách triển khai: [docs/21_PRIVACY_PERMISSIONS_RESEARCH.md](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).
+Nguồn và giới hạn: [Nghiên cứu quyền riêng tư](docs/21_PRIVACY_PERMISSIONS_RESEARCH.md).

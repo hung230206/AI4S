@@ -31,9 +31,9 @@ def main():
         wallet = request("POST", "/finance/wallets", json={"name": "QA CNY ledger", "currency": "CNY", "opening_balance": "1000.00", "opening_date": day.isoformat()})
         request("POST", "/finance/plans", json={"wallet_id": wallet["id"], "title": "Self-authored test rent", "kind": "EXPENSE", "amount": "1200.00", "category": "HOUSING", "due_date": (day + timedelta(days=5)).isoformat(), "recurrence": "NONE"})
         policy = "Self-authored software test policy, NOT real insurance. Claims require hospital invoices and a signed claim form. No coverage or actual payment is created by this test."
-        request("POST", "/documents", files={"file": ("self-authored-gemini-qa.txt", policy.encode(), "text/plain")}, data={"title": "Self-authored QA policy", "document_kind": "TEST_FIXTURE"})
+        request("POST", "/documents", headers={"X-Processing-Consent": "documents:files-2026-10-19-v1"}, files={"file": ("self-authored-gemini-qa.txt", policy.encode(), "text/plain")}, data={"title": "Self-authored QA policy", "document_kind": "TEST_FIXTURE"})
         permission = request("GET", "/privacy/ai-permission")
-        permission = request("POST", "/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "scopes": ["documents", "history"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True})
+        permission = request("POST", "/privacy/ai-permission", json={"revision": permission["revision"], "notice_version": permission["notice_version"], "enabled": True, "preset": "SAMPLE_ASSISTANT"})
         messages = ["Theo tài liệu mẫu, hồ sơ bồi thường cần những gì?", "Giải thích lại câu trả lời trước bằng 2 câu ngắn.", "Hồ sơ bồi thường trong tài liệu tôi tải lên cần những gì?"]
         history = []
         for index, message in enumerate(messages):

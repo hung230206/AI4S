@@ -50,25 +50,30 @@ def main():
             status = checked(client.get("/finance/assistant/status")); assert status["gemini_configured"]
             checked(client.post("/finance/assistant", json={"message": "Explain sample policy", "use_gemini": True, "privacy_revision": 1}), 403)
             evidence["checks"].append("default_off_server_gate_and_no_financial_actions")
-            grant = {"enabled": True, "revision": permission["revision"], "notice_version": permission["notice_version"], "scopes": ["documents"], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True}
+            grant = {"enabled": True, "revision": permission["revision"], "notice_version": permission["notice_version"], "preset": "SAMPLE_ASSISTANT"}
             csrf = checked(client.post("/privacy/ai-permission", headers={"X-CSRF-Token": ""}, json=grant), 403)
             assert csrf["error"]["code"] == "CSRF_INVALID"
-            checked(client.post("/privacy/ai-permission", json={**grant, "acknowledged": False}), 403)
+            checked(client.post("/privacy/ai-permission", json={**grant, "preset": None}), 403)
             if permission["data_mode"] == "DEMO_ONLY":
-                checked(client.post("/privacy/ai-permission", json={**grant, "scopes": ["finance"]}), 403)
+                checked(client.post("/privacy/ai-permission", json={**grant, "preset": "ACCOUNT_ASSISTANT"}), 403)
             permission = checked(client.post("/privacy/ai-permission", json=grant))
             evidence["checks"].append("explicit_versioned_grant_and_unpaid_scope_restriction")
+            for path in ["/documents", "/invoice-imports", "/insurance/claims/00000000-0000-0000-0000-000000000001/attachments"]:
+                rejected = checked(client.post(path, files={"file": ("consent-probe.txt", b"Fictional consent probe", "text/plain")},
+                                               data={"revision": "1", "item_code": "INVOICE"}), 403)
+                assert rejected["error"]["code"] == "FILE_CONSENT_REQUIRED"
+            evidence["checks"].append("each_upload_purpose_requires_processing_acknowledgement")
             for name, content, kind in [
                 ("private-qa.txt", b"Insurance claim requires PRIVATE_LOCAL_SENTINEL. claim claim claim.", "USER_PROVIDED"),
                 ("sample-qa.txt", b"Self-authored fictional insurance policy for software QA. Claims require a hospital invoice and signed claim form. No insurer submission or actual payment occurs.", "TEST_FIXTURE")]:
-                checked(client.post("/documents", files={"file": (name, content, "text/plain")}, data={"document_kind": kind}))
+                checked(client.post("/documents", headers={"X-Processing-Consent": "documents:files-2026-10-19-v1"}, files={"file": (name, content, "text/plain")}, data={"document_kind": kind}))
             body = {"message": "According to the sample policy, what documents are needed for a claim?", "use_gemini": True, "privacy_revision": permission["revision"], "history": [{"role": "user", "content": "LOCAL_HISTORY_SENTINEL"}]}
             preview = checked(client.post("/finance/assistant/preview", json=body))
-            assert preview["conversation"] == [] and "LOCAL_HISTORY_SENTINEL" not in json.dumps(preview)
+            assert len(preview["conversation"]) == 1 and "LOCAL_HISTORY_SENTINEL" in json.dumps(preview)
             if permission["data_mode"] == "DEMO_ONLY": assert "PRIVATE_LOCAL_SENTINEL" not in json.dumps(preview)
             assert "hospital invoice" in json.dumps(preview)
             assert all(e["kind"] not in ["BUDGET", "USER_REVIEWED_POLICY_SUMMARY", "CLAIM_PREPARATION_STATUS"] for e in preview["server_evidence"])
-            evidence["checks"].append("preview_is_local_and_filters_ungranted_history_and_private_sources")
+            evidence["checks"].append("preview_is_local_and_includes_agreed_history_and_filters_private_sources")
             blocked = checked(client.post("/finance/assistant", json={**body, "message": "Email: fake-student@example.com"}), 422)
             assert blocked["error"]["code"] == "AI_SENSITIVE_DATA"
             evidence["checks"].append("sensitive_data_tripwire_before_provider")

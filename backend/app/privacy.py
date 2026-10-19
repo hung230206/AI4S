@@ -12,18 +12,17 @@ from .security import ApiError, student, lock_user
 from .services import audit, iso
 
 router = APIRouter(prefix="/api/v1/privacy", tags=["Privacy permissions"])
-NOTICE_VERSION = "ai-privacy-2026-10-19-v1"
-Scope = Literal["history", "documents", "finance", "insurance"]
+NOTICE_VERSION = "ai-privacy-2026-10-19-v2"
+# Purpose presets are defined by the server, never arbitrary client permissions.
+PRESETS = {"QUESTION_ONLY": [], "SAMPLE_ASSISTANT": ["history", "documents"],
+           "ACCOUNT_ASSISTANT": ["history", "documents", "finance", "insurance"]}
 
 
 class PermissionInput(Strict):
     revision: int = Field(ge=0)
     notice_version: str
     enabled: bool
-    scopes: list[Scope] = Field(default_factory=list, max_length=4)
-    acknowledged: bool = False
-    adult_confirmed: bool = False
-    non_sensitive_confirmed: bool = False
+    preset: Literal["QUESTION_ONLY", "SAMPLE_ASSISTANT", "ACCOUNT_ASSISTANT"] | None = None
 
 
 def permission(db, request, user):
@@ -57,9 +56,9 @@ def set_permission(body: PermissionInput, request: Request, user=Depends(student
     if body.revision != (row.revision if row else 0):
         raise ApiError("PRIVACY_CHANGED", "Quyền đã thay đổi ở tab khác. Tải lại cài đặt quyền riêng tư.", 409)
     if body.enabled:
-        if body.notice_version != NOTICE_VERSION or not body.acknowledged or not body.adult_confirmed or not body.non_sensitive_confirmed:
-            raise ApiError("AI_CONSENT_REQUIRED", "Hãy đọc thông báo và xác nhận các lựa chọn trước khi bật Gemini.", 403)
-        if settings.gemini_data_mode == "DEMO_ONLY" and set(body.scopes) & {"finance", "insurance"}:
+        if body.notice_version != NOTICE_VERSION or body.preset is None:
+            raise ApiError("AI_CONSENT_REQUIRED", "Hãy đọc thông báo và chọn Đồng ý trước khi bật Gemini.", 403)
+        if settings.gemini_data_mode == "DEMO_ONLY" and body.preset == "ACCOUNT_ASSISTANT":
             raise ApiError("AI_SCOPE_UNAVAILABLE", "Gemini demo không nhận dữ liệu tài chính hoặc hợp đồng cá nhân. Dùng tra cứu trực tiếp.", 403)
     if row is None:
         row = AiPermission(subject=request.state.privacy_subject, user_id=user.id, revision=0)
@@ -67,7 +66,7 @@ def set_permission(body: PermissionInput, request: Request, user=Depends(student
     row.revision += 1
     row.notice_version = NOTICE_VERSION
     row.active = body.enabled
-    row.scopes = sorted(set(body.scopes)) if body.enabled else []
+    row.scopes = PRESETS[body.preset].copy() if body.enabled else []
     row.data_mode = settings.gemini_data_mode
     row.updated_at = now()
     row.granted_at = now() if body.enabled else None

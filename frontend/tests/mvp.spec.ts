@@ -90,6 +90,7 @@ test("private policy upload, cited search, download and delete on mobile", async
   await page.getByLabel("Tệp chính sách (PDF, ảnh, TXT hoặc MD)", {exact: true}).setInputFiles({name: "browser-policy.txt", mimeType: "text/plain", buffer: Buffer.from("QA policy document. Annual premium CNY 800.\n\nClaims require hospital invoices and a completed claim form.\n\nExclusions: elective cosmetic treatment.")});
   await page.getByLabel("Tên tài liệu", {exact: true}).fill("Browser uploaded policy");
   await page.getByRole("button", {name: "Tải lên và trích xuất", exact: true}).click();
+  await page.getByRole("dialog").getByRole("button", {name: "Đồng ý", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Browser uploaded policy", exact: true})).toBeVisible();
   await page.getByLabel("Câu hỏi hoặc từ khóa", {exact: true}).fill("hồ sơ bồi thường");
   await page.getByRole("button", {name: "Tìm trong tài liệu", exact: true}).click();

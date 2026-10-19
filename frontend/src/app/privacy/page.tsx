@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import {useI18n} from "@/components/i18n-provider";
-import {privacyText} from "@/lib/privacy";
+import {privacyText, fileNotice, AI_PRIVACY_NOTICE_VERSION} from "@/lib/privacy";
 
 export default function PrivacyPage() {
   const {locale} = useI18n(); const t = privacyText(locale);
@@ -30,5 +30,5 @@ export default function PrivacyPage() {
     ["Cookies and device access", "A necessary HttpOnly cookie maintains login. Language, theme and guide preferences are stored in your browser. We request no camera, microphone, location, contacts or full-disk permissions. Selecting a file only enables processing that file after you press upload."],
     ["Limits and contact", "This competition MVP has no legal compliance certification or independent audit. Sensitive-data detection cannot guarantee anonymity. Test with fictional or anonymised data. Contact the project team through the source repository; do not post personal information in public issues."],
   ];
-  return <main className="privacy-page"><Link className="text-link" href="/account">← Demo</Link><h1>{t.policy}</h1><p className="small muted">19/10/2026 · ai-privacy-2026-10-19-v1</p>{sections.map(([title, body]) => <section key={title}><h2>{title}</h2><p>{body}</p></section>)}<p><a className="text-link" href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noreferrer">{t.terms} ↗</a> · <a className="text-link" href="https://github.com/hung230206/AI4S" target="_blank" rel="noreferrer">GitHub</a></p></main>;
+  return <main className="privacy-page"><Link className="text-link" href="/account">← Demo</Link><h1>{t.policy}</h1><p className="small muted">19/10/2026 · {AI_PRIVACY_NOTICE_VERSION}</p>{sections.map(([title, body]) => <section id={title === t.title || title === "Quyền tùy chọn cho Gemini" ? "gemini" : undefined} key={title}><h2>{title}</h2><p>{body}</p></section>)}{(["documents", "invoice-ocr", "claim-attachments"] as const).map(purpose => {const notice = fileNotice(locale, purpose); return <section id={purpose} key={purpose}><h2>{notice.title}</h2><p>{notice.summary} {notice.limit}</p><p>{t.upload}</p><p>{sections[4][1]}</p></section>;})}<p><a className="text-link" href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noreferrer">{t.terms} ↗</a> · <a className="text-link" href="https://github.com/hung230206/AI4S" target="_blank" rel="noreferrer">GitHub</a></p></main>;
 }

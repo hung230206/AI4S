@@ -35,6 +35,7 @@ export default function CopilotPage() {
   const {token} = useAuth();
   const [availability, setAvailability] = useState<Availability>();
   const [useGemini, setUseGemini] = useState(false);
+  const [permissionRequested, setPermissionRequested] = useState(false);
   const [permission, setPermission] = useState<AiPermission>();
   const [preview, setPreview] = useState<unknown>();
   const inFlight = useRef(false);
@@ -99,12 +100,12 @@ export default function CopilotPage() {
     <section className="card copilot-card">
       <div className="copilot-toolbar">
         <div className="prompt-chips" role="group" aria-label={tr("Chế độ trả lời")}>
-          <button type="button" aria-pressed={useGemini} disabled={busy || !availability?.gemini_configured || !permission?.enabled} onClick={() => setUseGemini(true)}><Sparkles size={15}/> Gemini AI</button>
+          <button type="button" aria-pressed={useGemini} disabled={busy || !availability?.gemini_configured || !permission} onClick={() => permission?.enabled ? setUseGemini(true) : setPermissionRequested(true)}><Sparkles size={15}/> Gemini AI</button>
           <button type="button" aria-pressed={!useGemini} disabled={busy || !availability} onClick={() => setUseGemini(false)}>{tr("Tra cứu trực tiếp")}</button>
         </div>
         <button type="button" className="text-link" disabled={busy || !history.length} onClick={() => {setHistory([]); setError("");}}><Trash2 size={15}/> {tr("Xóa cuộc trò chuyện")}</button>
       </div>
-      <AiPrivacyControls value={permission} onChange={next => {setPermission(next); setHistory([]); setPreview(undefined); if (!next.enabled) setUseGemini(false);}} onEnabled={() => setUseGemini(Boolean(availability?.gemini_configured))}/>
+      <AiPrivacyControls requested={permissionRequested} onDismiss={() => setPermissionRequested(false)} value={permission} onChange={next => {setPermission(next); setHistory([]); setPreview(undefined); if (!next.enabled) setUseGemini(false);}} onEnabled={() => setUseGemini(Boolean(availability?.gemini_configured))}/>
       <p className="small muted copilot-privacy">
         {!availability ? tr("Đang kiểm tra kết nối trợ lý…") : useGemini
           ? <>{availability.model} · Google Gemini · {permission?.scopes.length ? permission.scopes.map(scope => privacy[scope as "history" | "documents" | "finance" | "insurance"]).join(" · ") : privacy.questionOnly}</>

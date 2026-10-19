@@ -1,5 +1,6 @@
 "use client";
 import {UploadPrivacyNotice} from "@/components/ai-privacy";
+import {requestFileConsent, fileConsentHeader} from "@/lib/file-consent";
 import {use, useCallback, useEffect, useState} from "react";
 import Link from "next/link";
 import {api, API, authHeaders, downloadOwned, time} from "@/lib/api";
@@ -19,8 +20,9 @@ export default function ClaimDetailPage({params}: {params: Promise<{id: string}>
   async function act(action: () => Promise<void>) {if (busy) return; setBusy(true); setError(""); try {await action();} catch(e) {setError((e as Error).message);} finally {setBusy(false);}}
   async function attach(file: File | undefined, code: string) {
     if (!file || !data) return;
+    if (!await requestFileConsent("claim-attachments")) return;
     const body = new FormData(); body.append("file", file); body.append("item_code", code); body.append("revision", String(data.revision));
-    const response = await fetch(`${API}/api/v1/insurance/claims/${id}/attachments`, {method: "POST", credentials: "include", headers: authHeaders(token), body});
+    const response = await fetch(`${API}/api/v1/insurance/claims/${id}/attachments`, {method: "POST", credentials: "include", headers: {...authHeaders(token), ...fileConsentHeader("claim-attachments")}, body});
     const result = await response.json();
     if (!response.ok) throw new Error(result.error?.message || "Upload failed");
     setData(result); setTarget("");

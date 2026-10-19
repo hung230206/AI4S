@@ -415,7 +415,7 @@ def assistant_evidence(question, user, db, scopes=None):
         add(f"I{index + 1}", "OPEN_INVOICE", {"amount_cny": display(invoice.amount_cny, "CNY"), "due_date": invoice.due_date.isoformat(), "fee_type": invoice.fee_type, "source_type": invoice.source_type}, {"title": f"{invoice.invoice_number}: {display(invoice.amount_cny, 'CNY')} CNY · {invoice.due_date}", "href": f"/invoices/{invoice.id}"})
     from .documents import search_owned
     from .config import settings
-    result = search_owned(Search(question=question), user, db, ["TEST_FIXTURE", "PUBLIC_REFERENCE"] if settings.gemini_data_mode == "DEMO_ONLY" else None) if "documents" in scopes else {"matches": []}
+    result = search_owned(Search(question=question), user, db, ["TEST_FIXTURE", "PUBLIC_REFERENCE"] if settings.gemini_data_mode == "DEMO_ONLY" or not {"finance", "insurance"} & set(scopes) else None) if "documents" in scopes else {"matches": []}
     for index, item in enumerate(result["matches"][:3]):
         add(f"D{index + 1}", "ORIGINAL_DOCUMENT_EXCERPT", {"title": item["title"][:160], "page": item["page"], "excerpt": item["excerpt"], "document_kind": item["document_kind"]}, {key: item[key] for key in ("title", "filename", "page", "excerpt", "document_id", "document_kind")})
     from .models import InsurancePolicy

@@ -20,7 +20,7 @@ def account(client):
 
 def grant(client, headers, scopes=None, **extra):
     state = client.get(P + "/privacy/ai-permission", headers=headers).json()
-    return client.post(P + "/privacy/ai-permission", headers=headers, json={"revision": state["revision"], "notice_version": state["notice_version"], "enabled": True, "scopes": scopes or [], "acknowledged": True, "adult_confirmed": True, "non_sensitive_confirmed": True, **extra})
+    return client.post(P + "/privacy/ai-permission", headers=headers, json={"revision": state["revision"], "notice_version": state["notice_version"], "enabled": True, "preset": ("ACCOUNT_ASSISTANT" if set(scopes or []) & {"finance", "insurance"} else "SAMPLE_ASSISTANT" if scopes else "QUESTION_ONLY"), **extra})
 
 
 def ask(client, headers, revision=None, **extra):
@@ -50,7 +50,7 @@ def test_default_no_consent_is_fail_closed_and_direct_still_works(client, provid
     assert provider == []
 
 
-@pytest.mark.parametrize("change", [{"acknowledged": False}, {"adult_confirmed": False}, {"non_sensitive_confirmed": False}, {"notice_version": "old"}])
+@pytest.mark.parametrize("change", [{"preset": None}, {"notice_version": "old"}])
 def test_no_preticked_or_old_notice_consent(client, provider, change):
     h = account(client)
     assert grant(client, h, **change).status_code == 403
@@ -162,3 +162,41 @@ def test_demo_logout_revokes_prior_ai_permission(client, provider, student_heade
     assert grant(client, student_headers).status_code == 200
     assert client.post(P + "/auth/logout", headers=student_headers, json={}).status_code == 200
     assert ask(client, student_headers, 1).status_code == 403
+
+
+def test_fixed_preset_cannot_be_extended_by_client(client, provider):
+    h = account(client)
+    s = grant(client, h, ["documents"]).json()
+    assert set(s["scopes"]) == {"history", "documents"}
+    assert client.post(P + "/privacy/ai-permission", headers=h, json={"revision": s["revision"], "notice_version": s["notice_version"], "enabled": True, "preset": "SAMPLE_ASSISTANT", "scopes": ["finance"]}).status_code == 422
+    assert grant(client, h, preset="INVENTED_PURPOSE").status_code == 422
+    assert grant(client, h, preset="ACCOUNT_ASSISTANT").status_code == 403
+
+
+@pytest.mark.parametrize("path,purpose", [("/documents", "documents"), ("/invoice-imports", "invoice-ocr"), ("/insurance/claims/00000000-0000-0000-0000-000000000001/attachments", "claim-attachments")])
+@pytest.mark.parametrize("consent", ["", "documents:old-notice", "unrelated:files-2026-10-19-v1"])
+def test_file_consent_rejected_before_processing(client, student_headers, monkeypatch, path, purpose, consent):
+    from app import documents, ocr
+    monkeypatch.setattr(documents, "extract", lambda *a: pytest.fail("No consent must never read document"))
+    monkeypatch.setattr(ocr, "extract_file", lambda *a: pytest.fail("No consent must never run OCR"))
+    r = client.post(P + path, headers={**student_headers, "X-Processing-Consent": consent},
+                    files={"file": ("fictional.txt", b"Fictional data")}, data={"item_code": "INVOICE", "revision": "1"})
+    assert r.status_code == 403 and r.json()["error"]["code"] == "FILE_CONSENT_REQUIRED"
+
+
+def test_sample_preset_excludes_personal_sources_even_on_paid_project(client, provider, monkeypatch):
+    monkeypatch.setattr(settings, "gemini_data_mode", "PAID_PRIVATE")
+    h = account(client)
+    assert client.post(P + "/documents", headers=h, files={"file": ("private.txt", b"Insurance claim checklist PRIVATE_PAID_DOCUMENT.")}).status_code == 200
+    assert grant(client, h, ["documents"]).status_code == 200
+    assert ask(client, h, 1).status_code == 200
+    assert "PRIVATE_PAID_DOCUMENT" not in json.dumps(provider)
+
+
+def test_upload_acknowledgement_allowed_on_configured_frontend_origin(client):
+    origin = settings.frontend_origins[0]
+    r = client.options(P + "/documents", headers={"Origin": origin,
+        "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "x-processing-consent,x-csrf-token"})
+    assert r.status_code == 200
+    assert r.headers["access-control-allow-origin"] == origin
+    assert "X-Processing-Consent" in r.headers["access-control-allow-headers"]

@@ -42,7 +42,7 @@ async def lifespan(app):
 
 
 app = FastAPI(title="Insurance Cross-border Payment • MOCK ONLY", version="1.0.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=settings.frontend_origins, allow_credentials=True, allow_methods=["GET", "POST"], allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-CSRF-Token"])
+app.add_middleware(CORSMiddleware, allow_origins=settings.frontend_origins, allow_credentials=True, allow_methods=["GET", "POST"], allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-CSRF-Token", "X-Processing-Consent"])
 app.include_router(accounts_router)
 app.include_router(billing_router)
 app.include_router(documents_router)

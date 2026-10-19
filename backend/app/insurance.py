@@ -17,6 +17,7 @@ from fastapi.responses import Response
 from pydantic import Field, field_validator, model_validator
 from sqlalchemy import select, func
 from sqlalchemy.orm import defer
+from .file_consent import require_file_consent
 from .db import get_db
 from .models import InsurancePolicy, InsuranceClaim, ClaimAttachment, FinancePlan, PolicyDocument, Invoice, now
 from .schemas import Strict
@@ -469,7 +470,7 @@ def transition(claim_id: UUID, body: TransitionInput, user=Depends(student), db=
 
 @router.post("/claims/{claim_id}/attachments")
 def upload_attachment(claim_id: UUID, file: UploadFile = File(...), item_code: str = Form(...),
-                      revision: int = Form(...), user=Depends(student), db=Depends(get_db, scope="function")):
+                      revision: int = Form(...), file_consent=Depends(require_file_consent("claim-attachments")), user=Depends(student), db=Depends(get_db, scope="function")):
     lock_user(db, user)
     claim = own_claim(db, claim_id, user); mutable(claim)
     if claim.revision != revision: raise ApiError("STALE_REVISION", "Hồ sơ đã thay đổi; hãy tải lại.", 409)
@@ -498,7 +499,7 @@ def upload_attachment(claim_id: UUID, file: UploadFile = File(...), item_code: s
     item = ClaimAttachment(user_id=user.id, claim_id=claim.id, item_code=item_code, filename=name,
                            content_type=mime, byte_size=len(raw), sha256=sha, original_bytes=raw)
     db.add(item); db.flush(); claim.status = "DRAFT"
-    journal(claim, "ATTACHMENT_ADDED", attachment_id=str(item.id), sha256=sha, item_code=item_code)
+    journal(claim, "ATTACHMENT_ADDED", attachment_id=str(item.id), sha256=sha, item_code=item_code, processing_consent=file_consent)
     return claim_out(claim, db)
 
 

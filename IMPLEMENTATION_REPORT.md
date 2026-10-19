@@ -1,3 +1,41 @@
+# Current release — feature-triggered binary permissions (19 October 2026)
+
+## Outcome
+
+Clicking Gemini, invoice OCR, policy/document upload or a claim attachment now opens a purpose-specific native modal. It has a fixed data/purpose summary, a details hyperlink that opens the matching public privacy section in a new tab, and exactly **Agree / Disagree**. There is no scope or acknowledgement checkbox picker. VI/EN/ZH are supported, with centered desktop and scrollable mobile dialogs.
+
+Gemini uses the server-defined SAMPLE_ASSISTANT preset: question, up to three previous Gemini turns from the same grant, and up to three sample/public excerpts. No personal finance/policy summaries or claim records are granted by this UI, including in paid mode. Agreement enables Gemini without sending a question. Refusal keeps direct lookup; withdrawal remains one click. Existing session/revision/expiry checks remain. The v2 notice invalidates v1 grants.
+
+Each file operation asks again, before the browser sends any bytes. Agree continues the original operation; Disagree/Escape cancels it. Upload endpoints require a current purpose/version processing acknowledgement before handler extraction/storage. Normal authentication, CSRF, ownership and file validation remain. The new header is allowed only under the existing configured-origin CORS policy. Successful new writes record the notice identifier without file text. The header is a declaration, not proof of a human click; custom clients can supply it, and the framework may spool multipart bytes before rejecting a request. No device permission, whole-disk access or payment authority is granted.
+
+Deployment: source and local acceptance complete; live release receipt is recorded below after deployment.
+
+## Actual validation
+
+| Check | Result | Evidence |
+|---|---|---|
+| Baseline backend | 184 passed, 337.69s | binary-consent-baseline.xml |
+| Targeted privacy + Gemini | 55 passed, 33.00s | binary-consent-targeted.xml / .txt |
+| Intermediate complete backend | 193 passed, 159.17s | binary-consent-full-backend.xml / .txt |
+| Privacy + CORS after final header change | 30 passed, 36.33s | binary-consent-cors-targeted.xml / .txt |
+| Final complete backend | 194 passed, 130.90s | binary-consent-final-backend.xml / .txt |
+| Standalone production browser suite | 30 passed, no failures/flaky/skipped, 2.5m | binary-consent-browser-production.json / .txt |
+| Lint / TypeScript / standalone webpack build | exit 0 each | binary-consent-lint.txt / -typescript.txt / -build.txt |
+| Actual local C+D HTTP acceptance | 7 groups PASS | binary-consent-insurance-local.json |
+| Exact configured-secret scan of browser bundles | 55 files, no matches | binary-consent-bundle-scan.json |
+
+Evidence paths above are under `submission/evidence/`. Two development-operator browser cases were explicitly excluded from the production suite; operator endpoints remain covered by backend tests. Separate isolated `_test` databases were used for pytest and browser/HTTP acceptance; no user database was cleared. The single backend warning is the existing Starlette/httpx TestClient deprecation. No new migration is required.
+
+Initial lint/TypeScript issues from the dialog trigger were corrected. The first targeted browser run had 8 passes and one test assertion against text inside a collapsed details element; the test now opens it, and the complete final run passes all 30. One early targeted pytest invocation was stopped when it overlapped the baseline test database; only completed subsequent runs count. Initial browser evidence is retained with `-initial` names.
+
+Gemini is mocked in automated tests; this change performs zero real model calls and moves no real funds. The earlier online provider TIMEOUT remains a separate known limitation; this UX release does not claim to fix Google availability. See the previous release evidence below for that failed provider check. There is still no full account erasure/automatic retention or independent legal/privacy certification.
+
+Commands from the backend directory: `.venv/Scripts/python.exe -m pytest -q`; Unix equivalent `.venv/bin/python -m pytest -q`. From frontend: `npm run lint`, `npx tsc --noEmit`, `npm run build -- --webpack`. Browser PowerShell: `$env:PLAYWRIGHT_BASE_URL='http://localhost:3104'; npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt' --reporter=list,json`. Unix: `PLAYWRIGHT_BASE_URL=http://localhost:3104 npx playwright test --grep-invert 'human consent, asynchronous|failure has no receipt' --reporter=list,json`. Browser fixtures must inherit the same isolated DATABASE_URL as the QA API.
+
+Research/limits: `docs/21_PRIVACY_PERMISSIONS_RESEARCH.md`. Short user test instructions: `PRIVACY_GUIDE.md`. Updated API extension: `contracts/privacy.openapi.json` (8 paths, 8 schema definitions). Earlier release descriptions below are historical; their checkbox/scopes UX is superseded.
+
+---
+
 # Latest update: optional-AI privacy and keyboard — 19 October 2026
 
 This section supersedes older Gemini outbound-data defaults below. Implementation and local/online privacy verification are complete.

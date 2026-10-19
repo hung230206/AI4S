@@ -1,3 +1,7 @@
+# Current permission UX amendment — 19 October 2026
+
+Feature-triggered native dialogs now offer only Agree / Disagree and a purpose-specific details hyperlink. Gemini uses the fixed server SAMPLE_ASSISTANT preset; no scope checkboxes. Old v1 AI grants are invalidated. Each document/OCR/claim upload asks separately and the API verifies its purpose/version processing acknowledgement. Decline cancels the browser request. AI grant expiry, revision, session isolation and revocation remain enforced. The sample preset excludes personal-source documents even in paid mode. This does not claim legal certification, device permissions or cryptographic proof of a click. Current exact validation is in IMPLEMENTATION_REPORT.md and binary-consent-* evidence. Earlier sections below describe previous releases.
+
 # Current privacy permission assessment — 19 October 2026
 
 This section supersedes older Gemini outbound-data defaults below. Contest mapping and primary-source research: [docs/21_PRIVACY_PERMISSIONS_RESEARCH.md](../docs/21_PRIVACY_PERMISSIONS_RESEARCH.md). The published contest asks for permission tiers and known risks; no compliance certification is claimed.

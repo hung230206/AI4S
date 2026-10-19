@@ -38,9 +38,17 @@ def clean_database(migrate):
         seed(db)
 
 
+class ConsentingTestClient(TestClient):
+    def request(self, method, url, **kwargs):
+        if kwargs.get("files"):
+            purpose = "documents" if str(url).endswith("/documents") else "invoice-ocr" if str(url).endswith("/invoice-imports") else "claim-attachments"
+            kwargs["headers"] = {"X-Processing-Consent": f"{purpose}:files-2026-10-19-v1", **(kwargs.get("headers") or {})}
+        return super().request(method, url, **kwargs)
+
+
 @pytest.fixture
 def client():
-    with TestClient(app) as value:
+    with ConsentingTestClient(app) as value:
         yield value
 
 

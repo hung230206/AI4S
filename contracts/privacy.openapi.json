@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Demo optional AI privacy and assistant contract",
-    "version": "1.0.0"
+    "title": "Demo purpose consent and assistant contract",
+    "version": "2.0.0"
   },
   "paths": {
     "/api/v1/auth/logout-all": {
@@ -12,6 +12,140 @@
         ],
         "summary": "Logout All",
         "operationId": "logout_all_api_v1_auth_logout_all_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Csrf-Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents": {
+      "post": {
+        "tags": [
+          "Private policy documents"
+        ],
+        "summary": "Upload",
+        "operationId": "upload_api_v1_documents_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-processing-consent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Processing-Consent"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Csrf-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_api_v1_documents_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Private policy documents"
+        ],
+        "summary": "Documents",
+        "operationId": "documents_api_v1_documents_get",
         "security": [
           {
             "HTTPBearer": []
@@ -245,6 +379,178 @@
         }
       }
     },
+    "/api/v1/invoice-imports": {
+      "post": {
+        "tags": [
+          "Reviewed local invoice OCR"
+        ],
+        "summary": "Upload",
+        "operationId": "upload_api_v1_invoice_imports_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "x-processing-consent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Processing-Consent"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Csrf-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_api_v1_invoice_imports_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/insurance/claims/{claim_id}/attachments": {
+      "post": {
+        "tags": [
+          "Insurance portfolio and claim preparation"
+        ],
+        "summary": "Upload Attachment",
+        "operationId": "upload_attachment_api_v1_insurance_claims__claim_id__attachments_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "claim_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Claim Id"
+            }
+          },
+          {
+            "name": "x-processing-consent",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Processing-Consent"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Csrf-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_attachment_api_v1_insurance_claims__claim_id__attachments_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/privacy/ai-permission": {
       "get": {
         "tags": [
@@ -417,6 +723,100 @@
         ],
         "title": "AssistantInput"
       },
+      "Body_upload_api_v1_documents_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url",
+            "default": ""
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "en",
+              "vi",
+              "zh"
+            ],
+            "title": "Language",
+            "default": "auto"
+          },
+          "document_kind": {
+            "type": "string",
+            "enum": [
+              "USER_PROVIDED",
+              "PUBLIC_REFERENCE",
+              "TEST_FIXTURE"
+            ],
+            "title": "Document Kind",
+            "default": "USER_PROVIDED"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_api_v1_documents_post"
+      },
+      "Body_upload_api_v1_invoice_imports_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "en",
+              "vi",
+              "zh"
+            ],
+            "title": "Language",
+            "default": "auto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_api_v1_invoice_imports_post"
+      },
+      "Body_upload_attachment_api_v1_insurance_claims__claim_id__attachments_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "item_code": {
+            "type": "string",
+            "title": "Item Code"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "item_code",
+          "revision"
+        ],
+        "title": "Body_upload_attachment_api_v1_insurance_claims__claim_id__attachments_post"
+      },
       "ChatTurn": {
         "properties": {
           "role": {
@@ -470,34 +870,21 @@
             "type": "boolean",
             "title": "Enabled"
           },
-          "scopes": {
-            "items": {
-              "type": "string",
-              "enum": [
-                "history",
-                "documents",
-                "finance",
-                "insurance"
-              ]
-            },
-            "type": "array",
-            "maxItems": 4,
-            "title": "Scopes"
-          },
-          "acknowledged": {
-            "type": "boolean",
-            "title": "Acknowledged",
-            "default": false
-          },
-          "adult_confirmed": {
-            "type": "boolean",
-            "title": "Adult Confirmed",
-            "default": false
-          },
-          "non_sensitive_confirmed": {
-            "type": "boolean",
-            "title": "Non Sensitive Confirmed",
-            "default": false
+          "preset": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "QUESTION_ONLY",
+                  "SAMPLE_ASSISTANT",
+                  "ACCOUNT_ASSISTANT"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preset"
           }
         },
         "additionalProperties": false,
@@ -548,17 +935,6 @@
           "type"
         ],
         "title": "ValidationError"
-      }
-    },
-    "securitySchemes": {
-      "HTTPBearer": {
-        "type": "http",
-        "scheme": "bearer"
-      },
-      "APIKeyCookie": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "baoan_session"
       }
     }
   }
