@@ -1,0 +1,120 @@
+{
+  "status": "WAITING",
+  "observations": [
+    {
+      "at": "2026-10-19T10:10:54.521638+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:11:19.647703+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:11:45.982739+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:12:12.378973+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:12:38.919464+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:13:05.307929+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:13:31.701609+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:13:58.047463+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:14:24.440820+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:14:49.794905+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:15:16.242300+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:15:42.624983+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:16:09.008542+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:16:34.294592+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:17:00.770045+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:17:27.118769+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:17:53.466308+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:18:19.830775+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:18:46.296222+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:19:12.703084+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:19:38.082164+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:20:04.466618+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    },
+    {
+      "at": "2026-10-19T10:20:29.857835+00:00",
+      "http_status": 200,
+      "configured_model": "gemini-3.8-flash"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "application_release": "ddde4217a515580d867fcba241cee42d4feed25c",
+  "origin": "https://ai4s-demo.onrender.com",
+  "verification": "Actual HTTPS via deployed frontend; exact health release checked",
+  "core_groups_passed": 7,
+  "provider": "GEMINI",
+  "actual_model": "gemini-3.5-flash-lite",
+  "model_fallback_from": "gemini-3.8-flash",
+  "generation_elapsed_seconds": 9.312,
+  "real_funds_moved": false,
+  "later_provider_availability": "See dated China-corpus acceptance; an earlier successful call is not a permanent availability guarantee"
+}

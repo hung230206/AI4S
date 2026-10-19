@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-19T10:08:38.648563+00:00",
+  "origin": "http://127.0.0.1:8106",
+  "public_official_content_only": true,
+  "actual_generation_requests": 3,
+  "answers": [
+    {
+      "case": "shortterm-renewal",
+      "question": "Bảo hiểm sức khỏe ngắn hạn có bảo đảm tái tục không?",
+      "provider": "GEMINI",
+      "model": "gemini-3.5-flash-lite",
+      "model_fallback_from": null,
+      "answer": "Theo tài liệu tham khảo, các sản phẩm bảo hiểm sức khỏe ngắn hạn có chứa trách nhiệm tái tục phải được thể hiện rõ ràng trong điều khoản là điều khoản “không bảo đảm tái tục” [R1]. Khi hết thời hạn bảo hiểm (một năm hoặc ngắn hơn), bên mua bảo hiểm cần nộp lại đơn xin tham gia, được sự đồng ý của công ty bảo hiểm và đóng phí để nhận hợp đồng bảo hiểm mới [R1]. Lưu ý rằng bằng chứng này là tài liệu tham khảo công khai [R2], không cấu thành quyết định bồi thường hay cam kết quyền lợi bảo hiểm cụ thể.",
+      "elapsed_seconds": 2.953,
+      "sources": [
+        {
+          "href": "/knowledge/c9752a60-1bd4-4251-80a5-41e3ee3b935c?revision=4#page-1",
+          "original_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+          "page": 1
+        },
+        {
+          "href": "/knowledge/c9752a60-1bd4-4251-80a5-41e3ee3b935c?revision=4#page-1",
+          "original_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "case": "social-versus-commercial",
+      "question": "Bảo hiểm thương mại 学生平安险 có thay thế bảo hiểm y tế cơ bản không? Tài liệu này có tự động chứng minh du học sinh Việt Nam đủ điều kiện tham gia医保 không?",
+      "provider": "GEMINI",
+      "model": "gemini-3.5-flash-lite",
+      "model_fallback_from": null,
+      "answer": "Bảo hiểm thương mại (学生平安险) không thể thay thế cho bảo hiểm y tế cơ bản (医保) [R1]. Dù đã mua bảo hiểm thương mại, học sinh vẫn nên tham gia bảo hiểm y tế cơ bản vì đây là hệ thống bảo hiểm xã hội do nhà nước thiết lập với phạm vi và mức độ bảo保障 rộng hơn, có tính chất phổ cập và làm nền tảng cốt lõi [R1]. Tài liệu hiện có không đề cập đến việc tài liệu này tự động chứng minh du học sinh Việt Nam đủ điều kiện tham gia医保. Xin lưu ý rằng câu trả lời này chỉ dựa trên các đoạn trích tài liệu được cung cấp.",
+      "elapsed_seconds": 1.656,
+      "sources": [
+        {
+          "href": "/knowledge/5ae2a264-4ed8-4031-a015-e98cd0564c1d?revision=4#page-1",
+          "original_url": "https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "case": "metadata-is-not-coverage",
+      "question": "Chỉ dựa vào thông tin sản phẩm 健康金福 này, có thể khẳng định tôi được bồi thường 3 triệu VND không?",
+      "provider": "GEMINI",
+      "model": "gemini-3.5-flash-lite",
+      "model_fallback_from": null,
+      "answer": "Dựa trên tài liệu được cung cấp về sản phẩm 健康金福 [R1], không có thông tin nào đề cập đến các quyền lợi bảo hiểm cụ thể, mức bồi thường hay khoản tiền 3 triệu VND [R1]. Do đó, bằng chứng không đủ để khẳng định bạn được bồi thường số tiền này [R1]. Tôi không thể xác nhận quyền hưởng bảo hiểm hay đưa ra quyết định bồi thường.",
+      "elapsed_seconds": 1.344,
+      "sources": [
+        {
+          "href": "/knowledge/6d265777-039d-4057-bae7-dcfb0d55dd77?revision=4#page-1",
+          "original_url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+          "page": 1
+        }
+      ]
+    }
+  ],
+  "published_china_reference_count": 9,
+  "unrelated_question_abstains": true,
+  "all_sources_retrieval_finds_shortterm_regulation": true,
+  "last_response": {
+    "provider": "GEMINI",
+    "model": "gemini-3.5-flash-lite",
+    "fallback_reason": null,
+    "status": "PARTIAL_EVIDENCE",
+    "answer": "Dựa trên tài liệu được cung cấp về sản phẩm 健康金福 [R1], không có thông tin nào đề cập đến các quyền lợi bảo hiểm cụ thể, mức bồi thường hay khoản tiền 3 triệu VND [R1]. Do đó, bằng chứng không đủ để khẳng định bạn được bồi thường số tiền này [R1]. Tôi không thể xác nhận quyền hưởng bảo hiểm hay đưa ra quyết định bồi thường."
+  },
+  "status": "PASS"
+}

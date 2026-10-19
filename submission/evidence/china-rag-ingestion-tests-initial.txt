@@ -1,0 +1,46 @@
+.......F.....                                                            [100%]
+================================== FAILURES ===================================
+___________ test_iac_uses_metadata_table_and_retains_stopped_status ___________
+
+    def test_iac_uses_metadata_table_and_retains_stopped_status():
+        body = "<tr><td>\u516c\u53f8\u540d\u79f0</td><td>\u4e2d\u82f1\u4eba\u5bff\u4fdd\u9669\u6709\u9650\u516c\u53f8</td></tr>" + "<tr><td>\u4ea7\u54c1\u540d\u79f0</td><td>\u4ea7\u54c1\u8bf4\u660e\u548c\u7248\u672c\u4fe1\u606f</td></tr>" * 5
+        raw = ('<table><tr><td>wrong navigation</td></tr></table><table class="biaoge">' + body + '<tr><td>\u505c\u7528\u65e5\u671f</td><td>2024-03-12</td></tr><tr><td>\u5ba2\u6237\u670d\u52a1\u7535\u8bdd</td><td>public service</td></tr></table>').encode()
+>       result = corpus.html_text(raw, "metadata")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts\tests\test_china_corpus.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+raw = b'<table><tr><td>wrong navigation</td></tr></table><table class="biaoge"><tr><td>\xe5\x85\xac\xe5\x8f\xb8\xe5\x90\x8d\...><td>\xe5\xae\xa2\xe6\x88\xb7\xe6\x9c\x8d\xe5\x8a\xa1\xe7\x94\xb5\xe8\xaf\x9d</td><td>public service</td></tr></table>'
+kind = 'metadata'
+
+    def html_text(raw, kind):
+        if kind == "nfra-json":
+            data = json.loads(raw)["data"]
+            soup = BeautifulSoup(data["docClob"], "html.parser")
+            area = soup
+        else:
+            soup = BeautifulSoup(raw, "html.parser")
+            area = soup.select_one("#zoom") if kind == "nhsa-html" else soup.select_one("table.biaoge")
+            if area is None: raise ValueError("Expected article/metadata region missing; source needs review")
+        for node in area.find_all(["script", "style", "nav", "footer", "iframe", "noscript"]): node.decompose()
+        if kind == "metadata":
+            lines = [row.get_text(" ", strip=True) for row in area.find_all("tr")]
+            lines = [line for line in lines if "\u5ba2\u6237\u670d\u52a1\u7535\u8bdd" not in line]
+        else:
+            lines = area.get_text("\n", strip=True).splitlines()
+        cleaned = []
+        for line in lines:
+            line = re.sub(r"[ \t\u3000]+", " ", line).strip()
+            if "\u4e2d\u56fd\u533b\u4fdd\uff0c\u4e00\u751f\u5b88\u62a4" in line or "\u6253\u51fb\u6b3a\u8bc8\u9a97\u4fdd\u4e3e\u62a5\u7535\u8bdd" in line: break
+            if not line or line in {"\u6253\u5370", "\u5173\u95ed", "\u3016\u6253\u5370\u3017", "\u3016\u5173\u95ed\u3017"}: continue
+            if cleaned and line == cleaned[-1]: continue
+            cleaned.append(line)
+>       if len("".join(cleaned)) < 80: raise ValueError("Extracted article is unexpectedly short")
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Extracted article is unexpectedly short
+
+scripts\china_rag_corpus.py:102: ValueError
+=========================== short test summary info ===========================
+FAILED scripts/tests/test_china_corpus.py::test_iac_uses_metadata_table_and_retains_stopped_status
+1 failed, 12 passed in 1.54s

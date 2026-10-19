@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-19T10:10:27.822Z",
+  "origin": "http://localhost:3104",
+  "fictional_content_only": false,
+  "public_official_content_only": true,
+  "actual_generation_requests": 1,
+  "generation_elapsed_seconds": 2.187,
+  "status": "PASS",
+  "provider": "GEMINI",
+  "model": "gemini-3.5-flash-lite",
+  "model_fallback_from": null,
+  "answer": "Theo các tài liệu quy định, các sản phẩm bảo hiểm sức khỏe ngắn hạn có chứa trách nhiệm tái tục phải được thể hiện rõ ràng trong điều khoản hợp đồng bằng điều khoản “không bảo đảm tái tục” [R1]. Khi hết thời hạn bảo hiểm (một năm hoặc ngắn hơn), bên mua bảo hiểm phải nộp đơn lại, được sự đồng ý của công ty bảo hiểm và đóng phí để nhận hợp đồng mới [R1]. Xin lưu ý đây là tài liệu tham khảo công khai, bằng chứng không đủ để khẳng định quyền lợi cụ thể của cá nhân bạn.",
+  "citations": [
+    {
+      "id": "R1",
+      "page": 1,
+      "revision": 6,
+      "href": "/knowledge/c9752a60-1bd4-4251-80a5-41e3ee3b935c?revision=6#page-1"
+    }
+  ],
+  "consent_withdrawn_after_test": true
+}

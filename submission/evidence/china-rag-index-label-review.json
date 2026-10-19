@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "reason": "Reduce generic editorial keyword repetition; preserve source facts and raw originals",
+  "updated": [
+    {
+      "slug": "iac-picc-product-info",
+      "document_id": "6d265777-039d-4057-bae7-dcfb0d55dd77",
+      "previous_sha256": "11b1aea76210129c97079d848c1022f84c9c689f2da384a5d7a96b0d0ab2fd9b",
+      "reviewed_sha256": "b4106dbc46e9f39929f01347ecbdf3f8e51edaa3ff2ef41c208f21bddacbea99",
+      "revision": 4
+    },
+    {
+      "slug": "iac-aviva-stopped-info",
+      "document_id": "bfc3dca7-f93d-4698-969a-cf34586dfc0a",
+      "previous_sha256": "2a6dd4925aee8548a7d8bf6aa83ecc817c5bd856fca8fa611a45627e5ff192b6",
+      "reviewed_sha256": "1616c2c421faf8103a442ef773123d0e192584c88e3de659793e1bb3df75f12b",
+      "revision": 4
+    },
+    {
+      "slug": "iac-claims-standard-2024",
+      "document_id": "d597444e-1ae2-4e31-940f-2d1ce5c87bb0",
+      "previous_sha256": "71b6b2e8fcd01cda9efbc9cf0e5bcd0f0f2f6e898f82d6eae3bfeaeb90b36aa2",
+      "reviewed_sha256": "483d8420f6d2690399e0b9ef12db3fdbd93e605e0c8398a29ce9310d1b2697e6",
+      "revision": 4
+    },
+    {
+      "slug": "nfra-health-measures-2019",
+      "document_id": "053e50cf-8bec-4173-9f68-c7dac1db4607",
+      "previous_sha256": "0b57fbda8072afa623a8b50ed11ca6fdac6529a2694d0fdb51b00b1afa939504",
+      "reviewed_sha256": "22b775c5cf427d7a793b5a88d620424a3290e90becdfcc7832a9e30d1fd943e8",
+      "revision": 4
+    },
+    {
+      "slug": "nfra-shortterm-notice-2021",
+      "document_id": "c9752a60-1bd4-4251-80a5-41e3ee3b935c",
+      "previous_sha256": "ff3501212c89c04b7f9da1920fcfb7c606be0e9c4770faceb140f5b8fbda4c92",
+      "reviewed_sha256": "efe237d8f276af6dbf1741c73c917f3f879450969ac7560225fe2100a5c91e22",
+      "revision": 4
+    },
+    {
+      "slug": "nhsa-student-insurance-2025",
+      "document_id": "5ae2a264-4ed8-4031-a015-e98cd0564c1d",
+      "previous_sha256": "149f35b034333141f12fd248a47500a7a6a09d88cbbe913adfcd99ee1148d3d7",
+      "reviewed_sha256": "0d812ffad98c518e4ed5335485b6d28dd3a43df80448c4683bb5df85758803a9",
+      "revision": 4
+    },
+    {
+      "slug": "nhsa-crossprovince-rules-2022",
+      "document_id": "2a3233ed-c6c6-4691-9e53-5e11e71b15e4",
+      "previous_sha256": "c1a503470f108304706d8cd4d59eb906d8ee0b4950c61b9c76c8705c6bb63091",
+      "reviewed_sha256": "3a63f322f7e44e5c86302b8d4efd0476732c6c84c13483ca263918d888d2b26d",
+      "revision": 4
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "staged_files_scanned": 36,
+  "configured_secret_and_admin_password_matches": 0,
+  "raw_and_prepared_source_pairs_hash_verified": 9,
+  "copyrighted_originals_excluded_from_public_source_zip": true,
+  "packages": [
+    {
+      "name": "Demo_Team_Handoff.zip",
+      "entries": 517,
+      "bytes": 19585485,
+      "sha256": "da5848e3a80ada4e0b4776ab23f5cd214bbb496856fb8c98c847935162cb40d8"
+    },
+    {
+      "name": "China_RAG_Corpus.zip",
+      "entries": 21,
+      "bytes": 2522640,
+      "sha256": "fe0e106b65f6f089f078bd757fdcff6def952ed80124b38ad8b911fe58e6f4ac"
+    }
+  ]
+}

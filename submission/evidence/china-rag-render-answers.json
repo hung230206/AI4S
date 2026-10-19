@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-19T10:19:16.147607+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "public_official_content_only": true,
+  "actual_generation_requests": 1,
+  "answers": [],
+  "published_china_reference_count": 9,
+  "unrelated_question_abstains": true,
+  "all_sources_retrieval_finds_shortterm_regulation": true,
+  "last_response": {
+    "provider": "EXTRACTIVE",
+    "model": null,
+    "fallback_reason": "PROVIDER_RATE_LIMIT",
+    "status": "EVIDENCE_FOUND",
+    "answer": "Các đoạn gốc liên quan để bạn đối chiếu:\n\n[R1] urance; ngắn hạn short term; thời gian chờ waiting period; bồi thường hồ sơ chi trả claims service]\n保险公司开发的短期健康保险产品应当在保险条款中对保险期间、保险责任、责任免除、理赔条件、退保约定，以及保费交纳方式、等待期设置，保险金额、免赔额、赔付比例等产品关键信息进行清晰、明确、无歧义的表述。\n三、\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal; ngắn hạn short term]\n保险公司开发的短期健康保险产品中包含续保责任的，应当在保险条款中明确表述为\n[Demo indexing hints only, not official translation: tái tục bảo đảm gia hạn renewal; không bảo đảm tái tục non guaranteed renewal]\n“不保证续保”条款。不保证续保条款中至少应当包含以下内容：\n本产品保险期间为一年（或不超过一年）。保险期间届满，投保人需要重新向保险公司申请投保本产品，并经保险人同意，交纳保险费，获得新的保险合同。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n保险公司不得在短期健康保险产品条款、宣传材料中使用\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; tái tục bảo đảm gia hạn renewal]\n\n\n[R2] CHINESE PUBLIC REFERENCE / BẢN TRÍCH XUẤT THAM KHẢO\n[NFRA · 2021] Bảo hiểm ngắn hạn và không bảo đảm tái tục\nSource: https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198\nSource date/snapshot: 2021-01-11; 银保监办发〔2021〕7号\nScope: Regulatory notice about individual short-term health insurance; its stated scope excludes group insurance. Do not apply it to every long-term/group contract or infer a user's renewal right.\nDemo VI/EN indexing hints are editorial labels, NOT an official translation. Base factual answers on the Chinese source text.\n\n[Original source physical page 1]\n银保监办发〔2021〕7号\n各保险公司、中国保险行业协会：\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n为规范各保险公司短期健康保险业务经营管理行为，切实保护保险消费者合法权益，根据《中华人民共和国保险法》《健康保险管理办法》等法律法规，\n经银保监会同意，\n\n\n[R3] hiểm sức khỏe health insurance; ngắn hạn short term]\n3月31日前在公司官网披露前三个年度个人短期健康保险产品停售情况及每一款产品的有效保单数量。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n保险公司经营短期健康保险业务，可以不受《中国保监会关于强化人身保险产品监管工作的通知》（保监寿险〔\n2016〕199 号）第四条第一款产品停售有关规定限制。\n十一、中\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term; bồi thường hồ sơ chi trả claims service]\n国保险行业协会应当加强对短期健康保险产品定价基础、核保理赔等行业基础性标准建设，促进短期健康保险业务科学化、规范化发展。\n十二、\n保险公司违反本通知有关规定的，银保监会将依法依规追究保险公司和相关责任人责任。情节严重的，银保监会将依法采取包括责令停止接受新业务、撤销相关人员任职资格等行政处罚措施。\n[Demo indexing hints only, not official translation: bảo hiểm sức khỏe health insurance; ngắn hạn short term]\n十三、本通知印发前保险公司已经审批或备案的短期健康保险产品，不符合本通知要求的\n，\n应于\n[Demo indexing hints only, not official translation: trạng thái bán ngừng ngày ngừng bán sales stopped date snapshot]\n2021年5月1日前停止销售。\n2021\n年\n1\n月\n11\n日\n"
+  },
+  "status": "FAIL",
+  "error": "AssertionError"
+}

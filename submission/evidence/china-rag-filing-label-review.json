@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "reason": "Differentiate insurance product filing from patient cross-province registration; source facts and original hashes unchanged",
+  "updated": [
+    {
+      "origin": "http://127.0.0.1:8106",
+      "slug": "nfra-health-measures-2019",
+      "document_id": "053e50cf-8bec-4173-9f68-c7dac1db4607",
+      "previous_sha256": "22b775c5cf427d7a793b5a88d620424a3290e90becdfcc7832a9e30d1fd943e8",
+      "reviewed_sha256": "c8b5730a8f9634c0b0aa520d0dc5669b03521ee853cfe258fc8fb74ce8dd915a",
+      "revision": 6
+    },
+    {
+      "origin": "http://127.0.0.1:8106",
+      "slug": "nfra-shortterm-notice-2021",
+      "document_id": "c9752a60-1bd4-4251-80a5-41e3ee3b935c",
+      "previous_sha256": "efe237d8f276af6dbf1741c73c917f3f879450969ac7560225fe2100a5c91e22",
+      "reviewed_sha256": "a1aeb34c29e2ec2d05fc7bfd23a8a2f52dd52870ca1894152479ef17c02ab1b3",
+      "revision": 6
+    },
+    {
+      "origin": "http://127.0.0.1:8106",
+      "slug": "nhsa-crossprovince-rules-2022",
+      "document_id": "2a3233ed-c6c6-4691-9e53-5e11e71b15e4",
+      "previous_sha256": "3a63f322f7e44e5c86302b8d4efd0476732c6c84c13483ca263918d888d2b26d",
+      "reviewed_sha256": "e665f4e6499cdc1b5ddbe7ca3c9c13b3104fabb6f4357e1add05b54ba692a1f0",
+      "revision": 6
+    },
+    {
+      "origin": "http://127.0.0.1:8106",
+      "slug": "nhsa-crossprovince-guide-2025",
+      "document_id": "86f99545-3406-4bb1-9e98-a43200dd5137",
+      "previous_sha256": "2dc06e96f8c92e7af3fc68b7a081b6d4a0666643288b93b6e0390d6854107181",
+      "reviewed_sha256": "9d62d04397f1a6754402f384e161296f5c496b4f2c72c2cc66276d3c362b0aea",
+      "revision": 4
+    },
+    {
+      "origin": "https://ai4s-demo.onrender.com",
+      "slug": "nfra-health-measures-2019",
+      "document_id": "bbe95534-c348-47c9-afeb-08f16346fdb8",
+      "previous_sha256": "22b775c5cf427d7a793b5a88d620424a3290e90becdfcc7832a9e30d1fd943e8",
+      "reviewed_sha256": "c8b5730a8f9634c0b0aa520d0dc5669b03521ee853cfe258fc8fb74ce8dd915a",
+      "revision": 4
+    },
+    {
+      "origin": "https://ai4s-demo.onrender.com",
+      "slug": "nfra-shortterm-notice-2021",
+      "document_id": "89c77422-dca9-405f-bf22-d490c22b3cef",
+      "previous_sha256": "efe237d8f276af6dbf1741c73c917f3f879450969ac7560225fe2100a5c91e22",
+      "reviewed_sha256": "a1aeb34c29e2ec2d05fc7bfd23a8a2f52dd52870ca1894152479ef17c02ab1b3",
+      "revision": 4
+    },
+    {
+      "origin": "https://ai4s-demo.onrender.com",
+      "slug": "nhsa-crossprovince-rules-2022",
+      "document_id": "6e8d7bea-0b77-4bcb-9227-d8cf98c0ed4b",
+      "previous_sha256": "3a63f322f7e44e5c86302b8d4efd0476732c6c84c13483ca263918d888d2b26d",
+      "reviewed_sha256": "e665f4e6499cdc1b5ddbe7ca3c9c13b3104fabb6f4357e1add05b54ba692a1f0",
+      "revision": 4
+    },
+    {
+      "origin": "https://ai4s-demo.onrender.com",
+      "slug": "nhsa-crossprovince-guide-2025",
+      "document_id": "11a94fea-7fd9-4812-a787-b8aa57dc2d0f",
+      "previous_sha256": "2dc06e96f8c92e7af3fc68b7a081b6d4a0666643288b93b6e0390d6854107181",
+      "reviewed_sha256": "9d62d04397f1a6754402f384e161296f5c496b4f2c72c2cc66276d3c362b0aea",
+      "revision": 4
+    }
+  ]
+}

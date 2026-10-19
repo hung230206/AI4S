@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-19T10:01:59.478397+00:00",
+  "origin": "http://127.0.0.1:8106",
+  "items": [
+    {
+      "slug": "iac-picc-terms-2024",
+      "document_id": "88b625c1-ee59-4438-bd2f-a55a83c01643",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/IC/tkk/01/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+      "source_pages": 36,
+      "published_pages": 36,
+      "sha256": "475583b89bc7fd522d07335bd7fff82e7bee1db92b7e74fa80b8fa4fdd858832",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "iac-picc-product-info",
+      "document_id": "6d265777-039d-4057-bae7-dcfb0d55dd77",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/IC/tkk/02/e40f8000-6ece-4e33-aa8f-4acaa88d6233.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "11b1aea76210129c97079d848c1022f84c9c689f2da384a5d7a96b0d0ab2fd9b",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "iac-aviva-stopped-info",
+      "document_id": "bfc3dca7-f93d-4698-969a-cf34586dfc0a",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/IC/tkk/02/01ad48f5-003b-49f0-b062-562cc4c400b6.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "2a6dd4925aee8548a7d8bf6aa83ecc817c5bd856fca8fa611a45627e5ff192b6",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "iac-claims-standard-2024",
+      "document_id": "d597444e-1ae2-4e31-940f-2d1ce5c87bb0",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.iachina.cn/module/download/downfile.jsp?classid=0&filename=253ba2d6743c4fe8a5aa5ca651b88bbf.pdf",
+      "source_pages": 16,
+      "published_pages": 1,
+      "sha256": "71b6b2e8fcd01cda9efbc9cf0e5bcd0f0f2f6e898f82d6eae3bfeaeb90b36aa2",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nfra-health-measures-2019",
+      "document_id": "053e50cf-8bec-4173-9f68-c7dac1db4607",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1027050",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "0b57fbda8072afa623a8b50ed11ca6fdac6529a2694d0fdb51b00b1afa939504",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nfra-shortterm-notice-2021",
+      "document_id": "c9752a60-1bd4-4251-80a5-41e3ee3b935c",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=958198",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "ff3501212c89c04b7f9da1920fcfb7c606be0e9c4770faceb140f5b8fbda4c92",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    },
+    {
+      "slug": "nhsa-student-insurance-2025",
+      "document_id": "5ae2a264-4ed8-4031-a015-e98cd0564c1d",
+      "revision": 2,
+      "operation": "CREATED_AND_PUBLISHED",
+      "source_url": "https://www.nhsa.gov.cn/art/2025/1/26/art_52_15573.html",
+      "source_pages": 1,
+      "published_pages": 1,
+      "sha256": "149f35b034333141f12fd248a47500a7a6a09d88cbbe913adfcd99ee1148d3d7",
+      "retrieval": "PASS",
+      "citation_offsets": "PASS",
+      "download_hash": "PASS"
+    }
+  ],
+  "fixture_sources_unpublished": [],
+  "actual_model_calls": 0,
+  "status": "FAIL",
+  "failure": "Retrieved evidence needs review: nhsa-crossprovince-rules-2022"
+}

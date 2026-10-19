@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "expected_release": "ddde4217a515580d867fcba241cee42d4feed25c",
+  "health": {
+    "status": "ok",
+    "demo_mode": true,
+    "payment_provider": "MOCK",
+    "allow_real_payments": false,
+    "release": "ddde4217a515580d867fcba241cee42d4feed25c",
+    "insurance_workflow": "portfolio-claims-v1"
+  },
+  "observations": [
+    {
+      "at": "2026-10-19T09:41:12.675504+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:41:28.215537+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:41:44.535065+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:42:01.021613+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:42:17.325621+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:42:33.739610+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:42:50.166766+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:43:05.529210+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:43:21.834408+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:43:38.207142+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:43:54.635137+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:44:09.876542+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:44:26.279207+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:44:42.562424+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:44:58.863955+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:45:15.243859+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:45:31.541850+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:45:47.863878+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:46:03.113553+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:46:19.458363+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:46:35.918653+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:46:52.305496+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:47:07.569353+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:47:23.935660+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:47:40.245415+00:00",
+      "http_status": 200,
+      "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241"
+    },
+    {
+      "at": "2026-10-19T09:47:56.682920+00:00",
+      "http_status": 200,
+      "release": "ddde4217a515580d867fcba241cee42d4feed25c"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-19T10:07:17.223665+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "public_official_content_only": true,
+  "actual_generation_requests": 1,
+  "answers": [],
+  "published_china_reference_count": 9,
+  "unrelated_question_abstains": true,
+  "all_sources_retrieval_finds_shortterm_regulation": true,
+  "status": "FAIL",
+  "error": "AssertionError"
+}

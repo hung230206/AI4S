@@ -1,0 +1,31 @@
+{
+  "status": "CORPUS_PASS_ONLINE_PROVIDER_RATE_LIMIT",
+  "runtime_release": "ddde4217a515580d867fcba241cee42d4feed25c",
+  "source_count": 9,
+  "source_distribution": {
+    "IAC": 4,
+    "NFRA": 2,
+    "NHSA": 3
+  },
+  "local_sources_verified": 9,
+  "online_sources_verified": 9,
+  "importer_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "15",
+    "time": "1.293",
+    "timestamp": "2026-10-19T17:23:42.798016+07:00",
+    "hostname": "Hung"
+  },
+  "source_scope": "All active shared sources are PUBLIC_REFERENCE, zh, CN; three fixtures are drafts",
+  "local_real_provider_status": "PASS",
+  "local_real_browser_status": "PASS",
+  "online_provider": "PROVIDER_RATE_LIMIT",
+  "required_operator_setting": "Render GEMINI_MODEL=gemini-3.5-flash-lite",
+  "private_finance_claim_data_copied": false,
+  "real_funds_moved": false,
+  "model_training_performed": false,
+  "model_setting_watch": "No primary-model change observed during the completed 10-minute read-only watch"
+}

@@ -1,3 +1,7 @@
+## Bản Render đã có cấu hình model cũ
+
+Nếu Environment đang đặt `GEMINI_MODEL=gemini-3.8-flash`, sửa trực tiếp thành `gemini-3.5-flash-lite` rồi lưu/deploy. Push mã mới không tự thay biến đã nhập thủ công. Model 3.8 đã gặp 503/timeout và sau đó 429 trong kiểm thử; lỗi quota không được thử lại tự động. Các nguồn RAG mới đã lưu trong PostgreSQL, không cần nhập lại khi deploy.
+
 ## Optional dedicated RAG test administrator
 
 After deploying the migration, set RAG_ADMIN_EMAIL and RAG_ADMIN_PASSWORD as server environment secrets from the private `.local/rag-admin-test.json` file created by `python -m app.rag_admin`. Do not use a public default password or paste it into GitHub. Startup creates a new administrator once, never elevates an existing ordinary account and never resets an existing administrator password. Existing app/database/payment/provider settings stay unchanged. `/admin/rag` uses normal account sign-in; the demo operator code is not an administrator credential. See RAG_GUIDE.md. The additive migration is 73c9794e8f35; reviewed personal invoices/policies/claims are preserved.
