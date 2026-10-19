@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_PASS_DEPLOY_PENDING",
+  "status": "CORE_PASS_PROVIDER_TIMEOUT",
   "backend": {
     "name": "pytest",
     "errors": "0",
@@ -29,5 +29,20 @@
   "typescript_exit": 0,
   "production_build_exit": 0,
   "real_funds_moved": false,
-  "actual_provider_check": "pending deployment"
+  "actual_provider_check": {
+    "render": {
+      "attempts": 1,
+      "provider": "EXTRACTIVE",
+      "reason": "TIMEOUT",
+      "core_groups_passed": 7
+    },
+    "local_generation": {
+      "attempts": 1,
+      "status": "TIMEOUT"
+    },
+    "model_metadata_http_status": 200
+  },
+  "application_release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241",
+  "live_origin": "https://ai4s-demo.onrender.com",
+  "live_core_status": "PASS"
 }

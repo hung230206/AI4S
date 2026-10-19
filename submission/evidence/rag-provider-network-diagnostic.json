@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-19T09:16:59.931625+00:00",
+  "origin": "local diagnostic; not the Render server",
+  "model": "gemini-3.8-flash",
+  "metadata_http_status": 200,
+  "model_exists": true,
+  "elapsed_seconds": 1.406
+}

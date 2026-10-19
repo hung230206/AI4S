@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-19T09:18:10.137621+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "application_release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241",
+  "render_service": "srv-dbab553ncjis73cthbc0",
+  "render_deploy": "dep-dbattlks728c739lrda0",
+  "verification": "real HTTPS through deployed frontend origin",
+  "administrator_login": "PASS; private credentials excluded",
+  "core_status": "PASS",
+  "core_groups_passed": 7,
+  "provider_status": "TIMEOUT; labelled EXTRACTIVE fallback verified",
+  "actual_generation_attempts": {
+    "render": 1,
+    "local": 1
+  },
+  "model_metadata_http_status": 200,
+  "visual_verification": "Local production browser workflows only. Final online browser control unavailable: disabled in Work settings.",
+  "real_funds_moved": false,
+  "acceptance_test_source_cleanup": "Recoverable trash; fixture corpus preserved",
+  "evidence": [
+    "rag-render-http.json",
+    "rag-deployment-watch.json",
+    "rag-validation.json",
+    "rag-provider-network-diagnostic.json",
+    "rag-local-provider-diagnostic.json"
+  ]
+}

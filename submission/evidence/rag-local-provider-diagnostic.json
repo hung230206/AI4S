@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-19T09:17:14.748976+00:00",
+  "origin": "local diagnostic; not the Render server",
+  "model": "gemini-3.8-flash",
+  "actual_model_calls": 1,
+  "fictional_content_only": true,
+  "status": "FALLBACK",
+  "reason": "TIMEOUT",
+  "elapsed_seconds": 25.234
+}

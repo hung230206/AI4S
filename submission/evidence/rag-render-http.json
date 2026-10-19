@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-19T09:15:44.367844+00:00",
+  "origin": "https://ai4s-demo.onrender.com",
+  "checks": [
+    "real_admin_login_and_regular_account_denied",
+    "per_file_acknowledgement_draft_isolation_and_local_admin_preview",
+    "publication_student_answer_exact_page_offsets_and_original_hash",
+    "unsupported_insurance_question_abstains",
+    "session_consent_gate_and_no_dispatch_preview",
+    "edit_and_replace_reindex_unpublish_old_revision_rejected",
+    "trash_restore_draft_and_revision_history"
+  ],
+  "actual_model_calls": 1,
+  "real_funds_moved": false,
+  "release": "99de4340a8c9c3727ee8ff2fc09a81c92eb99241",
+  "provider": "EXTRACTIVE",
+  "fallback_reason": "TIMEOUT",
+  "provider_status": "FALLBACK",
+  "core_status": "PASS",
+  "status": "PROVIDER_FALLBACK",
+  "elapsed_seconds": 49.453
+}

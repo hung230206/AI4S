@@ -1,7 +1,13 @@
 # Test kho RAG và tài khoản quản trị
 
-- Người dùng: `/knowledge` — **Hỏi đáp bảo hiểm RAG** trên menu.
-- Quản trị: `/admin/rag` — đăng nhập bằng tài khoản test trong `.local/rag-admin-test.json` trên máy chủ dự án. Đây là tệp riêng, không nằm trên GitHub hoặc ZIP bàn giao. Tài khoản thường và mã vận hành sandbox không có quyền quản trị.
+- Người dùng: https://ai4s-demo.onrender.com/knowledge — **Hỏi đáp bảo hiểm RAG** trên menu.
+- Quản trị: https://ai4s-demo.onrender.com/admin/rag — đăng nhập bằng tài khoản test trong `.local/RAG_ADMIN_TEST.txt` hoặc `.local/rag-admin-test.json` trên máy dự án. Đây là tệp riêng, không nằm trên GitHub hoặc ZIP bàn giao. Tài khoản thường và mã vận hành sandbox không có quyền quản trị.
+
+Đã kiểm thử trên Render: đăng nhập admin và đầy đủ 7 nhóm luồng RAG/CRUD. Gemini diễn giải hiện bị **TIMEOUT** khi gọi thật; trích đoạn gốc có nguồn vẫn dùng được. Không coi kết quả chuyển sang trích đoạn là câu trả lời Gemini.
+
+## Tệp tải lên để thử
+
+Mở thư mục `fixtures/rag_upload_samples/`: có `student-policy-sample-en.txt`, `claims-guide-sample-vi.md`, `insurance-glossary-sample-zh.txt`. Đây là bản rời của ba nguồn mẫu tự soạn đã có trong kho, dùng để thử thêm/thay tệp; không phải hợp đồng thật. `README.md` trong thư mục ghi thông tin metadata và câu hỏi đối chiếu. Không tải README thành nguồn bảo hiểm.
 
 ## Một luồng đầy đủ
 
