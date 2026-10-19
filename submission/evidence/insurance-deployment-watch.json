@@ -1,0 +1,62 @@
+{
+  "expected_release": "e54b9368f6bf754297fe8c028a5fa565a5d7687a",
+  "ready": true,
+  "observations": [
+    {
+      "elapsed_seconds": 0,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 46,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 91,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 136,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 181,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 227,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 273,
+      "http": 200,
+      "status": "ok",
+      "release": null,
+      "workflow": null
+    },
+    {
+      "elapsed_seconds": 318,
+      "http": 200,
+      "status": "ok",
+      "release": "e54b9368f6bf754297fe8c028a5fa565a5d7687a",
+      "workflow": "portfolio-claims-v1"
+    }
+  ]
+}

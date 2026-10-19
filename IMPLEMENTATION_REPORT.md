@@ -30,7 +30,11 @@ QA corrected repeated template-file loading, inaccessible exact select labels an
 
 ## Deployment and remaining boundaries
 
-The Render Blueprint preserves the user's requested on-commit auto-deploy behavior. The health endpoint now exposes the Render commit and the C+D workflow marker so the actual running release can be verified after push. Cloud verification is recorded separately after deployment; local success is not represented as a cloud deployment.
+**Verified live on Render on 19 October 2026, 13:14 GMT+7:** https://ai4s-demo.onrender.com/insurance . The running release is `e54b9368f6bf754297fe8c028a5fa565a5d7687a`; Render deploy `dep-dbar9egm7kps739vruk0` reports **Live**. The complete authenticated HTTPS C+D acceptance passed all seven groups in **19.219 seconds**, including an actual **gemini-3.8-flash** reply, signed applied sandbox event, unchanged declared balance and byte/hash-checked claim export. Only self-authored test data was uploaded. See `insurance-render-live.json`, `insurance-deployment-receipt.json` and the Render Live screenshot. This also exercises the Linux Docker deployment; local Docker execution is still not claimed.
+
+The dashboard had not started a new deployment after the feature push, so I invoked **Deploy latest commit**. The Settings UI subsequently showed **On Commit** selected, which I preserved, and the Blueprint now uses the matching `commit` trigger. I imported only the three Gemini settings into the service's private environment using the user's existing supplied key and rebuilt/deployed. Existing database/session/provider/operator configuration was preserved; no paid resource or database reset was introduced. No key was put in Git or browser assets. The temporary import file was removed locally afterward.
+
+A documentation/evidence-only follow-up uses `[skip render]` to avoid rebuilding the same application solely to add its post-deployment evidence. The actual application code and health marker remain the verified feature release above.
 
 Still not developed: live CNY/VND exchange or transfers; insurance purchase/activation; insurer contract or medical-document authenticity verification; insurer claims submission, eligibility decisions or payouts; background email/SMS; intraday FX monitoring. Coverage comparison does not model annual benefit consumption, full policy conditions, every exclusion or coordination between policies. The claim checklist is a referenced general preparation guide, not definitive insurer requirements.
 

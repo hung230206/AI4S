@@ -1,0 +1,16 @@
+{
+  "verified_at": "2026-10-19T06:17:27.500630+00:00",
+  "url": "https://ai4s-demo.onrender.com",
+  "release": "e54b9368f6bf754297fe8c028a5fa565a5d7687a",
+  "render_service_id": "srv-dbab553ncjis73cthbc0",
+  "render_deploy_id": "dep-dbar9egm7kps739vruk0",
+  "render_status": "Live",
+  "provider": "Gemini",
+  "model": "gemini-3.8-flash",
+  "http_checks_passed": 7,
+  "actual_gemini_replies": 1,
+  "real_funds_moved": false,
+  "auto_deploy_ui": "On Commit selected; preserved",
+  "deployment_method": "Deploy latest commit, then private Gemini environment import with rebuild/deploy",
+  "proof": "screenshots/insurance/render-live.jpg"
+}

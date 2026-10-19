@@ -1,5 +1,7 @@
 # Test luồng C + D
 
+Bản online: https://ai4s-demo.onrender.com/insurance . Gemini đã được cấu hình và kiểm tra gọi thật trên Render.
+
 Mở **Bảo hiểm & hồ sơ** (`/insurance`). Tạo tài khoản riêng để dữ liệu không lẫn với người khác.
 
 1. Bấm **Tải bộ tệp test C + D**, giải nén ZIP.
