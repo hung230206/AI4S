@@ -1,0 +1,17 @@
+
+Running 9 tests using 1 worker
+
+(node:20976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (1.6s)
+  ok 2 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (2.4s)
+  ok 3 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (6.8s)
+  ok 4 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (3.3s)
+
+  ok 5 tests\student-finance.spec.ts:32:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (4.9s)
+  ok 6 tests\task-ux.spec.ts:13:5 › three needs lead to the right pages; short intros repeat until the user hides them (2.7s)
+  ok 7 tests\task-ux.spec.ts:40:5 › hide checkbox applies only to that page, survives reload and can be restored in settings (4.9s)
+  ok 8 tests\task-ux.spec.ts:60:5 › mobile introductions fit, trap keyboard focus and translate with the page (2.2s)
+  ok 9 tests\task-ux.spec.ts:81:5 › invoice progress reflects API state and completed payment offers receipt and home, without a claim step (2.6s)
+
+  9 passed (33.5s)

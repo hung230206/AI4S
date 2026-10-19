@@ -1,33 +1,37 @@
 """Local OCR + labelled field extraction. Document content never goes upstream."""
 import hashlib
 import io
+import os
 import json
+import logging
 import re
 import shutil
 import subprocess
 import tempfile
 import threading
+import time
 import unicodedata
-from datetime import date
+from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path, PurePosixPath
-from uuid import UUID
+from uuid import UUID, uuid4
 from typing import Literal
-from fastapi import APIRouter, Depends, File, Form, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile
 from fastapi.responses import Response
 from PIL import Image, ImageOps, UnidentifiedImageError
 from pypdf import PdfReader
 import pypdfium2 as pdfium
-from sqlalchemy import select, func
+from sqlalchemy import select, func, text
 from .config import ROOT, settings
 from .file_consent import require_file_consent
-from .db import get_db
-from .models import InvoiceImport
-from .security import student, ApiError
+from .db import get_db, SessionLocal
+from .models import InvoiceImport, User, now
+from .security import student, ApiError, lock_user
 from .services import audit
 
 router = APIRouter(prefix="/api/v1/invoice-imports", tags=["Reviewed local invoice OCR"])
 slots = threading.BoundedSemaphore(settings.ocr_max_workers)
+job_slots = threading.BoundedSemaphore(settings.ocr_max_workers)
 MAX_BYTES = 5 * 1024 * 1024
 
 
@@ -56,61 +60,60 @@ def amount_value(value):
 
 
 def suggestions(pages):
+    from .document_assist import labelled, unique, number, dates, currency as detect_currency, document_type
     fields = {}
     labels = {
-        "invoice_number": r"(?:invoice\s*(?:no\.?|number|#)|ma\s*(?:hoa don|thong bao)|发票号码|发票编号|编号)",
-        "institution_name": r"(?:issuer|institution|school|don vi phat hanh|开票单位|学校)",
-        "beneficiary_name": r"(?:beneficiary|payee|recipient|ben nhan|收款单位|收款人)",
-        "amount_cny": r"(?:amount\s*due|total\s*due|total|tong tien|so tien|应付金额|合计|金额)",
-        "due_date": r"(?:due\s*date|pay\s*by|han thanh toan|缴费截止日期|截止日期|到期日)",
+        "invoice_number": r"invoice\s*(?:no\.?|number|#)|ma\s*(?:hoa don|thong bao)|发票号码|发票编号|编号|票据编号|bill reference",
+        "institution_name": r"issuer|institution|school|don vi phat hanh|开票单位|学校|收费单位",
+        "beneficiary_name": r"beneficiary|payee|recipient|ben nhan|收款单位|收款人",
+        "amount_cny": r"amount\s*due|total\s*due|total|tong tien|so tien|应付金额|合计|金额",
+        "due_date": r"due\s*date|pay\s*by|han thanh toan|缴费截止日期|截止日期|到期日",
     }
-    currency_text = plain("\n".join(p["text"] for p in pages))
-    cny = bool(re.search(r"\bcny\b|\brmb\b|人民币|人民幣", currency_text))
-    for page in pages:
-        for line in page["text"].splitlines():
-            canonical = re.sub(r"(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])", "", line)
-            for name, label in labels.items():
-                if name in fields:
-                    continue
-                match = re.search(label + r"\s*[:：#\-]?\s*(.+)$", plain(canonical), re.I)
-                if not match:
-                    continue
-                value = canonical[match.start(1):].strip(" :：\t")
-                if name == "amount_cny":
-                    other_currency = re.search(r"\b(?:usd|eur|vnd|gbp|jpy|krw)\b", plain(line))
-                    value = amount_value(match.group(1)) if cny and not other_currency else None
-                elif name == "due_date":
-                    numbers = re.search(r"(\d{4})\s*[年/\-.]\s*(\d{1,2})\s*[月/\-.]\s*(\d{1,2})", value)
-                    european = re.search(r"(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{4})", value)
-                    try:
-                        if numbers:
-                            value = date(*map(int, numbers.groups())).isoformat()
-                        elif european:
-                            d, m, y = map(int, european.groups())
-                            value = date(y, m, d).isoformat()
-                        else:
-                            value = None
-                    except ValueError:
-                        value = None
-                elif name == "invoice_number":
-                    value = value[:100]
-                else:
-                    value = value[:200]
-                if value:
-                    fields[name] = {"value": value, "page": page["page"], "source_line": line[:500]}
-    return {"fields": fields, "currency": "CNY" if cny else None, "warnings": ([] if cny else ["Chưa xác định được tiền tệ CNY. Hãy kiểm tra đồng tiền trước khi nhập số tiền."]) + ["Đối chiếu tất cả trường với bản gốc trước khi lưu. OCR có thể đọc sai số và tên."]}
+    text = "\n".join(p["text"] for p in pages)
+    code = detect_currency(text)
+    kind = document_type(pages)
+    blocked = kind != "INVOICE_OR_NOTICE"
+    for name, label in labels.items():
+        convert = (lambda raw: number(raw) if code == "CNY" else None) if name == "amount_cny" else (lambda raw: dates(raw)[0] if len(dates(raw)) == 1 else None) if name == "due_date" else (lambda raw: raw[:100] if name == "invoice_number" else raw[:200])
+        found = unique(labelled(pages, label), convert)
+        if found and not blocked:
+            fields[name] = {"value": found["value"], "page": found["page"], "source_line": found["quote"][:500]}
+    fee_type = None
+    for _, row in [(p["page"], row) for p in pages for row in p["text"].splitlines()[:12]]:
+        normalized = plain(row)
+        for category, pattern in (("TUITION", r"tuition(?: fee)?(?: notice)?|学费"), ("ACCOMMODATION", r"accommodation(?: fee)?|住宿费"), ("ANNUAL_HEALTH_INSURANCE_PREMIUM", r"insurance premium|保险费"), ("MEDICAL_SERVICE_FEE", r"medical service fee|医疗服务费")):
+            if re.search(pattern, normalized):
+                if fee_type and fee_type != category: fee_type = "AMBIGUOUS"
+                elif fee_type != "AMBIGUOUS": fee_type = category
+    warnings = []
+    if blocked:
+        warnings.append("Đây là chứng từ hồ sơ yêu cầu chi trả hoặc khoản đã chi, không phải khoản cần đóng. Hãy dùng ở mục Hồ sơ bồi thường.")
+    if code != "CNY": warnings.append("Tệp không xác định rõ số tiền CNY. Không dùng số tiền VND hoặc ngoại tệ khác làm số tiền CNY.")
+    warnings.append("Đối chiếu tất cả trường với bản gốc trước khi lưu. OCR có thể đọc sai số và tên.")
+    return {"fields": fields, "document_type": kind, "currency": code, "fee_type": fee_type if fee_type != "AMBIGUOUS" and not blocked else None, "warnings": warnings}
 
 
 def local_ocr(images, language="auto"):
     if not all((ROOT / ".local/ocr-models" / f"{lang}.traineddata").is_file() for lang in ("eng", "chi_sim", "vie")):
         raise ApiError("OCR_NOT_READY", "Run python scripts/setup_ocr.py and npm install in frontend", 503)
+    native = shutil.which("tesseract")
     node = shutil.which("node")
-    if not node:
+    if not native and not node:
         raise ApiError("OCR_NOT_READY", "Node.js is required for local OCR", 503)
     if not slots.acquire(blocking=False):
         raise ApiError("OCR_BUSY", "OCR is busy; retry shortly", 429)
     try:
-        result = subprocess.run([node, str(ROOT / "scripts/ocr_runner.cjs")], input=json.dumps({"images": images, "language": language}), text=True, encoding="utf-8", capture_output=True, timeout=75, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        if native:
+            languages = {"auto": "eng+chi_sim+vie", "en": "eng", "vi": "vie+eng", "zh": "chi_sim+eng"}[language]
+            deadline = time.monotonic() + settings.ocr_timeout_seconds
+            pages = []
+            for image in images:
+                result = subprocess.run([native, image, "stdout", "--tessdata-dir", str(ROOT / ".local/ocr-models"), "-l", languages, "--oem", "1", "--psm", "3", "--dpi", "200"], env={**os.environ, "OMP_THREAD_LIMIT": "1"}, text=True, encoding="utf-8", capture_output=True, timeout=max(0.1, deadline - time.monotonic()), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+                if result.returncode:
+                    raise ApiError("OCR_FAILED", "Local text recognition failed; retry with the document language", 422)
+                pages.append({"text": result.stdout, "ocr_engine": "TESSERACT_NATIVE"})
+            return pages
+        result = subprocess.run([node, str(ROOT / "scripts/ocr_runner.cjs")], input=json.dumps({"images": images, "language": language}), text=True, encoding="utf-8", capture_output=True, timeout=settings.ocr_timeout_seconds, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         if result.returncode:
             raise ApiError("OCR_FAILED", "Cannot read this image; upload a clearer image or enter manually", 422)
         return json.loads(result.stdout)["pages"]
@@ -196,7 +199,74 @@ def extract_file(raw, filename, language="auto"):
 
 
 def public_import(obj):
-    return {"id": str(obj.id), "filename": obj.filename, "method": obj.method, "pages": obj.pages, "suggestions": obj.suggestions, "invoice_id": str(obj.invoice_id) if obj.invoice_id else None, "requires_review": True}
+    status = obj.suggestions.get("processing_status", "COMPLETED")
+    extracted = {**suggestions(obj.pages), **{k: v for k, v in obj.suggestions.items() if k not in ("fields", "currency", "warnings", "document_type")}} if obj.pages else obj.suggestions
+    return {"id": str(obj.id), "filename": obj.filename, "method": obj.method, "pages": obj.pages, "suggestions": extracted, "status": status, "error_code": obj.suggestions.get("error_code"), "invoice_id": str(obj.invoice_id) if obj.invoice_id else None, "requires_review": True}
+
+
+def process_import(import_id, consent):
+    try:
+        _process_import(import_id, consent)
+    except Exception:
+        # Background failures must not print SQL parameters containing private OCR text.
+        logging.getLogger(__name__).warning("OCR job interrupted; the retained source can be retried")
+
+
+def _process_import(import_id, consent):
+    # Bounded workers; original bytes and result persist in the owner's source record.
+    with job_slots:
+        with SessionLocal.begin() as db:
+            obj = db.get(InvoiceImport, import_id)
+            if not obj or obj.suggestions.get("processing_status") != "QUEUED":
+                return
+            raw, filename, language = obj.original_bytes, obj.filename, obj.suggestions["language"]
+            token = obj.suggestions["processing_token"]
+            obj.suggestions = {**obj.suggestions, "processing_status": "RUNNING"}
+        try:
+            pages, mime, method = extract_file(raw, filename, language)
+            result = {**suggestions(pages), "language": language, "processing_status": "COMPLETED"}
+        except Exception as exc:
+            pages, mime, method = [], "application/octet-stream", "OCR_FAILED"
+            result = {"language": language, "processing_status": "FAILED", "error_code": exc.code if isinstance(exc, ApiError) else "OCR_FAILED", "fields": {}, "warnings": [], "currency": None}
+        with SessionLocal.begin() as db:
+            obj = db.scalar(select(InvoiceImport).where(InvoiceImport.id == import_id).with_for_update())
+            if not obj or obj.suggestions.get("processing_token") != token: return
+            obj.pages, obj.content_type, obj.method, obj.suggestions = pages, mime, method, result
+            audit(db, db.get(User, obj.user_id), "INVOICE_EXTRACTED" if pages else "OCR_PROCESSING_FAILED", import_id=str(obj.id), method=method, processing_consent=consent)
+
+
+@router.post("/jobs", status_code=202)
+def start_job(background: BackgroundTasks, file: UploadFile = File(...), language: Literal["auto", "en", "vi", "zh"] = Form("auto"), file_consent=Depends(require_file_consent("invoice-ocr")), user=Depends(student), db=Depends(get_db, scope="function")):
+    raw = file.file.read(MAX_BYTES + 1)
+    if not raw or len(raw) > MAX_BYTES:
+        raise ApiError("DOCUMENT_TOO_LARGE", "Use a file of 1 byte to 5 MB", 413)
+    filename = PurePosixPath((file.filename or "invoice").replace("\\", "/")).name
+    filename = "".join(c for c in filename if ord(c) >= 32)[:180]
+    if Path(filename).suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp", ".pdf", ".txt", ".md"):
+        raise ApiError("DOCUMENT_TYPE_UNSUPPORTED", "Use PNG, JPG, WebP, PDF, TXT or MD", 422)
+    # Serialize admission across accounts, without holding this lock during OCR.
+    db.execute(text("SELECT pg_advisory_xact_lock(8320420)"))
+    lock_user(db, user)
+    sha = hashlib.sha256(raw).hexdigest()
+    old = db.scalar(select(InvoiceImport).where(InvoiceImport.user_id == user.id, InvoiceImport.sha256 == sha).order_by(InvoiceImport.created_at.desc()))
+    if old: expire_job(old)
+    if old and (old.invoice_id or (old.suggestions.get("language", "auto") == language and old.suggestions.get("processing_status") != "FAILED")):
+        return public_import(old)
+    pending = list(db.scalars(select(InvoiceImport).where(InvoiceImport.suggestions["processing_status"].astext.in_(["QUEUED", "RUNNING"]))))
+    for item in pending: expire_job(item)
+    pending = [item for item in pending if item.suggestions.get("processing_status") in ("QUEUED", "RUNNING")]
+    if len(pending) >= 4 or any(item.user_id == user.id for item in pending):
+        raise ApiError("OCR_BUSY", "A document is already processing; wait for its result", 429)
+    if not old and db.scalar(select(func.count()).select_from(InvoiceImport).where(InvoiceImport.user_id == user.id)) >= 100:
+        raise ApiError("IMPORT_LIMIT", "Maximum 100 retained source files", 409)
+    obj = old or InvoiceImport(user_id=user.id, filename=filename, original_bytes=raw, content_type="application/octet-stream", sha256=sha, pages=[], method="OCR_PENDING")
+    obj.pages = []; obj.method = "OCR_PENDING"
+    obj.suggestions = {"language": language, "processing_token": str(uuid4()), "processing_status": "QUEUED", "queued_at": now().isoformat(), "fields": {}, "warnings": [], "currency": None}
+    db.add(obj); db.flush()
+    result = public_import(obj); import_id = obj.id
+    db.commit()  # Must be visible to the independent worker before its first read.
+    background.add_task(process_import, import_id, file_consent)
+    return result
 
 
 @router.post("")
@@ -229,7 +299,14 @@ def own_import(db, import_id, user):
 
 @router.get("/{import_id}")
 def detail(import_id: UUID, user=Depends(student), db=Depends(get_db, scope="function")):
-    return public_import(own_import(db, import_id, user))
+    obj = own_import(db, import_id, user)
+    expire_job(obj)
+    return public_import(obj)
+
+
+def expire_job(obj):
+    if obj.suggestions.get("processing_status") in ("QUEUED", "RUNNING") and (now() - datetime.fromisoformat(obj.suggestions["queued_at"]).astimezone(timezone.utc)).total_seconds() > 900:
+        obj.suggestions = {**obj.suggestions, "processing_status": "FAILED", "error_code": "OCR_INTERRUPTED"}
 
 
 @router.get("/{import_id}/download")

@@ -23,24 +23,24 @@ async function register(page: Page) {
 
 async function newWallet(page: Page, name: string, balance: string) {
   await page.goto("/finance");
-  await page.getByLabel("Tên sổ", {exact: true}).fill(name);
-  await page.getByLabel("Số dư ban đầu", {exact: true}).fill(balance);
-  await page.getByRole("button", {name: "Lưu sổ theo dõi", exact: true}).click();
+  await page.getByLabel("Tên nhóm tiền", {exact: true}).fill(name);
+  await page.getByLabel("Tiền bạn đang có", {exact: true}).fill(balance);
+  await page.getByRole("button", {name: "Lưu số tiền ban đầu", exact: true}).click();
   await expect(page.getByRole("heading", {name, exact: true, level: 2})).toBeVisible();
 }
 
 test("native ledger, planned shortfall, actual confirmation and bounded assistant", async ({page}) => {
   await register(page);
   await newWallet(page, "Sinh hoạt CNY", "1000.00");
-  await page.getByRole("button", {name: "Kế hoạch", exact: true}).click();
+  await page.getByRole("button", {name: "Sắp thu / chi", exact: true}).click();
   await page.getByLabel("Nội dung thu / chi", {exact: true}).fill("Tiền nhà tháng tới");
   await page.getByLabel("Số tiền thu / chi", {exact: true}).fill("1200.00");
   const due = new Date(); due.setDate(due.getDate() + 5);
   await page.getByLabel("Ngày dự kiến", {exact: true}).fill(due.toISOString().slice(0, 10));
   await page.getByLabel("Nhóm khoản tiền", {exact: true}).selectOption("HOUSING");
-  await page.getByRole("button", {name: "Lưu kế hoạch", exact: true}).click();
+  await page.getByRole("button", {name: "Lưu khoản sắp thu / chi", exact: true}).click();
   await expect(page.getByRole("status")).toContainText("Số dư hiện tại chưa thay đổi");
-  await page.getByRole("button", {name: "Dự phóng", exact: true}).click();
+  await page.getByRole("button", {name: "Dự kiến còn lại", exact: true}).click();
   await expect(page.getByText(/có thể thiếu tiền từ/)).toBeVisible();
   await expect(page.getByText("−200,00 CNY", {exact: true}).first()).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 0));
@@ -51,7 +51,7 @@ test("native ledger, planned shortfall, actual confirmation and bounded assistan
   await expect(page.getByRole("status")).toContainText("không thực hiện thanh toán");
   const orders = await page.request.get("/api/v1/orders");
   expect((await orders.json()).items).toEqual([]);
-  await page.getByRole("button", {name: "Thu / chi thực tế", exact: true}).click();
+  await page.getByRole("button", {name: "Đã thu / chi", exact: true}).click();
   await expect(page.getByText("Tiền nhà tháng tới", {exact: true})).toBeVisible();
   await page.getByRole("button", {name: "Hủy ghi nhận", exact: true}).click();
   await page.getByRole("button", {name: "Xác nhận hủy ghi nhận", exact: true}).click();

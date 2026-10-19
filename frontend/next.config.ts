@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   turbopack: {root: path.resolve(__dirname)},
-  // OCR can run for 75s; keep the same-origin proxy alive long enough to return its result/error.
-  experimental: {proxyTimeout: 120000},
+  // Invoice OCR uses short job/poll requests. Other local document OCR is bounded at 180s.
+  experimental: {proxyTimeout: 210000},
   allowedDevOrigins: (process.env.LAN_ALLOWED_HOSTS || "").split(",").map(value => value.trim()).filter(Boolean),
   async rewrites() {
     const backend = process.env.API_PROXY_TARGET || "http://127.0.0.1:8000";

@@ -1,0 +1,18 @@
+{
+  "original_document_hashes_unchanged": true,
+  "upload_files": 10,
+  "consumer_archive_json_files": 0,
+  "archive_integrity": "PASS",
+  "files": {
+    "01_Hoc_phi_CNY.png": "684e4d6128347d0bebcfae70e1d1d867ed35519ffc438c4a64cb9f4c02ff4fa0",
+    "02_Tien_ky_tuc_xa_CNY.png": "acf3f11fadf868c2d2c2d21019f861342adab5da9cf40b2c485157fcbf0d7a71",
+    "03_Phi_bao_hiem_CNY.png": "0fca225b96fc919d3aa30488fd78808cdf07d9c0afa40202753c5fc422ba0a63",
+    "04_Hop_dong_bao_hiem.pdf": "22e30408a5ea5e4aa83654028a2ec1fa740c9561e8d0cfff68bcc453b0fe9c7e",
+    "05_Hoa_don_vien_phi.pdf": "9ced6f1cb20e0755955baac4dee1f8798c79d98e2a8c4896284cf7e797a281c6",
+    "06_Benh_an_kham_benh.pdf": "bf659c054106cadf844834e08fea75a46fce1549b211153257bbfee4d9dbf0f6",
+    "07_Don_yeu_cau_boi_thuong.pdf": "1bfa9f1dc3400985c667941b993d1b3ec465ae9fa4df801992cbd8a5dea0c650",
+    "08_Giay_ra_vien.pdf": "4718b680ae267914f7798c520d5210e370beb0e73fd24304a5b4879295e80c90",
+    "09_Bang_ke_chi_phi.pdf": "e74ecbc8856ee00fdf78c9fd173c29b17a9984e80d9d6752211267a81396d043",
+    "10_Bien_ban_tai_nan.pdf": "23ecdac6e2867e65f0174ae529099fd425419224c534fc6486cc73c30052df3a"
+  }
+}

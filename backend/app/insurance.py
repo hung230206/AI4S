@@ -33,6 +33,20 @@ CLAIM_GUIDE = "https://www.lxbx.net/storage/website/20240402/Q420240402144639403
 MONEY_PATTERN = r"^\d{1,12}(\.\d{1,2})?$"
 
 
+@router.get("/documents/{document_id}/suggestions")
+def suggest_policy(document_id: UUID, user=Depends(student), db=Depends(get_db, scope="function")):
+    from .document_assist import policy_suggestions
+    doc = own_document(db, document_id, user)
+    return {**policy_suggestions(doc.pages), "document_id": str(doc.id), "sha256": doc.sha256}
+
+
+@router.get("/documents/{document_id}/claim-suggestions")
+def suggest_claim(document_id: UUID, user=Depends(student), db=Depends(get_db, scope="function")):
+    from .document_assist import claim_suggestions
+    doc = own_document(db, document_id, user)
+    return {**claim_suggestions(doc.pages), "document_id": str(doc.id), "sha256": doc.sha256}
+
+
 class BenefitInput(Strict):
     kind: BenefitKind
     status: Literal["INCLUDED", "EXCLUDED", "UNKNOWN"]
@@ -511,6 +525,22 @@ def download_attachment(claim_id: UUID, attachment_id: UUID, user=Depends(studen
     return Response(item.original_bytes, media_type="application/octet-stream", headers={"Content-Disposition": f'attachment; filename="attachment-{item.id}.{item.filename.rsplit(".", 1)[-1]}"'})
 
 
+class ClaimImportInput(RevisionInput):
+    import_id: UUID
+
+
+@router.post("/claims/{claim_id}/attach-import")
+def attach_import(claim_id: UUID, body: ClaimImportInput, file_consent=Depends(require_file_consent("claim-attachments")), user=Depends(student), db=Depends(get_db, scope="function")):
+    from .ocr import own_import, suggestions
+    own_claim(db, claim_id, user)
+    source = own_import(db, body.import_id, user)
+    if source.suggestions.get("processing_status", "COMPLETED") != "COMPLETED" or not source.pages:
+        raise ApiError("IMPORT_NOT_READY", "Chờ đọc xong tài liệu trước khi đính kèm.", 409)
+    if suggestions(source.pages)["document_type"] != "CLAIM_FORM":
+        raise ApiError("IMPORT_NOT_CLAIM_FORM", "Chọn giấy yêu cầu bồi thường đã đọc.", 422)
+    return upload_attachment(claim_id, UploadFile(filename=source.filename, file=io.BytesIO(source.original_bytes)), "CLAIM_FORM", body.revision, file_consent, user, db)
+
+
 @router.post("/claims/{claim_id}/attachments/{attachment_id}/remove")
 def remove_attachment(claim_id: UUID, attachment_id: UUID, body: RevisionInput, user=Depends(student), db=Depends(get_db, scope="function")):
     lock_user(db, user)
@@ -541,6 +571,35 @@ def export_claim(claim_id: UUID, user=Depends(student), db=Depends(get_db, scope
     return Response(stream.getvalue(), media_type="application/zip", headers={"Content-Disposition": f'attachment; filename="claim-preparation-{claim.id}.zip"'})
 
 
+@router.get("/claims/{claim_id}/attachments/{attachment_id}/review")
+def review_attachment(claim_id: UUID, attachment_id: UUID, user=Depends(student), db=Depends(get_db, scope="function")):
+    from .document_assist import claim_suggestions
+    from pypdf import PdfReader
+    claim = own_claim(db, claim_id, user)
+    item = db.scalar(select(ClaimAttachment).where(ClaimAttachment.id == attachment_id, ClaimAttachment.claim_id == claim.id, ClaimAttachment.user_id == user.id))
+    if not item: raise ApiError("ATTACHMENT_NOT_FOUND", "Không tìm thấy chứng từ.", 404)
+    pages = []
+    if item.filename.lower().endswith(".txt"):
+        pages = [{"page": 1, "text": item.original_bytes.decode("utf-8-sig")[:50_000]}]
+    elif item.filename.lower().endswith(".pdf"):
+        try:
+            reader = PdfReader(io.BytesIO(item.original_bytes))
+            if not reader.is_encrypted and len(reader.pages) <= 5:
+                pages = [{"page": i + 1, "text": (page.extract_text() or "")[:10_000]} for i, page in enumerate(reader.pages)]
+        except Exception:
+            pages = []
+    result = claim_suggestions(pages)
+    findings = []
+    values = result["fields"]
+    if not pages or not any(p["text"].strip() for p in pages): findings.append("MANUAL_TEXT_REVIEW")
+    if values.get("currency") and values["currency"] != claim.currency: findings.append("CURRENCY_MISMATCH")
+    if values.get("amount") and values.get("currency") == claim.currency and Decimal(values["amount"]) != claim.amount: findings.append("AMOUNT_MISMATCH")
+    if values.get("incident_date") and values["incident_date"] != str(claim.incident_date): findings.append("DATE_MISMATCH")
+    expected = {"PAID_MEDICAL_BILL": "INVOICE", "INVOICE_OR_NOTICE": None}.get(result["document_type"], result["document_type"])
+    if expected and expected != item.item_code: findings.append("DOCUMENT_CATEGORY_MISMATCH")
+    return {**result, "attachment_id": str(item.id), "sha256": item.sha256, "claim_revision": claim.revision, "findings": findings, "compared_fields": [k for k in ("amount", "currency", "incident_date") if k in values], "notice": "TEXT COMPARISON ONLY — not verification of authenticity, patient identity, completeness or claim eligibility."}
+
+
 @router.get("/overview")
 def overview(user=Depends(student), db=Depends(get_db, scope="function")):
     rows = list(db.scalars(select(InsurancePolicy).where(InsurancePolicy.user_id == user.id, InsurancePolicy.active == True)))
@@ -560,7 +619,10 @@ def overview(user=Depends(student), db=Depends(get_db, scope="function")):
 
 
 @router.get("/sample-pack")
-def sample_pack(user=Depends(student)):
+def sample_pack(edition: Literal["china", "regression"] = "china", user=Depends(student)):
+    if edition == "china":
+        from .sample_documents import china_sample_pack
+        return Response(china_sample_pack(), media_type="application/zip", headers={"Content-Disposition": 'attachment; filename="Demo_Upload_China_Samples.zip"', "Cache-Control": "no-store"})
     """Self-authored data, with dates relative to today so the A-Z route stays testable."""
     start = today() - timedelta(days=30)
     end = today() + timedelta(days=335)
@@ -581,8 +643,11 @@ def sample_pack(user=Depends(student)):
     stream = io.BytesIO()
     with ZipFile(stream, "w", ZIP_DEFLATED) as archive:
         archive.writestr("demo-policy.txt", policy_text)
+        from .sample_documents import claim_form_image
+        archive.writestr("claim-form-ocr.png", claim_form_image())
+        archive.writestr("OCR-README.txt", "Upload claim-form-ocr.png at /invoices/new to test detection and handoff to a private claim case. This is a fictional VND claim form, not a payable CNY invoice. Its amount must not be converted or applied automatically. Confirm attachment separately in the claim case. For the CNY sample case, review applicability or use claim-claim-form.txt instead. All data is self-authored.\n")
         archive.writestr("review-fields.json", json.dumps(fields, ensure_ascii=False, indent=2))
         for code in ("invoice", "medical-record", "claim-form", "discharge", "cost-breakdown", "accident-report"):
             archive.writestr("claim-" + code + ".txt", "SELF-AUTHORED TEST FIXTURE — NOT A REAL MEDICAL OR INSURANCE RECORD\nDocument: " + code + "\nDate: " + str(today()) + "\nTest expense: 500.00 CNY\nFictional person: Sample Student\nNo real identifying, health or banking information.\n")
-        archive.writestr("README.txt", "Start at /insurance. Upload demo-policy.txt as TEST_FIXTURE. Import review-fields.json into the editable review form, verify the source and confirm. Create a CNY wallet with 1000 CNY, then plan the 800 CNY premium. Analyze evacuation and outpatient needs. Create an outpatient claim for 500 CNY, attach the three matching claim files, confirm offline identity/bank readiness, mark ready and export. External submission is a self-reported status only.\nAll files are fictional; nothing is issued, paid or submitted. Dates are generated at download time.")
+        archive.writestr("README.txt", "Start at /insurance. Upload demo-policy.txt as TEST_FIXTURE. Read the document and enter the policy details and benefit clauses in the form. Review the source and confirm before saving. Create a CNY wallet with 1000 CNY, then plan the 800 CNY premium. Analyze evacuation and outpatient needs. Create an outpatient claim for 500 CNY, attach the three matching claim files, confirm offline identity/bank readiness, mark ready and export. External submission is a self-reported status only.\nAll files are fictional; nothing is issued, paid or submitted. Dates are generated at download time.")
     return Response(stream.getvalue(), media_type="application/zip", headers={"Content-Disposition": 'attachment; filename="demo-insurance-cd-samples.zip"'})

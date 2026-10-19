@@ -1,5 +1,6 @@
 "use client";
 import {tr} from "@/lib/i18n";
+import {PageIntro} from "./page-intro";
 import {FloatingAssistant} from "./floating-assistant";
 import {preference, writePreference} from "@/lib/preferences";
 
@@ -10,7 +11,6 @@ import {
   ShieldCheck,
   LayoutDashboard,
   Clock3,
-  BookOpen,
   Settings2,
   Globe2,
   ChevronRight,
@@ -18,7 +18,6 @@ import {
   FileText,
   LogOut,
   Wallet,
-  TrendingUp,
 } from "lucide-react";
 import {api, Account, AccountSession} from "@/lib/api";
 import {AuthScreen} from "@/components/auth-screen";
@@ -49,9 +48,7 @@ const nav = [
   {href: "/", key: "nav_dashboard", icon: LayoutDashboard},
   {href: "/invoices", key: "nav_invoices", icon: FileText},
   {href: "/finance", key: "nav_finance", icon: Wallet},
-  {href: "/rates", key: "nav_rates", icon: TrendingUp},
   {href: "/history", key: "nav_history", icon: Clock3},
-  {href: "/assistant", key: "nav_assistant", icon: BookOpen},
   {href: "/insurance", key: "nav_insurance", icon: ShieldCheck},
   {href: "/account", key: "nav_account", icon: UserRound},
 ];
@@ -157,7 +154,7 @@ export function Shell({children}: {children: React.ReactNode}) {
   const demoMode = Boolean(user?.is_demo);
   const pageLabel =
     (nav.find(item => item.href === path) ? t(nav.find(item => item.href === path)!.key) : "") ||
-    (path.startsWith("/admin/rag") ? t("nav_rag_admin") : path.startsWith("/knowledge") ? t("nav_knowledge") : path.startsWith("/checkout") ? t("checkout_label") :
+    (path === "/rates" ? t("nav_rates") : path === "/assistant" ? t("nav_assistant") : path.startsWith("/admin/rag") ? t("nav_rag_admin") : path.startsWith("/knowledge") ? t("nav_knowledge") : path.startsWith("/checkout") ? t("checkout_label") :
       path.startsWith("/payments") ? t("payments_label") :
         path.startsWith("/receipts") ? t("receipts_label") :
           path.startsWith("/insurance") ? t("nav_insurance") :
@@ -246,6 +243,7 @@ export function Shell({children}: {children: React.ReactNode}) {
           </footer>
         </div>
       </div>
+      <Suspense fallback={null}><PageIntro key={user?.id} userId={user?.id || "demo"}/></Suspense>
       <Suspense fallback={null}><FloatingAssistant key={`${user?.id}:${token}`}/></Suspense>
     </Auth.Provider>
   );

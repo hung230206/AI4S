@@ -45,7 +45,7 @@ async function importInvoice(page: Page, filename: string, amount: string) {
 test("owner completes upload, budget, policy, automatic signed payment, ledger and evidence", async ({page}) => {
   test.setTimeout(150000);
   await register(page);
-  await page.getByRole("link", {name: "Bắt đầu test A–Z", exact: true}).click();
+  await page.getByRole("link", {name: /Chưa có tài liệu\? Tải tệp mẫu để thử/}).click();
   await expect(page.getByRole("heading", {name: "Test trọn luồng từ A đến Z"})).toBeVisible();
   const download = page.waitForEvent("download");
   await page.getByRole("button", {name: "Tải toàn bộ dữ liệu mẫu ZIP", exact: true}).click();
@@ -54,9 +54,9 @@ test("owner completes upload, budget, policy, automatic signed payment, ledger a
   const invoiceUrl = await importInvoice(page, "01_en_800.png", "800.00");
   const invoiceId = invoiceUrl.split("/").pop();
   await page.goto("/finance");
-  await page.getByLabel("Tên sổ", {exact: true}).fill("Acceptance CNY");
-  await page.getByLabel("Số dư ban đầu", {exact: true}).fill("1000");
-  await page.getByRole("button", {name: "Lưu sổ theo dõi", exact: true}).click();
+  await page.getByLabel("Tên nhóm tiền", {exact: true}).fill("Acceptance CNY");
+  await page.getByLabel("Tiền bạn đang có", {exact: true}).fill("1000");
+  await page.getByRole("button", {name: "Lưu số tiền ban đầu", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Acceptance CNY", exact: true, level: 2})).toBeVisible();
   await page.goto(invoiceUrl);
   await page.getByRole("button", {name: "Đưa vào kế hoạch chi", exact: true}).click();
@@ -84,7 +84,7 @@ test("owner completes upload, budget, policy, automatic signed payment, ledger a
   await page.getByRole("link", {name: "Xem biên nhận mô phỏng", exact: true}).click();
   await expect(page.locator(".receipt-warning")).toContainText("SIMULATED TRANSACTION — NO REAL FUNDS MOVED");
   await page.goto("/finance");
-  await page.getByRole("button", {name: "Dự phóng", exact: true}).click();
+  await page.getByRole("button", {name: "Dự kiến còn lại", exact: true}).click();
   await page.getByRole("button", {name: "Ghi nhận đã chi", exact: true}).click();
   await page.getByRole("button", {name: "Xác nhận ghi sổ", exact: true}).click();
   await expect(page.getByRole("status")).toContainText("không thực hiện thanh toán");

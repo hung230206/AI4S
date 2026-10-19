@@ -211,7 +211,7 @@ test("legacy copilot URL opens global assistant and newer unseen notices cannot 
 
 test("OCR asks per file, declining sends no bytes and agreeing continues original operation", async ({page}) => {
   let uploads = 0;
-  await page.route("**/api/v1/invoice-imports", async route => {
+  await page.route("**/api/v1/invoice-imports/jobs", async route => {
     uploads++; expect(route.request().headers()["x-processing-consent"]).toBe("invoice-ocr:files-2026-10-19-v1");
     await route.fulfill({json: {id: "qa-import", filename: "fictional.txt", method: "TEXT", invoice_id: null, pages: [{page: 1, text: "Fictional invoice"}], suggestions: {fields: {}, currency: "CNY", warnings: []}}});
   });

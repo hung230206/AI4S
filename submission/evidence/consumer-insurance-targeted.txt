@@ -1,0 +1,80 @@
+
+Running 2 tests using 1 worker
+
+(node:27012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  x  1 tests\insurance.spec.ts:74:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP (11.0s)
+(node:23172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  x  2 tests\insurance.spec.ts:151:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio (11.5s)
+
+
+  1) tests\insurance.spec.ts:74:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP 
+
+    TimeoutError: locator.selectOption: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Tiền tệ', { exact: true })
+
+
+      20 |     await page.getByLabel(label, {exact: true}).fill(fields[key], {timeout: 8000});
+      21 |   }
+    > 22 |   await page.getByLabel("Tiền tệ", {exact: true}).selectOption(fields.currency, {timeout: 8000});
+         |                                                   ^
+      23 |   await page.getByLabel("Phạm vi lãnh thổ", {exact: true}).selectOption(fields.territory, {timeout: 8000});
+      24 |   const names: Record<string, string> = {OUTPATIENT: "Ngoại trú", INPATIENT: "Nội trú", ACCIDENT: "Tai nạn", EVACUATION: "Vận chuyển y tế"};
+      25 |   for (const benefit of fields.benefits) {
+        at fillPolicyDetails (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:22:51)
+        at setup (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:59:3)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:78:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\insurance-combined-C-D-jou-50077-igned-sandbox-and-claim-ZIP\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\insurance-combined-C-D-jou-50077-igned-sandbox-and-claim-ZIP\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\insurance-combined-C-D-jou-50077-igned-sandbox-and-claim-ZIP\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\insurance-combined-C-D-jou-50077-igned-sandbox-and-claim-ZIP\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\insurance.spec.ts:151:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio 
+
+    TimeoutError: locator.selectOption: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Tiền tệ', { exact: true })
+
+
+      20 |     await page.getByLabel(label, {exact: true}).fill(fields[key], {timeout: 8000});
+      21 |   }
+    > 22 |   await page.getByLabel("Tiền tệ", {exact: true}).selectOption(fields.currency, {timeout: 8000});
+         |                                                   ^
+      23 |   await page.getByLabel("Phạm vi lãnh thổ", {exact: true}).selectOption(fields.territory, {timeout: 8000});
+      24 |   const names: Record<string, string> = {OUTPATIENT: "Ngoại trú", INPATIENT: "Nội trú", ACCIDENT: "Tai nạn", EVACUATION: "Vận chuyển y tế"};
+      25 |   for (const benefit of fields.benefits) {
+        at fillPolicyDetails (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:22:51)
+        at setup (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:59:3)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\insurance.spec.ts:153:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\insurance-review-UI-reject-e6435--localized-mobile-portfolio\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\insurance-review-UI-reject-e6435--localized-mobile-portfolio\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\insurance-review-UI-reject-e6435--localized-mobile-portfolio\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\insurance-review-UI-reject-e6435--localized-mobile-portfolio\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\insurance.spec.ts:74:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP 
+    tests\insurance.spec.ts:151:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio 

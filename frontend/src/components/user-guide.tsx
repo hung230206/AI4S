@@ -2,7 +2,7 @@
 import {tr, localized} from "@/lib/i18n";
 import {useI18n} from "@/components/i18n-provider";
 
-import {useEffect, useRef, useState, type KeyboardEvent} from "react";
+import {useRef, useState, type KeyboardEvent} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {ArrowRight, BookOpen, CircleHelp, FileText, History, X} from "lucide-react";
@@ -23,13 +23,6 @@ export function UserGuide({userId}: {userId: string}) {
   const path = usePathname();
   const [tab, setTab] = useState(0);
   const storageKey = `baoan.guide.v1.${userId}`;
-  useEffect(() => {
-    const element = dialog.current;
-    let seen = false;
-    try {seen = localStorage.getItem(storageKey) === "seen";} catch { /* Guidance remains usable when browser storage is blocked. */ }
-    if (!seen && !element?.open) element?.showModal();
-    return () => element?.close();
-  }, [storageKey]);
   function remember() {try {localStorage.setItem(storageKey, "seen");} catch { /* Optional browser preference. */ }}
   function close() {remember(); dialog.current?.close(); trigger.current?.focus();}
   function keepFocus(event: KeyboardEvent<HTMLDialogElement>) {

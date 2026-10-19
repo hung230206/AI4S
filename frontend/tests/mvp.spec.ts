@@ -16,12 +16,12 @@ async function register(page: Page) {
   await page.getByLabel("Mật khẩu", {exact: true}).fill(password);
   await page.getByRole("button", {name: "Đăng ký tài khoản", exact: true}).click();
   await dismissWelcome(page);
-  await expect(page.getByRole("heading", {name: "Tài chính rõ ràng. Du học an tâm."})).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
   return email;
 }
 
 async function newInvoice(page: Page) {
-  await page.getByRole("link", {name: "Thêm hóa đơn đầu tiên", exact: true}).first().click();
+  await page.getByRole("link", {name: "Xem các khoản phí", exact: true}).first().click();
   await page.getByLabel("Mã hóa đơn", {exact: true}).fill(`BROWSER-${randomUUID().slice(0, 8)}`);
   await page.getByLabel("Đơn vị phát hành", {exact: true}).fill("Institution from uploaded notice");
   await page.getByLabel("Bên nhận theo hóa đơn", {exact: true}).fill("Recipient from uploaded notice");
@@ -37,10 +37,10 @@ test("account registration, persistent session, profile and sign-out", async ({p
   await page.goto("/");
   await page.screenshot({path: path.join(screenshotDir, "sign-in.png"), fullPage: true});
   const email = await register(page);
-  await expect(page.getByRole("heading", {name: "Chưa có hóa đơn", exact: true})).toBeVisible();
+  await expect(page.getByText("Chưa có việc đang làm dở. Chọn một nhu cầu phía trên để bắt đầu.", {exact: true})).toBeVisible();
   await page.reload();
-  await expect(page.getByRole("heading", {name: "Tài chính rõ ràng. Du học an tâm."})).toBeVisible();
-  await expect(page.getByText("FRANKFURTER · REFERENCE", {exact: true})).toBeVisible({timeout: 20000});
+  await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
+  await expect(page.locator(".goal-card")).toHaveCount(3);
   await page.screenshot({path: path.join(screenshotDir, "private-dashboard.png"), fullPage: true});
   await page.getByRole("link", {name: "Tài khoản", exact: true}).click();
   await page.getByLabel("Tên hiển thị", {exact: true}).fill("Updated Browser User");
@@ -85,6 +85,7 @@ test("invoice CRUD, real reference quote, sandbox consent and archive", async ({
 test("private policy upload, cited search, download and delete on mobile", async ({page}) => {
   await page.setViewportSize({width: 390, height: 844});
   await register(page);
+  await page.goto("/insurance");
   await page.getByRole("link", {name: "Tài liệu bảo hiểm", exact: true}).click();
   await expect(page.getByRole("heading", {name: "Chưa có tài liệu", exact: true})).toBeVisible();
   await page.getByLabel("Tệp chính sách (PDF, ảnh, TXT hoặc MD)", {exact: true}).setInputFiles({name: "browser-policy.txt", mimeType: "text/plain", buffer: Buffer.from("QA policy document. Annual premium CNY 800.\n\nClaims require hospital invoices and a completed claim form.\n\nExclusions: elective cosmetic treatment.")});

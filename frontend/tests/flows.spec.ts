@@ -27,8 +27,8 @@ test("desktop dashboard and mobile keyboard navigation", async ({page}) => {
   await page.setViewportSize({width: 1440, height: 1100});
   await page.goto("/");
   await dismissWelcome(page);
-  await expect(page.getByRole("heading", {name: "Tài chính rõ ràng. Du học an tâm."})).toBeVisible();
-  await expect(page.getByText("800.00").first()).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
+  await expect(page.locator(".goal-card")).toHaveCount(3);
   await page.screenshot({path: path.join(screenshots, "dashboard-desktop.png"), fullPage: true});
   await page.setViewportSize({width: 390, height: 844});
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
@@ -41,6 +41,7 @@ test("human consent, asynchronous signed success, duplicate, receipt", async ({p
   const consoleErrors: string[] = [];
   page.on("pageerror", e => consoleErrors.push(e.message));
   await checkout(page);
+  await page.getByLabel("Phương thức thử thanh toán", {exact: true}).selectOption("MANUAL");
   await page.screenshot({path: path.join(screenshots, "checkout-desktop.png"), fullPage: true});
   await page.getByRole("checkbox").check();
   await page.getByRole("button", {name: "Xác nhận thanh toán mô phỏng", exact: true}).click();
@@ -82,6 +83,7 @@ test("human consent, asynchronous signed success, duplicate, receipt", async ({p
 test("mobile cancellation and safe retry", async ({page}) => {
   await page.setViewportSize({width: 390, height: 844});
   await checkout(page);
+  await page.getByLabel("Phương thức thử thanh toán", {exact: true}).selectOption("MANUAL");
   await page.screenshot({path: path.join(screenshots, "checkout-mobile.png"), fullPage: true});
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.getByRole("button", {name: "Hủy trước khi xử lý"}).click();
@@ -94,6 +96,7 @@ test("mobile cancellation and safe retry", async ({page}) => {
 
 test("failure has no receipt and operator code is verified", async ({page, context}) => {
   await checkout(page);
+  await page.getByLabel("Phương thức thử thanh toán", {exact: true}).selectOption("MANUAL");
   await page.getByRole("checkbox").check();
   await page.getByRole("button", {name: "Xác nhận thanh toán mô phỏng", exact: true}).click();
   await expect(page).toHaveURL(/\/payments\//);

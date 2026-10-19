@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "seconds": 21.89,
+  "pages": 1,
+  "characters": 4034,
+  "method": "LOCAL_TESSERACT",
+  "document_type": "CLAIM_FORM",
+  "currency": "VND",
+  "invoice_fields": 0,
+  "source": "User-provided image processed locally; contents and original excluded from evidence"
+}

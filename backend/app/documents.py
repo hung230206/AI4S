@@ -73,7 +73,7 @@ def extract(raw, filename, language="auto"):
 
 
 def public_document(doc):
-    return {"id": str(doc.id), "title": doc.title, "filename": doc.filename, "byte_size": doc.byte_size, "page_count": len(doc.pages), "source_url": doc.source_url, "created_at": iso(doc.created_at), "source_type": "USER_DOCUMENT", "document_kind": doc.document_kind, "extraction_method": "LOCAL_TESSERACT" if any("confidence" in p for p in doc.pages) else "TEXT_EXTRACT"}
+    return {"id": str(doc.id), "title": doc.title, "filename": doc.filename, "byte_size": doc.byte_size, "page_count": len(doc.pages), "source_url": doc.source_url, "created_at": iso(doc.created_at), "source_type": "USER_DOCUMENT", "document_kind": doc.document_kind, "extraction_method": "LOCAL_TESSERACT" if any("confidence" in p or "ocr_engine" in p for p in doc.pages) else "TEXT_EXTRACT"}
 
 
 def own(db, document_id, user):
@@ -165,7 +165,7 @@ def search_owned(body, user, db, allowed_kinds=None):
     for word in re.findall(r"[\u4e00-\u9fff]{2,}", question):
         terms.add(word)
         terms.update(word[i:i + 2] for i in range(len(word) - 1))
-    synonyms = {"boi thuong": ["claim", "claims", "compensation", "理赔"], "loai tru": ["exclusion", "excluded", "exclusions", "除外"], "phi": ["premium", "fee", "保费"], "thoi han": ["period", "expiry", "duration", "期限"], "quyen loi": ["benefit", "coverage", "benefits", "保障"], "ho so": ["documents", "documentation", "材料"]}
+    synonyms = {"boi thuong": ["claim", "claims", "compensation", "理赔"], "loai tru": ["exclusion", "excluded", "exclusions", "除外"], "phi": ["premium", "fee", "保费"], "thoi han": ["period", "expiry", "duration", "期限"], "quyen loi": ["benefit", "coverage", "benefits", "保障"], "ho so": ["documents", "documentation", "材料"], "ngoai tru": ["outpatient", "门诊", "門診"], "noi tru": ["inpatient", "住院"], "khau tru": ["deductible", "免赔额"], "thoi gian cho": ["waiting", "等待期"], "tai tuc": ["renewal", "续保"], "gia han": ["renewal", "续保"], "van chuyen y te": ["evacuation", "医疗转运"], "han muc": ["limit", "限额", "保额"], "ty le chi tra": ["reimbursement", "报销比例", "赔付比例"]}
     for vi, values in synonyms.items():
         if vi in question or any(value in question for value in values):
             terms.update(values)
@@ -176,7 +176,7 @@ def search_owned(body, user, db, allowed_kinds=None):
             for passage in re.split(r"\n\s*\n|(?<=[.!?。])\s+", page["text"]):
                 passage = passage.strip()
                 normalized = normalize(passage)
-                hits = [term for term in terms if term in normalized]
+                hits = sorted(term for term in terms if term in normalized)
                 if hits:
                     first = min(normalized.find(term) for term in hits)
                     start = max(0, first - 180)

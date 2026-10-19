@@ -1,0 +1,96 @@
+
+Running 47 tests using 1 worker
+
+(node:26172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\acceptance.spec.ts:45:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (33.0s)
+  ok  2 tests\acceptance.spec.ts:104:5 › declined test method requires renewed consent and allows a successful retry (13.5s)
+(node:23444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\assistant-navigation.spec.ts:14:5 › real navigation asks first, cancel and Escape stay put, confirm filters history and preserves the conversation (6.6s)
+  ok  4 tests\assistant-navigation.spec.ts:45:5 › real add-invoice and budget requests open the correct page only after confirmation (4.1s)
+  ok  5 tests\assistant-navigation.spec.ts:57:5 › mobile English and Chinese navigation proposals stay accessible (6.0s)
+  ok  6 tests\assistant-navigation.spec.ts:74:5 › untrusted navigation targets cannot create a popup or an action (3.1s)
+  ok  7 tests\assistant-navigation.spec.ts:88:5 › withdrawing permission dismisses an outstanding navigation confirmation (3.7s)
+  ok  8 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (4.9s)
+  ok  9 tests\flows.spec.ts:40:5 › human consent, asynchronous signed success, duplicate, receipt (22.2s)
+  ok 10 tests\flows.spec.ts:83:5 › mobile cancellation and safe retry (7.2s)
+  ok 11 tests\flows.spec.ts:97:5 › failure has no receipt and operator code is verified (11.2s)
+  ok 12 tests\gemini.spec.ts:28:5 › bottom-centered launcher asks fixed consent on click, decline sends nothing and permission controls stay in account (2.7s)
+  ok 13 tests\gemini.spec.ts:52:5 › consent uses concise product language and links to complete public processing terms (3.8s)
+  ok 14 tests\gemini.spec.ts:72:5 › one floating chat uses RAG then general Gemini, folds sources and bounds conversation history (3.3s)
+  ok 15 tests\gemini.spec.ts:96:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (3.0s)
+  ok 16 tests\gemini.spec.ts:109:5 › scrolls chat to new answers without moving the page, even after reading older messages (3.0s)
+  ok 17 tests\gemini.spec.ts:124:5 › minimize, route navigation and reopening preserve conversation without repeated consent (2.5s)
+  ok 18 tests\gemini.spec.ts:136:5 › account revocation closes chat, clears context and ignores an in-flight reply (2.8s)
+  ok 19 tests\gemini.spec.ts:154:5 › provider fallback is explicit and a missing key still permits local answers (2.0s)
+  ok 20 tests\gemini.spec.ts:163:5 › permission expiry requires renewed consent before reopening (2.0s)
+  ok 21 tests\gemini.spec.ts:169:5 › account settings immediately reflect consent granted from the floating bar (2.4s)
+  ok 22 tests\gemini.spec.ts:181:5 › mobile light and dark chat, localized consent and short landscape fit the viewport (3.2s)
+  ok 23 tests\gemini.spec.ts:206:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted (3.1s)
+  ok 24 tests\gemini.spec.ts:212:5 › OCR asks per file, declining sends no bytes and agreeing continues original operation (2.9s)
+
+  ok 25 tests\insurance.spec.ts:48:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP (15.0s)
+
+  ok 26 tests\insurance.spec.ts:125:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio (4.3s)
+  ok 27 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (2.5s)
+  ok 28 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (5.9s)
+  ok 29 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (3.2s)
+
+  ok 30 tests\ocr-jobs.spec.ts:11:5 › queued OCR survives reload, prevents another upload and requires review (3.7s)
+  x  31 tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent (4.3s)
+(node:23852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 32 tests\onboarding.spec.ts:20:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (4.0s)
+  ok 33 tests\onboarding.spec.ts:47:5 › guided invoice journey explains inputs and calculates a quote without a payment (4.6s)
+  ok 34 tests\onboarding.spec.ts:80:5 › insurance entry opens its own workflow and route-specific help without an invoice (2.8s)
+  ok 35 tests\preferences.spec.ts:16:5 › sign-in preferences preserve input, persist on reload, and synchronize tabs (10.9s)
+  ok 36 tests\preferences.spec.ts:44:5 › system theme follows device changes, explicit selection takes priority (1.9s)
+  ok 37 tests\preferences.spec.ts:57:5 › translated screens, nested invoice form and guide retain draft data (10.2s)
+  ok 38 tests\preferences.spec.ts:87:5 › mobile dark mode has readable surfaces and no horizontal overflow (6.7s)
+  ok 39 tests\preferences.spec.ts:107:5 › preferences tolerate unavailable local storage (1.8s)
+  ok 40 tests\preferences.spec.ts:122:5 › invalid saved preferences fall back to Vietnamese and device theme (1.5s)
+  ok 41 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (16.6s)
+  ok 42 tests\rag.spec.ts:73:5 › admin file upload requires per-file agreement and original file can be replaced (5.7s)
+  ok 43 tests\rag.spec.ts:97:5 › regular users cannot administer and legacy knowledge page opens the one assistant (3.9s)
+  ok 44 tests\rag.spec.ts:106:5 › launcher asks consent once, cites RAG answer and later uses general Gemini (3.6s)
+
+  ok 45 tests\student-finance.spec.ts:32:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (8.2s)
+  ok 46 tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis (16.7s)
+  ok 47 tests\student-finance.spec.ts:108:5 › scanned policy PDF OCR produces a cited answer on a phone (8.0s)
+
+
+  1) tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      62 |   await expect(page.getByText("claim-form-ocr.png", {exact: true})).toBeVisible();
+      63 |   const detail = await (await page.request.get(`/api/v1/insurance/claims/${caseId}`)).json();
+    > 64 |   expect(detail.attachments).toHaveLength(1); expect(detail.amount).toBe("500.00"); expect(detail.currency).toBe("CNY");
+         |                              ^
+      65 |   const original = await page.request.get(`/api/v1/insurance/claims/${caseId}/attachments/${detail.attachments[0].id}`);
+      66 |   expect(await original.body()).toEqual(fs.readFileSync(path.join(root, ".local/qa-documents/claim-form-ocr.png")));
+      67 |   expect((await (await page.request.get("/api/v1/invoices")).json()).items).toHaveLength(0);
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\ocr-jobs.spec.ts:64:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent 
+  46 passed (5.5m)

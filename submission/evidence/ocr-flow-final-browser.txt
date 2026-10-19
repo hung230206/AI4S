@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+(node:26752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 1 tests\ocr-jobs.spec.ts:11:5 › queued OCR survives reload, prevents another upload and requires review (8.7s)
+  ok 2 tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent (11.1s)
+  ok 3 tests\ocr-jobs.spec.ts:70:5 › explicit demo FX and automatic signed payment finish without an operator account (8.2s)
+
+  3 passed (41.6s)

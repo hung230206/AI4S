@@ -23,7 +23,7 @@ def reference(monkeypatch):
 
 
 def data(client, headers):
-    result = client.get(P + "/insurance/sample-pack", headers=headers)
+    result = client.get(P + "/insurance/sample-pack?edition=regression", headers=headers)
     assert result.status_code == 200
     with ZipFile(io.BytesIO(result.content)) as z:
         files = {name: z.read(name) for name in z.namelist()}

@@ -1,10 +1,15 @@
 import {expect, Page} from "@playwright/test";
 
+// Legacy flow tests opt out after checking the first introduction, so they can
+// concentrate on their own features. Dedicated task-UX tests retain default-on help.
 export async function dismissWelcome(page: Page) {
-  const guide = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
-  await expect(guide).toBeVisible();
-  await guide.getByRole("button", {name: "Để sau", exact: true}).click();
-  await expect(guide).not.toBeVisible();
+  const intro = page.locator("dialog.page-intro-dialog");
+  await expect(intro).toBeVisible();
+  await intro.getByRole("button", {name: "Đã hiểu", exact: true}).click();
+  const response = await page.request.get("/api/v1/auth/session");
+  const uid = response.ok() ? (await response.json()).user.id : "22222222-2222-4222-8222-222222222222";
+  await page.evaluate(userId => {localStorage.setItem(`demo.page-intro.v1.${userId}`, "off"); window.dispatchEvent(new Event("demo:preferences"));}, uid);
+  await expect(intro).not.toBeVisible();
 }
 
 export async function openAssistant(page: Page) {

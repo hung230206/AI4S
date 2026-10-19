@@ -1,0 +1,11 @@
+
+Running 2 tests using 1 worker
+
+(node:26780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 1 tests\insurance.spec.ts:74:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP (12.5s)
+
+  ok 2 tests\insurance.spec.ts:151:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio (5.0s)
+
+  2 passed (18.6s)

@@ -48,6 +48,8 @@ def sample_pack(user=Depends(student)):
         for path in sorted(SAMPLES.rglob("*")):
             if path.is_file() and path.resolve().is_relative_to(SAMPLES.resolve()):
                 archive.writestr("Demo_Upload_Test/" + path.relative_to(SAMPLES).as_posix(), path.read_bytes())
+        for path in sorted((ROOT / "fixtures/china_upload_samples").iterdir()):
+            if path.is_file(): archive.writestr("China_Current_Samples/" + path.name, path.read_bytes())
     return Response(stream.getvalue(), media_type="application/zip", headers={"Content-Disposition": 'attachment; filename="Demo_Upload_Test.zip"'})
 
 

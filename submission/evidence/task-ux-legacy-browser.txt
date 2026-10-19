@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:19476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\onboarding.spec.ts:23:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (3.4s)
+  ok 2 tests\onboarding.spec.ts:50:5 › guided invoice journey explains inputs and calculates a quote without a payment (3.6s)
+  ok 3 tests\onboarding.spec.ts:83:5 › insurance entry opens its own workflow and route-specific help without an invoice (1.8s)
+
+  3 passed (9.9s)

@@ -1,0 +1,53 @@
+
+Running 2 tests using 1 worker
+
+(node:26160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\document-assist.spec.ts:23:5 › real PDF fills policy without JSON, keeps review gate, preserves edits, and prefills claim (10.7s)
+(node:18584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\document-assist.spec.ts:76:5 › three real Chinese images suggest all five invoice fields and the correct fee; paid bill is blocked (5.5s)
+
+
+  1) tests\document-assist.spec.ts:23:5 › real PDF fills policy without JSON, keeps review gate, preserves edits, and prefills claim 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByLabel('Tên hợp đồng', { exact: true })
+    Expected: "Tên đã đối chiếu của tôi"
+    Received: "留学生综合保险 / Student insurance schedule"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Tên hợp đồng', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Tên hợp đồng', { exact: true })
+        14 × locator resolved to <input required="" type="text" maxlength="150" value="留学生综合保险 / Student insurance schedule"/>
+           - unexpected value "留学生综合保险 / Student insurance schedule"
+
+
+      52 |   await page.getByRole("button", {name: "Lưu sau khi đối chiếu", exact: true}).click();
+      53 |   await page.getByRole("button", {name: "Xem / sửa", exact: true}).click();
+    > 54 |   await expect(page.getByLabel("Tên hợp đồng", {exact: true})).toHaveValue("Tên đã đối chiếu của tôi");
+         |                                                                ^
+      55 |   await page.getByRole("button", {name: "Đóng biểu mẫu", exact: true}).click();
+      56 |   await page.getByRole("tab", {name: "Hồ sơ bồi thường", exact: true}).click();
+      57 |   await page.getByLabel("Hợp đồng", {exact: true}).selectOption({label: "Tên đã đối chiếu của tôi · CNY"});
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\document-assist.spec.ts:54:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\document-assist-real-PDF-f-eb3bb-es-edits-and-prefills-claim\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\document-assist-real-PDF-f-eb3bb-es-edits-and-prefills-claim\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\document-assist-real-PDF-f-eb3bb-es-edits-and-prefills-claim\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\document-assist-real-PDF-f-eb3bb-es-edits-and-prefills-claim\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\document-assist.spec.ts:23:5 › real PDF fills policy without JSON, keeps review gate, preserves edits, and prefills claim 
+  1 passed (19.6s)

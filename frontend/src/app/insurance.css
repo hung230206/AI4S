@@ -36,3 +36,9 @@
 .insurance-workspace .badge{max-width:100%;white-space:normal}.insurance-workspace .section-heading{gap:12px;flex-wrap:wrap}
 .sidebar{overflow-y:auto}.sidebar-bottom{flex-shrink:0}
 @media(max-width:760px){.insurance-entry{flex-wrap:wrap}.insurance-entry>.button{margin-left:0;white-space:normal}.insurance-form-grid,.insurance-policy-grid,.insurance-benefit-grid,.insurance-source-upload{grid-template-columns:minmax(0,1fr)}.insurance-samples{align-items:flex-start;flex-direction:column}.insurance-tabs button{padding:10px 6px;font-size:12px}.insurance-workspace section.card,.insurance-workspace article.card{padding:18px}.insurance-workspace .button{white-space:normal;text-align:center}.insurance-boundary{padding:14px}.insurance-workspace .insurance-checklist article{padding:14px}}
+.insurance-form-step{margin:25px 0 16px;padding-top:18px;border-top:1px solid var(--line)}.insurance-form-step h3,.insurance-benefit-title{font-size:16px;color:var(--green);margin-bottom:7px}.insurance-form-step p{font-size:13px;color:var(--muted);margin:0;line-height:1.7}.insurance-benefit-title{margin-top:24px}
+
+.document-proposal {margin-block: 1rem; padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow-wrap: anywhere;}
+.document-proposal blockquote {margin: 1rem 0; padding-inline-start: .8rem; border-inline-start: 3px solid var(--border);}
+.document-proposal summary {cursor: pointer; font-weight: 600;}
+.insurance-attachment .document-proposal {grid-column: 1 / -1; width: 100%; min-width: 0;}

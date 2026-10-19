@@ -1,0 +1,1 @@
+{"archive": "C:\\Users\\hungt\\Downloads\\Demo_Upload_China_Samples_2026-10-20.zip", "bytes": 697440, "upload_files": 10, "ocr_seconds": [3.05, 3.05, 3.03], "policy_evidence_quotes": 4, "claim_uploads": 9, "all_delivered_hashes_match_tested_files": true}

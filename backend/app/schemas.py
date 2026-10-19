@@ -16,6 +16,7 @@ class SessionRequest(Strict):
 class CreateQuote(Strict):
     invoice_id: UUID
     settlement_currency: Literal["VND"]
+    demo_rate: bool = Field(default=False, strict=True)
 
 
 class CreateOrder(Strict):

@@ -1,0 +1,266 @@
+
+Running 52 tests using 1 worker
+
+(node:23688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\acceptance.spec.ts:45:5 › owner completes upload, budget, policy, automatic signed payment, ledger and evidence (13.7s)
+  ok  2 tests\acceptance.spec.ts:104:5 › declined test method requires renewed consent and allows a successful retry (12.8s)
+(node:8744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 tests\assistant-navigation.spec.ts:14:5 › real navigation asks first, cancel and Escape stay put, confirm filters history and preserves the conversation (2.2s)
+  ok  4 tests\assistant-navigation.spec.ts:45:5 › real add-invoice and budget requests open the correct page only after confirmation (1.9s)
+  ok  5 tests\assistant-navigation.spec.ts:57:5 › mobile English and Chinese navigation proposals stay accessible (1.9s)
+  ok  6 tests\assistant-navigation.spec.ts:74:5 › untrusted navigation targets cannot create a popup or an action (1.5s)
+  ok  7 tests\assistant-navigation.spec.ts:88:5 › withdrawing permission dismisses an outstanding navigation confirmation (1.2s)
+  x   8 tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation (5.9s)
+(node:2500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 tests\flows.spec.ts:40:5 › human consent, asynchronous signed success, duplicate, receipt (6.8s)
+  ok 10 tests\flows.spec.ts:83:5 › mobile cancellation and safe retry (3.0s)
+  ok 11 tests\flows.spec.ts:97:5 › failure has no receipt and operator code is verified (4.6s)
+  ok 12 tests\gemini.spec.ts:28:5 › bottom-centered launcher asks fixed consent on click, decline sends nothing and permission controls stay in account (1.4s)
+  ok 13 tests\gemini.spec.ts:52:5 › consent uses concise product language and links to complete public processing terms (1.4s)
+  ok 14 tests\gemini.spec.ts:72:5 › one floating chat uses RAG then general Gemini, folds sources and bounds conversation history (1.6s)
+  ok 15 tests\gemini.spec.ts:96:5 › Enter sends once, Shift Enter adds a newline and IME Enter never submits (1.4s)
+  ok 16 tests\gemini.spec.ts:109:5 › scrolls chat to new answers without moving the page, even after reading older messages (1.7s)
+  ok 17 tests\gemini.spec.ts:124:5 › minimize, route navigation and reopening preserve conversation without repeated consent (1.5s)
+  ok 18 tests\gemini.spec.ts:136:5 › account revocation closes chat, clears context and ignores an in-flight reply (1.6s)
+  ok 19 tests\gemini.spec.ts:154:5 › provider fallback is explicit and a missing key still permits local answers (1.2s)
+  ok 20 tests\gemini.spec.ts:163:5 › permission expiry requires renewed consent before reopening (1.2s)
+  ok 21 tests\gemini.spec.ts:169:5 › account settings immediately reflect consent granted from the floating bar (1.4s)
+  ok 22 tests\gemini.spec.ts:181:5 › mobile light and dark chat, localized consent and short landscape fit the viewport (2.0s)
+  ok 23 tests\gemini.spec.ts:206:5 › legacy copilot URL opens global assistant and newer unseen notices cannot be accepted (1.4s)
+  ok 24 tests\gemini.spec.ts:212:5 › OCR asks per file, declining sends no bytes and agreeing continues original operation (1.6s)
+
+  ok 25 tests\insurance.spec.ts:48:5 › combined C+D journey: reviewed source, gap, premium budget, signed sandbox and claim ZIP (11.8s)
+
+  ok 26 tests\insurance.spec.ts:125:5 › review UI rejects invented clauses, supports corrections and localized mobile portfolio (3.9s)
+  x  27 tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out (6.5s)
+(node:20628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  28 tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive (6.4s)
+(node:10336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  29 tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile (6.6s)
+(node:13120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 30 tests\ocr-jobs.spec.ts:11:5 › queued OCR survives reload, prevents another upload and requires review (3.7s)
+  ok 31 tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent (4.6s)
+  ok 32 tests\ocr-jobs.spec.ts:70:5 › explicit demo FX and automatic signed payment finish without an operator account (6.7s)
+  ok 33 tests\onboarding.spec.ts:23:5 › first-use guide traps focus, skips, stays dismissed and reopens on a narrow phone (3.0s)
+  ok 34 tests\onboarding.spec.ts:50:5 › guided invoice journey explains inputs and calculates a quote without a payment (3.0s)
+  ok 35 tests\onboarding.spec.ts:83:5 › insurance entry opens its own workflow and route-specific help without an invoice (1.6s)
+  ok 36 tests\preferences.spec.ts:17:5 › sign-in preferences preserve input, persist on reload, and synchronize tabs (1.7s)
+  ok 37 tests\preferences.spec.ts:45:5 › system theme follows device changes, explicit selection takes priority (751ms)
+  ok 38 tests\preferences.spec.ts:58:5 › translated screens, nested invoice form and guide retain draft data (3.9s)
+  ok 39 tests\preferences.spec.ts:88:5 › mobile dark mode has readable surfaces and no horizontal overflow (2.6s)
+  ok 40 tests\preferences.spec.ts:108:5 › preferences tolerate unavailable local storage (802ms)
+  ok 41 tests\preferences.spec.ts:123:5 › invalid saved preferences fall back to Vietnamese and device theme (657ms)
+  ok 42 tests\rag.spec.ts:33:5 › admin account manages publication, edits invalidate old sources, trash and restore (9.1s)
+  ok 43 tests\rag.spec.ts:73:5 › admin file upload requires per-file agreement and original file can be replaced (3.6s)
+  ok 44 tests\rag.spec.ts:97:5 › regular users cannot administer and legacy knowledge page opens the one assistant (1.6s)
+  ok 45 tests\rag.spec.ts:106:5 › launcher asks consent once, cites RAG answer and later uses general Gemini (1.5s)
+
+  x  46 tests\student-finance.spec.ts:32:5 › native ledger, planned shortfall, actual confirmation and bounded assistant (1.0m)
+(node:23924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 47 tests\student-finance.spec.ts:71:5 › real image OCR, mandatory review, source download, invoice plan and FX analysis (7.5s)
+  ok 48 tests\student-finance.spec.ts:108:5 › scanned policy PDF OCR produces a cited answer on a phone (4.6s)
+  ok 49 tests\task-ux.spec.ts:13:5 › three needs lead to the right pages; short intros repeat until the user hides them (1.8s)
+  ok 50 tests\task-ux.spec.ts:37:5 › hide checkbox applies only to that page, survives reload and can be restored in settings (3.2s)
+  ok 51 tests\task-ux.spec.ts:57:5 › mobile introductions fit, trap keyboard focus and translate with the page (2.0s)
+  ok 52 tests\task-ux.spec.ts:77:5 › invoice progress reflects API state and completed payment offers receipt and home, without a claim step (1.7s)
+
+
+  1) tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation ───────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+
+
+      28 |   await page.goto("/");
+      29 |   await dismissWelcome(page);
+    > 30 |   await expect(page.getByRole("heading", {name: "Tài chính rõ ràng. Du học an tâm."})).toBeVisible();
+         |                                                                                        ^
+      31 |   await expect(page.getByText("800.00").first()).toBeVisible();
+      32 |   await page.screenshot({path: path.join(screenshots, "dashboard-desktop.png"), fullPage: true});
+      33 |   await page.setViewportSize({width: 390, height: 844});
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\flows.spec.ts:30:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\flows-desktop-dashboard-and-mobile-keyboard-navigation\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\flows-desktop-dashboard-and-mobile-keyboard-navigation\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\flows-desktop-dashboard-and-mobile-keyboard-navigation\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\flows-desktop-dashboard-and-mobile-keyboard-navigation\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out ───────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+
+
+      17 |   await page.getByRole("button", {name: "Đăng ký tài khoản", exact: true}).click();
+      18 |   await dismissWelcome(page);
+    > 19 |   await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
+         |                                                                                        ^
+      20 |   return email;
+      21 | }
+      22 |
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:19:88)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:39:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\mvp-account-registration-p-b5643-ession-profile-and-sign-out\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\mvp-account-registration-p-b5643-ession-profile-and-sign-out\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mvp-account-registration-p-b5643-ession-profile-and-sign-out\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mvp-account-registration-p-b5643-ession-profile-and-sign-out\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive ──────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+
+
+      17 |   await page.getByRole("button", {name: "Đăng ký tài khoản", exact: true}).click();
+      18 |   await dismissWelcome(page);
+    > 19 |   await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
+         |                                                                                        ^
+      20 |   return email;
+      21 | }
+      22 |
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:19:88)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:58:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\mvp-invoice-CRUD-real-refe-4f64c-sandbox-consent-and-archive\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\mvp-invoice-CRUD-real-refe-4f64c-sandbox-consent-and-archive\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mvp-invoice-CRUD-real-refe-4f64c-sandbox-consent-and-archive\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mvp-invoice-CRUD-real-refe-4f64c-sandbox-consent-and-archive\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile ───
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Tài chính rõ ràng. Du học an tâm.' })
+
+
+      17 |   await page.getByRole("button", {name: "Đăng ký tài khoản", exact: true}).click();
+      18 |   await dismissWelcome(page);
+    > 19 |   await expect(page.getByRole("heading", {name: "Bạn muốn làm gì hôm nay?"})).toBeVisible();
+         |                                                                                        ^
+      20 |   return email;
+      21 | }
+      22 |
+        at register (C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:19:88)
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\mvp.spec.ts:87:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\mvp-private-policy-upload--0d1ce-wnload-and-delete-on-mobile\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\mvp-private-policy-upload--0d1ce-wnload-and-delete-on-mobile\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mvp-private-policy-upload--0d1ce-wnload-and-delete-on-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mvp-private-policy-upload--0d1ce-wnload-and-delete-on-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) tests\student-finance.spec.ts:32:5 › native ledger, planned shortfall, actual confirmation and bounded assistant 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Thu / chi thực tế', exact: true })
+
+
+      52 |   const orders = await page.request.get("/api/v1/orders");
+      53 |   expect((await orders.json()).items).toEqual([]);
+    > 54 |   await page.getByRole("button", {name: "Đã thu / chi", exact: true}).click();
+         |                                                                            ^
+      55 |   await expect(page.getByText("Tiền nhà tháng tới", {exact: true})).toBeVisible();
+      56 |   await page.getByRole("button", {name: "Hủy ghi nhận", exact: true}).click();
+      57 |   await page.getByRole("button", {name: "Xác nhận hủy ghi nhận", exact: true}).click();
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\student-finance.spec.ts:54:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\student-finance-native-led-f655a-ation-and-bounded-assistant\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    tests\flows.spec.ts:26:5 › desktop dashboard and mobile keyboard navigation ────────────────────
+    tests\mvp.spec.ts:36:5 › account registration, persistent session, profile and sign-out ────────
+    tests\mvp.spec.ts:57:5 › invoice CRUD, real reference quote, sandbox consent and archive ───────
+    tests\mvp.spec.ts:85:5 › private policy upload, cited search, download and delete on mobile ────
+    tests\student-finance.spec.ts:32:5 › native ledger, planned shortfall, actual confirmation and bounded assistant 
+  47 passed (4.2m)

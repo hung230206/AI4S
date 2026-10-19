@@ -1,3 +1,18 @@
+> Local update, 20 October 2026: the default download now contains ten current China samples. Upload policy PDF 04 to fill its fields and benefit citations automatically, then review and save. There is no consumer JSON import. A claim form can also fill a draft case; attachments provide text-comparison warnings. See [DOCUMENT_ASSIST_UPGRADE.md](docs/DOCUMENT_ASSIST_UPGRADE.md) for current behaviour and limits. Earlier descriptions below are historical where they differ.
+
+# Cập nhật OCR và luồng demo — 20/10/2026
+
+- OCR chạy nền: sau khi đồng ý xử lý tệp, app hiển thị đang chờ/đang đọc. Có thể tải lại trang Thêm hóa đơn để xem tiếp kết quả. Không bấm tải nhiều lần khi tác vụ đang chạy.
+- Ảnh giấy yêu cầu bồi thường bằng VND không phải hóa đơn cần thanh toán bằng CNY. App nhận diện biểu mẫu, không điền số tiền vào hóa đơn và cho chọn **Đưa vào hồ sơ bồi thường**. Chọn hồ sơ đang chuẩn bị hoặc tạo hồ sơ từ hợp đồng đã đối chiếu, rồi xác nhận đính kèm. Không cần upload lại. Đồng tiền và số tiền trong hồ sơ vẫn cần tự đối chiếu.
+- Tại **Bảo hiểm & hồ sơ → Tải bộ tệp test C + D**, ZIP có thêm `claim-form-ocr.png` và `OCR-README.txt`. Ảnh này tự soạn, không có dữ liệu thật. Upload ảnh đó tại **Thêm hóa đơn** để thử nhận diện nhầm loại tài liệu và chuyển sang hồ sơ. Hợp đồng mẫu dùng CNY; ảnh minh họa dùng VND để kiểm tra cảnh báo, không tự đổi tiền. Dùng `claim-claim-form.txt` cho bộ hồ sơ CNY mẫu tương ứng.
+- Khi thử thanh toán, phương thức mặc định là **Thành công tự động · sandbox**. Kiểm tra báo giá, tích đồng ý rồi xác nhận; không cần tài khoản vận hành. Biên nhận luôn ghi không chuyển tiền thật.
+- Nếu chỉ cần hoàn thành demo, chọn **Dùng tỷ giá demo để tiếp tục** thay vì gọi tỷ giá tham chiếu. App ghi rõ `DEMO_RATE`, không dùng tỷ giá demo thay thế âm thầm.
+- Sau thành công, trang giao dịch có bước tiếp theo tới Ngân sách hoặc Hồ sơ bồi thường. Hợp đồng liên quan được chọn sẵn nếu giao dịch xuất phát từ dự trù phí bảo hiểm. Thanh toán demo không kích hoạt hợp đồng, không trừ số dư sổ tiền và không gửi hồ sơ ra ngoài.
+
+Chi tiết kỹ thuật và giới hạn: [OCR_AND_COMPLETE_DEMO_FLOW.md](docs/OCR_AND_COMPLETE_DEMO_FLOW.md).
+
+---
+
 ## Managed Topic D RAG (19 October 2026)
 
 User Q&A: `/knowledge`. Administrator CRUD/publication: `/admin/rag` with a server-provisioned account. See [RAG_GUIDE.md](RAG_GUIDE.md) for the complete admin-to-student test flow and [research/method](docs/22_TOPIC_D_MANAGED_RAG.md). Credentials are in an ignored private local file, never in this repository. Gemini still requires binary session consent; the source library can be searched locally without a model.
@@ -15,7 +30,7 @@ Mở **Bảo hiểm & hồ sơ** (`/insurance`). Tạo tài khoản riêng để
 
 1. Bấm **Tải bộ tệp test C + D**, giải nén ZIP.
 2. Bấm **Thêm hợp đồng**. Tải `demo-policy.txt`, chọn **Dữ liệu mẫu tự soạn**, rồi **Tải lên và đọc tài liệu**.
-3. Chọn `review-fields.json` ở mục nạp trường. Đây chỉ là điền nháp. Đọc văn bản nguồn, đối chiếu số liệu, tích xác nhận rồi lưu.
+3. Đọc hợp đồng và điền tên, phí, thời hạn cùng quyền lợi vào biểu mẫu. Kiểm tra số trang và câu điều khoản, tích xác nhận rồi lưu. Không cần tải tệp JSON.
 4. Vào **Ngân sách & thu chi**, tạo sổ CNY có **1.000 CNY**. Quay lại hợp đồng → **Dự trù phí vào ngân sách** → chọn sổ → xác nhận. Dự phóng còn **200 CNY**; số dư hiện tại vẫn **1.000 CNY**.
 5. Sang **Kiểm tra quyền lợi**, bấm so sánh. Ngoại trú khớp hạn mức **2.000 CNY**, vận chuyển y tế có khoảng trống. Đổi hạn mức ngoại trú thành **4.000 CNY** sẽ thấy thiếu hạn mức. Đổi ngày/lãnh thổ để thử trường hợp khác. Đây là so sánh dữ liệu bạn nhập, không phải quyết định bảo hiểm.
 6. Trong hợp đồng, bấm **Tạo dự trù phí để thử sandbox** và đọc xác nhận. Khoản phí này do bạn tạo trong app, không phải hóa đơn nhà bảo hiểm. Mở **Xem giá trị VND**, lấy tỷ giá, kiểm tra tổng, chọn sandbox thành công, tích đồng ý rồi chạy thử. Biên nhận có dòng **NO REAL FUNDS MOVED**. Kế hoạch phí không bị tạo thêm lần nữa khi mở từ hóa đơn.

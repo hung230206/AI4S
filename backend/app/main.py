@@ -151,7 +151,9 @@ def quote(body: CreateQuote, user=Depends(student), db=Depends(get_db, scope="fu
     payable(invoice)
     expire_invoice_orders(db, invoice.id)
     reference = {}
-    if invoice.source_type == "USER_ENTERED":
+    if body.demo_rate and not settings.demo_mode:
+        raise ApiError("QUOTE_DEMO_DISABLED", "Demo quotes are disabled", 403)
+    if invoice.source_type == "USER_ENTERED" and not body.demo_rate:
         rate, stale = reference_rate(db)
         money = breakdown(invoice.amount_cny, rate.vnd_per_cny, settings.service_fee_percent, settings.service_fixed_fee_vnd)
         reference = {"rate_source": "FRANKFURTER_REFERENCE", "rate_date": rate.rate_date, "rate_fetched_at": rate.fetched_at, "rate_is_stale": stale}

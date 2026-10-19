@@ -1,0 +1,92 @@
+
+Running 3 tests using 1 worker
+
+(node:24648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ok 1 tests\ocr-jobs.spec.ts:11:5 › queued OCR survives reload, prevents another upload and requires review (9.3s)
+  x  2 tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent (12.4s)
+(node:12836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  x  3 tests\ocr-jobs.spec.ts:70:5 › explicit demo FX and automatic signed payment finish without an operator account (15.2s)
+
+
+  1) tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.insurance-attachment').getByText('claim-form-ocr.png', { exact: true })
+    Expected: visible
+    Error: strict mode violation: locator('.insurance-attachment').getByText('claim-form-ocr.png', { exact: true }) resolved to 2 elements:
+        1) <strong>claim-form-ocr.png</strong> aka getByRole('group').filter({ hasText: 'Sửa thông tin hồ sơTên hồ sơ' }).locator('strong')
+        2) <strong>claim-form-ocr.png</strong> aka getByRole('strong')
+
+    Call log:
+      - Expect "toBeVisible" locator('.insurance-attachment').getByText('claim-form-ocr.png', { exact: true }) with timeout 5000ms
+      - waiting for locator('.insurance-attachment').getByText('claim-form-ocr.png', { exact: true })
+
+
+      60 |   expect((await (await page.request.get(`/api/v1/insurance/claims/${caseId}`)).json()).attachments).toHaveLength(0);
+      61 |   await attach.click(); await consent.getByRole("button", {name: "Đồng ý", exact: true}).click();
+    > 62 |   await expect(page.locator(".insurance-attachment").getByText("claim-form-ocr.png", {exact: true})).toBeVisible();
+         |                                                                                                      ^
+      63 |   const detail = await (await page.request.get(`/api/v1/insurance/claims/${caseId}`)).json();
+      64 |   expect(detail.attachments).toHaveLength(1); expect(detail.amount).toBe("500.00"); expect(detail.currency).toBe("CNY");
+      65 |   const original = await page.request.get(`/api/v1/insurance/claims/${caseId}/attachments/${detail.attachments[0].id}`);
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\ocr-jobs.spec.ts:62:102
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ocr-jobs-real-full-page-cl-5b276--case-with-explicit-consent\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\ocr-jobs.spec.ts:70:5 › explicit demo FX and automatic signed payment finish without an operator account 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('SIMULATED TRANSACTION — NO REAL FUNDS MOVED', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('SIMULATED TRANSACTION — NO REAL FUNDS MOVED', { exact: true }) with timeout 5000ms
+      - waiting for getByText('SIMULATED TRANSACTION — NO REAL FUNDS MOVED', { exact: true })
+
+
+      85 |   await expect(page.getByRole("heading", {name: "Bước thanh toán demo đã hoàn tất", exact: true})).toBeVisible();
+      86 |   await page.getByRole("link", {name: "Xem biên nhận mô phỏng", exact: true}).click();
+    > 87 |   await expect(page.getByText("SIMULATED TRANSACTION — NO REAL FUNDS MOVED", {exact: true})).toBeVisible();
+         |                                                                                              ^
+      88 | });
+      89 |
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\ocr-jobs.spec.ts:87:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\ocr-jobs-explicit-demo-FX--e042b-without-an-operator-account\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\ocr-jobs-explicit-demo-FX--e042b-without-an-operator-account\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ocr-jobs-explicit-demo-FX--e042b-without-an-operator-account\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ocr-jobs-explicit-demo-FX--e042b-without-an-operator-account\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests\ocr-jobs.spec.ts:30:5 › real full-page claim OCR hands original to a private case with explicit consent 
+    tests\ocr-jobs.spec.ts:70:5 › explicit demo FX and automatic signed payment finish without an operator account 
+  1 passed (1.3m)

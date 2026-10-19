@@ -1,0 +1,170 @@
+{
+  "validated_at": "2026-10-19T21:15:24.030754+00:00",
+  "scope": "Local API on 127.0.0.1:8000; shared STUDENT sandbox, fictional files only",
+  "pdf": [
+    {
+      "file": "04_Hop_dong_bao_hiem.pdf",
+      "pages": 2,
+      "text_characters": 2310,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "05_Hoa_don_vien_phi.pdf",
+      "pages": 1,
+      "text_characters": 855,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "06_Benh_an_kham_benh.pdf",
+      "pages": 1,
+      "text_characters": 1226,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "07_Don_yeu_cau_boi_thuong.pdf",
+      "pages": 1,
+      "text_characters": 1248,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "08_Giay_ra_vien.pdf",
+      "pages": 1,
+      "text_characters": 1197,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "09_Bang_ke_chi_phi.pdf",
+      "pages": 1,
+      "text_characters": 988,
+      "app_text_extraction": "PASS"
+    },
+    {
+      "file": "10_Bien_ban_tai_nan.pdf",
+      "pages": 1,
+      "text_characters": 1150,
+      "app_text_extraction": "PASS"
+    }
+  ],
+  "ocr": [
+    {
+      "file": "01_Hoc_phi_CNY.png",
+      "status": "PASS",
+      "seconds": 3.05,
+      "fields": {
+        "invoice_number": "DEMO-CN-01-2026",
+        "institution_name": "Demo International University (fictional)",
+        "beneficiary_name": "Demo International University (fictional)",
+        "due_date": "2026-12-20",
+        "amount_cny": "20000.00"
+      }
+    },
+    {
+      "file": "02_Tien_ky_tuc_xa_CNY.png",
+      "status": "PASS",
+      "seconds": 3.05,
+      "fields": {
+        "invoice_number": "DEMO-CN-02-2026",
+        "institution_name": "Demo International University (fictional)",
+        "beneficiary_name": "Demo International University (fictional)",
+        "due_date": "2026-12-20",
+        "amount_cny": "6000.00"
+      }
+    },
+    {
+      "file": "03_Phi_bao_hiem_CNY.png",
+      "status": "PASS",
+      "seconds": 3.03,
+      "fields": {
+        "invoice_number": "DEMO-CN-03-2026",
+        "institution_name": "Demo Study Insurance (fictional)",
+        "beneficiary_name": "Demo Study Insurance (fictional)",
+        "due_date": "2026-12-20",
+        "amount_cny": "800.00"
+      }
+    }
+  ],
+  "claims": [
+    {
+      "kind": "INPATIENT",
+      "attachment_codes": [
+        "INVOICE",
+        "MEDICAL_RECORD",
+        "CLAIM_FORM",
+        "DISCHARGE",
+        "COST_BREAKDOWN"
+      ],
+      "uploaded_and_exported_original_bytes": "PASS",
+      "offline_checks_left_unconfirmed": true
+    },
+    {
+      "kind": "ACCIDENT",
+      "attachment_codes": [
+        "INVOICE",
+        "MEDICAL_RECORD",
+        "CLAIM_FORM",
+        "ACCIDENT_REPORT"
+      ],
+      "uploaded_and_exported_original_bytes": "PASS",
+      "offline_checks_left_unconfirmed": true
+    }
+  ],
+  "claim_form_classification": "PASS",
+  "policy_review": {
+    "status": "PASS",
+    "benefits_with_verified_citations": 4,
+    "document_kind": "TEST_FIXTURE"
+  },
+  "files": [
+    {
+      "file": "01_Hoc_phi_CNY.png",
+      "bytes": 162299,
+      "sha256": "684e4d6128347d0bebcfae70e1d1d867ed35519ffc438c4a64cb9f4c02ff4fa0"
+    },
+    {
+      "file": "02_Tien_ky_tuc_xa_CNY.png",
+      "bytes": 168716,
+      "sha256": "acf3f11fadf868c2d2c2d21019f861342adab5da9cf40b2c485157fcbf0d7a71"
+    },
+    {
+      "file": "03_Phi_bao_hiem_CNY.png",
+      "bytes": 166998,
+      "sha256": "0fca225b96fc919d3aa30488fd78808cdf07d9c0afa40202753c5fc422ba0a63"
+    },
+    {
+      "file": "04_Hop_dong_bao_hiem.pdf",
+      "bytes": 38375,
+      "sha256": "22e30408a5ea5e4aa83654028a2ec1fa740c9561e8d0cfff68bcc453b0fe9c7e"
+    },
+    {
+      "file": "05_Hoa_don_vien_phi.pdf",
+      "bytes": 36883,
+      "sha256": "9ced6f1cb20e0755955baac4dee1f8798c79d98e2a8c4896284cf7e797a281c6"
+    },
+    {
+      "file": "06_Benh_an_kham_benh.pdf",
+      "bytes": 35200,
+      "sha256": "bf659c054106cadf844834e08fea75a46fce1549b211153257bbfee4d9dbf0f6"
+    },
+    {
+      "file": "07_Don_yeu_cau_boi_thuong.pdf",
+      "bytes": 35682,
+      "sha256": "1bfa9f1dc3400985c667941b993d1b3ec465ae9fa4df801992cbd8a5dea0c650"
+    },
+    {
+      "file": "08_Giay_ra_vien.pdf",
+      "bytes": 35018,
+      "sha256": "4718b680ae267914f7798c520d5210e370beb0e73fd24304a5b4879295e80c90"
+    },
+    {
+      "file": "09_Bang_ke_chi_phi.pdf",
+      "bytes": 37869,
+      "sha256": "e74ecbc8856ee00fdf78c9fd173c29b17a9984e80d9d6752211267a81396d043"
+    },
+    {
+      "file": "10_Bien_ban_tai_nan.pdf",
+      "bytes": 34767,
+      "sha256": "23ecdac6e2867e65f0174ae529099fd425419224c534fc6486cc73c30052df3a"
+    }
+  ],
+  "status": "PASS"
+}

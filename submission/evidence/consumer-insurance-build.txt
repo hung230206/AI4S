@@ -1,0 +1,51 @@
+
+> bao-an-demo@1.0.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 27ms
+- Experiments (use with caution):
+  · proxyTimeout: 210000
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1839ms
+  Running TypeScript ...
+  Finished TypeScript in 2.6s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/17) ...
+  Generating static pages using 11 workers (4/17) 
+  Generating static pages using 11 workers (8/17) 
+  Generating static pages using 11 workers (12/17) 
+✓ Generating static pages using 11 workers (17/17) in 447ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /admin/rag
+├ ○ /assistant
+├ ƒ /checkout/[invoiceId]
+├ ○ /copilot
+├ ○ /finance
+├ ○ /history
+├ ○ /insurance
+├ ƒ /insurance/claims/[id]
+├ ○ /invoices
+├ ƒ /invoices/[id]
+├ ƒ /invoices/[id]/edit
+├ ○ /invoices/new
+├ ○ /knowledge
+├ ƒ /knowledge/[id]
+├ ƒ /operator
+├ ƒ /payments/[id]
+├ ○ /privacy
+├ ○ /rates
+├ ƒ /receipts/[id]
+└ ○ /test-lab
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,51 @@
+
+Running 4 tests using 1 worker
+
+(node:1752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\task-ux.spec.ts:13:5 › three needs lead to the right pages; short intros repeat until the user hides them (1.9s)
+  ok 2 tests\task-ux.spec.ts:37:5 › hide checkbox applies only to that page, survives reload and can be restored in settings (3.4s)
+  ok 3 tests\task-ux.spec.ts:57:5 › mobile introductions fit, trap keyboard focus and translate with the page (2.0s)
+  x  4 tests\task-ux.spec.ts:77:5 › invoice progress reflects API state and completed payment offers receipt and home, without a claim step (6.8s)
+
+
+  1) tests\task-ux.spec.ts:77:5 › invoice progress reflects API state and completed payment offers receipt and home, without a claim step 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('.payment-complete-next').getByRole('link', { name: 'Xem hợp đồng liên quan', exact: true })
+    Expected: "/insurance#policy-fictional-policy"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" locator('.payment-complete-next').getByRole('link', { name: 'Xem hợp đồng liên quan', exact: true }) with timeout 5000ms
+      - waiting for locator('.payment-complete-next').getByRole('link', { name: 'Xem hợp đồng liên quan', exact: true })
+
+
+       99 |   await expect(completion.getByRole("link", {name: "Xem biên nhận mô phỏng", exact: true})).toHaveAttribute("href", `/receipts/${order.id}`);
+      100 |   await expect(completion.getByRole("link", {name: "Về tổng quan", exact: true})).toHaveAttribute("href", "/");
+    > 101 |   await expect(completion.getByRole("link", {name: "Xem hợp đồng liên quan", exact: true})).toHaveAttribute("href", "/insurance#policy-fictional-policy");
+          |                                                                                             ^
+      102 |   await expect(completion.locator('a[href*="claim"]')).toHaveCount(0);
+      103 |   await expect(completion).toContainText("Không có tiền thật được chuyển");
+      104 |   await page.screenshot({path: path.join(evidence, "payment-finish.png"), animations: "disabled", fullPage: true});
+        at C:\Users\hungt\Documents\ChatGPT\Fintech hackathon\Insurance_Crossborder_Payment_Codex_Kit\frontend\tests\task-ux.spec.ts:101:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\task-ux-invoice-progress-r-9d26e-d-home-without-a-claim-step\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\task-ux-invoice-progress-r-9d26e-d-home-without-a-claim-step\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\task-ux-invoice-progress-r-9d26e-d-home-without-a-claim-step\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\task-ux-invoice-progress-r-9d26e-d-home-without-a-claim-step\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\task-ux.spec.ts:77:5 › invoice progress reflects API state and completed payment offers receipt and home, without a claim step 
+  3 passed (15.0s)

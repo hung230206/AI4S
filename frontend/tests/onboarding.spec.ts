@@ -1,4 +1,5 @@
 import {test, expect, Page} from "@playwright/test";
+import {dismissWelcome} from "./guide-helper";
 import {randomUUID} from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -12,6 +13,8 @@ async function firstVisit(page: Page) {
   await page.getByLabel("Email", {exact: true}).fill(`ux-${randomUUID()}@example.com`);
   await page.getByLabel("Mật khẩu", {exact: true}).fill("ux-browser-test-password-2026");
   await page.getByRole("button", {name: "Đăng ký tài khoản", exact: true}).click();
+  await dismissWelcome(page);
+  await page.getByRole("button", {name: "Mở hướng dẫn sử dụng"}).click();
   const guide = page.getByRole("dialog", {name: "Bắt đầu cùng Demo"});
   await expect(guide).toBeVisible();
   return guide;

@@ -14,4 +14,8 @@ policy = Image.new("RGB", (1700, 850), "white")
 draw = ImageDraw.Draw(policy)
 draw.multiline_text((80, 60), "QA POLICY - SELF AUTHORED TEST TEXT\n\nClaims require hospital invoices and a claim form.\nExclusions: elective cosmetic treatment.\n\nThis is not a real insurance policy.", font=font, fill="black", spacing=32)
 policy.save(root / "policy-scanned.pdf", "PDF", resolution=150)
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+from app.sample_documents import claim_form_image
+(root / "claim-form-ocr.png").write_bytes(claim_form_image())
 print("Self-authored OCR fixtures created in .local/qa-documents")

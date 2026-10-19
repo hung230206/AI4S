@@ -1,8 +1,11 @@
 "use client";
+import {DocumentSuggestions, type DocumentProposal} from "@/components/document-suggestions";
 import {UploadPrivacyNotice} from "@/components/ai-privacy";
 import {requestFileConsent, fileConsentHeader} from "@/lib/file-consent";
-import {use, useCallback, useEffect, useState} from "react";
+import {Suspense, use, useCallback, useEffect, useState} from "react";
 import Link from "next/link";
+import {useSearchParams} from "next/navigation";
+import {type InvoiceDraft} from "@/components/invoice-import";
 import {api, API, authHeaders, downloadOwned, time} from "@/lib/api";
 import {useInsuranceCopy, type ClaimCase} from "@/lib/insurance";
 import {useToken} from "@/components/shell";
@@ -10,9 +13,14 @@ import {Heading, ErrorBox} from "@/components/ui";
 import {ArrowLeft, Download, FileCheck2, ShieldCheck} from "lucide-react";
 import {ClaimEditor} from "@/components/claim-editor";
 
-export default function ClaimDetailPage({params}: {params: Promise<{id: string}>}) {
+export default function ClaimDetailPage({params}: {params: Promise<{id: string}>}) {return <Suspense><ClaimDetail params={params}/></Suspense>;}
+function ClaimDetail({params}: {params: Promise<{id: string}>}) {
+  const query = useSearchParams(); const rawImport = query.get("import") || ""; const importId = /^[0-9a-f-]{36}$/i.test(rawImport) ? rawImport : "";
+  const [imported, setImported] = useState<InvoiceDraft>(); const [importDone, setImportDone] = useState(false);
   const {id} = use(params); const token = useToken(); const t = useInsuranceCopy();
+  const [reviews, setReviews] = useState<Record<string, DocumentProposal>>({});
   const [data, setData] = useState<ClaimCase>(); const [busy, setBusy] = useState(false); const [error, setError] = useState("");
+  useEffect(() => {let active = true; if (importId) api<InvoiceDraft>(`/invoice-imports/${importId}`, token).then(value => {if (active) setImported(value);}).catch(e => {if (active) setError(e.message);}); return () => {active = false;};}, [importId, token]);
   const [target, setTarget] = useState(""); const [confirmed, setConfirmed] = useState(false); const [note, setNote] = useState("");
   const [pendingChecks, setPendingChecks] = useState<Record<string, boolean>>({});
   const load = useCallback(async () => setData(await api<ClaimCase>(`/insurance/claims/${id}`, token)), [id, token]);
@@ -26,6 +34,12 @@ export default function ClaimDetailPage({params}: {params: Promise<{id: string}>
     const result = await response.json();
     if (!response.ok) throw new Error(result.error?.message || "Upload failed");
     setData(result); setTarget("");
+    const added = result.attachments.find((f: {filename: string}) => f.filename === file.name);
+    if (added) await reviewFile(added.id);
+  }
+  async function reviewFile(attachmentId: string) {
+    const value = await api<DocumentProposal>(`/insurance/claims/${id}/attachments/${attachmentId}/review`, token);
+    setReviews(old => ({...old, [attachmentId]: value}));
   }
   function selectTarget(value: string) {setTarget(value); setConfirmed(false); setNote("");}
   return <div className="insurance-workspace">
@@ -33,13 +47,14 @@ export default function ClaimDetailPage({params}: {params: Promise<{id: string}>
     <Heading eyebrow={t("claims")} title={data?.title || t("open")}>{t("claimHelp")}</Heading>
     <div className="info-note insurance-boundary"><ShieldCheck size={22}/><p>{t("boundary")}</p></div>
     <UploadPrivacyNotice/><ErrorBox message={error}/>{error && <button className="text-link" disabled={busy} onClick={() => act(load)}>{t("refresh")}</button>}
+    {imported && data && !importDone && <section className="card"><h2>{t("attachImportedClaim")}</h2><p>{imported.filename}</p><p>{t("importClaimReview")}</p><button type="button" className="button primary" disabled={busy || !["DRAFT", "READY"].includes(data.status)} onClick={() => act(async () => {if (!await requestFileConsent("claim-attachments")) return; const response = await fetch(`${API}/api/v1/insurance/claims/${id}/attach-import`, {method: "POST", credentials: "include", headers: {...authHeaders(token), ...fileConsentHeader("claim-attachments"), "Content-Type": "application/json"}, body: JSON.stringify({import_id: importId, revision: data.revision})}); const result = await response.json(); if (!response.ok) throw new Error(result.error?.message || "Attachment failed"); setData(result); setImportDone(true); setTarget("");})}>{t("attachImportedClaim")}</button></section>}
     {!data ? !error && <p role="status">{t("busy")}</p> : <>
-      {["DRAFT", "READY"].includes(data.status) && <ClaimEditor key={data.revision} data={data} token={token} busy={busy} act={act} receive={value => {setData(value); setTarget("");}}/>}
+      {["DRAFT", "READY"].includes(data.status) && <ClaimEditor key={data.revision} data={data} token={token} busy={busy} act={act} receive={value => {setData(value); setTarget(""); setReviews({});}}/>}
       <section className="card"><div className="section-heading"><h2>{data.amount} {data.currency}</h2><span className="badge neutral">{t(data.status)}</span></div><p>{t(data.benefit_kind)} · {data.incident_date}</p>{data.deadline && <p>{t("deadline")}: {data.deadline}</p>}{data.description && <p className="insurance-preserve">{data.description}</p>}{data.warnings.map(w => <p className="error" key={w}>{t(w)}</p>)}<a className="text-link" href={data.guide_url} target="_blank" rel="noreferrer">{t("guide")} ↗</a></section>
       <section className="card"><h2>{t("checklist")}</h2><div className="insurance-checklist">{data.checklist.map(item => <article key={item.code} className={item.complete ? "complete" : ""}><div className="section-heading"><h3>{t(item.code)}</h3>{item.complete && <FileCheck2 size={21} aria-label={t("attached")}/>}</div>
         <label className="insurance-check"><input type="checkbox" disabled={busy || !["DRAFT", "READY"].includes(data.status)} checked={pendingChecks[item.code] ?? item.prepared_externally} onChange={e => {const prepared = e.target.checked; setPendingChecks({[item.code]: prepared}); act(async () => {setData(await api<ClaimCase>(`/insurance/claims/${id}/checklist`, token, {revision: data.revision, code: item.code, prepared_externally: prepared})); setTarget("");}).finally(() => setPendingChecks({}));}}/><span>{t("outsidePrepared")}</span></label>
         {!item.offline_only && ["DRAFT", "READY"].includes(data.status) && <label>{t("attach")} · PDF / PNG / JPG / TXT ≤ 5 MB<input type="file" disabled={busy} accept=".pdf,.png,.jpg,.jpeg,.txt" onChange={e => {const file = e.target.files?.[0]; e.target.value = ""; act(() => attach(file, item.code));}}/></label>}
-        {data.attachments.filter(f => f.item_code === item.code).map(f => <div className="insurance-attachment" key={f.id}><strong>{f.filename}</strong><small>SHA-256: {f.sha256}</small><button className="text-link" disabled={busy} onClick={() => act(() => downloadOwned(`/insurance/claims/${id}/attachments/${f.id}`, token, f.filename))}><Download size={14}/>{t("download")}</button></div>)}
+        {data.attachments.filter(f => f.item_code === item.code).map(f => <div className="insurance-attachment" key={f.id}><strong>{f.filename}</strong><small>SHA-256: {f.sha256}</small><button className="text-link" disabled={busy} onClick={() => act(() => downloadOwned(`/insurance/claims/${id}/attachments/${f.id}`, token, f.filename))}><Download size={14}/>{t("download")}</button><button type="button" className="text-link" disabled={busy} onClick={() => act(() => reviewFile(f.id))}>{t("reviewAttachment")}</button>{reviews[f.id] && <DocumentSuggestions proposal={reviews[f.id]}/>}</div>)}
       </article>)}</div></section>
       <section className="card"><h2>{t("export")}</h2><p>{t("exportHelp")}</p><button className="button secondary" disabled={busy} onClick={() => act(() => downloadOwned(`/insurance/claims/${id}/export`, token, `claim-preparation-${id}.zip`))}><Download size={17}/>{t("export")}</button>
         <div className="insurance-actions insurance-transitions">

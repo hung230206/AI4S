@@ -58,6 +58,12 @@ def create(body: InvoiceInput, user=Depends(student), db=Depends(get_db, scope="
             raise ApiError("IMPORT_NOT_FOUND", "Invoice source not found", 404)
         if not body.import_reviewed:
             raise ApiError("IMPORT_REVIEW_REQUIRED", "Review the source document and confirm the fields before saving", 422)
+        from .ocr import suggestions
+        if not source.pages or source.suggestions.get("processing_status", "COMPLETED") != "COMPLETED":
+            raise ApiError("IMPORT_NOT_READY", "Wait for OCR to finish before saving", 409)
+        classified = suggestions(source.pages)
+        if classified["document_type"] != "INVOICE_OR_NOTICE" or classified["currency"] == "VND":
+            raise ApiError("IMPORT_NOT_INVOICE", "This is a claim form or VND document, not a CNY payment invoice", 422)
         if source.invoice_id:
             raise ApiError("IMPORT_ALREADY_USED", "This source has already been saved as an invoice", 409)
     if db.scalar(select(Invoice.id).where(Invoice.student_id == user.id, Invoice.invoice_number == body.invoice_number)):

@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     fx_quote_ttl_seconds: int = 600
     provider_worker_enabled: bool = True
     ocr_max_workers: int = Field(default=2, ge=1, le=2)
+    ocr_timeout_seconds: int = Field(default=180, ge=30, le=300)
     gemini_enabled: bool = False
     gemini_api_key: SecretStr = Field(default=SecretStr(""), repr=False, exclude=True)
     gemini_model: str = Field(default="gemini-3.5-flash-lite", pattern=r"^[a-z0-9][a-z0-9.-]{1,79}$")

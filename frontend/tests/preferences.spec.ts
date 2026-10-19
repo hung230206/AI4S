@@ -1,4 +1,5 @@
 import {test, expect, Page} from "@playwright/test";
+import {dismissWelcome} from "./guide-helper";
 import {phrases} from "../src/lib/translations";
 import path from "node:path";
 import fs from "node:fs";
@@ -9,7 +10,7 @@ fs.mkdirSync(evidence, {recursive: true});
 async function demo(page: Page) {
   await page.goto("/");
   await page.getByRole("button", {name: "Dùng thử sandbox với dữ liệu mẫu", exact: true}).click();
-  await page.getByRole("dialog").getByRole("button", {name: "Để sau", exact: true}).click();
+  await dismissWelcome(page);
   await expect(page.locator("main h1")).toBeVisible();
 }
 
